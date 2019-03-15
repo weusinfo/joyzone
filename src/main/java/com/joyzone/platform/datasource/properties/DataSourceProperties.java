@@ -1,5 +1,6 @@
 package com.joyzone.platform.datasource.properties;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 
@@ -7,6 +8,7 @@ package com.joyzone.platform.datasource.properties;
  * Data source properties
  *
  */
+@ConfigurationProperties(prefix = "datasource.druid")
 public class DataSourceProperties {
     private String driverClassName;
     private String url;

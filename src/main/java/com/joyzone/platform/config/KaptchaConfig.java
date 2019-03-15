@@ -1,3 +1,5 @@
+package com.joyzone.platform.config;
+
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;

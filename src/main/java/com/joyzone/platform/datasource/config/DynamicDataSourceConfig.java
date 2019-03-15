@@ -5,6 +5,10 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.joyzone.platform.datasource.properties.DataSourceProperties;
 import com.joyzone.platform.datasource.properties.DynamicDataSourceProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +18,16 @@ import java.util.Map;
 
 
 @Configuration
-@EnableConfigurationProperties(DynamicDataSourceProperties.class)
+@EnableConfigurationProperties(DataSourceProperties.class)
+@ConditionalOnClass(DruidDataSource.class)
+@ConditionalOnProperty(prefix = "datasource.druid", name = "url")
+@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 public class DynamicDataSourceConfig {
     @Autowired
-    private DynamicDataSourceProperties properties;
+    private DynamicDataSourceProperties properties; 
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.druid")
+    @ConfigurationProperties(prefix = "datasource.druid",ignoreInvalidFields=true)
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
