@@ -1,0 +1,50 @@
+server:
+  port: 6006
+  maxHttpHeaderSize: 10240000
+  tomcat:
+    max-threads: 800
+    uri-encoding: UTF-8
+    basedir:
+      /usr/local/joyzone/business
+    accesslog:
+      enabled: true
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 300MB
+  application:
+    name: joyzone-business
+  security:
+    user:
+      name: joyzone
+      password: Joyzone
+mybatis:
+  type-aliases-package:  com.joyzone.platform.core.model
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations:
+    - classpath:/mapper/**.xml
+mapper:
+  mappers:
+    - com.joyzone.platform.core.mapper.BaseMapper
+  not-empty: true
+  identity: MYSQL
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count:countSql
+druid:
+  url: jdbc:mysql://120.78.156.35:3306/joyzone?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+  driver-class: com.mysql.jdbc.Driver
+  username: root
+  password: Joyzone@hgz
+  initialSize: 1
+  min-idle: 1
+  max-active: 20
+  test-on-borrow: true
+swagger:
+  enable: false
+logging:
+  config: classpath:logback.xml
