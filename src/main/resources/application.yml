@@ -48,3 +48,6 @@ swagger:
   enable: false
 logging:
   config: classpath:logback.xml
+using:
+  spring:
+    schedulerFactory: true
