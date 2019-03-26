@@ -1,4 +1,4 @@
-package com.joyzone.platform.model;
+package com.joyzone.platform.core.model;
 
 import java.util.Date;
 import javax.persistence.*;
