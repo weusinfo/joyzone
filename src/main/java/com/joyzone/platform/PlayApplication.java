@@ -1,23 +1,20 @@
 package com.joyzone.platform;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.Banner.Mode;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import tk.mybatis.spring.annotation.MapperScan;
 
-@ComponentScan(basePackages= {"com.joyzone.platform.config.datasource"})
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-@MapperScan(basePackages={"com.joyzone.platform.mapper"})
+@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class},scanBasePackages="com.joyzone.platform")
+@MapperScan(basePackages={"com.joyzone.platform.core.mapper"})
 @EnableTransactionManagement
 @EnableScheduling
 public class PlayApplication {
 	
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(PlayApplication.class).bannerMode(Mode.OFF).run(args);
+		SpringApplication.run(PlayApplication.class, args);
 	}
 
 }

@@ -19,6 +19,8 @@ spring:
     user:
       name: joyzone
       password: Joyzone
+  swagger:
+     enable: true
 mybatis:
   type-aliases-package:  com.joyzone.platform.core.model
   configuration:
@@ -27,7 +29,7 @@ mybatis:
     - classpath:/mapper/**.xml
 mapper:
   mappers:
-    - com.joyzone.platform.core.mapper.BaseMapper
+    - com.joyzone.platform.core.base.BaseMapper
   not-empty: true
   identity: MYSQL
 pagehelper:
@@ -44,10 +46,8 @@ druid:
   min-idle: 1
   max-active: 20
   test-on-borrow: true
-swagger:
-  enable: false
 logging:
   config: classpath:logback.xml
 using:
   spring:
-    schedulerFactory: true
+    schedulerFactory: false

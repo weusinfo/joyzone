@@ -1,4 +1,4 @@
-package com.joyzone.platform.module.admin.controller.service;
+package com.joyzone.platform.core.service;
 
 /**
  * Description:TODO

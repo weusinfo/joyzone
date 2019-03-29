@@ -7,6 +7,7 @@ import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ public class SpringQrtzScheduler {
 	
 	Logger logger = LoggerFactory.getLogger(SpringQrtzScheduler.class);
 	
+	@Autowired
 	private ApplicationContext applicationContext;
 	
 	@PostConstruct
