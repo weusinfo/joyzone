@@ -3,8 +3,11 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "team_users")
-public class TeamUsersModel {
+@Table(name = TeamUsersModel.TABLE_NAME)
+public class TeamUsersModel extends BaseModel{
+
+    protected static final String TABLE_NAME = "team_users";
+
     @Id
     private Long id;
 

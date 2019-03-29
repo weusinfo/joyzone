@@ -4,8 +4,11 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "document")
+@Table(name = DocumentModel.TABLE_NAME)
 public class DocumentModel {
+
+    protected static final String TABLE_NAME = "document";
+
     /**
      * 自增长主键
      */

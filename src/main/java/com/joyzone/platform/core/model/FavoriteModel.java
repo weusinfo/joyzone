@@ -3,8 +3,11 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "favorite")
-public class FavoriteModel {
+@Table(name = FavoriteModel.TABLE_NAME)
+public class FavoriteModel extends BaseModel{
+
+    protected static final String TABLE_NAME = "favorite";
+
     @Id
     private Long id;
 

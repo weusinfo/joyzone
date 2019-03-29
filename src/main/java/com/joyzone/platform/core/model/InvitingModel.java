@@ -3,8 +3,11 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "inviting")
-public class InvitingModel {
+@Table(name = InvitingModel.TABLE_NAME)
+public class InvitingModel extends BaseModel{
+
+    protected static final String TABLE_NAME = "inviting";
+
     @Id
     private Long id;
 

@@ -3,8 +3,11 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "user")
-public class UserModel {
+@Table(name = UserModel.TABLE_NAME)
+public class UserModel extends BaseModel{
+
+    protected static final String TABLE_NAME = "user";
+
     /**
      * 自增长主键
      */

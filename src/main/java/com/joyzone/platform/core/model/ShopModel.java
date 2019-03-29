@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "shop")
-public class ShopModel {
+@Table(name = ShopModel.TABLE_NAME)
+public class ShopModel extends BaseModel {
+
+    protected static final String TABLE_NAME = "shop";
+
     @Id
     private Long id;
 
