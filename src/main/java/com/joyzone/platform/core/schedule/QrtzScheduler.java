@@ -20,7 +20,7 @@ import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import com.joyzone.platform.config.AutoWiringSpringBeanJobFactory;
 
 @Configuration
-@ConditionalOnExpression("'${using.spring.schedulerFactory}'=='false'")
+@ConditionalOnExpression("'${using.quartz.schedulerFactory}'=='true'")
 public class QrtzScheduler {
 
     Logger logger = LoggerFactory.getLogger(getClass());

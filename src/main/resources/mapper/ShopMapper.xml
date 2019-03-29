@@ -25,7 +25,7 @@
   
   <insert id="addShop" parameterType="ShopModel">
   insert into shop(user_id,name,phone,address,description,price,price_taste,type,cover_img,shop_kind,status,
-  	reg_img,legal_person_img,create_time,update_time)
+  	reg_img,legal_person_img,create_time)
   values(#{userId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
   #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{priceTaste,jdbcType=DECIMAL},#{type,jdbcType=INTEGER},
   #{coverImg,jdbcType=VARCHAR},#{shopKind,jdbcType=INTEGER},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
@@ -73,9 +73,6 @@
       </if>
       <if test="legalPersonImg != null" >
         legal_person_img = #{legalPersonImg,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},

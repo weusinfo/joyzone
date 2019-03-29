@@ -1,4 +1,4 @@
-package com.joyzone.platform.core.mapper;
+package com.joyzone.platform.core.base;
 
 
 import tk.mybatis.mapper.common.Mapper;

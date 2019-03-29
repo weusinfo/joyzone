@@ -1,4 +1,4 @@
-package com.joyzone.platform.core.service;
+package com.joyzone.platform.core.base;
 
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
