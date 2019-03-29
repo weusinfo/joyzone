@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = DocumentModel.TABLE_NAME)
-public class DocumentModel {
+public class DocumentModel extends BaseModel{
 
     protected static final String TABLE_NAME = "document";
 
