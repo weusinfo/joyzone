@@ -22,4 +22,65 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <insert id="addShop" parameterType="ShopModel">
+  insert into shop(user_id,name,phone,address,description,price,price_taste,type,cover_img,shop_kind,status,
+  	reg_img,legal_person_img,create_time,update_time)
+  values(#{userId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+  #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{priceTaste,jdbcType=DECIMAL},#{type,jdbcType=INTEGER},
+  #{coverImg,jdbcType=VARCHAR},#{shopKind,jdbcType=INTEGER},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
+  #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateShop" parameterType="ShopModel">
+   update shop
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceTaste != null" >
+        price_taste = #{priceTaste,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="coverImg != null" >
+        cover_img = #{coverImg,jdbcType=INTEGER},
+      </if>
+      <if test="shopKind != null" >
+        shop_kind = #{shopKind,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="regImg != null" >
+        reg_img = #{regImg,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonImg != null" >
+        legal_person_img = #{legalPersonImg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
