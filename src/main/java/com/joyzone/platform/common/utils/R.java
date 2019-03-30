@@ -33,7 +33,7 @@ public class R extends HashMap<String, Object> {
 	}
 	
 	public static R error(String msg) {
-		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
+		return error(STATUS_FAIL, msg);
 	}
 	
 	public static R error(int code, String msg) {
@@ -45,6 +45,7 @@ public class R extends HashMap<String, Object> {
 
 	public static R ok(String msg) {
 		R r = new R();
+		r.put("code", STATUS_OK);
 		r.put("msg", msg);
 		return r;
 	}
