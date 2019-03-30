@@ -50,17 +50,17 @@ public class UserController {
     @ApiOperation("添加用户信息")
     public R saveUser(UserModel userModel){
         if(userModel == null)
-            return R.error(R.STATUS_FAIL,"信息不能为空.");
+            return R.error("信息不能为空.");
         if(userModel.getUserName() == null)
-            return R.error(R.STATUS_FAIL,"昵称不能为空.");
+            return R.error("昵称不能为空.");
         if(userModel.getPhone() == null)
-            return R.error(R.STATUS_FAIL,"用户电话号码不能为空.");
+            return R.error("用户电话号码不能为空.");
         if(!BaseUtils.isChinaPhoneLegal(userModel.getPhone()))
-            return R.error(R.STATUS_FAIL,"电话号码格式有误.");
+            return R.error("电话号码格式有误.");
         if(userModel.getBirthday() == null)
-            return R.error(R.STATUS_FAIL,"生日时间不能为空.");
+            return R.error("生日时间不能为空.");
         if(userModel.getSex() == null)
-            return R.error(R.STATUS_FAIL,"性别不能为空.");
+            return R.error("性别不能为空.");
 
         //userSerivce.saveUser(userModel);
 
