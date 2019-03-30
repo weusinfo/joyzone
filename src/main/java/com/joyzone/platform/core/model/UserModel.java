@@ -1,5 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -7,6 +10,9 @@ import javax.persistence.*;
 public class UserModel extends BaseModel{
 
     protected static final String TABLE_NAME = "user";
+
+    //密码加盐规则
+    public static final String PASSWORD_RULE = "joy_zone";
 
     /**
      * 自增长主键
@@ -59,14 +65,33 @@ public class UserModel extends BaseModel{
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "update_time")
     private Date updateTime;
+
+    /**
+     * 职业
+     */
+    private String profession;
+
+    /**
+     * 学历
+     */
+    private String education;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
 
     /**
      * 获取自增长主键
@@ -264,5 +289,29 @@ public class UserModel extends BaseModel{
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

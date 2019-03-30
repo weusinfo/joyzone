@@ -11,10 +11,23 @@
     <result column="type" property="type" jdbcType="BIT" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+    <result column="profession" property="profession" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="BIT" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,user_name,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time
+  </sql>
+
+  <select id="getUserList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.UserModel">
+      SELECT
+        <include refid="BaseResultSQL"></include>
+      FROM user
+  </select>
 </mapper>
