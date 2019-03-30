@@ -12,9 +12,6 @@ public class ShopModel extends BaseModel {
     @Id
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     private String name;
 
     private String phone;
@@ -92,20 +89,6 @@ public class ShopModel extends BaseModel {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return user_id
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     /**
