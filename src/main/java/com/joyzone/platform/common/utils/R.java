@@ -49,10 +49,22 @@ public class R extends HashMap<String, Object> {
 		r.put("msg", msg);
 		return r;
 	}
+	public static R ok(Object obj) {
+		R r = new R();
+		r.put("data",obj);
+		return r;
+	}
 	
 	public static R ok(Map<String, Object> map) {
 		R r = new R();
 		r.putAll(map);
+		return r;
+	}
+
+	public static R pageToData(Long total,Object obj) {
+		R r = new R();
+		r.put("total",total);
+		r.put("data",obj);
 		return r;
 	}
 	

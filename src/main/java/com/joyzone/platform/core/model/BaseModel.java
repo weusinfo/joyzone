@@ -11,6 +11,9 @@ import java.io.Serializable;
  */
 public class BaseModel implements Serializable {
 
+    public static final int PAGE_NUM = 1;   //页数
+    public static final int PAGE_SIZE = 10;//条数
+
     @Transient
     private Integer pageNum;
 
