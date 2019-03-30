@@ -76,4 +76,11 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <delete id="batchDelete">
+  delete from shop where id in
+  <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+  		#{id}
+  </foreach>
+  </delete>
 </mapper>

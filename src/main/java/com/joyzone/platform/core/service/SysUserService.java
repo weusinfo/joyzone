@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,21 @@ public class SysUserService extends BaseService<SysUserModel> {
 		if(StringUtils.isEmpty(sysUser.getPassword())) throw new JZException("密码不能为空");
 		if(StringUtils.isEmpty(sysUser.getPhone())) throw new JZException("手机号码不能为空");
 		if(PublicUtil.isEmpty(sysUser.getSex())) throw new JZException("性别不能为空");
+		sysUser.setCreateTime(new Date());
+		sysUser.setStatus(0);
 		sysUserMapper.insert(sysUser);
 	}
 	
 	public void updateUser(SysUserModel sysUser) {
+		sysUser.setUpdateTime(new Date());
 		sysUserMapper.updateSysUser(sysUser);
 	}
 	
 	public List<SysUserModel> listUsers(SysUserModel sysUser){
 		return select(sysUser);
+	}
+	
+	public void deleteUsers(Long[] ids) {
+		sysUserMapper.batchDelete(ids);
 	}
 }

@@ -49,7 +49,7 @@ public class ShopModel extends BaseModel {
     private Integer shopKind;
 
     /**
-     * 店家状态；1：签约；2：待审核；3：已禁入
+     * 店家状态；0：签约；1：待审核；2：已禁入
      */
     private Integer status;
 
