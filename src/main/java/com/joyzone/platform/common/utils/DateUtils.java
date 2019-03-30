@@ -156,4 +156,23 @@ public class DateUtils {
         DateTime dateTime = new DateTime(date);
         return dateTime.plusYears(years).toDate();
     }
+
+    /**
+     * 把日期转换成相应格式的字符串
+     * @author lipengfei
+     * @param date
+     * @param dateFormate
+     * @return String
+     * @throws
+     */
+    public static String dateToStr(Date date, String dateFormat) {
+
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        return format.format(date);
+    }
+
+    public static String getCurrentDate2(Date date) {
+
+        return dateToStr(new Date(), "yyyyMMdd");
+    }
 }
