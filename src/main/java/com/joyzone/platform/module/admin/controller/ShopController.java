@@ -34,8 +34,8 @@ public class ShopController {
 	}
 	
 	@PostMapping("/delete")
-	public R delete(@RequestParam("id") Long id) {
-		shopService.deleteShop(id);
+	public R batchDelete(@RequestParam("ids") Long[] ids) {
+		shopService.batchDelete(ids);
 		return R.ok("删除成功");
 	}
 	

@@ -36,6 +36,9 @@ public class SysUserModel extends BaseModel {
 	
 	@Column(name = "update_time")
 	private Date updateTime;
+	
+	@Column(name = "status")
+	private Integer status;
 
 	public Long getId() {
 		return id;
@@ -107,6 +110,14 @@ public class SysUserModel extends BaseModel {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }
