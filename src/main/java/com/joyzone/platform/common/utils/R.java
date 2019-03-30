@@ -17,9 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+
+	public static final int STATUS_OK = 0; 		//0 成功
+	public static final int STATUS_FAIL = 1; 	//1 失败
+
+
 	
 	public R() {
-		put("code", 0);
+		put("code", R.STATUS_OK);
 		put("msg", "success");
 	}
 	
