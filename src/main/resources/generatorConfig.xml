@@ -39,6 +39,6 @@
         <!--mapper-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.targetPackage}"  targetProject="${mapper.targetProject}"/>
 
-        <table tableName="document" domainObjectName="DocumentModel"></table>
+        <table tableName="menu" domainObjectName="MenuModel"></table>
     </context>
 </generatorConfiguration>

@@ -40,8 +40,7 @@ public class SysUserController {
 	@PostMapping("/list")
 	public R listUsers(SysUserModel sysUser) {
 		List<SysUserModel> users = sysUserService.listUsers(sysUser);
-		if(PublicUtil.isEmpty(users)) return R.error("没有查询到用户");
-		return R.ok().put("sysUsers", users);
+		return R.ok(users);
 	}
 
 }

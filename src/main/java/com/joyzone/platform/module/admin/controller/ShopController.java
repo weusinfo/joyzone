@@ -43,7 +43,7 @@ public class ShopController {
 	public R listShops(ShopModel shop) {
 		List<ShopModel> shops = shopService.listShops(shop);
 		if(PublicUtil.isEmpty(shops)) return R.error("没有门店数据");
-		return R.ok().put("shops",shops);
+		return R.ok(shops);
 	}
 
 }
