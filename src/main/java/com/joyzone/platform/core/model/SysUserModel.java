@@ -1,123 +1,207 @@
 package com.joyzone.platform.core.model;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = SysUserModel.TABLE_NAME)
-public class SysUserModel extends BaseModel {
-	
-	protected static final String TABLE_NAME = "sys_user";
-	
-	@Id
+@Table(name = "sys_user")
+public class SysUserModel {
+    @Id
     private Long id;
-	
-	@Column(name="shop_id")
-	private Long shopId;
 
-	@Column(name = "name")
-	private String name;
-	
-	@Column(name = "sex")
-	private Integer sex;
-	
-	@Column(name = "head_img")
-	private String headImg;
-	
-	@Column(name = "phone")
-	private String phone;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "create_time")
-	private Date createTime;
-	
-	@Column(name = "update_time")
-	private Date updateTime;
-	
-	@Column(name = "status")
-	private Integer status;
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * 0:男，1：女
+     */
+    private Integer sex;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public Long getShopId() {
-		return shopId;
-	}
+    /**
+     * 头像
+     */
+    @Column(name = "head_img")
+    private String headImg;
 
-	public void setShopId(Long shopId) {
-		this.shopId = shopId;
-	}
+    private String phone;
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * 密码
+     */
+    private String password;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Column(name = "create_time")
+    private Date createTime;
 
-	public Integer getSex() {
-		return sex;
-	}
+    @Column(name = "update_time")
+    private Date updateTime;
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
+    /**
+     * 用户状态；0：激活，1：禁用
+     */
+    private Integer status;
 
-	public String getHeadImg() {
-		return headImg;
-	}
+    /**
+     * 门店编号
+     */
+    @Column(name = "shop_id")
+    private Long shopId;
 
-	public void setHeadImg(String headImg) {
-		this.headImg = headImg;
-	}
+    /**
+     * @return id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    /**
+     * @param id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    /**
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * 获取0:男，1：女
+     *
+     * @return sex - 0:男，1：女
+     */
+    public Integer getSex() {
+        return sex;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    /**
+     * 设置0:男，1：女
+     *
+     * @param sex 0:男，1：女
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    /**
+     * 获取头像
+     *
+     * @return head_img - 头像
+     */
+    public String getHeadImg() {
+        return headImg;
+    }
 
-	public Date getUpdateTime() {
-		return updateTime;
-	}
+    /**
+     * 设置头像
+     *
+     * @param headImg 头像
+     */
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	
-	public Integer getStatus() {
-		return status;
-	}
+    /**
+     * @return phone
+     */
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    /**
+     * @param phone
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
+    /**
+     * 获取密码
+     *
+     * @return password - 密码
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 设置密码
+     *
+     * @param password 密码
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return create_time
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * @param createTime
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return update_time
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * 获取用户状态；0：激活，1：禁用
+     *
+     * @return status - 用户状态；0：激活，1：禁用
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置用户状态；0：激活，1：禁用
+     *
+     * @param status 用户状态；0：激活，1：禁用
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取门店编号
+     *
+     * @return shop_id - 门店编号
+     */
+    public Long getShopId() {
+        return shopId;
+    }
+
+    /**
+     * 设置门店编号
+     *
+     * @param shopId 门店编号
+     */
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
 }

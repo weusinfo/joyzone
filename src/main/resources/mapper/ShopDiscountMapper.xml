@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.ShopDiscountMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.ShopDiscountModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT" />
+    <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="play_time" property="playTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,shop_id,shop_name,shop_type_id,shop_type_name,discount,status,play_time,create_time,update_time,number
+  </sql>
+
+  <select id="getShopDiscountList" resultMap="BaseResultMap"  parameterType="com.joyzone.platform.core.model.ShopDiscountModel">
+    select
+      <include refid="BaseResultSQL"></include>
+    from shop_discount
+    where 1=1
+    <if test="name != '' and name != null">
+      and name like CONCAT('%','${name}','%')
+    </if>
+    <if test="shopId != null">
+      and shop_id = #{shopId}
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+  </select>
+</mapper>

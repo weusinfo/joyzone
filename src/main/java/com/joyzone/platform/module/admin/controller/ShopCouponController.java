@@ -1,6 +1,9 @@
 package com.joyzone.platform.module.admin.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.github.pagehelper.Page;
+import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
@@ -8,9 +11,12 @@ import com.joyzone.platform.core.service.ShopCouponService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.*;
 
 
@@ -40,13 +46,13 @@ public class ShopCouponController {
             return R.error(R.STATUS_FAIL,"参加人数不能低于一个人.");
         if(shopCouponModel.getPrice() == null)
             return R.error(R.STATUS_FAIL,"体验券价格不能为空.");
-//        if(shopCouponModel.getStartTime() == null)
-//            return R.error(R.STATUS_FAIL,"体验券开始时间不能为空.");
-//        if(shopCouponModel.getEndTime() == null)
-//            return R.error(R.STATUS_FAIL,"体验券结束时间不能为空.");
+        if(shopCouponModel.getStartTime() == null)
+            return R.error(R.STATUS_FAIL,"体验券开始时间不能为空.");
+        if(shopCouponModel.getEndTime() == null)
+            return R.error(R.STATUS_FAIL,"体验券结束时间不能为空.");
 
         Date date = new Date();
-        shopCouponModel.setStatus(ShopCouponModel.CONPON_SUCCESS);
+        shopCouponModel.setStatus(BaseModel.STATUS_SUCCESS);
         shopCouponModel.setCreateTime(date);
         shopCouponModel.setStartTime(date);
         shopCouponModel.setEndTime(date);
@@ -100,4 +106,16 @@ public class ShopCouponController {
         return shopCouponService.updateShopCouponStatus(id,status);
     }
 
+    @GetMapping("/exportShopCouponXls")
+    @ApiOperation("体验券清单导出")
+    public void exportShopCouponXls(ShopCouponModel shopCouponModel,HttpServletResponse response) throws Exception{
+        response.setHeader("content-Type", "application/vnd.ms-excel");
+        response.setHeader("Content-Disposition",
+                "attachment;filename=" + URLEncoder.encode(Constants.SHOP_COUPON, "UTF-8") + ".xls");
+        response.setCharacterEncoding("UTF-8");
+        List<ShopCouponModel> list = shopCouponService.getShopCouponList(shopCouponModel);
+        ExportParams params = new ExportParams(Constants.SHOP_COUPON, Constants.SHOP_COUPON);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, ShopCouponModel.class, list);
+        workbook.write(response.getOutputStream());
+    }
 }

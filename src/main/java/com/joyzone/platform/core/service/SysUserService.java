@@ -2,10 +2,8 @@ package com.joyzone.platform.core.service;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.druid.util.StringUtils;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.PublicUtil;
@@ -24,6 +22,7 @@ public class SysUserService extends BaseService<SysUserModel> {
 		if(StringUtils.isEmpty(sysUser.getPassword())) throw new JZException("密码不能为空");
 		if(StringUtils.isEmpty(sysUser.getPhone())) throw new JZException("手机号码不能为空");
 		if(PublicUtil.isEmpty(sysUser.getSex())) throw new JZException("性别不能为空");
+		if(PublicUtil.isEmpty(sysUser.getShopId())) throw new JZException("用户应该与店家关联");
 		sysUser.setCreateTime(new Date());
 		sysUser.setStatus(0);
 		sysUserMapper.insert(sysUser);
@@ -35,7 +34,9 @@ public class SysUserService extends BaseService<SysUserModel> {
 	}
 	
 	public List<SysUserModel> listUsers(SysUserModel sysUser){
-		return select(sysUser);
+		List<SysUserModel> sysUsers = select(sysUser);
+		if(PublicUtil.isEmpty(sysUsers)) throw new JZException("没有找到用户");
+		return sysUsers;
 	}
 	
 	public void deleteUsers(Long[] ids) {
