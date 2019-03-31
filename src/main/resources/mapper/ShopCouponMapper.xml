@@ -7,6 +7,9 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT" />
+    <result column="shop_type_name" property="shopTypeIdName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="back_img" property="backImg" jdbcType="VARCHAR" />
@@ -20,7 +23,8 @@
   </resultMap>
 
   <sql id="BaseResultSQL">
-    id, shop_id,name,price,back_img,status,number,start_time,end_time,create_time,update_time,content
+    id, shop_id,name,price,back_img,status,number,start_time,end_time,create_time,
+    update_time,content,number,shop_name,shop_type_id,shop_type_name
   </sql>
 
   <select id="getShopCouponList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.ShopCouponModel">

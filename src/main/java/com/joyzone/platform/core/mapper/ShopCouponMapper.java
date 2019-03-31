@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ShopCouponMapper extends Mapper<ShopCouponModel> {
 
+    //后台体验券管理
     List<ShopCouponModel> getShopCouponList(ShopCouponModel shopCouponModel);
 }
