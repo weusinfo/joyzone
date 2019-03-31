@@ -38,6 +38,7 @@
 		<tk.mybatis>1.2.4</tk.mybatis>
 		<pagehelper>1.2.3</pagehelper>
 		<feign.version>10.2.0</feign.version>
+		<easypoi.version>3.0.1</easypoi.version>
 		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
 	</properties>
 
@@ -216,6 +217,16 @@
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-slf4j</artifactId>
 			<version>${feign.version}</version>
+		</dependency>
+		<dependency>
+		　　<groupId>cn.afterturn</groupId>
+		　　<artifactId>easypoi-annotation</artifactId>
+		　　<version>${easypoi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<version>${easypoi.version}</version>
 		</dependency>
 	</dependencies>
 

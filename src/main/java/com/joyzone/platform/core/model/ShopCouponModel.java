@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,9 +11,8 @@ import javax.persistence.*;
 public class ShopCouponModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_coupon";
-    public static final int CONPON_SUCCESS = 1; //正常
-    public static final int CONPON_FAILL = 0;   //失效
 
+    @Excel(name="体验券标识")
     @Id
     private Long id;
 
@@ -22,12 +22,41 @@ public class ShopCouponModel extends BaseModel{
     /**
      * 活动名称
      */
+    @Excel(name="体验券名称")
     private String name;
+
+
+    /**
+     * 体验券店家名称
+     */
+    @Column(name = "shop_name")
+    @Excel(name="限制人数")
+    private String shopName;
+
+    /**
+     * 体验券店家种类ID
+     */
+    @Column(name = "shop_type_id")
+    private Long shopTypeId;
+
+    /**
+     * 体验券店家种类名称
+     */
+    @Excel(name="体验店家名称")
+    @Column(name = "shop_type_name")
+    private String shopTypeName;
 
     /**
      * 价格
      */
+    @Excel(name="体验券价格")
     private Long price;
+
+    /**
+     * 参加人数限制
+     */
+    @Excel(name="限制人数")
+    private Integer number;
 
     /**
      * 活动背景图URL
@@ -38,6 +67,7 @@ public class ShopCouponModel extends BaseModel{
     /**
      * 状态：0 失效 1 正常
      */
+    @Excel(name="状态",replace= {"失效_0","正常_1"})
     private Integer status;
 
     /**
@@ -46,6 +76,7 @@ public class ShopCouponModel extends BaseModel{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "start_time")
+    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     @Column(name = "end_time")
@@ -59,6 +90,7 @@ public class ShopCouponModel extends BaseModel{
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -73,11 +105,6 @@ public class ShopCouponModel extends BaseModel{
      * 活动内容
      */
     private String content;
-
-    /**
-     * 参加人数限制
-     */
-    private Integer number;
 
 
     /**
@@ -272,5 +299,29 @@ public class ShopCouponModel extends BaseModel{
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Long getShopTypeId() {
+        return shopTypeId;
+    }
+
+    public void setShopTypeId(Long shopTypeId) {
+        this.shopTypeId = shopTypeId;
+    }
+
+    public String getShopTypeName() {
+        return shopTypeName;
+    }
+
+    public void setShopTypeName(String shopTypeName) {
+        this.shopTypeName = shopTypeName;
     }
 }

@@ -13,6 +13,8 @@ public class BaseModel implements Serializable {
 
     public static final int PAGE_NUM = 1;   //页数
     public static final int PAGE_SIZE = 10;//条数
+    public static final int STATUS_SUCCESS = 1; //正常
+    public static final int STATUS_FAILL = 0;   //失效
 
     @Transient
     private Integer pageNum;
