@@ -21,6 +21,15 @@ spring:
       password: Joyzone
   swagger:
      enable: true
+  redis:
+     host: 172.18.12.65
+     port: 6379
+     timeout: 20000
+     pool:
+       max-active: 8
+       min-adle: 0
+       max-idle: 8
+       max-wait: -1
 mybatis:
   type-aliases-package:  com.joyzone.platform.core.model
   configuration:

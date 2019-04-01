@@ -15,8 +15,22 @@
   <select id="getMenus">
   	select menu.name,menu.url, menu.parent_id, menu.description,sysum.user_id 
   	from menu inner join sysuser_menu sysum on menu.id = sysum.menu_id
-  	inner join sys_user u on sysum.user_id = u.id and u.id=#{userId}
+  	inner join sys_user u on sysum.user_id = u.id where u.status = 0 and u.id=#{userId}
   </select>
   
+  <delete id="deleteMenus">
+  delete from sysuser_menu where user_id = #{userId}
+  </delete>
   
+  <insert id="addMenus">
+  insert into sysuser_menus(menu_id,user_id)
+  values
+  <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+  		#{id},#{userId}
+  </foreach>
+  </insert>
+  
+  <select id="getAllMenus">
+  select * from menu where url is not null
+  </select>
 </mapper>

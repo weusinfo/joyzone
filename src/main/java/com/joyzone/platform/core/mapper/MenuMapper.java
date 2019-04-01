@@ -8,4 +8,10 @@ import tk.mybatis.mapper.common.Mapper;
 public interface MenuMapper extends Mapper<MenuModel> {
 	
 	List<MenuModel> getMenus(@Param("userId") Long userId);
+	
+	void deleteMenus(Long userId);
+	
+	void addMenus(Long userId, Long[] ids);
+	
+	List<MenuModel> getAllMenus();
 }
