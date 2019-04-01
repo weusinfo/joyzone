@@ -3,7 +3,6 @@ package com.joyzone.platform.core.model;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 import javax.persistence.*;
 
