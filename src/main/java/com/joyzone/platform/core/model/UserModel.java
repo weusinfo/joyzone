@@ -26,6 +26,9 @@ public class UserModel extends BaseModel{
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name="login_name")
+    private String loginName;
+
     /**
      * 密码
      */
@@ -313,5 +316,13 @@ public class UserModel extends BaseModel{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 }

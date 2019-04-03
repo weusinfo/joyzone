@@ -1,5 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
@@ -22,10 +25,16 @@ public class OrderModel extends BaseModel{
     private Integer orderType;
 
     /**
-     * 店家服务类型；：真人cs  1：健身馆。。。
+     * 订单编号
      */
-    @Column(name = "shop_kind")
-    private Integer shopKind;
+    @Column(name = "order_no")
+    private String orderNo;
+
+    /**
+     * 店家服务类型种类
+     */
+    @Column(name = "shop_type_id")
+    private Long shopTypeId;
 
     /**
      * 店家ID
@@ -45,13 +54,32 @@ public class OrderModel extends BaseModel{
     private Integer personNum;
 
     @Column(name = "create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+
+
+
+    /**
+     * 玩耍时间
+     */
+    @Column(name = "pay_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date payTime;
+
+    /**
+     * 0 失效  1有效
+     */
+    private Integer status;
 
     /**
      * @return id
@@ -99,22 +127,12 @@ public class OrderModel extends BaseModel{
         this.orderType = orderType;
     }
 
-    /**
-     * 获取店家服务类型；：真人cs  1：健身馆。。。
-     *
-     * @return shop_kind - 店家服务类型；：真人cs  1：健身馆。。。
-     */
-    public Integer getShopKind() {
-        return shopKind;
+    public Long getShopTypeId() {
+        return shopTypeId;
     }
 
-    /**
-     * 设置店家服务类型；：真人cs  1：健身馆。。。
-     *
-     * @param shopKind 店家服务类型；：真人cs  1：健身馆。。。
-     */
-    public void setShopKind(Integer shopKind) {
-        this.shopKind = shopKind;
+    public void setShopTypeId(Long shopTypeId) {
+        this.shopTypeId = shopTypeId;
     }
 
     /**
@@ -201,5 +219,29 @@ public class OrderModel extends BaseModel{
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
