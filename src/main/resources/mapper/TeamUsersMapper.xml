@@ -12,4 +12,9 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <select id="getTeamUsers" resultType="com.joyzone.platform.core.model.UserModel">
+    SELECT u.* FROM user u INNER JOIN team_users tu on tu.user_id = u.id
+    WHERE tu.team_id = #{teamId} and tu.status = 0 GROUP BY u.id
+  </select>
 </mapper>

@@ -8,11 +8,50 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="team_id" property="teamId" jdbcType="BIGINT" />
     <result column="order_type" property="orderType" jdbcType="INTEGER" />
-    <result column="shop_kind" property="shopKind" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="shop_type_id" property="shopTypeName" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="person_num" property="personNum" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,team_id,order_type,order_no,shop_kind,shop_id,person_num,create_time,update_time,pay_time,status
+  </sql>
+
+  <select id="getOrderList" resultType="com.joyzone.platform.core.dto.OrderDto" parameterType="com.joyzone.platform.core.dto.OrderDto">
+    select
+      o.id,o.order_no as orderNo,o.order_type as orderType,o.person_num as personNum,o.price,
+      o.pay_time as payTime,o.team_id as teamId,o.create_time as createTime,o.status,
+      s.id as shopId,s.`name` as shopName,st.id as shopTypeId,st.`name` as shopTypeName
+    from orders o LEFT JOIN shop s on s.id = o.shop_id
+    LEFT JOIN shop_type st on st.id = o.shop_type_id
+    where 1=1
+    <if test="orderType != null">
+      and o.order_type = #{orderType}
+    </if>
+    <if test="shopId != null">
+      and o.shop_id = #{shopId}
+    </if>
+    <if test="status != null">
+      and o.status = #{status}
+    </if>
+    <if test="shopTypeId != null">
+      and o.shopTypeId = #{shopTypeId}
+    </if>
+  </select>
+
+  <select id="findById" resultType="com.joyzone.platform.core.dto.OrderDto">
+    select
+    o.id,o.order_no as orderNo,o.order_type as orderType,o.person_num as personNum,o.price,
+    o.pay_time as payTime,o.team_id as teamId,o.create_time as createTime,o.status,
+    s.id as shopId,s.`name` as shopName,st.id as shopTypeId,st.`name` as shopTypeName
+    from orders o LEFT JOIN shop s on s.id = o.shop_id
+    LEFT JOIN shop_type st on st.id = o.shop_type_id
+    where o.id = #{id}
+  </select>
 </mapper>
