@@ -10,6 +10,7 @@ import java.util.List;
 public interface TeamUsersMapper extends Mapper<TeamUsersModel> {
 
     //根据组队ID获取加入的人员信息
-    List<UserModel> getTeamUsers(@Param("teamId") Long teamId);
+    List<UserModel> getTeamUsers(@Param("teamId") Long teamId,@Param("pageNum")
+                                    Integer pageNum,@Param("pageSize") Integer pageSize);
 
 }

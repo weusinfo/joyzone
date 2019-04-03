@@ -41,9 +41,9 @@ public class OrderController {
     /**
      * Mr.Gx
      */
-    @GetMapping("getTeamUsers/{teamId}")
+    @GetMapping("getTeamUsers/{teamId}/{pageNum}/{pageSize}")
     @ApiOperation("后台订单列表")
-    public R getTeamUsers(@PathVariable Long teamId){
-        return orderService.getTeamUsers(teamId);
+    public R getTeamUsers(@PathVariable Long teamId,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
+        return orderService.getTeamUsers(teamId,pageNum,pageSize);
     }
 }

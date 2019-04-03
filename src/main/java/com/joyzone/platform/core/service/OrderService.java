@@ -58,11 +58,15 @@ public class OrderService extends BaseService<OrderModel> {
      * 后台获取订单参加的用户清单
      * Mr.Gx
      */
-    public R getTeamUsers(Long teamId){
-        if (teamId == null) {
+    public R getTeamUsers(Long teamId,Integer pageNum,Integer pageSize){
+        if (teamId == null)
             return R.error(R.STATUS_FAIL, "组队标识不能为空.");
-        }
-        List<UserModel> list = teamUsersMapper.getTeamUsers(teamId);
+        if (pageNum == null)
+            pageNum = BaseModel.PAGE_NUM;
+        if (pageSize == null)
+            pageNum = BaseModel.PAGE_SIZE;
+
+        List<UserModel> list = teamUsersMapper.getTeamUsers(teamId,pageNum,pageSize);
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
