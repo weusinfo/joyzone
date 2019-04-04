@@ -7,6 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="BIT" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -22,7 +23,7 @@
   </resultMap>
 
   <sql id="BaseResultSQL">
-    id,user_name,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time
+    id,user_name,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time,login_name
   </sql>
 
   <select id="getUserList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.UserModel">
