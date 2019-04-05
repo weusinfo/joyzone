@@ -1,5 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -15,6 +18,9 @@ public class InvitingModel extends BaseModel{
 
     @Column(name = "shop_id")
     private Long shopId;
+
+    @Column(name = "shop_name")
+    private String shopName;
 
     /**
      * 地址
@@ -35,6 +41,8 @@ public class InvitingModel extends BaseModel{
      * 开始时间
      */
     @Column(name = "start_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
 
     /**
@@ -51,12 +59,16 @@ public class InvitingModel extends BaseModel{
      * 邀约创建时间
      */
     @Column(name = "create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 邀约修改时间
      */
     @Column(name = "update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     /**
@@ -64,6 +76,17 @@ public class InvitingModel extends BaseModel{
      */
     @Column(name = "pay_way")
     private Integer payWay;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Transient
+    private Date endTime;
+
+    /**
+     * 受邀人数
+     */
+    @Transient
+    private Integer invitingNum;
 
     /**
      * @return id
@@ -267,5 +290,29 @@ public class InvitingModel extends BaseModel{
      */
     public void setPayWay(Integer payWay) {
         this.payWay = payWay;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Integer getInvitingNum() {
+        return invitingNum;
+    }
+
+    public void setInvitingNum(Integer invitingNum) {
+        this.invitingNum = invitingNum;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }

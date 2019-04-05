@@ -3,39 +3,29 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = FavoriteModel.TABLE_NAME)
-public class FavoriteModel extends BaseModel{
-
-    protected static final String TABLE_NAME = "favorite";
+@Table(name = InvitingUserModel.TABLE_NAME)
+public class InvitingUserModel extends BaseModel{
+    protected static final String TABLE_NAME = "inviting_user";
 
     @Id
     private Long id;
 
+    @Column(name = "inviting_id")
+    private Long invitingId;
+
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "shop_id")
-    private Long shopId;
-
+    /**
+     * 0 退出 1 接受
+     */
     private Integer status;
 
-    /**
-     * 收藏时间
-     */
     @Column(name = "create_time")
     private Date createTime;
 
-    /**
-     * 修改时间
-     */
     @Column(name = "update_time")
     private Date updateTime;
-
-    /**
-     * 目前用户ID
-     */
-    @Column(name = "target_id")
-    private Long targetId;
 
     /**
      * @return id
@@ -49,6 +39,20 @@ public class FavoriteModel extends BaseModel{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return inviting_id
+     */
+    public Long getInvitingId() {
+        return invitingId;
+    }
+
+    /**
+     * @param invitingId
+     */
+    public void setInvitingId(Long invitingId) {
+        this.invitingId = invitingId;
     }
 
     /**
@@ -66,64 +70,46 @@ public class FavoriteModel extends BaseModel{
     }
 
     /**
-     * @return shop_id
-     */
-    public Long getShopId() {
-        return shopId;
-    }
-
-    /**
-     * @param shopId
-     */
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
-    }
-
-    /**
-     * @return status
+     * 获取0 退出 1 接受
+     *
+     * @return status - 0 退出 1 接受
      */
     public Integer getStatus() {
         return status;
     }
 
     /**
-     * @param status
+     * 设置0 退出 1 接受
+     *
+     * @param status 0 退出 1 接受
      */
     public void setStatus(Integer status) {
         this.status = status;
     }
 
     /**
-     * 获取收藏时间
-     *
-     * @return create_time - 收藏时间
+     * @return create_time
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * 设置收藏时间
-     *
-     * @param createTime 收藏时间
+     * @param createTime
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * 获取修改时间
-     *
-     * @return update_time - 修改时间
+     * @return update_time
      */
     public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
-     * 设置修改时间
-     *
-     * @param updateTime 修改时间
+     * @param updateTime
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
