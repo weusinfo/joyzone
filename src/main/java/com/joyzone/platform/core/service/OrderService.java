@@ -34,7 +34,7 @@ public class OrderService extends BaseService<OrderModel> {
         if(orderDto.getPageSize() == null)
             orderDto.setPageNum(BaseModel.PAGE_SIZE);
 
-        List<OrderDto> list = orderMapper.getOrderList(orderDto);
+        List<OrderDto> list = selectOrderList(orderDto);
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
@@ -73,5 +73,9 @@ public class OrderService extends BaseService<OrderModel> {
             return  R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,new ArrayList<>());
+    }
+
+    public  List<OrderDto> selectOrderList(OrderDto orderDto){
+        return orderMapper.getOrderList(orderDto);
     }
 }

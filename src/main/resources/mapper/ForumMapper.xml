@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.joyzone.platform.core.mapper.FavoriteMapper" >
-  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.FavoriteModel" >
+<mapper namespace="com.joyzone.platform.core.mapper.ForumMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.ForumModel" >
     <!--
       WARNING - @mbggenerated
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="target_id" property="targetId" jdbcType="BIGINT" />
-    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="point_num" property="pointNum" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
 </mapper>
