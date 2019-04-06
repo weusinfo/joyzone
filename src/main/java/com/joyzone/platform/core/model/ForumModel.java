@@ -1,10 +1,15 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "forum")
-public class ForumModel {
+@Table(name = ForumModel.TABLE_NAME)
+public class ForumModel extends BaseModel{
+
+    protected static final String TABLE_NAME = "forum";
     @Id
     private Long id;
 
@@ -28,12 +33,29 @@ public class ForumModel {
     private Integer status;
 
     @Column(name = "create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     @Column(name = "update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     private String content;
+
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date startTime;
+
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date endTime;
+
+    //跟帖人数
+    private Integer forumNum;
 
     /**
      * @return id
@@ -157,5 +179,29 @@ public class ForumModel {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getForumNum() {
+        return forumNum;
+    }
+
+    public void setForumNum(Integer forumNum) {
+        this.forumNum = forumNum;
     }
 }

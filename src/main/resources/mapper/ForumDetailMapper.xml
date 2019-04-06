@@ -15,4 +15,14 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,forum_id,pid,user_id,point_num,status,create_time,update_time,content
+  </sql>
+
+  <select id="findByForumId" resultMap="BaseResultMap">
+     select
+      <include refid="BaseResultSQL"></include>
+     from forum_detail where status = 1 and forum_id = #{forumId}
+  </select>
 </mapper>

@@ -3,8 +3,10 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "forum_detail")
+@Table(name = ForumDetailModel.TABLE_NAME)
 public class ForumDetailModel {
+    protected static final String TABLE_NAME = "forum_detail";
+
     @Id
     private Long id;
 

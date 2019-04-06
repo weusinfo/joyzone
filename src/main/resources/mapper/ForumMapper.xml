@@ -14,4 +14,23 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,user_id,type,point_num,status,create_time,update_time,content
+  </sql>
+
+  <select id="getForumList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.ForumModel">
+      select
+        <include refid="BaseResultSQL"></include>
+      from forum where 1=1
+      <if test="type != null">
+          and type = #{type}
+      </if>
+      <if test="startTime != null">
+          and create_time >= #{startTime}
+      </if>
+      <if test="endTime != null">
+          and create_time <![CDATA[ <= ]]> #{endTime}
+      </if>
+  </select>
 </mapper>
