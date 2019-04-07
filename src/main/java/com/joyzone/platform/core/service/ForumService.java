@@ -63,8 +63,7 @@ public class ForumService extends BaseService<ForumModel> {
         if(StringUtils.isBlank(content))
             return R.error(R.STATUS_FAIL,"发帖内容不能为空.");
         //TODO 进行铭感字处理为:**
-        content = SensitiveWordUtils.getInstance().filterInfo(content);
-        forumModel.setContent(content);
+        //forumModel.setContent(SensitiveWordUtils.getInstance().filterInfo(content));
         Date date = new Date();
         if(forumModel.getId() == null){
            forumModel.setCreateTime(date);
@@ -92,8 +91,7 @@ public class ForumService extends BaseService<ForumModel> {
         if(StringUtils.isBlank(content))
             return R.error(R.STATUS_FAIL,"发帖内容不能为空.");
         //TODO 进行铭感字处理为:**
-        content = SensitiveWordUtils.getInstance().filterInfo(content);
-        forumDetailModel.setContent(content);
+        //forumDetailModel.setContent(SensitiveWordUtils.getInstance().filterInfo(content));
         Date date = new Date();
         if(forumDetailModel.getId() == null){
             forumDetailModel.setCreateTime(date);

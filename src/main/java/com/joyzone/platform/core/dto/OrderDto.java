@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.dto;
 
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joyzone.platform.core.model.BaseModel;
@@ -12,21 +13,30 @@ import java.util.Date;
 public class OrderDto extends BaseModel {
 
     private Long id;
+    @Excel(name="订单编号")
     private String orderNo;
+    //0：组队店家订单；1：体验券店家订单
+    @Excel(name="订单类型",replace = {"组队店家订单_0","体验券店家订单_1"})
     private Integer orderType;
+    @Excel(name="店家名称")
+    private String shopName;
+    @Excel(name="店家类型")
+    private String shopTypeName;
+    @Excel(name="参加人数")
     private Integer personNum;
+    @Excel(name="订单价格")
     private BigDecimal price;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date payTime;
     private Long teamId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     private Long shopTypeId;
-    private String shopTypeName;
     private Long shopId;
-    private String shopName;
     private Integer status;
 
     public Long getId() {

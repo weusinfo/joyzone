@@ -1,8 +1,10 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -12,7 +14,14 @@ public class ShopDiscountModel extends BaseModel{
     protected static final String TABLE_NAME = "shop_discount";
 
     @Id
+    @Excel(name="折扣券ID")
     private Long id;
+
+    /**
+     * 折扣券名称
+     */
+    @Excel(name="折扣券名称")
+    private String name;
 
     /**
      * 店家ID
@@ -24,6 +33,7 @@ public class ShopDiscountModel extends BaseModel{
      * 店家名称
      */
     @Column(name = "shop_name")
+    @Excel(name="组队店家名称")
     private String shopName;
 
     /**
@@ -36,21 +46,28 @@ public class ShopDiscountModel extends BaseModel{
      * 店家种类名称
      */
     @Column(name = "shop_type_name")
+    @Excel(name="组队店家种类")
     private String shopTypeName;
+
+    @Excel(name="折扣后的价格")
+    private BigDecimal price;
+
+    /**
+     * 折扣  9折 = 0.9
+     */
+    @Excel(name="折扣数")
+    private Integer discount;
 
     /**
      * 人数限制
      */
+    @Excel(name="允许人数")
     private Integer number;
-
-    /**
-     * 折扣  9折 = 0.9 
-     */
-    private Integer discount;
 
     /**
      * 状态：0 失效 1 正常
      */
+    @Excel(name="状态",replace = {"失效_0","有效_1"})
     private Integer status;
 
     /**
@@ -59,11 +76,13 @@ public class ShopDiscountModel extends BaseModel{
     @Column(name = "play_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date playTime;
 
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @Column(name = "update_time")
@@ -271,5 +290,21 @@ public class ShopDiscountModel extends BaseModel{
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

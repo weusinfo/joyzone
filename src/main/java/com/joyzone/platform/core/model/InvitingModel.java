@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ public class InvitingModel extends BaseModel{
     protected static final String TABLE_NAME = "inviting";
 
     @Id
+    @Excel(name="邀请函标识")
     private Long id;
 
     private Long owner;
@@ -35,15 +37,15 @@ public class InvitingModel extends BaseModel{
     /**
      * 邀约类型
      */
+    @Excel(name="邀请函标识",replace = {"默认_0"})
     private Integer type;
 
     /**
-     * 开始时间
+     * 受邀人数
      */
-    @Column(name = "start_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date startTime;
+    @Excel(name="受邀人数")
+    @Transient
+    private Integer invitingNum;
 
     /**
      * 邀约状态;0:有效；1：失效
@@ -51,9 +53,26 @@ public class InvitingModel extends BaseModel{
     private Integer status;
 
     /**
+     * 支付方式：0：AA，1：女生免费；2：赢家免费
+     */
+    @Column(name = "pay_way")
+    @Excel(name="支付类型",replace = {"AA_0","女生免费_1","赢家免费_2"})
+    private Integer payWay;
+
+    /**
      * 邀约成功状态：0：失败；1：成功
      */
+    @Excel(name="结果",replace = {"失败_0","成功_1"})
     private Integer result;
+
+    /**
+     * 开始时间
+     */
+    @Column(name = "start_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
 
     /**
      * 邀约创建时间
@@ -61,6 +80,7 @@ public class InvitingModel extends BaseModel{
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -71,22 +91,10 @@ public class InvitingModel extends BaseModel{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
-    /**
-     * 支付方式：0：AA，1：女生免费；2：赢家免费
-     */
-    @Column(name = "pay_way")
-    private Integer payWay;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Transient
     private Date endTime;
-
-    /**
-     * 受邀人数
-     */
-    @Transient
-    private Integer invitingNum;
 
     /**
      * @return id
