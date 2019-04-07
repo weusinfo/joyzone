@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +12,7 @@ public class ForumModel extends BaseModel{
 
     protected static final String TABLE_NAME = "forum";
     @Id
+    @Excel(name = "帖子标识")
     private Long id;
 
     @Column(name = "user_id")
@@ -19,11 +21,13 @@ public class ForumModel extends BaseModel{
     /**
      * 0 建议 1吐槽
      */
+    @Excel(name="类型",replace= {"建议_0","吐槽_1"})
     private Integer type;
 
     /**
      * 点赞数量
      */
+    @Excel(name="跟帖人数")
     @Column(name = "point_num")
     private Integer pointNum;
 
@@ -35,6 +39,7 @@ public class ForumModel extends BaseModel{
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @Column(name = "update_time")
