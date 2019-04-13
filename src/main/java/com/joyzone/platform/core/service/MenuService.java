@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -62,7 +60,8 @@ public class MenuService extends BaseService<MenuModel> {
 					map.get(desc).add(menu);
 				}else {
 					List<MenuModel> list = new ArrayList<MenuModel>();
-					map.get(desc).add(menu);
+					list.add(menu);
+					map.put(desc, list);
 				}
 			});
 			map.keySet().forEach(key ->{
