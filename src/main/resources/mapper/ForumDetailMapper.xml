@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.ForumDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.ForumDetailModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="forum_id" property="forumId" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="point_num" property="pointNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,forum_id,pid,user_id,point_num,status,create_time,update_time,content
+  </sql>
+
+  <select id="findByForumId" resultMap="BaseResultMap">
+     select
+      <include refid="BaseResultSQL"></include>
+     from forum_detail where status = 1 and forum_id = #{forumId}
+  </select>
+</mapper>

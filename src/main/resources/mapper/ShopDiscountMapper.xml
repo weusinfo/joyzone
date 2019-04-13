@@ -6,6 +6,8 @@
       WARNING - @mbggenerated
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT" />
@@ -19,7 +21,8 @@
   </resultMap>
 
   <sql id="BaseResultSQL">
-    id,shop_id,shop_name,shop_type_id,shop_type_name,discount,status,play_time,create_time,update_time,number
+    id,shop_id,shop_name,shop_type_id,shop_type_name,name,price,
+    discount,status,play_time,create_time,update_time,number
   </sql>
 
   <select id="getShopDiscountList" resultMap="BaseResultMap"  parameterType="com.joyzone.platform.core.model.ShopDiscountModel">
@@ -35,6 +38,12 @@
     </if>
     <if test="status != null">
       and status = #{status}
+    </if>
+    <if test="startTime != null">
+      and create_time >= #{startTime}
+    </if>
+    <if test="endTime != null">
+      and create_time <![CDATA[ <= ]]> #{endTime}
     </if>
   </select>
 </mapper>

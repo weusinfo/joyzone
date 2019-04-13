@@ -8,6 +8,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="owner" property="owner" jdbcType="BIGINT" />
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
@@ -18,4 +19,32 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="pay_way" property="payWay" jdbcType="INTEGER" />
   </resultMap>
+
+  <select id="getInvitingList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingModel">
+      select * from inviting where 1=1
+      <if test="type != null">
+          and type = #{type}
+      </if>
+      <if test="result != null">
+          and result = #{result}
+      </if>
+      <if test="startTime != null">
+          and start_time >= #{startTime}
+      </if>
+      <if test="endTime != null">
+          and start_time <![CDATA[ <= ]]> #{endTime}
+      </if>
+  </select>
+
+  <select id="getUserToInvitings" resultType="com.joyzone.platform.core.dto.InvitingDto" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+      select u.id as userId,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
+             (CASE i.pay_way
+              WHEN 0 THEN 'AA制'
+              WHEN 1 THEN '女生免费'
+              WHEN 2 THEN '赢家免费'
+              ELSE null END ) as payWayName
+      from inviting i inner join user u on u.id = i.`owner`
+      where u.status = 0 and i.status = 0 ORDER BY i.id desc
+  </select>
+
 </mapper>
