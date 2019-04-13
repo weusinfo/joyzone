@@ -11,6 +11,8 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.SysUserMapper;
 import com.joyzone.platform.core.model.SysUserModel;
 
+import cn.hutool.crypto.digest.BCrypt;
+
 @Service
 public class SysUserService extends BaseService<SysUserModel> {
 
@@ -23,6 +25,7 @@ public class SysUserService extends BaseService<SysUserModel> {
 		if(StringUtils.isEmpty(sysUser.getPhone())) throw new JZException("手机号码不能为空");
 		if(PublicUtil.isEmpty(sysUser.getSex())) throw new JZException("性别不能为空");
 		if(PublicUtil.isEmpty(sysUser.getShopId())) throw new JZException("用户应该与店家关联");
+		sysUser.setPassword(BCrypt.hashpw(sysUser.getPassword()));
 		sysUser.setCreateTime(new Date());
 		sysUser.setStatus(0);
 		sysUserMapper.insert(sysUser);
@@ -41,5 +44,13 @@ public class SysUserService extends BaseService<SysUserModel> {
 	
 	public void deleteUsers(Long[] ids) {
 		sysUserMapper.batchDelete(ids);
+	}
+	
+	public boolean checkUserByName(String userName) {
+		return sysUserMapper.checkUserByName(userName).equals(1) ? true : false;
+	}
+	
+	public SysUserModel selectUserByPwd(String userName, String password) {
+		return sysUserMapper.selectUserByPwd(userName, password);
 	}
 }

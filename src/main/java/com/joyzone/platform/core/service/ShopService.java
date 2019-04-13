@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.ShopMapper;
 import com.joyzone.platform.core.model.ShopModel;
+
+import cn.hutool.core.util.NumberUtil;
 
 @Service
 public class ShopService extends BaseService<ShopModel> {
@@ -28,6 +31,13 @@ public class ShopService extends BaseService<ShopModel> {
 		if(StringUtils.isEmpty(shop.getCoverImg())) throw new JZException("请上传店家照片");
 		if(null == shop.getShopKind()) throw new JZException("请选择店家的活动类型"); 
 		if(StringUtil.isEmpty(shop.getDescription())) throw new JZException("请填写店家描述");
+		if(shop.getType() == null) throw new JZException("请选择店家类型");
+		if(shop.getType() == 1 && (shop.getPriceTaste() == null || shop.getPriceTaste().compareTo(new BigDecimal("0")) == 0)) {
+			throw new JZException("请输入体验券价格");
+		}
+		if(shop.getType() == 0 && (shop.getPrice() == null || shop.getPrice().compareTo(new BigDecimal("0")) == 0)) {
+			throw new JZException("请输入有效价格");
+		}
 	}
 	
 	public void addShop(ShopModel shop) {
