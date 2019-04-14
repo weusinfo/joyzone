@@ -2,6 +2,8 @@ package com.joyzone.platform.core.service;
 
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alibaba.druid.util.StringUtils;
@@ -52,5 +54,13 @@ public class SysUserService extends BaseService<SysUserModel> {
 	
 	public SysUserModel selectUserByPwd(String userName, String password) {
 		return sysUserMapper.selectUserByPwd(userName, password);
+	}
+	
+	public int logLogin(String userName) {
+		return sysUserMapper.logErrLogin(userName);
+	}
+	
+	public Integer checkErrLoginCount(@Param("userName") String userName) {
+		return sysUserMapper.checkErrLoginCount(userName);
 	}
 }

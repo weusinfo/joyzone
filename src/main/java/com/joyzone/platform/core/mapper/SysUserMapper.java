@@ -14,4 +14,8 @@ public interface SysUserMapper extends BaseMapper<SysUserModel> {
 	Integer checkUserByName(@Param("userName") String userName);
 	
 	SysUserModel selectUserByPwd(@Param("userName") String userName, @Param("password") String password);
+	
+	int logErrLogin(@Param("userName") String userName);
+	
+	int checkErrLoginCount(@Param("userName") String userName);
 }

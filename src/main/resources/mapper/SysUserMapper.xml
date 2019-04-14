@@ -15,6 +15,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="try_err_times" property="tryErrTimes" jdbcType="INTEGER" />
   </resultMap>
   
   <update id="updateSysUser" parameterType="SysUserModel">
@@ -41,6 +43,12 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tryErrTimes != null" >
+        try_err_times = #{tryErrTimes,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -51,4 +59,20 @@
   		#{id}
   </foreach>
   </delete>
+  
+  <select id="selectUserByPwd" resultType="SysUserModel">
+  	select * from sys_user where status = 0 and user_name = #{userName} and password = #{password}
+  </select>
+  
+  <select id="checkUserByName" resultType="java.lang.Integer">
+  	select 1 from sys_user where user_name = #{userName}
+  </select>
+  
+  <select id="logErrLogin">
+  	update sys_user set last_login_time = sysdate(), try_err_times = try_err_times + 1 where name = #{userName}
+  </select>
+  
+  <select id="checkErrLoginCount" resultType="java.lang.Integer">
+  select try_err_times from sys_user where name = #{userName}
+  </select>
 </mapper>

@@ -44,6 +44,10 @@ public class SysUserModel {
      */
     @Column(name = "shop_id")
     private Long shopId;
+    
+    private Date lastLoginTime;
+
+	private Integer tryErrTimes;
 
     /**
      * @return id
@@ -204,4 +208,20 @@ public class SysUserModel {
     public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
+    
+    public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public Integer getTryErrTimes() {
+		return tryErrTimes;
+	}
+
+	public void setTryErrTimes(Integer tryErrTimes) {
+		this.tryErrTimes = tryErrTimes;
+	}
 }
