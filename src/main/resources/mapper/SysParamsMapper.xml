@@ -14,6 +14,6 @@
   </resultMap>
   
   <select id="findByName" resultType="SysParamsModel">
- 	select * from sys_params where param_name = #{paramName}
+ 	select * from sys_params where param_name = #{paramName} and status = 0
   </select>
 </mapper>
