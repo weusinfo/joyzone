@@ -45,8 +45,16 @@ public class SysUserModel {
     @Column(name = "shop_id")
     private Long shopId;
     
+    /**
+     * 上次登陆时间
+     */
+    @Column(name = "last_login_time")
     private Date lastLoginTime;
 
+    /**
+     * 登陆出错次数
+     */
+    @Column(name = "try_err_times")
 	private Integer tryErrTimes;
 
     /**

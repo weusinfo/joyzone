@@ -1,5 +1,7 @@
 package com.joyzone.platform.core.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.joyzone.platform.core.base.BaseMapper;
@@ -13,9 +15,11 @@ public interface SysUserMapper extends BaseMapper<SysUserModel> {
 	
 	Integer checkUserByName(@Param("userName") String userName);
 	
-	SysUserModel selectUserByPwd(@Param("userName") String userName, @Param("password") String password);
+	Integer logErrLogin(@Param("userName") String userName);
 	
-	int logErrLogin(@Param("userName") String userName);
+	Integer checkErrLoginCount(@Param("userName") String userName);
 	
-	int checkErrLoginCount(@Param("userName") String userName);
+	List<SysUserModel> listUsers(SysUserModel sysUser);
+	
+	SysUserModel selectByName(@Param("userName") String userName);
 }

@@ -31,13 +31,13 @@ public class PermissionService {
 				throw new JZException("您已超过试错次数， 请联系客服");
 			}
 		}
-		String cryptPwd = BCrypt.hashpw(password);
-		SysUserModel sysUser = sysUserService.selectUserByPwd(userName,cryptPwd);
+		SysUserModel sysUser = sysUserService.selectByName(userName);
 		if(sysUser == null) {
 			//log login fail time and retry count
 			sysUserService.logLogin(userName);
 			throw new JZException("密码错误");
 		}
+		boolean isMatched = BCrypt.checkpw(password, sysUser.getPassword());
 		return menuService.list(sysUser.getId());
 	}
 }

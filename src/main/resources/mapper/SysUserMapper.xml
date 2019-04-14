@@ -60,12 +60,12 @@
   </foreach>
   </delete>
   
-  <select id="selectUserByPwd" resultType="SysUserModel">
-  	select * from sys_user where status = 0 and user_name = #{userName} and password = #{password}
+  <select id="selectByName" resultType="SysUserModel">
+  	select * from sys_user where status = 0 and name = #{userName}
   </select>
   
   <select id="checkUserByName" resultType="java.lang.Integer">
-  	select 1 from sys_user where user_name = #{userName}
+  	select 1 from sys_user where name = #{userName}
   </select>
   
   <select id="logErrLogin">
@@ -74,5 +74,14 @@
   
   <select id="checkErrLoginCount" resultType="java.lang.Integer">
   select try_err_times from sys_user where name = #{userName}
+  </select>
+  
+  <select id="listUsers" parameterType="SysUserModel">
+  select id, name, phone, sex, head_img from sys_user 
+	  <where>
+	  	<if test="id != null ">id=#{id}</if>
+	  	<if test="name != null and name.length()>0" >and name=#{name}</if>
+	  	<if test="shopId != null">and shop_id = #{shopId}</if>
+	  </where>
   </select>
 </mapper>
