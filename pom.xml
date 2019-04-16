@@ -39,6 +39,7 @@
 		<pagehelper>1.2.3</pagehelper>
 		<feign.version>10.2.0</feign.version>
 		<easypoi.version>3.0.1</easypoi.version>
+		<qcloud.version>5.5.1</qcloud.version>
 		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
 	</properties>
 
@@ -227,6 +228,11 @@
 			<groupId>cn.afterturn</groupId>
 			<artifactId>easypoi-base</artifactId>
 			<version>${easypoi.version}</version>
+		</dependency>
+		<dependency>
+          <groupId>com.qcloud</groupId>
+          <artifactId>cos_api</artifactId>
+          <version>${qcloud.version}</version>
 		</dependency>
 	</dependencies>
 
