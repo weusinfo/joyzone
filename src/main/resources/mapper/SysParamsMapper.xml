@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.SysParamsMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.SysParamsModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+    <result column="param_value" property="paramValue" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="findByName" resultType="SysParamsModel">
+ 	select * from sys_params where param_name = #{paramName} and status = 0
+  </select>
+</mapper>

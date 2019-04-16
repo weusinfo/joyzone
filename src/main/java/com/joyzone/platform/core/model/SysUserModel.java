@@ -44,6 +44,18 @@ public class SysUserModel {
      */
     @Column(name = "shop_id")
     private Long shopId;
+    
+    /**
+     * 上次登陆时间
+     */
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
+
+    /**
+     * 登陆出错次数
+     */
+    @Column(name = "try_err_times")
+	private Integer tryErrTimes;
 
     /**
      * @return id
@@ -204,4 +216,20 @@ public class SysUserModel {
     public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
+    
+    public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public Integer getTryErrTimes() {
+		return tryErrTimes;
+	}
+
+	public void setTryErrTimes(Integer tryErrTimes) {
+		this.tryErrTimes = tryErrTimes;
+	}
 }
