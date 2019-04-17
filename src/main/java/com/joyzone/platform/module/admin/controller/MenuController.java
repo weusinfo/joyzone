@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/menus")
-@Api(tags="1.0",value="后台用户菜单清单")
+@Api(tags="后台用户菜单清单",description="MenuController")
 public class MenuController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class MenuController {
 	}
 	
 	@ApiOperation(notes="给用户分配菜单项", value = "分配用户菜单项")
-	@PostMapping("/auth")
+	@PostMapping("/update")
 	public R update(Long userId, Long[] ids) {
 		menuService.update(userId,ids);
 		return R.ok("权限修改成功");

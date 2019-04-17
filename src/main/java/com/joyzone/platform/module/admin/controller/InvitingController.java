@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/inviting")
-@Api(value="后台邀约管理",tags="1.0")
+@Api(tags="后台邀约管理",description="InvitingController")
 public class InvitingController {
 
     @Autowired

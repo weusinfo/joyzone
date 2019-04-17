@@ -10,13 +10,18 @@ import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.MenuModel;
 import com.joyzone.platform.core.service.PermissionService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/login")
+@Api(tags="后台用户登陆",description="LoginController")
 public class LoginController {
 	
 	@Autowired
 	private PermissionService permissionService;
 	
+	@ApiOperation("后台用户登陆")
 	@PostMapping("/auth")
 	public R auth(String userName, String password) {
 		if(PublicUtil.isEmpty(userName)) return R.error("请输入用户名");

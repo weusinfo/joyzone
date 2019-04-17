@@ -28,7 +28,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/shopDiscount")
-@Api(value="后台店家折扣券管理V",description="后台折扣券管理",tags = "1.0")
+@Api(tags="后台店家折扣券管理",description="ShopDiscountController")
 public class ShopDiscountController {
 
     @Autowired

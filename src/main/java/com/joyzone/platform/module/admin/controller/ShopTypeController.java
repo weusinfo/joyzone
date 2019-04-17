@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/shopType")
-@Api(value="后台门店类型及种类V",description="后台门店类型及种类",tags="1.0")
+@Api(tags="后台门店类型及种类",description="ShopTypeController")
 public class ShopTypeController {
 	
 	@Autowired

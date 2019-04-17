@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/app_inviting")
-@Api(value = "app邀请函相关接口",tags = "1.0")
+@Api(tags = "app邀请函相关接口",description = "AppInvitingController")
 public class AppInvitingController {
 
     @Autowired
