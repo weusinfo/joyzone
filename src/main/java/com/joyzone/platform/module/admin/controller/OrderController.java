@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order")
-@Api(value="后台订单管理V",description="后台订单管理",tags="1.0")
+@Api(tags="后台订单管理V",description="OrderController")
 public class OrderController {
 
     @Autowired

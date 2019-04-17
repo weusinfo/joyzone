@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/forum")
-@Api(value="后台论坛管理",tags="1.0")
+@Api(tags="后台论坛管理",description="ForumController")
 public class ForumController {
 
     @Autowired
