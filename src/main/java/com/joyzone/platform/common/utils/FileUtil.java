@@ -2,6 +2,7 @@ package com.joyzone.platform.common.utils;
 
 import java.io.InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.PutObjectRequest;
@@ -14,19 +15,30 @@ import com.qcloud.cos.model.PutObjectRequest;
 @Component
 public class FileUtil {
 
+	@Value("${bucket}")
+	private String bucket;
+
 	@Autowired
 	private COSClient cosClient;
 	
+	public String getBucket() {
+		return bucket;
+	}
+
+	public void setBucket(String bucket) {
+		this.bucket = bucket;
+	}
+	
 	public String uploadShopImg(InputStream in, String fileName) {
-		PutObjectRequest putObjectRequest = new PutObjectRequest("joyzone-1257127706", "shop/"+fileName,in,null);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "shop/"+fileName,in,null);
 		cosClient.putObject(putObjectRequest);
-		return "https://joyzone-1257127706.cos.ap-shenzhen-fsi.myqcloud.com/shop/"+fileName;
+		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/shop/"+fileName;
 	}
 	
 	public String uploadPersonalImg(InputStream in,String fileName) {
-		PutObjectRequest putObjectRequest = new PutObjectRequest("joyzone-1257127706", "personal/"+fileName,in,null);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "personal/"+fileName,in,null);
 		cosClient.putObject(putObjectRequest);
-		return "https://joyzone-1257127706.cos.ap-shenzhen-fsi.myqcloud.com/personal/"+fileName;
+		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/personal/"+fileName;
 	}
 	
 }
