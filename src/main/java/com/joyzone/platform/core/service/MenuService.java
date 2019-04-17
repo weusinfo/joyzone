@@ -22,7 +22,7 @@ public class MenuService extends BaseService<MenuModel> {
 	
 	public List<MenuModel> list(Long userId){
 		List<MenuModel> menus = menuMapper.getMenus(userId);
-		if(PublicUtil.isNotEmpty(menus)) throw new JZException("没有权限");
+		if(PublicUtil.isEmpty(menus)) throw new JZException("没有权限");
 		return menus;
 	}
 	

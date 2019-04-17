@@ -12,7 +12,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   
-  <select id="getMenus">
+  <select id="getMenus" resultType="MenuModel">
   	select menu.name,menu.url, menu.parent_id, menu.description,sysum.user_id 
   	from menu inner join sysuser_menu sysum on menu.id = sysum.menu_id
   	inner join sys_user u on sysum.user_id = u.id where u.status = 0 and u.id=#{userId}

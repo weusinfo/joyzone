@@ -26,7 +26,8 @@ public class SwaggerConfig {
             .apiInfo(apiInfo())
             .select()
             //加了ApiOperation注解的类，才生成接口文档
-            .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+            //使用包来暴露
+            .apis(RequestHandlerSelectors.basePackage("com.joyzone.platform.module"))
             .paths(PathSelectors.any())
             .build()
             .genericModelSubstitutes(ResponseEntity.class)
