@@ -29,12 +29,24 @@ public class FileUtil {
 		this.bucket = bucket;
 	}
 	
+	/**
+	 * 保存商户相关文件
+	 * @param in
+	 * @param fileName
+	 * @return
+	 */
 	public String uploadShopImg(InputStream in, String fileName) {
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "shop/"+fileName,in,null);
 		cosClient.putObject(putObjectRequest);
 		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/shop/"+fileName;
 	}
 	
+	/**
+	 * 保存用户相关文件
+	 * @param in
+	 * @param fileName
+	 * @return
+	 */
 	public String uploadPersonalImg(InputStream in,String fileName) {
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "personal/"+fileName,in,null);
 		cosClient.putObject(putObjectRequest);

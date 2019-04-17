@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
-@Api(value="后台用户管理V",description="后台用户管理",tags="1.0")
+@Api(tags="后台用户管理V",description="UserController")
 public class UserController {
 
     @Autowired

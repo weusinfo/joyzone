@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/app_forum")
-@Api(value="app论坛相关操作",tags="1.0")
+@Api(tags="app论坛相关操作", description = "AppForumController")
 public class AppForumController {
 
     @Autowired

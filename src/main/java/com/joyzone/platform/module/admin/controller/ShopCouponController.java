@@ -22,7 +22,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/shiopCoupon")
-@Api(value="后台店家体验券管理V",description="后台体验券管理",tags = "1.0")
+@Api(tags="后台店家体验券管理V",description="ShopCouponController")
 public class ShopCouponController {
 
     @Autowired
