@@ -38,6 +38,10 @@ public class PermissionService {
 			throw new JZException("密码错误");
 		}
 		boolean isMatched = BCrypt.checkpw(password, sysUser.getPassword());
+		if(!isMatched) {
+			sysUserService.logLogin(userName);
+			throw new JZException("密码错误");
+		}
 		return menuService.list(sysUser.getId());
 	}
 }
