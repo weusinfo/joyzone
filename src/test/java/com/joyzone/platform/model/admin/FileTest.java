@@ -23,7 +23,7 @@ public class FileTest {
 	
 	@Test
 	public void testFile() throws FileNotFoundException {
-		util.uploadPersonalImg(new FileInputStream(new File("d:\\ip.properties")), "ip.properties");
+		//util.uploadPersonalImg(new FileInputStream(new File("d:\\ip.properties")), "ip.properties");
 	}
 
 }
