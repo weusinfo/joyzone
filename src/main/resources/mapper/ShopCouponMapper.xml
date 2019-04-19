@@ -48,4 +48,17 @@
         and create_time <![CDATA[ <= ]]> #{endTime}
       </if>
   </select>
+
+    <select id="getCouponShopList" resultType="java.util.HashMap" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+        SELECT
+        id AS couponShopId,
+        NAME AS couponShopName,
+        address AS couponShopAddress,
+        price AS couponShopPrice,
+        price_taste AS shopPriceTaste,
+        cover_img AS shopCoverImg,
+        shop_kind AS shopKind
+        FROM shop WHERE TYPE = 1 AND STATUS = 1
+    </select>
+
 </mapper>
