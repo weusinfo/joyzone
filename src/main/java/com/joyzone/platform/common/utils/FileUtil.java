@@ -1,11 +1,24 @@
 package com.joyzone.platform.common.utils;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.PutObjectRequest;
+
+import net.coobird.thumbnailator.Thumbnails;
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
 
 /**
  * 腾讯云对象存储， 需要指定文件名
@@ -17,16 +30,29 @@ public class FileUtil {
 
 	@Value("${bucket}")
 	private String bucket;
+	
+	@Value("${fileSize}")
+	private String fileSize;
+	
+	@Value("${scale}")
+	private String scale;
 
 	@Autowired
 	private COSClient cosClient;
 	
-	public String getBucket() {
-		return bucket;
-	}
-
-	public void setBucket(String bucket) {
-		this.bucket = bucket;
+	private int sequence = 1;
+	
+	private int getNextNumber()
+	{
+		if (sequence == Integer.MAX_VALUE)
+		{
+			sequence = 1;
+		}
+		else
+		{
+			sequence = sequence  + 1;
+		}
+		return sequence;
 	}
 	
 	/**
@@ -34,9 +60,12 @@ public class FileUtil {
 	 * @param in
 	 * @param fileName
 	 * @return
+	 * @throws IOException 
 	 */
-	public String uploadShopImg(InputStream in, String fileName) {
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "shop/"+fileName,in,null);
+	public String uploadShopImg(MultipartFile file) throws Exception {
+		String fileName = genTempFileName(file);
+		File tmpFile = handleFile(file,fileName);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "shop/"+fileName,new FileInputStream(tmpFile),null);
 		cosClient.putObject(putObjectRequest);
 		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/shop/"+fileName;
 	}
@@ -46,11 +75,82 @@ public class FileUtil {
 	 * @param in
 	 * @param fileName
 	 * @return
+	 * @throws IOException 
 	 */
-	public String uploadPersonalImg(InputStream in,String fileName) {
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "personal/"+fileName,in,null);
+	public String uploadPersonalImg(MultipartFile file) throws Exception {
+		String fileName = genTempFileName(file);
+		File tmpFile = handleFile(file,fileName);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "personal/"+fileName,new FileInputStream(tmpFile),null);
 		cosClient.putObject(putObjectRequest);
 		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/personal/"+fileName;
 	}
 	
+	/**
+	 * 生成唯一文件名
+	 * @param name
+	 * @return
+	 */
+	public String genTempFileName(MultipartFile file)
+    {
+		String name = file.getName();
+    	StringBuilder fileNameBuilder = new StringBuilder();
+    	fileNameBuilder.append(System.currentTimeMillis());
+    	fileNameBuilder.append(getNextNumber());
+    	fileNameBuilder.append("_");
+    	fileNameBuilder.append(name);
+    	return fileNameBuilder.toString();
+    }
+	
+	/**
+	 * 在本地生成临时文件
+	 * @param file
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public File genTempFile(MultipartFile file, String fileName) throws IOException {
+		String originalFileName = file.getOriginalFilename();
+		int suffixIdx = originalFileName.lastIndexOf(".");
+		String suffix = originalFileName.substring(suffixIdx);
+		File tmpFile = File.createTempFile(fileName, suffix);
+		return tmpFile;
+	}
+	
+	/**
+	 * 不是图片类型文件部压缩
+	 * @param file
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
+	public File handleFile(MultipartFile file, String fileName) throws Exception {
+		File tmpFile = genTempFile(file,fileName);
+		boolean isValid  = isValidPic(file);
+		if(!isValid) return tmpFile;
+		if(StringUtils.isNoneEmpty(fileSize) && StringUtils.isNoneEmpty(scale)) {
+			if(file.getSize() >= Long.parseLong(fileSize)) {
+				Thumbnails.of(file.getInputStream()).scale(Long.parseLong(scale)).toFile(tmpFile);
+				return tmpFile;
+			}
+		}
+		return tmpFile;
+	}
+	
+	/**
+	 * 检查是否是图片
+	 * @param file
+	 * @return
+	 * @throws MagicParseException
+	 * @throws MagicMatchNotFoundException
+	 * @throws MagicException
+	 * @throws IOException
+	 */
+	public boolean isValidPic(MultipartFile file) throws MagicParseException, MagicMatchNotFoundException, MagicException, IOException {
+		MagicMatch matcher = Magic.getMagicMatch(file.getBytes());
+		String mimeType = matcher.getMimeType();
+		if(mimeType.equals("image/jpeg") || mimeType.equals("image/gif") || mimeType.equals("image/png") || mimeType.equals("image/bmp")) {
+			return true;
+		}
+		return false;
+	}
 }

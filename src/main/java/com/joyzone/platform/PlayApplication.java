@@ -16,5 +16,4 @@ public class PlayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PlayApplication.class, args);
 	}
-
 }

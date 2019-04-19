@@ -13,6 +13,7 @@ import com.joyzone.platform.core.service.ShopService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -25,6 +26,18 @@ public class ShopController {
 	
 	@ApiOperation("添加商户")
 	@PostMapping("/add")
+	@ApiImplicitParams(value= {
+			@ApiImplicitParam(name="name", value="商户名字", required=true,paramType="form"),
+			@ApiImplicitParam(name="phone", value="商户联系电话", required=true,paramType="form"),
+			@ApiImplicitParam(name="address", value="商户地址", required=true,paramType="form"),
+			@ApiImplicitParam(name="description", value="商户描述", required=true, paramType="form"),
+			@ApiImplicitParam(name="type", value="商户类型:0:组队店家;1:体验券店家", required=true, paramType="form"),
+			@ApiImplicitParam(name="price", value="组队店家", paramType="form"),
+			@ApiImplicitParam(name="priceTaste", value="体验价格", required=true, paramType="form"),
+			@ApiImplicitParam(name="shopKind", value="店家提供的活动类型", required=true, paramType="form"),
+			@ApiImplicitParam(name="regImg", value="工商注册照片", required=false),
+			@ApiImplicitParam(name="legalPersonImg", value="法人信息照片", required=false)
+	})
 	public R addShop(ShopModel shop) {
 		shopService.addShop(shop);
 		return R.ok("添加成功");
