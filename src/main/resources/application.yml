@@ -63,3 +63,5 @@ using:
 secretId: AKIDDJF0rh6KckRDjCnpyeeVBkYQNGMIDg9J
 secretKey:  1IRmyGn3FWlvukPSXKAQFy3vgF05rUwk
 bucket:  joyzone-1257127706
+fileSize: 2000 * 1024
+scale: 0.8f
