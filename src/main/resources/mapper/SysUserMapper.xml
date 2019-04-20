@@ -68,19 +68,19 @@
   	select 1 from sys_user where name = #{userName}
   </select>
   
-  <select id="logErrLogin">
+  <update id="logErrLogin">
   	update sys_user set last_login_time = sysdate(), try_err_times = try_err_times + 1 where name = #{userName}
-  </select>
+  </update>
   
   <select id="checkErrLoginCount" resultType="java.lang.Integer">
   select try_err_times from sys_user where name = #{userName}
   </select>
   
-  <select id="listUsers" parameterType="SysUserModel">
+  <select id="listUsers" parameterType="SysUserModel" resultType="SysUserModel">
   select id, name, phone, sex, head_img from sys_user 
 	  <where>
 	  	<if test="id != null ">id=#{id}</if>
-	  	<if test="name != null and name.length()>0" >and name=#{name}</if>
+	  	<if test="name != null and name.length()>0" >and name like "%"#{name}"%"</if>
 	  	<if test="shopId != null">and shop_id = #{shopId}</if>
 	  </where>
   </select>
