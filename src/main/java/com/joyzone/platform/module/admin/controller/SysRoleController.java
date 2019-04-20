@@ -21,7 +21,7 @@ public class SysRoleController {
 	@Autowired
 	private SysRoleService roleService;
 	
-	@ApiOperation(value="添加商户文件", notes="添加角色和修改角色同一接口,有roleId,则认为是更新,没有则是新增")
+	@ApiOperation(value="系统角色设置", notes="添加角色和修改角色同一接口,有roleId,则认为是更新,没有则是新增")
 	@ApiImplicitParam(name="status", value="权限状态;0:生效;1:失效.新增时默认为生效")
 	@PostMapping("/update")
 	public R updateRole(SysRoleModel role) {
