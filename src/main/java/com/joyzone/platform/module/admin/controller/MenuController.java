@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.Menus;
-import com.joyzone.platform.core.model.MenuModel;
 import com.joyzone.platform.core.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +23,7 @@ public class MenuController {
 	@ApiOperation(notes="根据系统用户ID获取该用户菜单项", value = "获取用户菜单项")
 	@PostMapping("/list")
 	public R list(@RequestParam("userId") Long userId) {
-		List<MenuModel> menus = menuService.list(userId);
+		List<Menus> menus = menuService.list(userId);
 		return R.ok(menus);
 	}
 	

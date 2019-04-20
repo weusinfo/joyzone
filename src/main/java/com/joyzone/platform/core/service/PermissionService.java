@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.Constants;
+import com.joyzone.platform.core.dto.Menus;
 import com.joyzone.platform.core.model.MenuModel;
 import com.joyzone.platform.core.model.SysParamsModel;
 import com.joyzone.platform.core.model.SysUserModel;
@@ -22,7 +23,7 @@ public class PermissionService {
 	@Autowired
 	private MenuService menuService;
 	
-	public List<MenuModel> auth(String userName, String password) {
+	public List<Menus> auth(String userName, String password) {
 		if(!sysUserService.checkUserByName(userName)) throw new JZException("不存在该用户");
 		SysParamsModel paramsModel = paramsService.findByName(Constants.PARAM_LOGIN_FORBIDDEN_NUM);
 		if(paramsModel != null) {

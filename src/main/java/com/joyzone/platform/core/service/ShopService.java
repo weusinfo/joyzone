@@ -15,6 +15,7 @@ import com.joyzone.platform.core.mapper.ShopMapper;
 import com.joyzone.platform.core.model.ShopModel;
 
 import cn.hutool.core.util.NumberUtil;
+import tk.mybatis.mapper.entity.Example;
 
 @Service
 public class ShopService extends BaseService<ShopModel> {
@@ -60,6 +61,15 @@ public class ShopService extends BaseService<ShopModel> {
 	
 	public List<ShopModel> listShops(ShopModel shop){
 		return shopMapper.select(shop);
+	}
+	
+	public boolean exists(Long shopId) {
+		Example example = new Example(ShopModel.class);
+		example.createCriteria().andEqualTo("id", shopId);
+		example.createCriteria().andEqualTo("status", 0);
+		int i = selectCountByExample(example);
+		if(i == 1) return true;
+		return false;
 	}
 
 }

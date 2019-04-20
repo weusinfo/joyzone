@@ -13,13 +13,16 @@ import com.joyzone.platform.common.utils.FileUtil;
 import com.joyzone.platform.common.utils.R;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 腾讯云对象存储， 需要指定文件名
  * @author Administrator
  *
  */
-@Api(tags="文件处理",description="DocumentController")
+@Api(tags="文件上传",description="DocumentController")
 @RestController
 @RequestMapping("/doc")
 public class DocumentController {
@@ -27,6 +30,7 @@ public class DocumentController {
 	@Autowired
 	private FileUtil fileUtil;
 	
+	@ApiOperation("添加商户文件")
 	@PostMapping(path="/uploadShopDoc", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public R uploadShopDoc(MultipartFile file) {
 		try {
@@ -38,6 +42,7 @@ public class DocumentController {
 		return R.error("上传失败");
 	}
 	
+	@ApiOperation("添加用户文件")
 	@PostMapping(path="/uploadUserDoc", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public R uploadUserDoc(MultipartFile file) {
 		try {
