@@ -19,12 +19,16 @@ public class SysUserService extends BaseService<SysUserModel> {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	
+	@Autowired
+	private ShopService shopService;
+	
 	public void addUser(SysUserModel sysUser) {
 		if(StringUtils.isEmpty(sysUser.getName())) throw new JZException("用户名不能为空");
 		if(StringUtils.isEmpty(sysUser.getPassword())) throw new JZException("密码不能为空");
 		if(StringUtils.isEmpty(sysUser.getPhone())) throw new JZException("手机号码不能为空");
 		if(PublicUtil.isEmpty(sysUser.getSex())) throw new JZException("性别不能为空");
 		if(PublicUtil.isEmpty(sysUser.getShopId())) throw new JZException("用户应该与店家关联");
+		if(!shopService.exists(sysUser.getShopId())) throw new JZException("该商户状态异常");
 		sysUser.setPassword(BCrypt.hashpw(sysUser.getPassword()));
 		sysUser.setCreateTime(new Date());
 		sysUser.setStatus(0);

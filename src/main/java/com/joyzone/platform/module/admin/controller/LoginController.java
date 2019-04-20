@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.dto.Menus;
 import com.joyzone.platform.core.model.MenuModel;
 import com.joyzone.platform.core.service.PermissionService;
 
@@ -26,7 +27,7 @@ public class LoginController {
 	public R auth(String userName, String password) {
 		if(PublicUtil.isEmpty(userName)) return R.error("请输入用户名");
 		if(PublicUtil.isEmpty(password)) return R.error("请输入密码");
-		List<MenuModel> menus = permissionService.auth(userName, password);
+		List<Menus> menus = permissionService.auth(userName, password);
 		return R.ok(menus);
 	}
 

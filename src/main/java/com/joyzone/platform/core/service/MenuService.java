@@ -20,8 +20,9 @@ public class MenuService extends BaseService<MenuModel> {
 	@Autowired
 	private MenuMapper menuMapper;
 	
-	public List<MenuModel> list(Long userId){
-		List<MenuModel> menus = menuMapper.getMenus(userId);
+	public List<Menus> list(Long userId){
+		List<MenuModel> userMenus = menuMapper.getMenus(userId);
+		List<Menus> menus = getMenus(userMenus);
 		if(PublicUtil.isEmpty(menus)) throw new JZException("没有权限");
 		return menus;
 	}
@@ -50,11 +51,18 @@ public class MenuService extends BaseService<MenuModel> {
 }]
 	 */
 	public List<Menus> getAllMenus(){
-		List<Menus> result = new ArrayList<Menus>();
+		
 		List<MenuModel> allMenus = menuMapper.getAllMenus();
-		if(PublicUtil.isNotEmpty(allMenus)) {
+		List<Menus> results = getMenus(allMenus);
+		if(PublicUtil.isEmpty(results)) throw new JZException("没有有效菜单");
+		return results;
+	}
+
+	private List<Menus> getMenus(List<MenuModel> menuModels){
+		List<Menus> result = new ArrayList<Menus>();
+		if(PublicUtil.isNotEmpty(menuModels)) {
 			Map<String, List<MenuModel>> map = new HashMap<String,List<MenuModel>>();
-			allMenus.forEach(menu -> {
+			menuModels.forEach(menu -> {
 				String desc = menu.getDescription();
 				if(map.containsKey(desc)) {
 					map.get(desc).add(menu);
@@ -73,13 +81,13 @@ public class MenuService extends BaseService<MenuModel> {
 					MenuItem menuItem = new MenuItem();
 					menuItem.setName(item.getName());
 					menuItem.setId(item.getId());
+					menuItem.setPath(item.getUrl());
+					list.add(menuItem);
 				});
 				menus.setGroupItem(list);
 				result.add(menus);
 			});
 		}
-		if(PublicUtil.isEmpty(result)) throw new JZException("没有有效菜单");
 		return result;
 	}
-
 }
