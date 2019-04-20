@@ -33,4 +33,12 @@
   <select id="getAllMenus" resultType="MenuModel">
   select * from menu where url is not null
   </select>
+  
+  <select id="getMenusByUserId" resultType="MenuModel">
+  select menu.* from sys_user su inner join role_user ru
+	on su.id = ru.user_id
+	inner join sys_role sr on ru.role_id = sr.id
+	inner join role_menu rm on sr.id = rm.role_id
+	inner join menu on rm.menu_id = menu.id where su.status = 0 and sr.status = 0 and su.id = #{userId}
+  </select>
 </mapper>

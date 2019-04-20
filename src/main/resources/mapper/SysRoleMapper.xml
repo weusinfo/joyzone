@@ -49,6 +49,16 @@
   </update>
   
   <delete id="deleteMenusByRoleId">
-  delete from role_menu where role_id = #{roleId}
+  	delete from role_menu where role_id = #{roleId}
   </delete>
+  
+  <delete id="revokeRole">
+  delete from role_user where user_id = #{userId}
+  </delete>
+  
+  <insert id="grantRole">
+  insert into role_user(role_id, user_id, create_time) 
+  values (#{roleId,jdbcType=BIGINT},
+       #{userId,jdbcType=BIGINT}, sysdate())
+  </insert>
 </mapper>

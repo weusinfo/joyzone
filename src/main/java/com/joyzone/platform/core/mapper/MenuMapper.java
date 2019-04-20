@@ -14,4 +14,6 @@ public interface MenuMapper extends Mapper<MenuModel> {
 	void addMenus(Long userId, Long[] ids);
 	
 	List<MenuModel> getAllMenus();
+	
+	List<MenuModel> getMenusByUserId(@Param("userId") Long userId);
 }
