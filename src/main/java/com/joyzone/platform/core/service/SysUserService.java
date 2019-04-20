@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.alibaba.druid.util.StringUtils;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.PublicUtil;
@@ -14,6 +16,7 @@ import com.joyzone.platform.core.model.SysUserModel;
 import cn.hutool.crypto.digest.BCrypt;
 
 @Service
+@Transactional
 public class SysUserService extends BaseService<SysUserModel> {
 
 	@Autowired
