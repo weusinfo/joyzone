@@ -3,8 +3,10 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
+import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.service.InvitingService;
 import com.joyzone.platform.core.service.ShopCouponService;
 import io.swagger.annotations.Api;
@@ -29,19 +31,25 @@ public class AppShopCouponController {
     /**
      * zy
      */
-    /*@PostMapping("saveInviting")
-    @ApiOperation("前端发起邀请")
-    public R saveInviting(InvitingModel invitingModel){
-        return invitingService.saveInviting(invitingModel);
-    }*/
+    @PostMapping("/getCouponList")
+    @ApiOperation("前端获取体验券列表")
+    public R getCouponList(ShopCouponModel shopCouponModel){
+        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel);
+        if(couponDtoList != null && couponDtoList.size() > 0){
+            Page page = new Page();
+            page = (Page)couponDtoList;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
+    }
 
     /**
      * zy
      */
     @PostMapping("/getCouponShopList")
     @ApiOperation("前端获取体验券店家列表")
-    public R getCouponShopList(InvitingDto invitingDto){
-        List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(invitingDto);
+    public R getCouponShopList(ShopCouponModel shopCouponModel){
+        List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(shopCouponModel);
         if(couponShopList != null && couponShopList.size() > 0){
             Page page = new Page();
             page = (Page)couponShopList;

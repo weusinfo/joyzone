@@ -3,8 +3,10 @@ package com.joyzone.platform.core.service;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
+import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
+import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +48,12 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
                  R.ok("更新成功") : R.error(R.STATUS_FAIL,"更新失败");
     }
 
-    public List<Map<String,Object>> getCouponShopList(InvitingDto invitingDto){
-        return shopCouponMapper.getCouponShopList(invitingDto);
+    public List<Map<String,Object>> getCouponShopList(ShopCouponModel shopCouponModel){
+        return shopCouponMapper.getCouponShopList(shopCouponModel);
+    }
+
+    public  List<CouponDto> getCouponList(ShopCouponModel shopCouponModel){
+        return shopCouponMapper.getCouponList(shopCouponModel);
     }
 
 }
