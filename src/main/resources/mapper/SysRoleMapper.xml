@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.SysRoleModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <insert id="addRole" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="SysRoleModel" >
+    insert into sys_role (role_name,
+      status,remark, create_time)
+    values (#{roleName,jdbcType=VARCHAR},
+       #{status,jdbcType=INTEGER}, 
+       #{remark,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="addMenus">
+	  insert into role_menu(menu_id, role_id,create_time) values 
+	  <foreach collection="ids" item="id" index="index" separator=",">
+	  		(#{id},#{roleId}, sysdate())
+	  </foreach>
+  </insert>
+  
+  <update id="updateRole">
+   update sys_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <delete id="deleteMenusByRoleId">
+  delete from role_menu where role_id = #{roleId}
+  </delete>
+</mapper>

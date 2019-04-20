@@ -5,6 +5,7 @@ import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * date: 2019/3/29
  */
 @Service
+@Transactional
 public class UserSerivce extends BaseService<UserModel> {
 
     @Autowired
