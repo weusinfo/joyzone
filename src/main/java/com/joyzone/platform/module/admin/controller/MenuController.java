@@ -27,7 +27,7 @@ public class MenuController {
 		return R.ok(menus);
 	}
 	
-	@ApiOperation(notes="给用户分配菜单项", value = "分配用户菜单项")
+	@ApiOperation(notes="给用户分配菜单项, 已废弃!!!!!!", value = "分配用户菜单项, 已废弃!!!!!!")
 	@PostMapping("/update")
 	public R update(Long userId, Long[] ids) {
 		menuService.update(userId,ids);
