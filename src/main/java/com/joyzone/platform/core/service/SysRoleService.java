@@ -33,5 +33,10 @@ public class SysRoleService extends BaseService<SysRoleModel> {
 			roleMapper.addMenus(role.getMenuIds(), role.getId());
 		}
 	}
+	
+	public void grantRole(Long roleId, Long userId) {
+		roleMapper.revokeRole(userId);
+		roleMapper.grantRole(roleId, userId);
+	}
 
 }

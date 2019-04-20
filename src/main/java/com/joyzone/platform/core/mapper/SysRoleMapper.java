@@ -15,5 +15,9 @@ public interface SysRoleMapper extends Mapper<SysRoleModel> {
 	int updateRole(SysRoleModel role);
 	
 	int deleteMenusByRoleId(@Param("roleId") Long roleId);
+	
+	int grantRole(@Param("roleId") Long roleId, @Param("userId") Long userId);
+	
+	int revokeRole(@Param("userId") Long userId);
 
 }

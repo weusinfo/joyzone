@@ -24,7 +24,7 @@ public class MenuService extends BaseService<MenuModel> {
 	private MenuMapper menuMapper;
 	
 	public List<Menus> list(Long userId){
-		List<MenuModel> userMenus = menuMapper.getMenus(userId);
+		List<MenuModel> userMenus = menuMapper.getMenusByUserId(userId);
 		List<Menus> menus = getMenus(userMenus);
 		if(PublicUtil.isEmpty(menus)) throw new JZException("没有权限");
 		return menus;
