@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import com.github.pagehelper.util.StringUtil;
 import com.joyzone.platform.common.exception.JZException;
@@ -18,6 +19,7 @@ import cn.hutool.core.util.NumberUtil;
 import tk.mybatis.mapper.entity.Example;
 
 @Service
+@Transactional
 public class ShopService extends BaseService<ShopModel> {
 	
 	private Logger logger = LoggerFactory.getLogger(ShopService.class);

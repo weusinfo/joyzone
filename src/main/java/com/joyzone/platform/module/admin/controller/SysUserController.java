@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/sysUser")
-@Api(tags="系统（门店）用户管理",description="SysUserController")
+@Api(tags="后台（门店）用户管理",description="SysUserController")
 public class SysUserController {
 	
 	@Autowired

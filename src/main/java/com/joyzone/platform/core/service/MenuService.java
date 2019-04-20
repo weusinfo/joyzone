@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -15,6 +17,7 @@ import com.joyzone.platform.core.mapper.MenuMapper;
 import com.joyzone.platform.core.model.MenuModel;
 
 @Service
+@Transactional
 public class MenuService extends BaseService<MenuModel> {
 	
 	@Autowired

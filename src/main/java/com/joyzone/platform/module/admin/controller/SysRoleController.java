@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/sysRole")
-@Api(value="SysRoleController", tags="系统后台角色设置")
+@Api(value="SysRoleController", tags="后台角色设置")
 public class SysRoleController {
 	
 	@Autowired
