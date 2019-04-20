@@ -45,7 +45,7 @@ public class ForumController {
     }
 
     @GetMapping("/exportForumModelXls")
-    @ApiOperation("发起邀请清单导出")
+    @ApiOperation("论坛清单导出")
     public void exportForumModelXls(ForumModel forumModel, HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");
         response.setHeader("Content-Disposition",

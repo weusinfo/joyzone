@@ -2,26 +2,32 @@ package com.joyzone.platform.core.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ForumModel.TABLE_NAME)
+@ApiModel("论坛信息")
 public class ForumModel extends BaseModel{
 
     protected static final String TABLE_NAME = "forum";
     @Id
     @Excel(name = "帖子标识")
+    @ApiModelProperty("主键")
     private Long id;
 
     @Column(name = "user_id")
+    @ApiModelProperty("发帖用户ID")
     private Long userId;
 
     /**
      * 0 建议 1吐槽
      */
     @Excel(name="类型",replace= {"建议_0","吐槽_1"})
+    @ApiModelProperty("0.建议,1.吐槽")
     private Integer type;
 
     /**
@@ -29,24 +35,29 @@ public class ForumModel extends BaseModel{
      */
     @Excel(name="跟帖人数")
     @Column(name = "point_num")
+    @ApiModelProperty("跟帖人数")
     private Integer pointNum;
 
     /**
      * 状态 0 失效 1 正常
      */
+    @ApiModelProperty("0 失效,1 正常")
     private Integer status;
 
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
+    @ApiModelProperty("发表内容")
     private String content;
 
     @Transient
@@ -60,6 +71,7 @@ public class ForumModel extends BaseModel{
     private Date endTime;
 
     //跟帖人数
+    @ApiModelProperty("跟帖人数")
     private Integer forumNum;
 
     /**
