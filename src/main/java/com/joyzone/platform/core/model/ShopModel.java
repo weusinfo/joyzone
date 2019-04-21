@@ -1,67 +1,84 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ShopModel.TABLE_NAME)
+@ApiModel("店家信息")
 public class ShopModel extends BaseModel {
 
     protected static final String TABLE_NAME = "shop";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
+    @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("手机号码")
     private String phone;
 
+    @ApiModelProperty("地址")
     private String address;
 
+    @ApiModelProperty("描述")
     private String description;
 
     /**
      * 价格
      */
+    @ApiModelProperty("价格")
     private BigDecimal price;
 
     /**
      * 体验券价格
      */
     @Column(name = "price_taste")
+    @ApiModelProperty("体验券价格")
     private BigDecimal priceTaste;
 
     /**
      * 店家类型；0：组队店家，1：体验券店家
      */
+    @ApiModelProperty("店家类型；0：组队店家，1：体验券店家")
     private Integer type;
 
     /**
      * 店家封面照片
      */
     @Column(name = "cover_img")
+    @ApiModelProperty("店家封面照片")
     private String coverImg;
 
     /**
      * 店家提供活动类型，1：轰趴馆，2：真人CS
      */
     @Column(name = "shop_kind")
+    @ApiModelProperty("店家提供活动类型，1：轰趴馆，2：真人CS")
     private Integer shopKind;
 
     /**
      * 店家状态；0：签约；1：待审核；2：已禁入
      */
+    @ApiModelProperty("店家状态；0：签约；1：待审核；2：已禁入")
     private Integer status;
 
     /**
      * 工商注册照片
      */
+    @ApiModelProperty("工商注册照片")
     @Column(name = "reg_img")
     private String regImg;
 
     /**
      * 法人信息照片
      */
+    @ApiModelProperty("法人信息照片")
     @Column(name = "legal_person_img")
     private String legalPersonImg;
 

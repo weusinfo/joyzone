@@ -1,30 +1,38 @@
 package com.joyzone.platform.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = FavoriteModel.TABLE_NAME)
+@ApiModel("收藏相关信息")
 public class FavoriteModel extends BaseModel{
 
     protected static final String TABLE_NAME = "favorite";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     @Column(name = "user_id")
+    @ApiModelProperty("收藏人ID")
     private Long userId;
 
     @Column(name = "shop_id")
+    @ApiModelProperty("收藏店家ID")
     private Long shopId;
 
+    @ApiModelProperty("")
     private Integer status;
 
     /**
      * 收藏时间
      */
+    @ApiModelProperty("收藏时间")
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -36,12 +44,14 @@ public class FavoriteModel extends BaseModel{
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 
     /**
-     * 目前用户ID
+     * 目标用户ID
      */
     @Column(name = "target_id")
+    @ApiModelProperty("目标用户ID")
     private Long targetId;
 
     /**

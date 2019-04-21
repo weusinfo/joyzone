@@ -2,42 +2,56 @@ package com.joyzone.platform.core.dto;
 
 
 import com.joyzone.platform.core.model.BaseModel;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 import java.util.List;
 
+@ApiModel("前端体验券交互DTO")
 public class CouponDto extends BaseModel {
     //体验券ID
+    @ApiModelProperty("主键")
     private Long couponId;
 
     //体验券图片：上面标明体验券价格，后台新增体验券时添加
+    @ApiModelProperty("体验券图片")
     private String couponImg;
 
     //店家ID
+    @ApiModelProperty("店家ID")
     private Long shopId;
 
     //店家图片
+    @ApiModelProperty("店家图片")
     private String shopImg;
 
     //店家名称
+    @ApiModelProperty("店家名称")
     private String shopName;
 
     //体验券名称，或体验活动名称
+    @ApiModelProperty("体验券或体验活动名称")
     private String couponName;
 
     //店家地址
+    @ApiModelProperty("店家地址")
     private String shopAddress;
 
     //体验活动开始时间
+    @ApiModelProperty("体验券开始时间")
     private Date startTime;
 
     //体验活动结束时间
+    @ApiModelProperty("体验券结束时间")
     private Date endTime;
 
     //店家类型名称
+    @ApiModelProperty("店家类型名称")
     private String shopTypeName;
 
     //允许的最大人数
+    @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
     private List<UserJoinCouponDto> userJoinList;

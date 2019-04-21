@@ -2,41 +2,51 @@ package com.joyzone.platform.core.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = InvitingModel.TABLE_NAME)
+@ApiModel("受邀列表")
 public class InvitingModel extends BaseModel{
 
     protected static final String TABLE_NAME = "inviting";
 
     @Id
     @Excel(name="邀请函标识")
+    @ApiModelProperty("邀请ID")
     private Long id;
 
+    @ApiModelProperty("发起人")
     private Long owner;
 
     @Column(name = "shop_id")
+    @ApiModelProperty("店家ID")
     private Long shopId;
 
     @Column(name = "shop_name")
+    @ApiModelProperty("店家名称")
     private String shopName;
 
     /**
      * 地址
      */
+    @ApiModelProperty("地址")
     private String address;
 
     /**
      * 主题
      */
+    @ApiModelProperty("主题")
     private String content;
 
     /**
      * 邀约类型
      */
+    @ApiModelProperty("邀请函标识")
     @Excel(name="邀请函标识",replace = {"默认_0"})
     private Integer type;
 
@@ -50,11 +60,13 @@ public class InvitingModel extends BaseModel{
     /**
      * 邀约状态;0:有效；1：失效
      */
+    @ApiModelProperty("邀约状态;0:有效；1：失效")
     private Integer status;
 
     /**
      * 支付方式：0：AA，1：女生免费；2：赢家免费
      */
+    @ApiModelProperty("付方式：0：AA，1：女生免费；2：赢家免费")
     @Column(name = "pay_way")
     @Excel(name="支付类型",replace = {"AA_0","女生免费_1","赢家免费_2"})
     private Integer payWay;
@@ -63,6 +75,7 @@ public class InvitingModel extends BaseModel{
      * 邀约成功状态：0：失败；1：成功
      */
     @Excel(name="结果",replace = {"失败_0","成功_1"})
+    @ApiModelProperty("邀约成功状态：0：失败；1：成功")
     private Integer result;
 
     /**

@@ -1,12 +1,15 @@
 package com.joyzone.platform.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = UserModel.TABLE_NAME)
+@ApiModel("APP用户信息")
 public class UserModel extends BaseModel{
 
     protected static final String TABLE_NAME = "user";
@@ -18,51 +21,61 @@ public class UserModel extends BaseModel{
      * 自增长主键
      */
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 用户姓名
      */
+    @ApiModelProperty("用户姓名")
     @Column(name = "user_name")
     private String userName;
 
     @Column(name="login_name")
+    @ApiModelProperty("用户登录账号")
     private String loginName;
 
     /**
      * 密码
      */
+    @ApiModelProperty("用户登录密码")
     private String password;
 
     /**
      * 用户类型
      */
+    @ApiModelProperty("用户类型")
     private Boolean type;
 
     /**
      * 用户电话号码
      */
+    @ApiModelProperty("用户电话")
     private String phone;
 
     /**
      * 头像
      */
+    @ApiModelProperty("用户头像")
     @Column(name = "head_pic")
     private String headPic;
 
     /**
      * 性别
      */
+    @ApiModelProperty("性别 0 男 1女")
     private Boolean sex;
 
     /**
      * 生日
      */
+    @ApiModelProperty("生日")
     private Date birthday;
 
     /**
      * 用户状态
      */
+    @ApiModelProperty("用户状态")
     private Boolean status;
 
     /**
@@ -84,16 +97,19 @@ public class UserModel extends BaseModel{
     /**
      * 职业
      */
+    @ApiModelProperty("职业")
     private String profession;
 
     /**
      * 学历
      */
+    @ApiModelProperty("学历")
     private String education;
 
     /**
      * 年龄
      */
+    @ApiModelProperty("年龄")
     private Integer age;
 
     /**

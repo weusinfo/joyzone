@@ -1,46 +1,59 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ForumDetailModel.TABLE_NAME)
+@ApiModel("论坛跟帖信息")
 public class ForumDetailModel {
     protected static final String TABLE_NAME = "forum_detail";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 总评论ID
      */
+    @ApiModelProperty("总评论ID")
     @Column(name = "forum_id")
     private Long forumId;
 
     /**
      * 父级评论
      */
+    @ApiModelProperty("父级评论")
     private Long pid;
 
     @Column(name = "user_id")
+    @ApiModelProperty("跟帖人")
     private Long userId;
 
     @Column(name = "point_num")
+    @ApiModelProperty("点赞人数")
     private Integer pointNum;
 
     /**
      * 0 失效 1正常
      */
+    @ApiModelProperty("0 失效 1正常")
     private Integer status;
 
     @Column(name = "create_time")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     @Column(name = "update_time")
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
     /**
      * 内容
      */
+    @ApiModelProperty("内容")
     private String content;
 
     /**

@@ -1,5 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.Transient;
 import java.io.Serializable;
 
@@ -9,6 +12,7 @@ import java.io.Serializable;
  * @author Mr.Gx
  * date: 2019/3/29
  */
+@ApiModel("共享类")
 public class BaseModel implements Serializable {
 
     public static final int PAGE_NUM = 1;   //页数
@@ -17,9 +21,11 @@ public class BaseModel implements Serializable {
     public static final int STATUS_FAILL = 0;   //失效
 
     @Transient
+    @ApiModelProperty("页数")
     private Integer pageNum;
 
     @Transient
+    @ApiModelProperty("每页条数")
     private Integer pageSize;
 
     public Integer getPageNum() {

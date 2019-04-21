@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ForumModel;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.service.ForumService;
@@ -35,6 +36,11 @@ public class ForumController {
     @GetMapping("getForumList")
     @ApiOperation("获取论坛清单")
     public R getForumList(ForumModel forumModel){
+        if(forumModel.getPageNum() == null)
+            forumModel.setPageNum(BaseModel.PAGE_NUM);
+        if(forumModel.getPageSize() == null)
+            forumModel.setPageSize(BaseModel.PAGE_SIZE);
+
        List<ForumModel> list = forumService.getForumList(forumModel);
        if(list != null && list.size() > 0){
            Page page = new Page();

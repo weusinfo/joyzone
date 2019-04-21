@@ -1,6 +1,8 @@
 package com.joyzone.platform.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -8,13 +10,16 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = OrderModel.TABLE_NAME)
+@ApiModel("订单信息")
 public class OrderModel extends BaseModel{
 
     protected static final String TABLE_NAME = "orders";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
+    @ApiModelProperty("组队主键ID")
     @Column(name = "team_id")
     private Long teamId;
 
@@ -22,17 +27,20 @@ public class OrderModel extends BaseModel{
      * 0：组队店家订单；1：体验券店家订单
      */
     @Column(name = "order_type")
+    @ApiModelProperty("类型0：组队店家订单；1：体验券店家订单")
     private Integer orderType;
 
     /**
      * 订单编号
      */
     @Column(name = "order_no")
+    @ApiModelProperty("订单编号")
     private String orderNo;
 
     /**
      * 店家服务类型种类
      */
+    @ApiModelProperty("店家服务类型种类ID")
     @Column(name = "shop_type_id")
     private Long shopTypeId;
 
@@ -40,17 +48,20 @@ public class OrderModel extends BaseModel{
      * 店家ID
      */
     @Column(name = "shop_id")
+    @ApiModelProperty("店家ID")
     private Long shopId;
 
     /**
      * 价格
      */
+    @ApiModelProperty("价格")
     private BigDecimal price;
 
     /**
      * 组队人数
      */
     @Column(name = "person_num")
+    @ApiModelProperty("组队人数")
     private Integer personNum;
 
     @Column(name = "create_time")
@@ -74,11 +85,13 @@ public class OrderModel extends BaseModel{
     @Column(name = "pay_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("玩耍时间")
     private Date payTime;
 
     /**
      * 0 失效  1有效
      */
+    @ApiModelProperty("0 失效  1有效")
     private Integer status;
 
     /**

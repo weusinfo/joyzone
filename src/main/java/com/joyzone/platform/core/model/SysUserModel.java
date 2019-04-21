@@ -1,31 +1,41 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "sys_user")
+@ApiModel("系统用户信息")
 public class SysUserModel {
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
+    @ApiModelProperty("名称")
     private String name;
 
     /**
      * 0:男，1：女
      */
+    @ApiModelProperty("0:男，1：女")
     private Integer sex;
 
     /**
      * 头像
      */
+    @ApiModelProperty("头像")
     @Column(name = "head_img")
     private String headImg;
 
+    @ApiModelProperty("电话号码")
     private String phone;
 
     /**
      * 密码
      */
+    @ApiModelProperty("密码")
     private String password;
 
     @Column(name = "create_time")
@@ -37,23 +47,27 @@ public class SysUserModel {
     /**
      * 用户状态；0：激活，1：禁用
      */
+    @ApiModelProperty("用户状态；0：激活，1：禁用")
     private Integer status;
 
     /**
      * 门店编号
      */
+    @ApiModelProperty("所属门店ID")
     @Column(name = "shop_id")
     private Long shopId;
     
     /**
      * 上次登陆时间
      */
+    @ApiModelProperty("上次登陆时间")
     @Column(name = "last_login_time")
     private Date lastLoginTime;
 
     /**
      * 登陆出错次数
      */
+    @ApiModelProperty("登陆出错次数")
     @Column(name = "try_err_times")
 	private Integer tryErrTimes;
 

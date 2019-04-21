@@ -1,22 +1,31 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 @Table(name = "menu")
+@ApiModel("菜单信息")
 public class MenuModel {
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 菜单名字
      */
+    @ApiModelProperty("菜单名字")
     private String name;
 
     @Column(name = "parent_id")
+    @ApiModelProperty("父级菜单ID")
     private Long parentId;
 
+    @ApiModelProperty("描述")
     private String description;
 
+    @ApiModelProperty("访问地址")
     private String url;
 
     /**
