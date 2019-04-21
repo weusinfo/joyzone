@@ -1,17 +1,28 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Configuration;
+
 
 import java.util.Date;
 import java.util.List;
 
+
+@Configuration
 @ApiModel("前端体验券交互DTO")
-public class CouponDto extends BaseModel {
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+public class CouponDto extends BaseModel{
+
+    public CouponDto(){
+
+    }
+
     //体验券ID
-    @ApiModelProperty("主键")
+    @ApiModelProperty("体验券主键")
     private Long couponId;
 
     //体验券图片：上面标明体验券价格，后台新增体验券时添加

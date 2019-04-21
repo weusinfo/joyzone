@@ -22,6 +22,30 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
 
+   <resultMap id="couponShopList" type="com.joyzone.platform.core.dto.CouponDto">
+       <id column="couponId" property="couponId" jdbcType="BIGINT" />
+       <result column="couponImg" property="couponImg" jdbcType="VARCHAR" />
+       <result column="shopId" property="shopId" jdbcType="BIGINT" />
+       <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
+       <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+       <result column="couponName" property="couponName" jdbcType="VARCHAR" />
+       <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+       <result column="startTime" property="startTime" jdbcType="DATE" />
+       <result column="endTime" property="endTime" jdbcType="DATE" />
+       <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
+       <result column="personNum" property="personNum" jdbcType="INTEGER" />
+       <collection property="userJoinList" javaType="ArrayList" column="{couponId=couponId}" select="com.joyzone.platform.core.mapper.ShopCouponMapper.queryUserJoinCouponList"
+                   fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinCouponDto">
+
+       </collection>
+   </resultMap>
+
+    <resultMap id="userJoinCouponMap" type="com.joyzone.platform.core.dto.UserJoinCouponDto">
+        <id column="couponId" property="couponId" jdbcType="BIGINT" />
+        <result column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
+    </resultMap>
+
   <sql id="BaseResultSQL">
     id, shop_id,name,price,back_img,status,number,start_time,end_time,create_time,
     update_time,content,number,shop_name,shop_type_id,shop_type_name
@@ -61,7 +85,7 @@
         FROM shop WHERE TYPE = 1 AND STATUS = 1
     </select>
 
-    <select id="getCouponList" resultType="com.joyzone.platform.core.dto.CouponDto" parameterType="com.joyzone.platform.core.model.ShopCouponModel">
+    <select id="getCouponList" resultMap="couponShopList" parameterType="com.joyzone.platform.core.model.ShopCouponModel">
         SELECT
             sc.id AS couponId,
             sc.back_img AS couponImg,
@@ -77,6 +101,13 @@
         FROM shop_coupon sc
         LEFT JOIN shop s ON s.id = sc.shop_id
         WHERE sc.status = 1
+    </select>
+
+    <select id="queryUserJoinCouponList" resultMap="userJoinCouponMap">
+        SELECT cu.coupon_id AS couponId,u.id AS userId,u.head_pic AS userHeadImg
+        FROM coupon_user cu
+        LEFT JOIN user u ON u.id = cu.user_id
+        WHERE cu.coupon_id = #{couponId} AND cu.status = 1
     </select>
 
 </mapper>
