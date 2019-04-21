@@ -1,22 +1,30 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "sys_params")
+@ApiModel("系统参数信息")
 public class SysParamsModel {
     @Id
+    @ApiModelProperty("主键")
     private Integer id;
 
+    @ApiModelProperty("参数名")
     @Column(name = "param_name")
     private String paramName;
 
+    @ApiModelProperty("参数值")
     @Column(name = "param_value")
     private String paramValue;
 
     /**
      * 备注
      */
+    @ApiModelProperty("备注")
     private String remark;
 
     @Column(name = "create_time")
@@ -25,6 +33,7 @@ public class SysParamsModel {
     /**
      * 是否有效;0:有效；1：无效
      */
+    @ApiModelProperty("是否有效;0:有效；1：无效")
     private Integer status;
 
     /**

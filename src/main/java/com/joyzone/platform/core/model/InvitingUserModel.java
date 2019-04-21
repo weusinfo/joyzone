@@ -1,24 +1,32 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = InvitingUserModel.TABLE_NAME)
+@ApiModel("接受邀请函信息")
 public class InvitingUserModel extends BaseModel{
     protected static final String TABLE_NAME = "inviting_user";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
+    @ApiModelProperty("发起邀请函主键")
     @Column(name = "inviting_id")
     private Long invitingId;
 
+    @ApiModelProperty("用户ID")
     @Column(name = "user_id")
     private Long userId;
 
     /**
      * 0 退出 1 接受
      */
+    @ApiModelProperty("0 退出 1 接受")
     private Integer status;
 
     @Column(name = "create_time")

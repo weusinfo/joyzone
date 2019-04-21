@@ -1,38 +1,49 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = TeamModel.TABLE_NAME)
+@ApiModel("组队信息")
 public class TeamModel {
     protected static final String TABLE_NAME = "team";
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
+    @ApiModelProperty("店家ID")
     @Column(name = "shop_id")
     private Long shopId;
 
+    @ApiModelProperty("发起人ID")
     private Long owner;
 
     /**
      * 活动开始时间
      */
+    @ApiModelProperty("活动开始时间")
     @Column(name = "start_time")
     private Date startTime;
 
     /**
      * 组队类型：:0：组队店家;1:体验店家
      */
+    @ApiModelProperty(" 组队类型：:0：组队店家;1:体验店家")
     private Integer type;
 
     /**
      * 组队状态;0：有效，1：无效
      */
+    @ApiModelProperty("组队状态;0：有效，1：无效")
     private Integer status;
 
     /**
      * 0：组队中；1：组队成功；2：组队失败
      */
+    @ApiModelProperty("0：组队中；1：组队成功；2：组队失败")
     private Integer result;
 
     /**

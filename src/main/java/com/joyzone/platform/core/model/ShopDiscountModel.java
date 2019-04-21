@@ -2,6 +2,8 @@ package com.joyzone.platform.core.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -9,24 +11,28 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ShopDiscountModel.TABLE_NAME)
+@ApiModel("折扣券信息")
 public class ShopDiscountModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_discount";
 
     @Id
     @Excel(name="折扣券ID")
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 折扣券名称
      */
     @Excel(name="折扣券名称")
+    @ApiModelProperty("折扣券名称")
     private String name;
 
     /**
      * 店家ID
      */
     @Column(name = "shop_id")
+    @ApiModelProperty("店家ID")
     private Long shopId;
 
     /**
@@ -34,12 +40,14 @@ public class ShopDiscountModel extends BaseModel{
      */
     @Column(name = "shop_name")
     @Excel(name="组队店家名称")
+    @ApiModelProperty("组队店家名称")
     private String shopName;
 
     /**
      * 店家种类ID
      */
     @Column(name = "shop_type_id")
+    @ApiModelProperty("店家种类ID")
     private Long shopTypeId;
 
     /**
@@ -47,27 +55,32 @@ public class ShopDiscountModel extends BaseModel{
      */
     @Column(name = "shop_type_name")
     @Excel(name="组队店家种类")
+    @ApiModelProperty("组队店家种类名称")
     private String shopTypeName;
 
     @Excel(name="折扣后的价格")
+    @ApiModelProperty("折扣后的价格")
     private BigDecimal price;
 
     /**
      * 折扣  9折 = 0.9
      */
     @Excel(name="折扣数")
+    @ApiModelProperty("折扣  9折 = 0.9")
     private Integer discount;
 
     /**
      * 人数限制
      */
     @Excel(name="允许人数")
+    @ApiModelProperty("允许人数")
     private Integer number;
 
     /**
      * 状态：0 失效 1 正常
      */
     @Excel(name="状态",replace = {"失效_0","有效_1"})
+    @ApiModelProperty("状态：0 失效 1 正常")
     private Integer status;
 
     /**
@@ -77,6 +90,7 @@ public class ShopDiscountModel extends BaseModel{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("玩耍时间")
     private Date playTime;
 
     @Column(name = "create_time")
@@ -93,11 +107,13 @@ public class ShopDiscountModel extends BaseModel{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Transient
+    @ApiModelProperty("根据开始时间查询信息")
     private Date startTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Transient
+    @ApiModelProperty("根据结束时间查询信息")
     private Date endTime;
 
     /**

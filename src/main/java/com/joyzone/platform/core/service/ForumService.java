@@ -34,11 +34,6 @@ public class ForumService extends BaseService<ForumModel> {
      * Mr.Gx
      */
     public List<ForumModel> getForumList(ForumModel forumModel){
-        if(forumModel.getPageNum() == null)
-            forumModel.setPageNum(BaseModel.PAGE_NUM);
-        if(forumModel.getPageSize() == null)
-            forumModel.setPageSize(BaseModel.PAGE_SIZE);
-
        List<ForumModel> list = forumMapper.getForumList(forumModel);
        if(list != null && list.size() > 0){
            for(ForumModel model : list){
