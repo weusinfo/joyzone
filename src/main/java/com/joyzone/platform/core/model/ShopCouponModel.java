@@ -2,26 +2,32 @@ package com.joyzone.platform.core.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ShopCouponModel.TABLE_NAME)
+@ApiModel("体验券信息")
 public class ShopCouponModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_coupon";
 
     @Excel(name="体验券标识")
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     @Column(name = "shop_id")
+    @ApiModelProperty("店家ID")
     private Long shopId;
 
     /**
      * 活动名称
      */
     @Excel(name="体验券名称")
+    @ApiModelProperty("体验券名称")
     private String name;
 
 
@@ -29,44 +35,51 @@ public class ShopCouponModel extends BaseModel{
      * 体验券店家名称
      */
     @Column(name = "shop_name")
-    @Excel(name="限制人数")
+    @Excel(name="店家名称")
+    @ApiModelProperty("店家名称")
     private String shopName;
 
     /**
      * 体验券店家种类ID
      */
     @Column(name = "shop_type_id")
+    @ApiModelProperty("体验券店家种类ID")
     private Long shopTypeId;
 
     /**
      * 体验券店家种类名称
      */
-    @Excel(name="体验店家名称")
+    @Excel(name="体验券店家种类名称")
     @Column(name = "shop_type_name")
+    @ApiModelProperty("体验券店家种类名称")
     private String shopTypeName;
 
     /**
      * 价格
      */
     @Excel(name="体验券价格")
+    @ApiModelProperty("体验券价格")
     private Long price;
 
     /**
      * 参加人数限制
      */
     @Excel(name="限制人数")
+    @ApiModelProperty("限制人数")
     private Integer number;
 
     /**
      * 活动背景图URL
      */
     @Column(name = "back_img")
+    @ApiModelProperty("活动背景图URL")
     private String backImg;
 
     /**
      * 状态：0 失效 1 正常
      */
     @Excel(name="状态",replace= {"失效_0","正常_1"})
+    @ApiModelProperty("状态：0 失效 1 正常")
     private Integer status;
 
     /**
@@ -76,11 +89,13 @@ public class ShopCouponModel extends BaseModel{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "start_time")
     @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("开始时间")
     private Date startTime;
 
     @Column(name = "end_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty("结束时间")
     private Date endTime;
 
     /**

@@ -1,10 +1,14 @@
 package com.joyzone.platform.core.model;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = DocumentModel.TABLE_NAME)
+@ApiModel("文件资源")
 public class DocumentModel extends BaseModel{
 
     protected static final String TABLE_NAME = "document";
@@ -13,40 +17,47 @@ public class DocumentModel extends BaseModel{
      * 自增长主键
      */
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 文件拥有者，关联user.id
      */
+    @ApiModelProperty("文件拥有者，关联user.id")
     private Long owner;
 
     /**
      * 文件名
      */
     @Column(name = "file_name")
+    @ApiModelProperty("文件名")
     private String fileName;
 
     /**
      * 文件路径
      */
     @Column(name = "file_path")
+    @ApiModelProperty("")
     private String filePath;
 
     /**
      * 文件类型,0:图片（一般是图片，有其它类型再定义）
      */
+    @ApiModelProperty("文件类型,0:图片")
     private Boolean type;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     /**
      * 更新时间
      */
     @Column(name = "update_time")
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
     /**

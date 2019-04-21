@@ -1,34 +1,42 @@
 package com.joyzone.platform.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = ShopTypeModel.TABLE_NAME)
+@ApiModel("店家种类信息")
 public class ShopTypeModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_type";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     /**
      * 类型名或种类名称
      */
+    @ApiModelProperty("类型名或种类名称")
     private String name;
 
     /**
      * 1 : 组队类型   2：体验类型
      */
+    @ApiModelProperty("1 : 组队类型   2：体验类型")
     private Integer type;
 
+    @ApiModelProperty("父级ID")
     private Long pid;
 
     /**
      *  0 失效  1 正常
      */
+    @ApiModelProperty("0 失效  1 正常")
     private Integer status;
 
     @Column(name = "create_time")

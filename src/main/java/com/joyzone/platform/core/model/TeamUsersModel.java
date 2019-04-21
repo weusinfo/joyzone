@@ -1,36 +1,46 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = TeamUsersModel.TABLE_NAME)
+@ApiModel("参加组队人员信息")
 public class TeamUsersModel extends BaseModel{
 
     protected static final String TABLE_NAME = "team_users";
 
     @Id
+    @ApiModelProperty("主键")
     private Long id;
 
     @Column(name = "team_id")
+    @ApiModelProperty("组队ID")
     private Long teamId;
 
     @Column(name = "user_id")
+    @ApiModelProperty("用户标识")
     private Long userId;
 
     /**
      * 入队状态：0：加入；1：退出
      */
+    @ApiModelProperty("入队状态：0：加入；1：退出")
     private Integer status;
 
     /**
      * 加入时间
      */
+    @ApiModelProperty("加入时间")
     @Column(name = "create_time")
     private Date createTime;
 
     /**
      * 修改时间.退出时间
      */
+    @ApiModelProperty("修改时间")
     @Column(name = "update_time")
     private Date updateTime;
 

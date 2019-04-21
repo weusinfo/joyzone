@@ -20,9 +20,9 @@ public class ShopTypeController {
 	@Autowired
 	private ShopTypeService shopTypeService;
 	
-	@GetMapping("getShopTypeList/{pid}")
+	@GetMapping("getShopTypeList")
 	@ApiOperation("店家的类型及类型旗下的种类")
-	public R getShopTypeList(@PathVariable Long pid) {
+	public R getShopTypeList(Long pid) {
 		if(pid == null){
 			return R.ok(shopTypeService.findByShopType());
 		}
