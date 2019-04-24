@@ -10,6 +10,7 @@ import com.joyzone.platform.core.mapper.InvitingUserMapper;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.model.InvitingUserModel;
+import com.joyzone.platform.core.vo.AppInvitingVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,16 +99,77 @@ public class InvitingService extends BaseService<InvitingModel> {
     }
 
     /**
-     * APP获取个人邀请列表
-     * Mr.Gx\
+     * APP获取受邀列表
+     * Mr.Gx
      */
     public R getUserToInvitings(InvitingDto invitingDto){
+        if(invitingDto == null)
+            return R.error("参数不能为空.");
+        if(invitingDto.getUserId() == null)
+            return R.error("用户ID不能为空.");
         if(invitingDto.getPageNum() == null)
             invitingDto.setPageNum(BaseModel.PAGE_NUM);
         if(invitingDto.getPageSize() == null)
             invitingDto.setPageSize(BaseModel.PAGE_SIZE);
 
-        List<InvitingDto> list = invitingMapper.getUserToInvitings(invitingDto);
+        return pageToRet(invitingMapper.getUserToInvitings(invitingDto));
+    }
+
+    /**
+     * APP获取我的正式函列表
+     * Mr.Gx
+     */
+    public R getConfirmInvitings(InvitingDto invitingDto){
+        if(invitingDto.getUserId() == null)
+            return R.error("用户ID不能为空.");
+        if(invitingDto.getPageNum() == null)
+            invitingDto.setPageNum(BaseModel.PAGE_NUM);
+        if(invitingDto.getPageSize() == null)
+            invitingDto.setPageSize(BaseModel.PAGE_SIZE);
+
+        return pageToRet(invitingMapper.getConfirmInvitings(invitingDto));
+    }
+
+    /**
+     * APP获取我的邀请列表
+     * Mr.Gx
+     */
+    public R getMyInvitings(InvitingDto invitingDto){
+        if(invitingDto == null)
+            return R.error("参数不能为空.");
+        if(invitingDto.getUserId() == null)
+            return R.error("用户ID不能为空.");
+        if(invitingDto.getPageNum() == null)
+            invitingDto.setPageNum(BaseModel.PAGE_NUM);
+        if(invitingDto.getPageSize() == null)
+            invitingDto.setPageSize(BaseModel.PAGE_SIZE);
+
+        return pageToRet(invitingMapper.getMyInvitings(invitingDto));
+    }
+
+    /**
+     * APP获取回应我的邀请列表
+     * Mr.Gx
+     */
+    public R getRespondInvitings(InvitingDto invitingDto){
+        if(invitingDto == null)
+            return R.error("参数不能为空.");
+        if(invitingDto.getUserId() == null)
+            return R.error("用户ID不能为空.");
+        if(invitingDto.getPageNum() == null)
+            invitingDto.setPageNum(BaseModel.PAGE_NUM);
+        if(invitingDto.getPageSize() == null)
+            invitingDto.setPageSize(BaseModel.PAGE_SIZE);
+
+        return pageToRet(invitingUserMapper.getRespondInvitings(invitingDto));
+    }
+
+    /**
+     * 统一处理分页数据
+     * @param list
+     * @return
+     */
+    private R pageToRet(List<AppInvitingVO> list){
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
