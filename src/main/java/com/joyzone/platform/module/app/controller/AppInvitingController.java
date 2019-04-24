@@ -24,7 +24,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("saveInviting")
-    @ApiOperation("前端发起邀请")
+    @ApiOperation("发起邀请")
     public R saveInviting(InvitingModel invitingModel){
         return invitingService.saveInviting(invitingModel);
     }
@@ -33,8 +33,36 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getUserToInvitings")
-    @ApiOperation("前端获取个人邀请列表")
+    @ApiOperation("获取受邀列表")
     public R getUserToInvitings(InvitingDto invitingDto){
         return invitingService.getUserToInvitings(invitingDto);
     }
+
+    /**
+     * Mr.Gx
+     */
+    @PostMapping("getConfirmInvitings")
+    @ApiOperation("获取我的受邀正式函列表")
+    public R getConfirmInvitings(InvitingDto invitingDto){
+        return invitingService.getConfirmInvitings(invitingDto);
+    }
+
+    /**
+     * Mr.Gx
+     */
+    @PostMapping("getMyInvitings")
+    @ApiOperation("获取我的邀请列表")
+    public R getMyInvitings(InvitingDto invitingDto){
+        return invitingService.getMyInvitings(invitingDto);
+    }
+
+    /**
+     * Mr.Gx
+     */
+    @PostMapping("getRespondInvitings")
+    @ApiOperation("获取回应我的邀请列表")
+    public R getRespondInvitings(InvitingDto invitingDto){
+        return invitingService.getRespondInvitings(invitingDto);
+    }
+
 }
