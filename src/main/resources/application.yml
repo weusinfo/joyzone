@@ -7,7 +7,7 @@ server:
     buffer-size: 1024
     direct-buffers: true
     accesslog:
-      dir: /usr/local/jxmlogs/yys/
+      dir: /usr/local/accesslogs/joyzone/
       enabled: true
       pattern: combined
       prefix: access_log.
