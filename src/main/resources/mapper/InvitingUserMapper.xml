@@ -22,4 +22,15 @@
         <include refid="BaseResultSQL"></include>
       from inviting_user where status = 1 and inviting_id = #{invitingId}
   </select>
+
+  <select id="getRespondInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO"
+                                                              parameterType="com.joyzone.platform.core.dto.InvitingDto">
+    select u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
+      (CASE i.pay_way WHEN 0 THEN 'AA制' WHEN 1 THEN '女生免费'  WHEN 2 THEN '赢家免费' ELSE null END ) as payWayName
+    from inviting i inner join inviting_user iur on i.id = iur.inviting_id
+    INNER JOIN
+    user u on u.id = iur.user_id
+    where u.status = 0 and i.status = 0 and iur.status = 1 and i.owner = #{userId}
+    ORDER BY iur.id desc
+  </select>
 </mapper>

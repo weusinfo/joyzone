@@ -20,8 +20,14 @@
     <result column="pay_way" property="payWay" jdbcType="INTEGER" />
   </resultMap>
 
-  <select id="getInvitingList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingModel">
-      select * from inviting where 1=1
+    <sql id="BaseResultSql">
+        id,owner,shop_id,shop_name,address,content,type,start_time,status,result,create_time,update_time,pay_way
+    </sql>
+
+    <select id="getInvitingList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingModel">
+      select
+        <include refid="BaseResultSql"></include>
+      from inviting where 1=1
       <if test="type != null">
           and type = #{type}
       </if>
@@ -34,17 +40,51 @@
       <if test="endTime != null">
           and start_time <![CDATA[ <= ]]> #{endTime}
       </if>
-  </select>
+    </select>
 
-  <select id="getUserToInvitings" resultType="com.joyzone.platform.core.dto.InvitingDto" parameterType="com.joyzone.platform.core.dto.InvitingDto">
-      select u.id as userId,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
+    <select id="getUserToInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+      select u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
              (CASE i.pay_way
               WHEN 0 THEN 'AA制'
               WHEN 1 THEN '女生免费'
               WHEN 2 THEN '赢家免费'
               ELSE null END ) as payWayName
       from inviting i inner join user u on u.id = i.`owner`
-      where u.status = 0 and i.status = 0 ORDER BY i.id desc
-  </select>
+      where u.status = 0 and i.status = 0
+      <if test="userId != null">
+          and i.owner <![CDATA[ <> ]]> #{userId}
+      </if>
+      ORDER BY i.id desc
+    </select>
+
+    <select id="getConfirmInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+        select u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
+               (CASE i.pay_way
+                    WHEN 0 THEN 'AA制'
+                    WHEN 1 THEN '女生免费'
+                    WHEN 2 THEN '赢家免费'
+                    ELSE null END ) as payWayName
+        from inviting i inner join user u on u.id = i.`owner`
+        where u.status = 0 and i.status = 0 and i.result = 0
+        <if test="userId != null">
+            and i.owner = #{userId}
+        </if>
+        ORDER BY i.id desc
+    </select>
+
+    <select id="getMyInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+        select u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
+        (CASE i.pay_way
+        WHEN 0 THEN 'AA制'
+        WHEN 1 THEN '女生免费'
+        WHEN 2 THEN '赢家免费'
+        ELSE null END ) as payWayName
+        from inviting i inner join user u on u.id = i.`owner`
+        where u.status = 0 and i.status = 0
+        <if test="userId != null">
+            and i.owner = #{userId}
+        </if>
+        ORDER BY i.id desc
+    </select>
 
 </mapper>
