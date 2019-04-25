@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by zy on 2019/4/20.
  */
-@ApiModel("参加信息DTO")
+@ApiModel("店家组队用户参与信息DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserJoinCouponDto extends BaseModel {
+public class UserJoinTeamDto extends BaseModel {
 
-    @ApiModelProperty("体验券ID")
-    private Long couponId;
+    @ApiModelProperty("店家组队ID")
+    private Long teamId;
 
     @ApiModelProperty("用户ID")
     private Long userId;
@@ -23,12 +23,12 @@ public class UserJoinCouponDto extends BaseModel {
     @ApiModelProperty("用户头像")
     private String userHeadImg;
 
-    public Long getCouponId() {
-        return couponId;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setCouponId(Long couponId) {
-        this.couponId = couponId;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
     public Long getUserId() {

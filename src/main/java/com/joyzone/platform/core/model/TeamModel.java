@@ -1,14 +1,16 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.properties.IntegerProperty;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = TeamModel.TABLE_NAME)
 @ApiModel("组队信息")
-public class TeamModel {
+public class TeamModel extends BaseModel {
     protected static final String TABLE_NAME = "team";
     @Id
     @ApiModelProperty("主键")
@@ -47,6 +49,13 @@ public class TeamModel {
     private Integer result;
 
     /**
+     * 参加人数限制
+     */
+    @Excel(name="限制人数")
+    @ApiModelProperty("限制人数")
+    private Integer number;
+
+    /**
      * 创建时间
      */
     @Column(name = "create_time")
@@ -57,6 +66,10 @@ public class TeamModel {
      */
     @Column(name = "update_time")
     private Date updateTime;
+
+    @Transient
+    @ApiModelProperty("0：热点组队列表 1：最新组队列表")
+    private Integer sort;
 
     /**
      * @return id
@@ -172,6 +185,14 @@ public class TeamModel {
         this.result = result;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     /**
      * 获取创建时间
      *
@@ -206,5 +227,13 @@ public class TeamModel {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

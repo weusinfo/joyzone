@@ -7,27 +7,22 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 
-
 import java.util.Date;
 import java.util.List;
 
 
 @Configuration
-@ApiModel("前端体验券交互DTO")
+@ApiModel("前端店家组队列表交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class CouponDto extends BaseModel{
+public class TeamDto extends BaseModel{
 
-    public CouponDto(){
+    public TeamDto(){
 
     }
 
     //体验券ID
-    @ApiModelProperty("体验券主键")
-    private Long couponId;
-
-    //体验券图片：上面标明体验券价格，后台新增体验券时添加
-    @ApiModelProperty("体验券图片")
-    private String couponImg;
+    @ApiModelProperty("店家组队主键")
+    private Long teamId;
 
     //店家ID
     @ApiModelProperty("店家ID")
@@ -41,46 +36,26 @@ public class CouponDto extends BaseModel{
     @ApiModelProperty("店家名称")
     private String shopName;
 
-    //体验券名称，或体验活动名称
-    @ApiModelProperty("体验券或体验活动名称")
-    private String couponName;
-
     //店家地址
     @ApiModelProperty("店家地址")
     private String shopAddress;
 
     //体验活动开始时间
-    @ApiModelProperty("体验券开始时间")
+    @ApiModelProperty("店家组队开始时间")
     private Date startTime;
-
-    //体验活动结束时间
-    @ApiModelProperty("体验券结束时间")
-    private Date endTime;
-
-    //店家类型名称
-    @ApiModelProperty("店家类型名称")
-    private String shopTypeName;
 
     //允许的最大人数
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
-    private List<UserJoinCouponDto> userJoinList;
+    private List<UserJoinTeamDto> userJoinList;
 
-    public Long getCouponId() {
-        return couponId;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setCouponId(Long couponId) {
-        this.couponId = couponId;
-    }
-
-    public String getCouponImg() {
-        return couponImg;
-    }
-
-    public void setCouponImg(String couponImg) {
-        this.couponImg = couponImg;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
     public Long getShopId() {
@@ -107,14 +82,6 @@ public class CouponDto extends BaseModel{
         this.shopName = shopName;
     }
 
-    public String getCouponName() {
-        return couponName;
-    }
-
-    public void setCouponName(String couponName) {
-        this.couponName = couponName;
-    }
-
     public String getShopAddress() {
         return shopAddress;
     }
@@ -131,22 +98,6 @@ public class CouponDto extends BaseModel{
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getShopTypeName() {
-        return shopTypeName;
-    }
-
-    public void setShopTypeName(String shopTypeName) {
-        this.shopTypeName = shopTypeName;
-    }
-
     public Integer getPersonNum() {
         return personNum;
     }
@@ -155,12 +106,11 @@ public class CouponDto extends BaseModel{
         this.personNum = personNum;
     }
 
-    public List<UserJoinCouponDto> getUserJoinList() {
+    public List<UserJoinTeamDto> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinCouponDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
         this.userJoinList = userJoinList;
     }
-
 }
