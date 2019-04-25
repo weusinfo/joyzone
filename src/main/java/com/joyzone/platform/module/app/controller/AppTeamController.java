@@ -41,7 +41,7 @@ public class AppTeamController {
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel, Integer sort){
-        List<TeamDto> teamList = teamService.getTeamList(teamModel,sort);
+        List<TeamDto> teamList = teamService.getTeamList(teamModel);
         if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
