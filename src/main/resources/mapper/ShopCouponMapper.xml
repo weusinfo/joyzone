@@ -107,7 +107,7 @@
         SELECT cu.coupon_id AS couponId,u.id AS userId,u.head_pic AS userHeadImg
         FROM coupon_user cu
         LEFT JOIN user u ON u.id = cu.user_id
-        WHERE cu.coupon_id = #{couponId} AND cu.status = 1
+        WHERE cu.coupon_id = #{couponId} AND cu.status = 0
     </select>
 
 </mapper>

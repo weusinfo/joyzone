@@ -19,6 +19,26 @@
     <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
+  <resultMap id="teamOrderListMap" type="com.joyzone.platform.core.dto.OrderMineDto">
+    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <result column="shopId" property="shopId" jdbcType="BIGINT" />
+    <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
+    <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+    <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+    <result column="startTime" property="startTime" jdbcType="DATE" />
+    <result column="personNum" property="personNum" jdbcType="INTEGER" />
+    <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
+
+    </collection>
+  </resultMap>
+
+  <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
+    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <result column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="BaseResultSQL">
     id,team_id,order_type,order_no,shop_kind,shop_id,person_num,create_time,update_time,pay_time,status
   </sql>
@@ -54,4 +74,30 @@
     LEFT JOIN shop_type st on st.id = o.shop_type_id
     where o.id = #{id}
   </select>
+
+  <select id="getTeamOrderList" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
+    SELECT
+    t.id AS teamId,
+    t.shop_id AS shopId,
+    s.cover_img AS shopImg,
+    s.name AS shopName,
+    s.address AS shopAddress,
+    t.start_time AS startTime,
+    t.number AS personNum
+    FROM team_users tu
+    LEFT JOIN team t ON t.id = tu.team_id
+    LEFT JOIN shop s ON s.id = t.shop_id
+    WHERE user_id = #{userId}
+    AND t.status = 0
+    AND t.result = 0
+  </select>
+
+  <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
+    SELECT tu.team_id AS teamId,u.id AS userId,u.head_pic AS userHeadImg
+    FROM team_users tu
+    LEFT JOIN user u ON u.id = tu.user_id
+    WHERE tu.team_id = #{teamId} AND tu.status = 0
+  </select>
+
+
 </mapper>
