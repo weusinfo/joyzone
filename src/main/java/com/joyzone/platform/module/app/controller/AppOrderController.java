@@ -3,9 +3,11 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.dto.OrderMineDto;
 import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.model.OrderModel;
 import com.joyzone.platform.core.model.TeamModel;
-import com.joyzone.platform.core.service.TeamService;
+import com.joyzone.platform.core.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,29 +19,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/app_team")
-@Api(tags = "app首页店家组队列表相关接口",description = "AppTeamController")
-public class AppTeamController {
+@RequestMapping("/app_order")
+@Api(tags = "app首页订单列表相关接口",description = "AppOrderController")
+public class AppOrderController {
 
     @Autowired
-    private TeamService teamService;
+    private OrderService orderService;
 
     /**
      * zy
      */
-    @PostMapping("/getTeamList")
+    @PostMapping("/getMyOrderList")
     @ApiOperation("前端获取店家組隊列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0:报名 1：成功", required = true, dataType = "Integer", paramType = "query")
     })
-    public R getTeamList(TeamModel teamModel, Integer sort){
-        List<TeamDto> teamList = teamService.getTeamList(teamModel);
-        if(teamList != null && teamList.size() > 0){
+    public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
+        List<OrderMineDto> myOrderList = orderService.getTeamOrderList(orderModel,userId,type);
+        if(myOrderList != null && myOrderList.size() > 0){
             Page page = new Page();
-            page = (Page)teamList;
+            page = (Page)myOrderList;
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,new ArrayList<>());

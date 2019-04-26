@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.OrderDto;
+import com.joyzone.platform.core.dto.OrderMineDto;
 import com.joyzone.platform.core.mapper.OrderMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.BaseModel;
@@ -79,5 +80,10 @@ public class OrderService extends BaseService<OrderModel> {
 
     public  List<OrderDto> selectOrderList(OrderDto orderDto){
         return orderMapper.getOrderList(orderDto);
+    }
+
+    public List<OrderMineDto> getTeamOrderList(OrderModel orderModel, Long userId, Integer type){
+        orderModel.setUserId(userId);
+        return orderMapper.getTeamOrderList(orderModel);
     }
 }
