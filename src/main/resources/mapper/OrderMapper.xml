@@ -27,7 +27,16 @@
     <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
     <result column="startTime" property="startTime" jdbcType="DATE" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
+    <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
 
+    </collection>
+  </resultMap>
+
+  <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
+    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <result column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="BaseResultSQL">
@@ -81,6 +90,13 @@
     WHERE user_id = #{userId}
     AND t.status = 0
     AND t.result = 0
+  </select>
+
+  <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
+    SELECT tu.team_id AS teamId,u.id AS userId,u.head_pic AS userHeadImg
+    FROM team_users tu
+    LEFT JOIN user u ON u.id = tu.user_id
+    WHERE tu.team_id = #{teamId} AND tu.status = 0
   </select>
 
 
