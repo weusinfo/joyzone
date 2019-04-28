@@ -31,7 +31,7 @@ public class AppTeamController {
      * zy
      */
     @PostMapping("/getTeamList")
-    @ApiOperation("前端获取店家組隊列表")
+    @ApiOperation("前端获取体验券列表 @Yz")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
@@ -45,4 +45,18 @@ public class AppTeamController {
         return R.pageToData(0L,new ArrayList<>());
     }
 
+    /**
+     * zy
+     */
+    @PostMapping("/getCouponShopList")
+    @ApiOperation("前端获取体验券店家列表 @Yz")
+    public R getCouponShopList(ShopCouponModel shopCouponModel){
+        List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(shopCouponModel);
+        if(couponShopList != null && couponShopList.size() > 0){
+            Page page = new Page();
+            page = (Page)couponShopList;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
+    }
 }
