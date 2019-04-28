@@ -67,9 +67,6 @@ public class TeamModel extends BaseModel {
     @Column(name = "update_time")
     private Date updateTime;
 
-    @Transient
-    @ApiModelProperty("0：热点组队列表 1：最新组队列表")
-    private Integer sort;
 
     /**
      * @return id
@@ -229,11 +226,4 @@ public class TeamModel extends BaseModel {
         this.updateTime = updateTime;
     }
 
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
 }

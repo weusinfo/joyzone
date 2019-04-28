@@ -1,13 +1,19 @@
 server:
   port: 6006
   maxHttpHeaderSize: 10240000
-  tomcat:
-    max-threads: 800
-    uri-encoding: UTF-8
-    basedir:
-      /usr/local/joyzone/business
+  undertow:
+    io-threads: 4
+    worker-threads: 256
+    buffer-size: 1024
+    direct-buffers: true
     accesslog:
+      dir: /usr/local/accesslogs/joyzone/
       enabled: true
+      pattern: combined
+      prefix: access_log.
+      rotate: true
+      suffix: log
+    max-http-post-size: 10240000
 spring:
   servlet:
     multipart:

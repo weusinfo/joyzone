@@ -3,11 +3,8 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.dto.TeamDto;
-import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
-import com.joyzone.platform.core.service.ShopCouponService;
 import com.joyzone.platform.core.service.TeamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,8 +25,6 @@ import java.util.Map;
 public class AppTeamController {
 
     @Autowired
-    private ShopCouponService shopCouponService;
-    @Autowired
     private TeamService teamService;
 
     /**
@@ -41,7 +36,7 @@ public class AppTeamController {
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel, Integer sort){
-        List<TeamDto> teamList = teamService.getTeamList(teamModel,sort);
+        List<TeamDto> teamList = teamService.getTeamList(teamModel);
         if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
