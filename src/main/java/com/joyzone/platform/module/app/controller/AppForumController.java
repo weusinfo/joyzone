@@ -24,7 +24,7 @@ public class AppForumController {
      * Mr.Gx
      */
     @PostMapping("saveForum")
-    @ApiOperation("添加及更新论坛信息")
+    @ApiOperation("添加及更新论坛信息  @Mr.Gx")
     public R saveForum(ForumModel forumModel){
         return forumService.saveForumNum(forumModel);
     }
@@ -33,7 +33,7 @@ public class AppForumController {
      * Mr.Gx
      */
     @PostMapping("saveForumDetail")
-    @ApiOperation("添加跟帖信息")
+    @ApiOperation("添加跟帖信息 @Mr.Gx")
     public R saveForumDetail(ForumDetailModel forumDetailModel){
         return forumService.saveForumDetail(forumDetailModel);
     }

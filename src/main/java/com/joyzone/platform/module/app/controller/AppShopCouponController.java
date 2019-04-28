@@ -32,7 +32,7 @@ public class AppShopCouponController {
      * zy
      */
     @PostMapping("/getCouponList")
-    @ApiOperation("前端获取体验券列表")
+    @ApiOperation("前端获取体验券列表  @Yz")
     public R getCouponList(ShopCouponModel shopCouponModel){
         List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel);
         if(couponDtoList != null && couponDtoList.size() > 0){
@@ -47,7 +47,7 @@ public class AppShopCouponController {
      * zy
      */
     @PostMapping("/getCouponShopList")
-    @ApiOperation("前端获取体验券店家列表")
+    @ApiOperation("前端获取体验券店家列表 @Yz")
     public R getCouponShopList(ShopCouponModel shopCouponModel){
         List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(shopCouponModel);
         if(couponShopList != null && couponShopList.size() > 0){
