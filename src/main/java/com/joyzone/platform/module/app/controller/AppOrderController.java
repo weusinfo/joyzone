@@ -32,7 +32,7 @@ public class AppOrderController {
      * zy
      */
     @PostMapping("/getMyOrderList")
-    @ApiOperation("前端获取店家組隊列表")
+    @ApiOperation("前端获取订单組隊相关列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0:报名 1：成功", required = true, dataType = "Integer", paramType = "query")
