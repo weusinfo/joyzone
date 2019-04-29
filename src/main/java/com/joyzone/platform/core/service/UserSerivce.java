@@ -39,4 +39,8 @@ public class UserSerivce extends BaseService<UserModel> {
     public int saveUser(UserModel userModel){
         return userMapper.insertSelective(userModel);
     }
+
+    public List<UserModel> getUserByPhone(String phone){
+        return userMapper.getUserByPhone(phone);
+    }
 }

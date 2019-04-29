@@ -31,7 +31,7 @@ public class AppTeamController {
      * zy
      */
     @PostMapping("/getTeamList")
-    @ApiOperation("前端获取店家組隊列表")
+    @ApiOperation("前端获取店家組隊列表 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })

@@ -31,4 +31,9 @@
         <include refid="BaseResultSQL"></include>
       FROM user
   </select>
+
+  <select id="getUserByPhone" resultType="com.joyzone.platform.core.model.UserModel" >
+      SELECT * FROM user
+      WHERE phone = #{phone}
+  </select>
 </mapper>
