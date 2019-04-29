@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/app_order")
 @Api(tags = "app首页订单列表相关接口",description = "AppOrderController")
-public class AppOrderController {
+public class  AppOrderController {
 
     @Autowired
     private OrderService orderService;
@@ -32,7 +32,7 @@ public class AppOrderController {
      * zy
      */
     @PostMapping("/getMyOrderList")
-    @ApiOperation("前端获取店家組隊列表")
+    @ApiOperation("前端获取店家組隊列表 @Zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0:报名 1：成功", required = true, dataType = "Integer", paramType = "query")

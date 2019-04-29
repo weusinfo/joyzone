@@ -60,7 +60,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getRespondInvitings")
-    @ApiOperation("获取回应我的邀请列表")
+    @ApiOperation("获取回应我的邀请列表 @Mr.Gx")
     public R getRespondInvitings(InvitingDto invitingDto){
         return invitingService.getRespondInvitings(invitingDto);
     }
