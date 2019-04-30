@@ -4,7 +4,9 @@ package com.joyzone.platform.module.app.controller;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
+import com.joyzone.platform.core.service.ShopCouponService;
 import com.joyzone.platform.core.service.TeamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,11 +29,14 @@ public class AppTeamController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private ShopCouponService shopCouponService;
+
     /**
      * zy
      */
     @PostMapping("/getTeamList")
-    @ApiOperation("前端获取体验券列表 @Yz")
+    @ApiOperation("前端获取体验券列表 @Zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
@@ -49,7 +54,7 @@ public class AppTeamController {
      * zy
      */
     @PostMapping("/getCouponShopList")
-    @ApiOperation("前端获取体验券店家列表 @Yz")
+    @ApiOperation("前端获取体验券店家列表 @Zy")
     public R getCouponShopList(ShopCouponModel shopCouponModel){
         List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(shopCouponModel);
         if(couponShopList != null && couponShopList.size() > 0){
