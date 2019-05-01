@@ -11,27 +11,30 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="price_taste" property="priceTaste" jdbcType="DECIMAL" />
-    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="cover_img" property="coverImg" jdbcType="VARCHAR" />
-    <result column="shop_kind" property="shopKind" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="reg_img" property="regImg" jdbcType="VARCHAR" />
     <result column="legal_person_img" property="legalPersonImg" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="lng" property="lng" jdbcType="DECIMAL"/>
+    <result column="lat" property="lat" jdbcType="DECIMAL"/>
+    <result column="province" property="province" jdbcType="VARCHAR"/>
+    <result column="city" property="city" jdbcType="VARCHAR"/>
+    <result column="area" property="area" jdbcType="VARCHAR"/>
   </resultMap>
   
-  <insert id="addShop" parameterType="ShopModel">
-  insert into shop(name,phone,address,description,price,price_taste,type,cover_img,shop_kind,status,
-  	reg_img,legal_person_img,create_time)
+  <insert id="addShop" parameterType="com.joyzone.platform.core.model.ShopModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  insert into shop(name,phone,address,description,price,cover_img,status,
+  	reg_img,legal_person_img,create_time,province,city,area,lng,lat)
   values(#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
-  #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{priceTaste,jdbcType=DECIMAL},#{type,jdbcType=INTEGER},
-  #{coverImg,jdbcType=VARCHAR},#{shopKind,jdbcType=INTEGER},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
-  #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+  #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},
+  #{coverImg,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
+  #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},
+  #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL})
   </insert>
   
-  <update id="updateShop" parameterType="ShopModel">
+  <update id="updateShop" parameterType="com.joyzone.platform.core.model.ShopModel">
    update shop
     <set >
       <if test="name != null" >
@@ -49,17 +52,8 @@
       <if test="price != null" >
         price = #{price,jdbcType=DECIMAL},
       </if>
-      <if test="priceTaste != null" >
-        price_taste = #{priceTaste,jdbcType=DECIMAL},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
       <if test="coverImg != null" >
         cover_img = #{coverImg,jdbcType=INTEGER},
-      </if>
-      <if test="shopKind != null" >
-        shop_kind = #{shopKind,jdbcType=DECIMAL},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -73,6 +67,15 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+     </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -83,4 +86,26 @@
   		#{id}
   </foreach>
   </delete>
+
+  <select id="getAppShopList" resultType="com.joyzone.platform.core.vo.AppShopVO"
+                              parameterType="com.joyzone.platform.core.dto.ShopDto">
+      select
+         id,name,shop_type_id as shopTypeId,price,address,lng,lat,cover_img as coverImg,lng,lat
+      from shop
+      <where>
+        <if test="status != null">
+            status = #{status}
+        </if>
+        <if test="shopTypeId != null">
+            and shop_type_id = #{shopTypeId}
+        </if>
+        <if test="areaCode != null">
+            and area = #{areaCode}
+        </if>
+      </where>
+  </select>
+
+  <select id="findById" resultMap="BaseResultMap">
+      select * from shop where id = #{id}
+  </select>
 </mapper>
