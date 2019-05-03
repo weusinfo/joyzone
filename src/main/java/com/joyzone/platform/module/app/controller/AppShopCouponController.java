@@ -4,19 +4,20 @@ package com.joyzone.platform.module.app.controller;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.CouponDto;
-import com.joyzone.platform.core.dto.InvitingDto;
-import com.joyzone.platform.core.model.InvitingModel;
+import com.joyzone.platform.core.model.CouponUserModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
-import com.joyzone.platform.core.service.InvitingService;
+import com.joyzone.platform.core.service.CouponUserService;
 import com.joyzone.platform.core.service.ShopCouponService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class AppShopCouponController {
 
     @Autowired
     private ShopCouponService shopCouponService;
+    @Autowired
+    private CouponUserService couponUserService;
+
 
     /**
      * zy
@@ -57,4 +61,40 @@ public class AppShopCouponController {
         }
         return R.pageToData(0L,new ArrayList<>());
     }
+
+    @PostMapping("/joinTheCoupon")
+    @ApiOperation("前端用户领取体验券 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "couponId", value = "体验券ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R joinTheCoupon(CouponUserModel model, Long userId, Long couponId){
+        CouponUserModel couponUserModel = couponUserService.checkUserInCoupon(model,userId,couponId);
+        if(couponUserModel != null && couponUserModel.getStatus() == 0){
+            return R.error("用户已领取该体验券！");
+        }
+        if(couponUserModel != null && couponUserModel.getStatus() == 1){
+            couponUserModel.setStatus(0);
+            couponUserModel.setUpdateTime(new Date());
+            int result = couponUserService.update(couponUserModel);
+            if(result == 1){
+                return R.ok("用户领取成功！");
+            }else {
+                return R.error("用户领取失败！");
+            }
+        }
+        CouponUserModel bean = new CouponUserModel();
+        bean.setCouponId(couponId);
+        bean.setUserId(userId);
+        bean.setStatus(0);
+        bean.setCreateTime(new Date());
+        int ret = couponUserService.save(bean);
+        if(ret == 1){
+            return R.ok("用户领取成功！");
+        }else {
+            return R.error("用户领取失败！");
+        }
+    }
+
+
 }
