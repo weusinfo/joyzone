@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "sys_role")
-public class SysRoleModel {
+public class SysRoleModel  extends BaseModel{
     @Id
     private Long id;
 

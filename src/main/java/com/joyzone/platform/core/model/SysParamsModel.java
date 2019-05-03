@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Table(name = "sys_params")
 @ApiModel("系统参数信息")
-public class SysParamsModel {
+public class SysParamsModel  extends BaseModel{
     @Id
     @ApiModelProperty("主键")
     private Integer id;

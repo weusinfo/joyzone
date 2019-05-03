@@ -1,10 +1,13 @@
 package com.joyzone.platform.core.model;
 
+import io.swagger.annotations.ApiModel;
+
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "phone_black")
-public class PhoneBlackModel  extends BaseModel{
+@Table(name = "shop_collect")
+@ApiModel("店家收藏表")
+public class ShopCollectModel  extends BaseModel{
     /**
      * 主键
      */
@@ -12,25 +15,21 @@ public class PhoneBlackModel  extends BaseModel{
     private Long id;
 
     /**
-     * 用户ID
+     * 用户
      */
     @Column(name = "user_id")
     private Long userId;
 
     /**
-     * 手机号
+     * 店家ID
      */
-    private String phone;
+    @Column(name = "shop_id")
+    private Long shopId;
 
     /**
-     * 1 封号， 2禁入
+     * 0：收藏 1：取消收藏
      */
-    private Integer type;
-
-    /**
-     * 封号或禁入的原因
-     */
-    private String reason;
+    private Integer status;
 
     /**
      * 创建时间
@@ -39,7 +38,7 @@ public class PhoneBlackModel  extends BaseModel{
     private Date createTime;
 
     /**
-     * 更新时间
+     * 修改时间
      */
     @Column(name = "update_time")
     private Date updateTime;
@@ -63,75 +62,57 @@ public class PhoneBlackModel  extends BaseModel{
     }
 
     /**
-     * 获取用户ID
+     * 获取用户
      *
-     * @return user_id - 用户ID
+     * @return user_id - 用户
      */
     public Long getUserId() {
         return userId;
     }
 
     /**
-     * 设置用户ID
+     * 设置用户
      *
-     * @param userId 用户ID
+     * @param userId 用户
      */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
     /**
-     * 获取手机号
+     * 获取店家ID
      *
-     * @return phone - 手机号
+     * @return shop_id - 店家ID
      */
-    public String getPhone() {
-        return phone;
+    public Long getShopId() {
+        return shopId;
     }
 
     /**
-     * 设置手机号
+     * 设置店家ID
      *
-     * @param phone 手机号
+     * @param shopId 店家ID
      */
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
     }
 
     /**
-     * 获取1 封号， 2禁入
+     * 获取0：收藏 1：取消收藏
      *
-     * @return type - 1 封号， 2禁入
+     * @return status - 0：收藏 1：取消收藏
      */
-    public Integer getType() {
-        return type;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
-     * 设置1 封号， 2禁入
+     * 设置0：收藏 1：取消收藏
      *
-     * @param type 1 封号， 2禁入
+     * @param status 0：收藏 1：取消收藏
      */
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    /**
-     * 获取封号或禁入的原因
-     *
-     * @return reason - 封号或禁入的原因
-     */
-    public String getReason() {
-        return reason;
-    }
-
-    /**
-     * 设置封号或禁入的原因
-     *
-     * @param reason 封号或禁入的原因
-     */
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**
@@ -153,18 +134,18 @@ public class PhoneBlackModel  extends BaseModel{
     }
 
     /**
-     * 获取更新时间
+     * 获取修改时间
      *
-     * @return update_time - 更新时间
+     * @return update_time - 修改时间
      */
     public Date getUpdateTime() {
         return updateTime;
     }
 
     /**
-     * 设置更新时间
+     * 设置修改时间
      *
-     * @param updateTime 更新时间
+     * @param updateTime 修改时间
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;

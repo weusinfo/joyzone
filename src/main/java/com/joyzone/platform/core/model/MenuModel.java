@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Table(name = "menu")
 @ApiModel("菜单信息")
-public class MenuModel {
+public class MenuModel  extends BaseModel{
     @Id
     @ApiModelProperty("主键")
     private Long id;

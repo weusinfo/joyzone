@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "coupon_user")
-public class CouponUserModel {
+public class CouponUserModel  extends BaseModel{
     /**
      * 主键ID
      */
