@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Table(name = "sys_user")
 @ApiModel("系统用户信息")
-public class SysUserModel {
+public class SysUserModel  extends BaseModel{
     @Id
     @ApiModelProperty("主键")
     private Long id;
