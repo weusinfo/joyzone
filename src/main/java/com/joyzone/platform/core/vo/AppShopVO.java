@@ -36,7 +36,29 @@ public class AppShopVO {
     private Double lat;
 
     @ApiModelProperty("离商家的距离")
-    private Double distance;
+    private double distance;
+
+    @ApiModelProperty("商家描述")
+    private String description;
+
+    @ApiModelProperty("种类名称")
+    private String shopTypeName;
+
+    public String getShopTypeName() {
+        return shopTypeName;
+    }
+
+    public void setShopTypeName(String shopTypeName) {
+        this.shopTypeName = shopTypeName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -94,11 +116,11 @@ public class AppShopVO {
         this.lat = lat;
     }
 
-    public Double getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 }

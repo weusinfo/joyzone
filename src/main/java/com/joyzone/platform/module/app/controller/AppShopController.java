@@ -3,14 +3,14 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.ShopDto;
 import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.service.ShopService;
 import com.joyzone.platform.core.service.ShopTypeService;
-import com.joyzone.platform.core.vo.AppShopVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,26 +31,42 @@ public class AppShopController {
     @Autowired
     private ShopTypeService shopTypeService;
 
+    @PostMapping("getAppShopHomeList")
+    @ApiOperation("商家首页信息展示 @Mr.Gx")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
+            @ApiImplicitParam(name = "pageSize",value = "三组商家信息显示数量,默认6条",paramType = "form",defaultValue = "6")
+    })
+    public R getAppShopHomeList(@RequestParam("userId") Long userId, @RequestParam("pageSize") Integer pageSize){
+        return R.ok(shopService.getAppShopHomeList(userId,pageSize));
+    }
+
+    @PostMapping("findByShopId")
+    @ApiOperation("查看商家首页信息 @Mr.Gx")
+    @ApiImplicitParam(name="id", value="商户id",paramType ="form")
+    public R findByShopId(Long id){
+        return R.ok(shopService.findById(id));
+    }
+
     @PostMapping("getAppShopList")
-    @ApiOperation("根据种类获取店家信息 @Mr.Gx")
+    @ApiOperation("根据种类ID获取附近店家信息 @Mr.Gx")
     public R getAppShopList(ShopDto shopDto){
         if(shopDto == null)
             return R.error("参数不能为空");
-        if(shopDto.getLng() == null)
-            return R.error("用户所在的经度不能为空");
-        if(shopDto.getLat() == null)
-            return R.error("用户所在的纬度不能为空");
+        if(shopDto.getShopTypeId() == null)
+            return R.error("种类ID不能为空");
         if(shopDto.getPageNum() == null)
             shopDto.setPageNum(BaseModel.PAGE_NUM);
         if(shopDto.getPageSize() == null)
             shopDto.setPageSize(BaseModel.PAGE_SIZE);
 
-        return R.ok(shopService.getAppShopList(shopDto));
+        return shopService.getAppShopList(shopDto);
     }
 
     @PostMapping("getAppShopTypeList")
-    @ApiOperation("根据店家种类信息 @Mr.Gx")
+    @ApiOperation("获取店家组队种类信息 @Mr.Gx")
     public R getAppShopTypeList(){
-        return R.ok(shopTypeService.findByShopType());
+        return R.ok(shopTypeService.findByShopType(ShopTypeModel.SHOP_TYPE_ZD));
     }
+
 }

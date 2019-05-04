@@ -19,4 +19,10 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 	List<AppShopVO> getAppShopList(ShopDto shopDto);
 
 	ShopModel findById(@Param("id") Long id);
+
+	List<ShopModel> findAll();
+
+	List<AppShopVO> getAppShopHomeList(@Param("shopTypeId") Long shopTypeId,@Param("size") Integer size);
+
+	List<String> getShopPicList(@Param("size") Integer size);
 }

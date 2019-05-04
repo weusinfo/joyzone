@@ -13,6 +13,8 @@ import javax.persistence.*;
 public class ShopTypeModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_type";
+    public static final int SHOP_TYPE_ZD = 1;//组队类型
+    public static final int SHOP_TYPE_TYJ = 2;//体验券类型
 
     @Id
     @ApiModelProperty("主键")
