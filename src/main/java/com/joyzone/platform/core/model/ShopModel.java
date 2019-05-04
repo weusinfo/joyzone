@@ -36,13 +36,6 @@ public class ShopModel extends BaseModel {
     private BigDecimal price;
 
     /**
-     * 体验券价格
-     */
-    @Column(name = "price_taste")
-    @ApiModelProperty("体验券价格")
-    private BigDecimal priceTaste;
-
-    /**
      * 店家类型；0：组队店家，1：体验券店家
      */
     @ApiModelProperty("店家类型；0：组队店家，1：体验券店家")
@@ -54,13 +47,6 @@ public class ShopModel extends BaseModel {
     @Column(name = "cover_img")
     @ApiModelProperty("店家封面照片")
     private String coverImg;
-
-    /**
-     * 店家提供活动类型，1：轰趴馆，2：真人CS
-     */
-    @Column(name = "shop_kind")
-    @ApiModelProperty("店家提供活动类型，1：轰趴馆，2：真人CS")
-    private Integer shopKind;
 
     /**
      * 店家状态；0：签约；1：待审核；2：已禁入
@@ -93,6 +79,61 @@ public class ShopModel extends BaseModel {
      */
     @Column(name = "update_time")
     private Date updateTime;
+
+    @ApiModelProperty("经度")
+    private BigDecimal lng;
+
+    @ApiModelProperty("纬度")
+    private BigDecimal lat;
+
+    @ApiModelProperty("所在省")
+    private String province;
+
+    @ApiModelProperty("所在市")
+    private String city;
+
+    @ApiModelProperty("所在区")
+    private String area;
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
+    }
 
     /**
      * @return id
@@ -182,23 +223,6 @@ public class ShopModel extends BaseModel {
         this.price = price;
     }
 
-    /**
-     * 获取体验券价格
-     *
-     * @return price_taste - 体验券价格
-     */
-    public BigDecimal getPriceTaste() {
-        return priceTaste;
-    }
-
-    /**
-     * 设置体验券价格
-     *
-     * @param priceTaste 体验券价格
-     */
-    public void setPriceTaste(BigDecimal priceTaste) {
-        this.priceTaste = priceTaste;
-    }
 
     /**
      * 获取店家类型；0：组队店家，1：体验券店家
@@ -236,23 +260,6 @@ public class ShopModel extends BaseModel {
         this.coverImg = coverImg;
     }
 
-    /**
-     * 获取店家提供活动类型，1：轰趴馆，2：真人CS
-     *
-     * @return shop_kind - 店家提供活动类型，1：轰趴馆，2：真人CS
-     */
-    public Integer getShopKind() {
-        return shopKind;
-    }
-
-    /**
-     * 设置店家提供活动类型，1：轰趴馆，2：真人CS
-     *
-     * @param shopKind 店家提供活动类型，1：轰趴馆，2：真人CS
-     */
-    public void setShopKind(Integer shopKind) {
-        this.shopKind = shopKind;
-    }
 
     /**
      * 获取店家状态；1：签约；2：待审核；3：已禁入

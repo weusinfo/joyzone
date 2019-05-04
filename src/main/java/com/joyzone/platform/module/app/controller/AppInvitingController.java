@@ -24,7 +24,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("saveInviting")
-    @ApiOperation("发起邀请")
+    @ApiOperation("发起邀请 @Mr.Gx")
     public R saveInviting(InvitingModel invitingModel){
         return invitingService.saveInviting(invitingModel);
     }
@@ -33,7 +33,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getUserToInvitings")
-    @ApiOperation("获取受邀列表")
+    @ApiOperation("获取受邀列表   @Mr.Gx")
     public R getUserToInvitings(InvitingDto invitingDto){
         return invitingService.getUserToInvitings(invitingDto);
     }
@@ -42,7 +42,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getConfirmInvitings")
-    @ApiOperation("获取我的受邀正式函列表")
+    @ApiOperation("获取我的受邀正式函列表 @Mr.Gx")
     public R getConfirmInvitings(InvitingDto invitingDto){
         return invitingService.getConfirmInvitings(invitingDto);
     }
@@ -51,7 +51,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getMyInvitings")
-    @ApiOperation("获取我的邀请列表")
+    @ApiOperation("获取我的邀请列表 @Mr.Gx")
     public R getMyInvitings(InvitingDto invitingDto){
         return invitingService.getMyInvitings(invitingDto);
     }
@@ -60,7 +60,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getRespondInvitings")
-    @ApiOperation("获取回应我的邀请列表")
+    @ApiOperation("获取回应我的邀请列表 @Mr.Gx")
     public R getRespondInvitings(InvitingDto invitingDto){
         return invitingService.getRespondInvitings(invitingDto);
     }
