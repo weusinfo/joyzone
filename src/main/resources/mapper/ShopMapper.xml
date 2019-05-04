@@ -90,7 +90,7 @@
   <select id="getAppShopList" resultType="com.joyzone.platform.core.vo.AppShopVO"
                               parameterType="com.joyzone.platform.core.dto.ShopDto">
       select
-         id,name,shop_type_id as shopTypeId,price,address,lng,lat,cover_img as coverImg,lng,lat
+         id,name,shop_type_id as shopTypeId,price,address,lng,lat,cover_img as coverImg,description
       from shop
       <where>
         <if test="status != null">
@@ -107,5 +107,21 @@
 
   <select id="findById" resultMap="BaseResultMap">
       select * from shop where id = #{id}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+      select * from shop
+  </select>
+
+  <select id="getAppShopHomeList" resultType="com.joyzone.platform.core.vo.AppShopVO">
+    select
+      st.name as shopTypeName,s.id,s.name,s.price,s.address,s.lng,
+      s.lat,s.cover_img as coverImg,s.description
+    from shop s inner join shop_type st on st.id = s.shop_type_id
+    where s.status = 1 and st.type = 1 and st.status = 1 and st.id = #{shopTypeId}  limit #{size}
+  </select>
+
+  <select id="getShopPicList" resultType="java.lang.String">
+     select cover_img from shop where status = 1 limit #{size}
   </select>
 </mapper>

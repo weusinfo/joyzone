@@ -59,4 +59,18 @@
         LEFT JOIN user u ON u.id = tu.user_id
         WHERE tu.team_id = #{teamId} AND tu.status = 0
     </select>
+
+    <select id="getAppTeamList" resultType="com.joyzone.platform.core.vo.AppTeamVO">
+        select
+            t.id,t.start_time as startTime,u.id as userId,u.user_name as userName,
+            u.head_pic as userPic,u.sex,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age,
+            u.profession,u.education,s.name as shopName,s.cover_img as coverImg,
+            st.name as shopTypeName,if(IFNULL(tu.id,0) = 0,0,1) as userJoinStatus
+        FROM team t
+                 left join user u on u.id = t.owner
+                 left join shop s on s.id = t.shop_id
+                 left join shop_type st on st.id = s.shop_type_id
+                 left join team_users tu on (tu.team_id = t.id and tu.user_id = #{userId} and tu.status = 0)
+        where t.status = 0 and t.type = 0 and u.status = 0
+    </select>
 </mapper>

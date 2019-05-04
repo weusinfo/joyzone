@@ -22,8 +22,8 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
      * 获取店家类型ID与名称
      * Mr.Gx
      */
-    public List<Map<String,Object>> findByShopType(){
-        return shopTypeMapper.findByShopType();
+    public List<Map<String,Object>> findByShopType(Integer type){
+        return shopTypeMapper.findByShopType(type);
     }
 
     /**
@@ -32,6 +32,14 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
      */
     public List<Map<String,Object>> findByPid(Long pid){
         return shopTypeMapper.findByPid(pid);
+    }
+
+    /**
+     * 获取店家类型信息
+     * Mr.Gx
+     */
+    public List<ShopTypeModel> selectByPageSize(Integer pageNum,Integer pageSize,Integer type){
+        return shopTypeMapper.selectByPageSize(pageNum,pageSize,type);
     }
 
 }

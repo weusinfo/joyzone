@@ -99,4 +99,9 @@ public class ForumService extends BaseService<ForumModel> {
         return forumDetailMapper.updateByPrimaryKeySelective(forumDetailModel) > 0 ?
                 R.ok("更新成功.") : R.error(R.STATUS_FAIL,"更新失败.");
     }
+
+    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize){
+        forumMapper.getAppForumList(pageNum,pageSize);
+        return null;
+    }
 }

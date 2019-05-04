@@ -65,4 +65,21 @@ public class ShopController {
 		return R.ok(shops);
 	}
 
+
+	@PostMapping("saveLngOrLat")
+	@ApiOperation("测试使用（添加门店经纬度到缓存中取）")
+	public R saveLngOrLat(ShopModel shop){
+		if(shop != null && shop.getLng() != null){
+			shopService.saveLngOrLat(shop);
+		}else{
+			List<ShopModel> list = shopService.findAll();
+			if(list != null && list.size() > 0){
+				for(ShopModel shopModel : list){
+					shopService.saveLngOrLat(shopModel);
+				}
+			}
+		}
+		return R.ok("保存成功");
+	}
+
 }

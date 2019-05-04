@@ -1,14 +1,14 @@
 package com.joyzone.platform.core.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.*;
 import com.joyzone.platform.core.dto.ShopDto;
+import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.model.ShopTypeModel;
+import com.joyzone.platform.core.vo.AppShopHomeVO;
 import com.joyzone.platform.core.vo.AppShopVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +37,14 @@ public class ShopService extends BaseService<ShopModel> {
 	private Logger logger = LoggerFactory.getLogger(ShopService.class);
 
 	@Value("${distance_range}")
-	private double radius;
+	private double radius;//设置距离的范围
 
 	@Autowired
 	private ShopMapper shopMapper;
 	@Autowired
 	private RedisService redisService;
+	@Autowired
+	private ShopTypeService shopTypeService;
 
 	
 	public void validateShop(ShopModel shop) {
@@ -63,17 +65,34 @@ public class ShopService extends BaseService<ShopModel> {
 		shop.setStatus(ShopModel.STATUS_SUCCESS); //默认签约
 		shop.setCreateTime(new Date());
 		shopMapper.addShop(shop);
-		Long shopId = shop.getId();
-		if(shopId != null){
-			Point point = new Point(shop.getLng().doubleValue(),shop.getLat().doubleValue());
-			RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(),RedisColumn.SHOP_LOCATION ,point,shopId.toString());
-		}
+//		Long shopId = shop.getId();
+//		if(shopId != null){
+//			//缓存中保存商家经纬度信息
+//			saveLngOrLat(shop);
+//		}
 	}
 	
 	public void updateShop(ShopModel shop) {
 		validateShop(shop);
 		shop.setUpdateTime(new Date());
-		shopMapper.updateShop(shop);
+		int ret = shopMapper.updateShop(shop);
+//		if(ret > 0){
+//			//缓存中更新商家经纬度信息
+//			saveLngOrLat(shop);
+//		}
+	}
+
+	/**
+	 * 缓存中保存或者更新商家经纬度信息
+	 * @param shop
+	 */
+	public void saveLngOrLat(ShopModel shop){
+		Point point = new Point(shop.getLng().doubleValue(),shop.getLat().doubleValue());
+		RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(),RedisColumn.SHOP_TEAM_LOCATION ,point,shop.getId().toString());
+	}
+
+	public List<ShopModel> findAll(){
+		return shopMapper.findAll();
 	}
 	
 	public void batchDelete(Long[] ids) {
@@ -93,49 +112,69 @@ public class ShopService extends BaseService<ShopModel> {
 		if(i == 1) return true;
 		return false;
 	}
+
+
+	/**
+	 * 根据商家ID获取详情
+	 * @param id
+	 * @return
+	 */
+	public ShopModel findById(Long id){
+		return shopMapper.findById(id);
+	}
+
 	/**
 	 * 获取用户附近的商家信息
 	 * @param shopDto
 	 * @Mr.Gx
 	 */
 	public R getAppShopList(ShopDto shopDto){
-		Double longitude = shopDto.getLng().doubleValue();
-		Double latitude = shopDto.getLat().doubleValue();
-		Point geoCoordinate=new Point(longitude,latitude);
-		List<GeoRadiusDto>  geoRadiusResponseList = RedisGeoUtil.geoRadius(redisService.getStringRedisTemplate(), RedisColumn.SHOP_LOCATION,geoCoordinate,radius, Metrics.KILOMETERS, Sort.Direction.DESC);
-		String areaCode = null;
-		if(geoRadiusResponseList !=null && geoRadiusResponseList.size()>0){
-			for (GeoRadiusDto geoRadiusResponse:geoRadiusResponseList) {
-				String shopId = new String(geoRadiusResponse.getMember());
-				ShopModel shop = shopMapper.findById(Long.valueOf(shopId));
-				if(shop != null && (shop.getArea()!=null && !shop.getArea().equals("999999"))){
-					areaCode = shop.getArea();
-					break;
-				}
-			}
-			if(areaCode==null) {
-				areaCode= "999999";
-			}
-		}else{
-			areaCode= "999999";
-		}
-		if(!"999999".equals(areaCode)){
-			shopDto.setAreaCode(areaCode);
-		}
 		shopDto.setStatus(ShopModel.STATUS_SUCCESS); //已签约
 		List<AppShopVO> list = shopMapper.getAppShopList(shopDto);
-		//计算离商家的距离
 		if(list!=null && list.size()>0){
-			for (AppShopVO appShopVO: list) {
-				Double lon = appShopVO.getLng() != null ? appShopVO.getLng() : 0.0;
-				Double lat = appShopVO.getLat() != null ? appShopVO.getLat() : 0.0;
-				appShopVO.setDistance(LocationUtils.getDistance(latitude,longitude,lat,lon));
-			}
 			Page page = new Page();
 			page = (Page)list;
 			return R.pageToData(page.getTotal(),page.getResult());
 		}
 		return R.pageToData(0L,list);
+	}
+
+
+	/**
+	 * 获取App端商家首页信息
+	 * @Mr.Gx
+	 */
+	public R getAppShopHomeList(Long userId,Integer pageSize){
+		AppShopHomeVO appShopHomeVO = new AppShopHomeVO();
+		//获取轮播图规定六张
+		appShopHomeVO.setShopPicList(shopMapper.getShopPicList(BaseModel.PAGE_SIZE_SIX));
+		//获取组队店家的种类及三组店家相关信息
+		List<ShopTypeModel> list = shopTypeService.selectByPageSize(BaseModel.PAGE_NUM,BaseModel.PAGE_SIZE_SIX, ShopTypeModel.SHOP_TYPE_ZD);
+		if(list != null && list.size() > 0){
+			appShopHomeVO.setShopTypeModels(list);
+			int count = 0;
+			for(ShopTypeModel shopTypeModel : list){
+                if(count == 3){
+                    break;
+                }
+				if(count == 0){
+					appShopHomeVO.setAppShops1(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
+					count++;
+					continue;
+				}
+				if(count == 1){
+					appShopHomeVO.setAppShops2(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
+					count++;
+                    continue;
+				}
+				if(count == 2){
+					appShopHomeVO.setAppShops3(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
+					count++;
+                    continue;
+				}
+			}
+		}
+		return R.ok(appShopHomeVO);
 	}
 
 }

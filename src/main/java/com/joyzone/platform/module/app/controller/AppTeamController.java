@@ -82,4 +82,33 @@ public class AppTeamController {
         }
     }
 
+    @PostMapping("/saveTeam")
+    @ApiOperation("前端用户发起组队信息 @Mr.Gx")
+    public R saveTeam(TeamModel model){
+        if(model == null)
+            R.error("系统参数不能为空");
+        if(model.getOwner() == null)
+            R.error("发起人的ID不能为空");
+        if(model.getShopId() == null)
+            R.error("所属店家ID不能为空");
+        if(model.getStartTime() == null)
+            R.error("开始时间不能为空");
+        if(model.getNumber() == null)
+            R.error("请填写限制人数");
+
+        return teamService.saveTeam(model) > 0 ? R.ok() : R.error("操作失败");
+    }
+
+    @PostMapping("/getAppTeamList")
+    @ApiOperation("App获取组队列表信息 @Mr.Gx")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "页数",required = true, dataType = "Integer",defaultValue = "1",paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数",required = true, dataType = "Integer",defaultValue = "10",paramType = "query")
+    })
+    public R getAppTeamList(Long userId,Integer pageNum,Integer pageSize){
+        return teamService.getAppTeamList(userId,pageNum,pageSize);
+    }
+
+
 }
