@@ -73,3 +73,4 @@ secretKey:  1IRmyGn3FWlvukPSXKAQFy3vgF05rUwk
 bucket:  joyzone-1257127706
 fileSize: 2048000
 scale: 0.8
+distance_range: 1
