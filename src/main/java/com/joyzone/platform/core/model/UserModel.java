@@ -17,6 +17,12 @@ public class UserModel extends BaseModel{
     //密码加盐规则
     public static final String PASSWORD_RULE = "joy_zone";
 
+
+    public UserModel(String phone) {
+        this.phone = phone;
+    }
+    public UserModel() {
+    }
     /**
      * 自增长主键
      */
@@ -45,7 +51,7 @@ public class UserModel extends BaseModel{
      * 用户类型
      */
     @ApiModelProperty("用户类型")
-    private Boolean type;
+    private Integer type;
 
     /**
      * 用户电话号码
@@ -64,7 +70,7 @@ public class UserModel extends BaseModel{
      * 性别
      */
     @ApiModelProperty("性别 0 男 1女")
-    private Boolean sex;
+    private Integer sex;
 
     /**
      * 生日
@@ -76,7 +82,7 @@ public class UserModel extends BaseModel{
      * 用户状态
      */
     @ApiModelProperty("用户状态")
-    private Boolean status;
+    private Integer status;
 
     /**
      * 创建时间
@@ -167,24 +173,6 @@ public class UserModel extends BaseModel{
     }
 
     /**
-     * 获取用户类型
-     *
-     * @return type - 用户类型
-     */
-    public Boolean getType() {
-        return type;
-    }
-
-    /**
-     * 设置用户类型
-     *
-     * @param type 用户类型
-     */
-    public void setType(Boolean type) {
-        this.type = type;
-    }
-
-    /**
      * 获取用户电话号码
      *
      * @return phone - 用户电话号码
@@ -221,24 +209,6 @@ public class UserModel extends BaseModel{
     }
 
     /**
-     * 获取性别
-     *
-     * @return sex - 性别
-     */
-    public Boolean getSex() {
-        return sex;
-    }
-
-    /**
-     * 设置性别
-     *
-     * @param sex 性别
-     */
-    public void setSex(Boolean sex) {
-        this.sex = sex;
-    }
-
-    /**
      * 获取生日
      *
      * @return birthday - 生日
@@ -254,24 +224,6 @@ public class UserModel extends BaseModel{
      */
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    /**
-     * 获取用户状态
-     *
-     * @return status - 用户状态
-     */
-    public Boolean getStatus() {
-        return status;
-    }
-
-    /**
-     * 设置用户状态
-     *
-     * @param status 用户状态
-     */
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     /**
@@ -340,5 +292,29 @@ public class UserModel extends BaseModel{
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

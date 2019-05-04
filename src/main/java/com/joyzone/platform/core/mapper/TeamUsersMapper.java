@@ -13,4 +13,6 @@ public interface TeamUsersMapper extends Mapper<TeamUsersModel> {
     List<UserModel> getTeamUsers(@Param("teamId") Long teamId,@Param("pageNum")
                                     Integer pageNum,@Param("pageSize") Integer pageSize);
 
+    TeamUsersModel checkUserInTeam(TeamUsersModel model,@Param("userId") Long userId, @Param("teamId") Long teamId);
+
 }

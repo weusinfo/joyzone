@@ -4,10 +4,10 @@ package com.joyzone.platform.module.app.controller;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
-import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
-import com.joyzone.platform.core.service.ShopCouponService;
+import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.service.TeamService;
+import com.joyzone.platform.core.service.TeamUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,15 +29,12 @@ public class AppTeamController {
 
     @Autowired
     private TeamService teamService;
-
     @Autowired
-    private ShopCouponService shopCouponService;
+    private TeamUsersService teamUsersService;
 
-    /**
-     * zy
-     */
+
     @PostMapping("/getTeamList")
-    @ApiOperation("前端获取体验券列表 @Zy")
+    @ApiOperation("前端获取店家組隊列表 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
@@ -50,18 +48,38 @@ public class AppTeamController {
         return R.pageToData(0L,new ArrayList<>());
     }
 
-    /**
-     * zy
-     */
-    @PostMapping("/getCouponShopList")
-    @ApiOperation("前端获取体验券店家列表 @Zy")
-    public R getCouponShopList(ShopCouponModel shopCouponModel){
-        List<Map<String,Object>> couponShopList = shopCouponService.getCouponShopList(shopCouponModel);
-        if(couponShopList != null && couponShopList.size() > 0){
-            Page page = new Page();
-            page = (Page)couponShopList;
-            return R.pageToData(page.getTotal(),page.getResult());
+    @PostMapping("/joinTheTeam")
+    @ApiOperation("前端用户报名已有组队 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "teamId", value = "组队ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R joinTheTeam(TeamUsersModel model,Long userId,Long teamId){
+        TeamUsersModel teamUsersModel = teamUsersService.checkUserInTeam(model,userId,teamId);
+        if(teamUsersModel != null && teamUsersModel.getStatus() == 0){
+            return R.error("用户已报名该组队！");
         }
-        return R.pageToData(0L,new ArrayList<>());
+        if(teamUsersModel != null && teamUsersModel.getStatus() == 1){
+            teamUsersModel.setStatus(0);
+            teamUsersModel.setUpdateTime(new Date());
+            int result = teamUsersService.update(teamUsersModel);
+            if(result == 1){
+                return R.ok("用户报名成功！");
+            }else {
+                return R.error("用户报名失败！");
+            }
+        }
+        TeamUsersModel bean = new TeamUsersModel();
+        bean.setTeamId(teamId);
+        bean.setUserId(userId);
+        bean.setStatus(0);
+        bean.setCreateTime(new Date());
+        int ret = teamUsersService.save(bean);
+        if(ret == 1){
+            return R.ok("用户报名成功！");
+        }else {
+            return R.error("用户报名失败！");
+        }
     }
+
 }
