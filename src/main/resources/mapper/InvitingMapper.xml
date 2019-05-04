@@ -18,10 +18,11 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="pay_way" property="payWay" jdbcType="INTEGER" />
+      <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
   </resultMap>
 
     <sql id="BaseResultSql">
-        id,owner,shop_id,shop_name,address,content,type,start_time,status,result,create_time,update_time,pay_way
+        id,owner,shop_id,shop_name,address,content,type,start_time,status,result,create_time,update_time,pay_way,sex_want
     </sql>
 
     <select id="getInvitingList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingModel">

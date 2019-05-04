@@ -66,9 +66,9 @@ public class InvitingModel extends BaseModel{
     /**
      * 支付方式：0：AA，1：女生免费；2：赢家免费
      */
-    @ApiModelProperty("付方式：0：AA，1：女生免费；2：赢家免费")
+    @ApiModelProperty("付方式：0：AA，1：邀约者请客 2：女生免费；3：赢家免费 4:女生半价 5：赢家半价")
     @Column(name = "pay_way")
-    @Excel(name="支付类型",replace = {"AA_0","女生免费_1","赢家免费_2"})
+    @Excel(name="支付类型",replace = {"AA_0","邀约者请客_1","女生免费_2","赢家免费_3","女生半价_4","赢家半价_5"})
     private Integer payWay;
 
     /**
@@ -108,6 +108,14 @@ public class InvitingModel extends BaseModel{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Transient
     private Date endTime;
+
+    /**
+     * 希望邀约对象性别：0女 1男 2随便
+     */
+    @ApiModelProperty("希望邀约对象性别：0女 1男 2随便")
+    @Column(name = "sex_want")
+    @Excel(name="希望邀约对象性别：",replace = {"女_0","男_1","随便_2"})
+    private Integer sexWant;
 
     /**
      * @return id
@@ -335,5 +343,13 @@ public class InvitingModel extends BaseModel{
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Integer getSexWant() {
+        return sexWant;
+    }
+
+    public void setSexWant(Integer sexWant) {
+        this.sexWant = sexWant;
     }
 }
