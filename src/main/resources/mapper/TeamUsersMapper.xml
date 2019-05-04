@@ -17,4 +17,10 @@
     SELECT u.* FROM user u INNER JOIN team_users tu on tu.user_id = u.id
     WHERE tu.team_id = #{teamId} and tu.status = 0 GROUP BY u.id
   </select>
+
+  <select id="checkUserInTeam" resultType="com.joyzone.platform.core.model.TeamUsersModel" parameterType="com.joyzone.platform.core.model.TeamUsersModel">
+    SELECT tu.* FROM team_users tu
+    WHERE tu.user_id = #{userId} AND tu.team_id  = #{teamId}
+  </select>
+
 </mapper>
