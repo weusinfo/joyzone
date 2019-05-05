@@ -48,6 +48,7 @@ public class ShopService extends BaseService<ShopModel> {
 
 	
 	public void validateShop(ShopModel shop) {
+		if(shop.getShopTypeId() == null) throw new JZException("门店种类不能为空");
 		if(StringUtils.isEmpty(shop.getName())) throw new JZException("门店名不能为空");
 		if(StringUtils.isEmpty(shop.getAddress())) throw new JZException("门店地址不能为空");
 		if(StringUtils.isEmpty(shop.getPhone())) throw new JZException("门店电话不能为空");

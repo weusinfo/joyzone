@@ -31,10 +31,7 @@ public class ShopController {
 			@ApiImplicitParam(name="phone", value="商户联系电话", required=true,paramType="form"),
 			@ApiImplicitParam(name="address", value="商户地址", required=true,paramType="form"),
 			@ApiImplicitParam(name="description", value="商户描述", required=true, paramType="form"),
-			@ApiImplicitParam(name="type", value="商户类型:0:组队店家;1:体验券店家", required=true, paramType="form"),
 			@ApiImplicitParam(name="price", value="组队店家", paramType="form"),
-			@ApiImplicitParam(name="priceTaste", value="体验价格", required=true, paramType="form"),
-			@ApiImplicitParam(name="shopKind", value="店家提供的活动类型", required=true, paramType="form"),
 			@ApiImplicitParam(name="regImg", value="工商注册照片", required=false, paramType="form"),
 			@ApiImplicitParam(name="legalPersonImg", value="法人信息照片", required=false, paramType="form")
 	})
