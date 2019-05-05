@@ -22,16 +22,19 @@
     <result column="province" property="province" jdbcType="VARCHAR"/>
     <result column="city" property="city" jdbcType="VARCHAR"/>
     <result column="area" property="area" jdbcType="VARCHAR"/>
+    <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT"/>
+    <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR"/>
   </resultMap>
   
   <insert id="addShop" parameterType="com.joyzone.platform.core.model.ShopModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   insert into shop(name,phone,address,description,price,cover_img,status,
-  	reg_img,legal_person_img,create_time,province,city,area,lng,lat)
+  	reg_img,legal_person_img,create_time,province,city,area,lng,lat,shop_type_id,shop_type_name)
   values(#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
   #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},
   #{coverImg,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
   #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},
-  #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL})
+  #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL},
+  #{shopTypeId,jdbcType=BIGINT},#{shopTypeName,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateShop" parameterType="com.joyzone.platform.core.model.ShopModel">
@@ -76,6 +79,12 @@
       <if test="area != null">
         area = #{area,jdbcType=VARCHAR},
       </if>
+     <if test="shopTypeId != null">
+        shop_type_id = #{shopTypeId,jdbcType=BIGINT},
+     </if>
+     <if test="shopTypeName != null and shopTypeName != ''">
+        shop_type_name = #{shopTypeName,jdbcType=VARCHAR},
+     </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -90,7 +99,7 @@
   <select id="getAppShopList" resultType="com.joyzone.platform.core.vo.AppShopVO"
                               parameterType="com.joyzone.platform.core.dto.ShopDto">
       select
-         id,name,shop_type_id as shopTypeId,price,address,lng,lat,cover_img as coverImg,description
+         id,name,shop_type_id as shopTypeId,shop_type_name as shopTypeName,price,address,lng,lat,cover_img as coverImg,description
       from shop
       <where>
         <if test="status != null">
