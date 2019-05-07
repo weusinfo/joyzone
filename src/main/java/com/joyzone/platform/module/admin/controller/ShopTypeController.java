@@ -22,8 +22,7 @@ public class ShopTypeController {
 	private ShopTypeService shopTypeService;
 	
 	@GetMapping("getShopTypeList")
-	@ApiOperation("店家的类型及类型旗下的种类")
-	@ApiImplicitParam(value = "类型：1 组队店家 2 体验店家",name = "type",paramType = "type")
+	@ApiOperation("店家的类型及类型旗下的种：1 组队店家 2 体验店家")
 	public R getShopTypeList(@RequestParam("type") Integer type) {
 		return R.ok(shopTypeService.findByShopType(type));
 	}
