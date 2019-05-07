@@ -23,8 +23,8 @@ public class TeamService extends BaseService<TeamModel> {
     @Autowired
     private TeamMapper teamMapper;
 
-    public  List<TeamDto> getTeamList(TeamModel teamModel){
-        return teamMapper.getTeamList(teamModel);
+    public  List<TeamDto> getTeamList(TeamModel teamModel, Integer sort){
+        return teamMapper.getTeamList(teamModel,sort);
     }
 
 }

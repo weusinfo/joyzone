@@ -2,6 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.model.TeamModel;
@@ -39,7 +40,8 @@ public class AppTeamController {
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel, Integer sort){
-        List<TeamDto> teamList = teamService.getTeamList(teamModel);
+        PageHelper.startPage(0,10);
+        List<TeamDto> teamList = teamService.getTeamList(teamModel,sort);
         if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
