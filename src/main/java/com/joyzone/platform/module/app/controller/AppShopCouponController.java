@@ -2,6 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.model.CouponUserModel;
@@ -37,8 +38,12 @@ public class AppShopCouponController {
      */
     @PostMapping("/getCouponList")
     @ApiOperation("前端获取体验券列表 @zhangyu")
-    public R getCouponList(ShopCouponModel shopCouponModel){
-        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R getCouponList(ShopCouponModel shopCouponModel, Integer sort){
+        PageHelper.startPage(0,10);
+        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel,sort);
         if(couponDtoList != null && couponDtoList.size() > 0){
             Page page = new Page();
             page = (Page)couponDtoList;

@@ -54,8 +54,8 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.getCouponShopList(shopCouponModel);
     }
 
-    public  List<CouponDto> getCouponList(ShopCouponModel shopCouponModel){
-        return shopCouponMapper.getCouponList(shopCouponModel);
+    public  List<CouponDto> getCouponList(ShopCouponModel shopCouponModel, Integer sort){
+        return shopCouponMapper.getCouponList(shopCouponModel,sort);
     }
 
 }
