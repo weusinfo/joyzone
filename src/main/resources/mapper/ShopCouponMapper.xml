@@ -100,23 +100,23 @@
         sc.shop_type_name AS shopTypeName,
         sc.number AS personNum
         FROM (
-        SELECT * FROM shop_coupon WHERE id IN (
-        SELECT a.id FROM (
-        SELECT
-        sc.id,sc.`number`,
-        (SELECT COUNT(*) FROM coupon_user WHERE coupon_id =sc.id AND STATUS = 0) AS joinNum
-        FROM shop_coupon sc
-        LEFT JOIN coupon_user cu ON cu.coupon_id = sc.id
-        GROUP BY sc.id
-        ) a
-        WHERE 1=1
-        <if test="sort == 0">
-          and a.number <![CDATA[ <= ]]> (a.joinNum * 2)
-        </if>
-        <if test="sort == 1">
-            and a.number > (a.joinNum * 2)
-        </if>
-        )
+            SELECT * FROM shop_coupon WHERE id IN (
+            SELECT a.id FROM (
+                SELECT
+                sc.id,sc.`number`,
+                (SELECT COUNT(*) FROM coupon_user WHERE coupon_id =sc.id AND STATUS = 0) AS joinNum
+                FROM shop_coupon sc
+                LEFT JOIN coupon_user cu ON cu.coupon_id = sc.id
+                GROUP BY sc.id
+            ) a
+            WHERE 1=1
+            <if test="sort == 0">
+              and a.number <![CDATA[ <= ]]> (a.joinNum * 2)
+            </if>
+            <if test="sort == 1">
+                and a.number > (a.joinNum * 2)
+            </if>
+            )
         ) sc
         LEFT JOIN shop s ON s.id = sc.shop_id
         WHERE sc.status = 1
@@ -128,6 +128,14 @@
         FROM coupon_user cu
         LEFT JOIN user u ON u.id = cu.user_id
         WHERE cu.coupon_id = #{couponId} AND cu.status = 0
+    </select>
+
+    <select id="checkCouponIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        sc.number,
+        (SELECT COUNT(*) FROM coupon_user WHERE coupon_id =#{couponId} AND STATUS = 0) AS joinNum
+        FROM shop_coupon sc
+        WHERE sc.id = #{couponId}
     </select>
 
 </mapper>

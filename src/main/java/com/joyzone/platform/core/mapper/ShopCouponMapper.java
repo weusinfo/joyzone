@@ -17,4 +17,6 @@ public interface ShopCouponMapper extends Mapper<ShopCouponModel> {
     List<Map<String,Object>> getCouponShopList(ShopCouponModel shopCouponModel);
 
     List<CouponDto> getCouponList(ShopCouponModel shopCouponModel, @Param("sort") Integer sort);
+
+    Map<String,Object> checkCouponIfSuccess(@Param("couponId") Long couponId);
 }

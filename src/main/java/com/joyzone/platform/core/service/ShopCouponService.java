@@ -58,4 +58,8 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.getCouponList(shopCouponModel,sort);
     }
 
+    public Map<String,Object> checkCouponIfSuccess(Long couponId){
+        return shopCouponMapper.checkCouponIfSuccess(couponId);
+    }
+
 }
