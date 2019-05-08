@@ -89,7 +89,12 @@
     LEFT JOIN shop s ON s.id = t.shop_id
     WHERE user_id = #{userId}
     AND t.status = 0
-    AND t.result = 0
+    <if test="type == 0">
+      AND t.result = 0
+    </if>
+    <if test="type == 1">
+      AND t.result = 1
+    </if>
   </select>
 
   <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">

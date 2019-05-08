@@ -83,7 +83,6 @@ public class OrderService extends BaseService<OrderModel> {
     }
 
     public List<OrderMineDto> getTeamOrderList(OrderModel orderModel, Long userId, Integer type){
-        orderModel.setUserId(userId);
-        return orderMapper.getTeamOrderList(orderModel);
+        return orderMapper.getTeamOrderList(orderModel,userId,type);
     }
 }

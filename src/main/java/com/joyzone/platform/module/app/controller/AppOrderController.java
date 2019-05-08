@@ -2,6 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.OrderMineDto;
 import com.joyzone.platform.core.dto.TeamDto;
@@ -47,6 +48,7 @@ public class AppOrderController {
             @ApiImplicitParam(name = "type", value = "0:报名 1：成功", required = true, dataType = "Integer", paramType = "query")
     })
     public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
+        PageHelper.startPage(0,10);
         List<OrderMineDto> myOrderList = orderService.getTeamOrderList(orderModel,userId,type);
         if(myOrderList != null && myOrderList.size() > 0){
             Page page = new Page();
