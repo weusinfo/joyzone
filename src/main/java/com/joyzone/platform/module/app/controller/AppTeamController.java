@@ -65,6 +65,7 @@ public class AppTeamController {
             teamUsersModel.setStatus(0);
             teamUsersModel.setUpdateTime(new Date());
             int result = teamUsersService.update(teamUsersModel);
+            checkTeamIfSuccess(teamId);
             if(result == 1){
                 return R.ok("用户报名成功！");
             }else {
@@ -77,10 +78,24 @@ public class AppTeamController {
         bean.setStatus(0);
         bean.setCreateTime(new Date());
         int ret = teamUsersService.save(bean);
+        checkTeamIfSuccess(teamId);
         if(ret == 1){
             return R.ok("用户报名成功！");
         }else {
             return R.error("用户报名失败！");
+        }
+    }
+
+    public void checkTeamIfSuccess(Long teamId){
+        Map<String,Object> teamInfo = teamService.checkTeamIfSuccess(teamId);
+        Integer number = (Integer) teamInfo.get("number");
+        Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
+        if(number == joinNum){
+            TeamModel model = new TeamModel();
+            model.setId(teamId);
+            model.setResult(1);
+            model.setUpdateTime(new Date());
+            teamService.update(model);
         }
     }
 

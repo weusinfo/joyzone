@@ -27,4 +27,8 @@ public class TeamService extends BaseService<TeamModel> {
         return teamMapper.getTeamList(teamModel,sort);
     }
 
+    public Map<String,Object> checkTeamIfSuccess(Long teamId){
+        return teamMapper.checkTeamIfSuccess(teamId);
+    }
+
 }

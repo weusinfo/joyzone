@@ -79,4 +79,13 @@
         LEFT JOIN user u ON u.id = tu.user_id
         WHERE tu.team_id = #{teamId} AND tu.status = 0
     </select>
+
+    <select id="checkTeamIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        t.number,
+        (SELECT COUNT(*) FROM team_users WHERE team_id =#{teamId} AND STATUS = 0) AS joinNum
+        FROM team t
+        WHERE t.id = #{teamId}
+    </select>
+
 </mapper>
