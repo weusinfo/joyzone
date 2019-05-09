@@ -6,6 +6,7 @@ import java.util.*;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.*;
 import com.joyzone.platform.core.dto.ShopDto;
+import com.joyzone.platform.core.dto.ShopHomeDto;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.vo.AppShopHomeVO;
@@ -176,6 +177,10 @@ public class ShopService extends BaseService<ShopModel> {
 			}
 		}
 		return R.ok(appShopHomeVO);
+	}
+
+	public List<ShopHomeDto> getShopHomeList(Long userId){
+		return shopMapper.getShopHomeList(userId);
 	}
 
 }
