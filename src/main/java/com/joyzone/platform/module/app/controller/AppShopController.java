@@ -1,7 +1,10 @@
 package com.joyzone.platform.module.app.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.ShopDto;
+import com.joyzone.platform.core.dto.ShopHomeDto;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.service.ShopService;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description:TODO
@@ -39,6 +44,22 @@ public class AppShopController {
     })
     public R getAppShopHomeList(@RequestParam("userId") Long userId, @RequestParam("pageSize") Integer pageSize){
         return R.ok(shopService.getAppShopHomeList(userId,pageSize));
+    }
+
+    @PostMapping("getShopHomeList")
+    @ApiOperation("商家首页信息展示 @zy")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form")
+    })
+    public R getShopHomeList(@RequestParam("userId") Long userId){
+        PageHelper.startPage(0,10);
+        List<ShopHomeDto> shopHomeList = shopService.getShopHomeList(userId);
+        if(shopHomeList != null && shopHomeList.size() > 0){
+            Page page = new Page();
+            page = (Page)shopHomeList;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
     }
 
     @PostMapping("findByShopId")

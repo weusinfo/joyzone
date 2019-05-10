@@ -25,4 +25,17 @@
       <include refid="BaseResultSQL"></include>
      from forum_detail where status = 1 and forum_id = #{forumId}
   </select>
+
+  <select id="selectForumDetails" resultType="com.joyzone.platform.core.vo.AppForumVO">
+    SELECT
+      f.id,f.content,f.point_num as pointNum,f.create_time as createTime,u.id as userId,
+      u.login_name as userName,u.head_pic as headPic,u.sex,u.education,u.profession,
+      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age
+    FROM forum_detail f INNER JOIN `user` u on (f.user_id = u.id and u.`status` = 0)
+    WHERE f.`status` = 1 and f.forum_id = #{forumId}
+  </select>
+
+  <update id="updateForumDetailPointNum">
+    update forum_detail set point_num = point_num + 1 where id = #{id}
+  </update>
 </mapper>
