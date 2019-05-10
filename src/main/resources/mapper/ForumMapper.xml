@@ -33,4 +33,17 @@
           and create_time <![CDATA[ <= ]]> #{endTime}
       </if>
   </select>
+
+    <select id="getAppForumList" resultType="com.joyzone.platform.core.vo.AppForumVO" >
+        SELECT
+            f.id,f.content,f.type,f.point_num as pointNum,f.create_time as createTime,
+            u.id as userId,u.login_name as userName,u.head_pic as headPic,u.sex,u.education,
+            u.profession,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age
+        FROM forum f INNER JOIN `user` u on (f.user_id = u.id and u.`status` = 0)
+        WHERE f.`status` = 1
+    </select>
+
+    <update id="updateForumPointNum">
+        update forum set point_num = point_num + 1 where id = #{id}
+    </update>
 </mapper>
