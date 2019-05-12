@@ -1,6 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +30,7 @@ public class UserModel extends BaseModel{
      */
     @Id
     @ApiModelProperty("主键")
+    @Excel(name="主键")
     private Long id;
 
     /**
@@ -50,13 +53,14 @@ public class UserModel extends BaseModel{
     /**
      * 用户类型
      */
-    @ApiModelProperty("用户类型")
+    @ApiModelProperty("用户类型 0 用户(默认)")
     private Integer type;
 
     /**
      * 用户电话号码
      */
     @ApiModelProperty("用户电话")
+    @Excel(name="电话")
     private String phone;
 
     /**
@@ -70,52 +74,59 @@ public class UserModel extends BaseModel{
      * 性别
      */
     @ApiModelProperty("性别 0 男 1女")
+    @Excel(name="性别",replace = {"男_0","女_1"})
     private Integer sex;
 
     /**
      * 生日
      */
-    @ApiModelProperty("生日")
+    @ApiModelProperty("生日(yyyy-MM-dd)")
+    @DateTimeFormat(pattern = DateUtils.DATE_PATTERN)
+    @Excel(name="生日",exportFormat = DateUtils.DATE_PATTERN)
     private Date birthday;
 
     /**
      * 用户状态
      */
     @ApiModelProperty("用户状态")
+    @Excel(name="性别",replace = {"激活_0","封号_1","禁入_2"})
     private Integer status;
 
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @Column(name = "create_time")
+    @Excel(name="创建时间",exportFormat = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;
 
     /**
      * 更新时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @Column(name = "update_time")
+    @Excel(name="更新时间",exportFormat = DateUtils.DATE_TIME_PATTERN)
     private Date updateTime;
 
     /**
      * 职业
      */
     @ApiModelProperty("职业")
+    @Excel(name = "职业")
     private String profession;
 
     /**
      * 学历
      */
     @ApiModelProperty("学历")
+    @Excel(name = "学历")
     private String education;
 
     /**
      * 年龄
      */
-    @ApiModelProperty("年龄")
     private Integer age;
 
     /**

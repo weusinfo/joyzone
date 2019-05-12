@@ -13,4 +13,6 @@ public interface Constants {
 	String JOY_FORUM = "论坛清单模板";
 	
 	String PARAM_LOGIN_FORBIDDEN_NUM = "登陆试错次数";
+
+	String APP_USER = "用户清单模板";
 }
