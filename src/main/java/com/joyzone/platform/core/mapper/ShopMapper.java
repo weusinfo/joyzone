@@ -29,4 +29,6 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 
 	List<ShopHomeDto> getShopHomeList(@Param("userId") Long userId);
 
+	List<ShopModel> getAppShopByTypeId(@Param("typeId") Long typeId);
+
 }

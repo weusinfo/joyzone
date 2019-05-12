@@ -53,7 +53,7 @@ pagehelper:
   support-methods-arguments: true
   params: count:countSql
 druid:
-  url: jdbc:mysql://120.78.156.35:3306/joyzone?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+  url: jdbc:mysql://120.78.156.35:3306/joyzone?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
   driver-class: com.mysql.jdbc.Driver
   username: root
   password: Joyzone@hgz

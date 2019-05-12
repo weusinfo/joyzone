@@ -6,6 +6,7 @@ import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.ShopDto;
 import com.joyzone.platform.core.dto.ShopHomeDto;
 import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.model.ShopModel;
 import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.service.ShopService;
 import com.joyzone.platform.core.service.ShopTypeService;
@@ -82,6 +83,19 @@ public class AppShopController {
             shopDto.setPageSize(BaseModel.PAGE_SIZE);
 
         return shopService.getAppShopList(shopDto);
+    }
+
+    @PostMapping("getAppShopByTypeId")
+    @ApiOperation("根据种类ID获取附近店家信息 @zy")
+    public R getAppShopByTypeId(Long typeId){
+        PageHelper.startPage(0,10);
+        List<ShopModel> shopInfoList = shopService.getAppShopByTypeId(typeId);
+        if(shopInfoList != null && shopInfoList.size() > 0){
+            Page page = new Page();
+            page = (Page)shopInfoList;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
     }
 
     @PostMapping("getAppShopTypeList")
