@@ -40,9 +40,14 @@ public class TeamService extends BaseService<TeamModel> {
     public int saveTeam(TeamModel teamModel){
         Date date = new Date();
         if(teamModel.getId() == null){//添加
-            teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);
-            teamModel.setStatus(BaseModel.STATUS_SUCCESS);
+            List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
+            if(teamModelList != null && teamModelList.size() > 0){
+                return 999;
+            }
+            teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
+            teamModel.setStatus(0); //组队有效
             teamModel.setCreateTime(date);
+            teamModel.setResult(0); //组队中
             return teamMapper.insertSelective(teamModel);
         }
         //更新

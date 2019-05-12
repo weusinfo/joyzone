@@ -67,6 +67,21 @@ public class TeamModel extends BaseModel {
     @Column(name = "update_time")
     private Date updateTime;
 
+    /**
+     * 支付方式：0：AA，1：组队发起者请客 2：女生免费；3：赢家免费 4:女生半价 5：赢家半价
+     */
+    @Excel(name="支付类型",replace = {"AA_0","邀约者请客_1","女生免费_2","赢家免费_3","女生半价_4","赢家半价_5"})
+    @ApiModelProperty("支付方式 0：AA，1：组队发起者请客 2：女生免费；3：赢家免费 4:女生半价 5：赢家半价")
+    @Column(name = "pay_way")
+    private Integer payWay;
+
+    /**
+     * 参加人数限制
+     */
+    @Excel(name="希望组队成员性别比例：0：约1:1   1：女>0  2随便")
+    @ApiModelProperty("希望组队成员性别比例：0：约1:1   1：女>0  2随便")
+    @Column(name = "sex_want")
+    private Integer sexWant;
 
     /**
      * @return id
@@ -226,4 +241,19 @@ public class TeamModel extends BaseModel {
         this.updateTime = updateTime;
     }
 
+    public Integer getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(Integer payWay) {
+        this.payWay = payWay;
+    }
+
+    public Integer getSexWant() {
+        return sexWant;
+    }
+
+    public void setSexWant(Integer sexWant) {
+        this.sexWant = sexWant;
+    }
 }

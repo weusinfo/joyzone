@@ -19,4 +19,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
 
     List<ShopTeamsDto> getShopTeamListByShopId(@Param("shopId") Long shopId);
 
+    List<TeamModel> checkUserStartTeam(@Param("userId") Long userId,@Param("shopId") Long shopId);
+
 }
