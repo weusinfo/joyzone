@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.CouponDto;
+import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
@@ -39,9 +40,14 @@ public class TeamService extends BaseService<TeamModel> {
     public int saveTeam(TeamModel teamModel){
         Date date = new Date();
         if(teamModel.getId() == null){//添加
-            teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);
-            teamModel.setStatus(BaseModel.STATUS_SUCCESS);
+            List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
+            if(teamModelList != null && teamModelList.size() > 0){
+                return 999;
+            }
+            teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
+            teamModel.setStatus(0); //组队有效
             teamModel.setCreateTime(date);
+            teamModel.setResult(0); //组队中
             return teamMapper.insertSelective(teamModel);
         }
         //更新
@@ -64,6 +70,10 @@ public class TeamService extends BaseService<TeamModel> {
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,list);
+    }
+
+    public List<ShopTeamsDto> getShopTeamListByShopId(Long shopId){
+        return teamMapper.getShopTeamListByShopId(shopId);
     }
 
 }

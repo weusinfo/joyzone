@@ -36,4 +36,11 @@
       SELECT * FROM user
       WHERE phone = #{phone}
   </select>
+
+  <delete id="delUsers">
+    delete from user where id in
+    <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+    </foreach>
+  </delete>
 </mapper>

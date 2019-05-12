@@ -95,8 +95,15 @@ public class AppTeamController {
             R.error("开始时间不能为空");
         if(model.getNumber() == null)
             R.error("请填写限制人数");
-
-        return teamService.saveTeam(model) > 0 ? R.ok() : R.error("操作失败");
+        if(model.getPayWay() == null)
+            R.error("请填写付款方式");
+        if(model.getSexWant() == null)
+            R.error("请填写希望的男女比列");
+        int ret = teamService.saveTeam(model);
+        if(ret == 999){
+            return R.error("用户已在该店内发起了有效组队！");
+        }
+        return ret > 0 ? R.ok() : R.error("操作失败");
     }
 
     @PostMapping("/getAppTeamList")

@@ -214,5 +214,12 @@
          WHERE shop_type_id = #{shopTypeId}
     </select>
 
+    <select id="getAppShopByTypeId" resultType="com.joyzone.platform.core.model.ShopModel">
+         SELECT
+         id,NAME,shop_type_id AS shopTypeId,shop_type_name AS shopTypeName,price,address,lng,lat,cover_img AS coverImg,description
+         FROM shop
+         WHERE shop_type_id = #{typeId}
+         AND STATUS = 1
+    </select>
 
 </mapper>

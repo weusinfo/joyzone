@@ -11,6 +11,7 @@ import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +44,9 @@ public class UserSerivce extends BaseService<UserModel> {
      * Mr.Gx
      */
     public int saveUser(UserModel userModel){
+        Date date = new Date();
+        userModel.setCreateTime(date);
+        userModel.setUpdateTime(date);
         return userMapper.insertSelective(userModel);
     }
 
@@ -61,5 +65,23 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public Long saveUserLngAndLat(Long userId,Double lng,Double lat){
         return RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(), RedisColumn.USER_LOCATION,new Point(lng,lat),userId.toString());
+    }
+
+    /**
+     * 批量删除数据
+     * @param ids
+     * Mr.Gx
+     */
+    public int delUsers(Long[] ids){
+        return userMapper.delUsers(ids);
+    }
+
+    /**
+     * 根据条件获取导出数据
+     * @param userModel
+     * Mr.Gx
+     */
+    public List<UserModel> getExportUserXls(UserModel userModel){
+        return userMapper.getUserList(userModel);
     }
 }

@@ -183,4 +183,8 @@ public class ShopService extends BaseService<ShopModel> {
 		return shopMapper.getShopHomeList(userId);
 	}
 
+	public List<ShopModel> getAppShopByTypeId(Long typeId){
+		return shopMapper.getAppShopByTypeId(typeId);
+	}
+
 }

@@ -15,6 +15,8 @@
     <result column="number" property="number" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+      <result column="pay_way" property="payWay" jdbcType="INTEGER" />
+      <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
   </resultMap>
 
   <resultMap id="teamListMap" type="com.joyzone.platform.core.dto.TeamDto">
@@ -37,6 +39,18 @@
     <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
   </resultMap>
 
+    <resultMap id="shopTeamsMap" type="com.joyzone.platform.core.dto.ShopTeamsDto">
+        <id column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="teamId" property="teamId" jdbcType="BIGINT" />
+        <result column="shopCoverImg" property="shopCoverImg" jdbcType="VARCHAR" />
+        <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+        <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+        <result column="shopPrice" property="shopPrice" jdbcType="DECIMAL" />
+        <collection property="teamUsers" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
+
+        </collection>
+    </resultMap>
 
     <select id="getTeamList" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
           SELECT
@@ -72,5 +86,28 @@
                  left join shop_type st on st.id = s.shop_type_id
                  left join team_users tu on (tu.team_id = t.id and tu.user_id = #{userId} and tu.status = 0)
         where t.status = 0 and t.type = 0 and u.status = 0
+    </select>
+
+    <select id="getShopTeamListByShopId" resultMap="shopTeamsMap">
+        SELECT
+            s.id AS shopId,
+            s.`cover_img` AS shopCoverImg,
+            s.`name` AS shopName,
+            s.`address` AS shopAddress,
+            s.`price` AS shopPrice,
+            t.id AS teamId
+        FROM team t
+        LEFT JOIN shop s ON s.id = t.shop_id
+        WHERE t.status = 0 AND t.result = 0
+        AND t.shop_id = #{shopId}
+    </select>
+
+    <select id="checkUserStartTeam" resultMap="BaseResultMap">
+        SELECT
+        t.*
+        FROM team t
+        WHERE t.owner = #{userId}
+        AND t.shop_id = #{shopId}
+        AND t.status = 0
     </select>
 </mapper>
