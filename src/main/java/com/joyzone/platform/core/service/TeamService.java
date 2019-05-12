@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.CouponDto;
+import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
@@ -64,6 +65,10 @@ public class TeamService extends BaseService<TeamModel> {
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,list);
+    }
+
+    public List<ShopTeamsDto> getShopTeamListByShopId(Long shopId){
+        return teamMapper.getShopTeamListByShopId(shopId);
     }
 
 }
