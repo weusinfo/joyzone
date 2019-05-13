@@ -83,6 +83,13 @@ public class ShopCouponModel extends BaseModel{
     private Integer status;
 
     /**
+     * 状态：0 失效 1 正常
+     */
+    @Excel(name="结果",replace= {"组队中_0","组队成功_1","组队失败_2"})
+    @ApiModelProperty("结果：0：组队中；1：组队成功；2：组队失败")
+    private Integer result;
+
+    /**
      * 开始时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -219,6 +226,14 @@ public class ShopCouponModel extends BaseModel{
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
     }
 
     /**

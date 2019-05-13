@@ -14,6 +14,7 @@
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="back_img" property="backImg" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="INTEGER" />
     <result column="number" property="number" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
@@ -47,7 +48,7 @@
     </resultMap>
 
   <sql id="BaseResultSQL">
-    id, shop_id,name,price,back_img,status,number,start_time,end_time,create_time,
+    id, shop_id,name,price,back_img,status,result,number,start_time,end_time,create_time,
     update_time,content,number,shop_name,shop_type_id,shop_type_name
   </sql>
 
@@ -75,32 +76,54 @@
 
     <select id="getCouponShopList" resultType="java.util.HashMap" parameterType="com.joyzone.platform.core.model.ShopCouponModel">
         SELECT
-        id AS couponShopId,
-        NAME AS couponShopName,
-        address AS couponShopAddress,
-        price AS couponShopPrice,
-        price_taste AS shopPriceTaste,
-        cover_img AS shopCoverImg,
-        shop_kind AS shopKind
-        FROM shop WHERE TYPE = 1 AND STATUS = 1
+            s.id AS couponShopId,
+            s.name AS couponShopName,
+            s.address AS couponShopAddress,
+            s.price AS couponShopPrice,
+            s.cover_img AS shopCoverImg,
+            st.id AS shopTypeId,
+            st.name AS shopTypeName
+        FROM shop s
+        LEFT JOIN shop_type st ON st.id = s.shop_type_id
+        WHERE s.status = 1 AND st.status = 1 AND st.type = 2
     </select>
 
     <select id="getCouponList" resultMap="couponShopList" parameterType="com.joyzone.platform.core.model.ShopCouponModel">
         SELECT
-            sc.id AS couponId,
-            sc.back_img AS couponImg,
-            sc.shop_id AS shopId,
-            s.cover_img AS shopImg,
-            s.name AS shopName,
-            sc.name AS couponName,
-            s.address AS shopAddress,
-            sc.start_time AS startTime,
-            sc.end_time AS endTime,
-            sc.shop_type_name AS shopTypeName,
-            sc.number AS personNum
-        FROM shop_coupon sc
+        sc.id AS couponId,
+        sc.back_img AS couponImg,
+        sc.shop_id AS shopId,
+        s.cover_img AS shopImg,
+        s.name AS shopName,
+        sc.name AS couponName,
+        s.address AS shopAddress,
+        sc.start_time AS startTime,
+        sc.end_time AS endTime,
+        sc.shop_type_name AS shopTypeName,
+        sc.number AS personNum
+        FROM (
+            SELECT * FROM shop_coupon WHERE id IN (
+            SELECT a.id FROM (
+                SELECT
+                sc.id,sc.`number`,
+                (SELECT COUNT(*) FROM coupon_user WHERE coupon_id =sc.id AND STATUS = 0) AS joinNum
+                FROM shop_coupon sc
+                LEFT JOIN coupon_user cu ON cu.coupon_id = sc.id
+                GROUP BY sc.id
+            ) a
+            WHERE 1=1
+            <if test="sort == 0">
+              and a.number <![CDATA[ <= ]]> (a.joinNum * 2)
+            </if>
+            <if test="sort == 1">
+                and a.number > (a.joinNum * 2)
+            </if>
+            )
+        ) sc
         LEFT JOIN shop s ON s.id = sc.shop_id
         WHERE sc.status = 1
+        AND sc.result = 0
+        AND sc.end_time > NOW()
     </select>
 
     <select id="queryUserJoinCouponList" resultMap="userJoinCouponMap">
@@ -108,6 +131,14 @@
         FROM coupon_user cu
         LEFT JOIN user u ON u.id = cu.user_id
         WHERE cu.coupon_id = #{couponId} AND cu.status = 0
+    </select>
+
+    <select id="checkCouponIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        sc.number,
+        (SELECT COUNT(*) FROM coupon_user WHERE coupon_id =#{couponId} AND STATUS = 0) AS joinNum
+        FROM shop_coupon sc
+        WHERE sc.id = #{couponId}
     </select>
 
 </mapper>

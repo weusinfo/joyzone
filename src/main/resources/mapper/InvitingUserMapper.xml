@@ -9,12 +9,13 @@
     <result column="inviting_id" property="invitingId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="confirm" property="confirm" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="BaseResultSQL">
-    id,inviting_id,user_id,status,create_time,update_time
+    id,inviting_id,user_id,status,confirm,create_time,update_time
   </sql>
 
   <select id="findByInvitingId" resultMap="BaseResultMap">

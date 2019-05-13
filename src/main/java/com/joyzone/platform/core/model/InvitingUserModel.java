@@ -29,6 +29,12 @@ public class InvitingUserModel extends BaseModel{
     @ApiModelProperty("0 退出 1 接受")
     private Integer status;
 
+    /**
+     * 0收到正式函 1未收到
+     */
+    @ApiModelProperty("0收到正式函 1未收到")
+    private Integer confirm;
+
     @Column(name = "create_time")
     private Date createTime;
 
@@ -93,6 +99,14 @@ public class InvitingUserModel extends BaseModel{
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(Integer confirm) {
+        this.confirm = confirm;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.model.TeamModel;
@@ -39,7 +40,8 @@ public class AppTeamController {
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel, Integer sort){
-        List<TeamDto> teamList = teamService.getTeamList(teamModel);
+        PageHelper.startPage(0,10);
+        List<TeamDto> teamList = teamService.getTeamList(teamModel,sort);
         if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
@@ -63,6 +65,7 @@ public class AppTeamController {
             teamUsersModel.setStatus(0);
             teamUsersModel.setUpdateTime(new Date());
             int result = teamUsersService.update(teamUsersModel);
+            checkTeamIfSuccess(teamId);
             if(result == 1){
                 return R.ok("用户报名成功！");
             }else {
@@ -75,6 +78,7 @@ public class AppTeamController {
         bean.setStatus(0);
         bean.setCreateTime(new Date());
         int ret = teamUsersService.save(bean);
+        checkTeamIfSuccess(teamId);
         if(ret == 1){
             return R.ok("用户报名成功！");
         }else {
@@ -82,6 +86,19 @@ public class AppTeamController {
         }
     }
 
+    public void checkTeamIfSuccess(Long teamId){
+        Map<String,Object> teamInfo = teamService.checkTeamIfSuccess(teamId);
+        Integer number = (Integer) teamInfo.get("number");
+        Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
+        if(number == joinNum){
+            TeamModel model = new TeamModel();
+            model.setId(teamId);
+            model.setResult(1);
+            model.setUpdateTime(new Date());
+            teamService.update(model);
+        }
+    }
+  
     @PostMapping("/saveTeam")
     @ApiOperation("前端用户发起组队信息 @Mr.Gx")
     public R saveTeam(TeamModel model){
@@ -116,6 +133,4 @@ public class AppTeamController {
     public R getAppTeamList(Long userId,Integer pageNum,Integer pageSize){
         return teamService.getAppTeamList(userId,pageNum,pageSize);
     }
-
-
 }
