@@ -1,11 +1,11 @@
 package com.joyzone.platform.module.admin.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.ShopModel;
@@ -77,6 +77,30 @@ public class ShopController {
 			}
 		}
 		return R.ok("保存成功");
+	}
+
+	/**
+	 * 用于新增系统用户时选择商家信息
+	 * @param name
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	@GetMapping("getShopMapList")
+	@ApiOperation("用于新增系统用户时选择商家信息")
+	@ApiImplicitParams(value= {
+			@ApiImplicitParam(name="name", value="商户名字", paramType="query"),
+			@ApiImplicitParam(name="pageNum", value="页数", paramType="query",defaultValue = "1"),
+			@ApiImplicitParam(name="pageSize", value="每页条数", paramType="query",defaultValue = "10"),
+	})
+	public R getShopMapList(String name,Integer pageNum,Integer pageSize){
+		List<Map<String,Object>> list = shopService.getShopMapList(name,pageNum,pageSize);
+		if(list != null && list.size() > 0){
+			Page page = new Page();
+			page = (Page)list;
+			return R.pageToData(page.getTotal(),page.getResult());
+		}
+		return R.pageToData(0L,list);
 	}
 
 }

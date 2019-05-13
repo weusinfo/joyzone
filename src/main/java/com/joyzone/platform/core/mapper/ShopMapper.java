@@ -8,6 +8,7 @@ import com.joyzone.platform.core.vo.AppShopVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ShopMapper extends BaseMapper<ShopModel> {
 	
@@ -31,4 +32,7 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 
 	List<ShopModel> getAppShopByTypeId(@Param("typeId") Long typeId);
 
+	List<Map<String,Object>> getShopMapList(@Param("name") String name,
+											@Param("pageNum") Integer pageNum,
+											@Param("pageSize")Integer pageSize);
 }

@@ -11,7 +11,7 @@ public interface SysUserMapper extends BaseMapper<SysUserModel> {
 
 	int updateSysUser(SysUserModel sysUser);
 	
-	int batchDelete(Long[] ids);
+	int batchDelete(@Param("ids") Long[] ids);
 	
 	Integer checkUserByName(@Param("userName") String userName);
 	
@@ -22,4 +22,6 @@ public interface SysUserMapper extends BaseMapper<SysUserModel> {
 	List<SysUserModel> listUsers(SysUserModel sysUser);
 	
 	SysUserModel selectByName(@Param("userName") String userName);
+
+	SysUserModel selectById(Long id);
 }

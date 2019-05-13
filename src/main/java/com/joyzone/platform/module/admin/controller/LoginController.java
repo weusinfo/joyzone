@@ -1,6 +1,8 @@
 package com.joyzone.platform.module.admin.controller;
 
 import java.util.List;
+
+import com.joyzone.platform.core.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ public class LoginController {
 	public R auth(String userName, String password) {
 		if(PublicUtil.isEmpty(userName)) return R.error("请输入用户名");
 		if(PublicUtil.isEmpty(password)) return R.error("请输入密码");
-		List<Menus> menus = permissionService.auth(userName, password);
+		SysUserVO menus = permissionService.auth(userName, password);
 		return R.ok(menus);
 	}
 
