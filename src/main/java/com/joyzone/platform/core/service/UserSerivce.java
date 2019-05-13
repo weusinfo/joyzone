@@ -45,6 +45,10 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public int saveUser(UserModel userModel){
         Date date = new Date();
+        if(userModel.getId() != null){
+            userModel.setUpdateTime(date);
+            return userMapper.updateByPrimaryKeySelective(userModel);
+        }
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
         return userMapper.insertSelective(userModel);

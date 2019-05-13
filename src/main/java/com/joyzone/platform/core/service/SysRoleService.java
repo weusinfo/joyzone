@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,10 @@ public class SysRoleService extends BaseService<SysRoleModel> {
 	public void grantRole(Long roleId, Long userId) {
 		roleMapper.revokeRole(userId);
 		roleMapper.grantRole(roleId, userId);
+	}
+
+	public List<SysRoleModel> getRoleList(){
+		return roleMapper.getRoleList();
 	}
 
 }

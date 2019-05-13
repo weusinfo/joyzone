@@ -12,6 +12,10 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <sql id="BaseResultSQL">
+    id,role_name,status,remark,create_time,update_time
+  </sql>
   
   <insert id="addRole" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="SysRoleModel" >
     insert into sys_role (role_name,
@@ -61,4 +65,10 @@
   values (#{roleId,jdbcType=BIGINT},
        #{userId,jdbcType=BIGINT}, sysdate())
   </insert>
+
+  <select id="getRoleList" resultMap="BaseResultMap">
+      select
+        <include refid="BaseResultSQL"></include>
+      from sys_role where status = 0
+  </select>
 </mapper>

@@ -15,6 +15,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/sysRole")
 @Api(value="SysRoleController", tags="后台角色设置")
@@ -37,5 +39,11 @@ public class SysRoleController {
 		if(roleId == null || userId == null) return R.error("缺少必要参数");
 		roleService.grantRole(roleId, userId);
 		return R.ok("角色设置成功");
+	}
+
+	@ApiOperation(value="获取角色列表")
+	@PostMapping("/getRoleList  @Mr.Gx")
+	public R getRoleList() {
+		return R.ok(roleService.getRoleList());
 	}
 }
