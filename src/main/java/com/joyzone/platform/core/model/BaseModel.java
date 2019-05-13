@@ -19,6 +19,7 @@ public class BaseModel implements Serializable {
     public static final int PAGE_SIZE = 10;//条数
     public static final int STATUS_SUCCESS = 1; //正常
     public static final int STATUS_FAILL = 0;   //失效
+    public static final int PAGE_SIZE_SIX = 6;   //默认
 
     @Transient
     @ApiModelProperty("页数")

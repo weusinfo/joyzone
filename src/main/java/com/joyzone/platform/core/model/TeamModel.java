@@ -83,7 +83,6 @@ public class TeamModel extends BaseModel {
     @Column(name = "sex_want")
     private Integer sexWant;
 
-
     /**
      * @return id
      */

@@ -13,6 +13,8 @@ import javax.persistence.*;
 public class ShopTypeModel extends BaseModel{
 
     protected static final String TABLE_NAME = "shop_type";
+    public static final int SHOP_TYPE_ZD = 0;//组队类型
+    public static final int SHOP_TYPE_TYJ = 1;//体验券类型
 
     @Id
     @ApiModelProperty("主键")
@@ -25,9 +27,9 @@ public class ShopTypeModel extends BaseModel{
     private String name;
 
     /**
-     * 1 : 组队类型   2：体验类型
+     * 0 : 组队类型   1：体验类型
      */
-    @ApiModelProperty("1 : 组队类型   2：体验类型")
+    @ApiModelProperty("0 : 组队类型   1：体验类型")
     private Integer type;
 
     @ApiModelProperty("父级ID")

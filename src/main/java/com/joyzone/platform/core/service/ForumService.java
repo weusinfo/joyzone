@@ -10,6 +10,7 @@ import com.joyzone.platform.core.mapper.ForumMapper;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ForumDetailModel;
 import com.joyzone.platform.core.model.ForumModel;
+import com.joyzone.platform.core.vo.AppForumVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,5 +99,46 @@ public class ForumService extends BaseService<ForumModel> {
         forumDetailModel.setUpdateTime(date);
         return forumDetailMapper.updateByPrimaryKeySelective(forumDetailModel) > 0 ?
                 R.ok("更新成功.") : R.error(R.STATUS_FAIL,"更新失败.");
+    }
+
+
+    /**
+     * App我的论坛列表
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize){
+        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize);
+        if(list != null && list.size() > 0){
+            for(AppForumVO appForumVO : list){
+                appForumVO.setForumDetails(forumDetailMapper.selectForumDetails(appForumVO.getId()));
+            }
+            Page page = new Page();
+            page=(Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,list);
+    }
+
+    /**
+     * 对主评论进行点赞
+     * @param userId
+     * @return
+     */
+    public R updateForumPointNum(Long userId,Long forumId){
+        return forumMapper.updateForumPointNum(forumId) > 0 ?
+                R.ok() : R.error("操作失败");
+    }
+
+    /**
+     * 对跟帖评论进行点赞
+     * @param userId
+     * @return
+     */
+    public R updateForumDetailPointNum(Long userId,Long forumDetailId){
+        return forumDetailMapper.updateForumDetailPointNum(forumDetailId) > 0 ?
+                R.ok() : R.error("操作失败");
     }
 }

@@ -9,7 +9,7 @@
     <id column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="sex" property="address" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="head_img" property="headImg" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -19,7 +19,7 @@
     <result column="try_err_times" property="tryErrTimes" jdbcType="INTEGER" />
   </resultMap>
   
-  <update id="updateSysUser" parameterType="SysUserModel">
+  <update id="updateSysUser" parameterType="com.joyzone.platform.core.model.SysUserModel">
    update sys_user
     <set >
       <if test="name != null" >
@@ -60,7 +60,7 @@
   </foreach>
   </delete>
   
-  <select id="selectByName" resultType="SysUserModel">
+  <select id="selectByName" resultType="com.joyzone.platform.core.model.SysUserModel">
   	select * from sys_user where status = 0 and name = #{userName}
   </select>
   
@@ -76,12 +76,16 @@
   select try_err_times from sys_user where name = #{userName}
   </select>
   
-  <select id="listUsers" parameterType="SysUserModel" resultType="SysUserModel">
-  select id, name, phone, sex, head_img from sys_user 
+  <select id="listUsers" parameterType="com.joyzone.platform.core.model.SysUserModel" resultType="com.joyzone.platform.core.model.SysUserModel">
+  select id,shop_id, name, phone, sex, head_img,status,create_time,update_time,last_login_time from sys_user
 	  <where>
 	  	<if test="id != null ">id=#{id}</if>
 	  	<if test="name != null and name.length()>0" >and name like "%"#{name}"%"</if>
 	  	<if test="shopId != null">and shop_id = #{shopId}</if>
 	  </where>
+  </select>
+
+  <select id="selectById" resultType="com.joyzone.platform.core.model.SysUserModel" parameterType="java.lang.Long">
+      select id,shop_id,name, phone, sex, head_img,status,last_login_time,create_time,update_time from sys_user where id = #{id}
   </select>
 </mapper>

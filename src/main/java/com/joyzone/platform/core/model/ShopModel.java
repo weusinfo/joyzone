@@ -36,12 +36,6 @@ public class ShopModel extends BaseModel {
     private BigDecimal price;
 
     /**
-     * 店家类型；0：组队店家，1：体验券店家
-     */
-    @ApiModelProperty("店家类型；0：组队店家，1：体验券店家")
-    private Integer type;
-
-    /**
      * 店家封面照片
      */
     @Column(name = "cover_img")
@@ -94,6 +88,14 @@ public class ShopModel extends BaseModel {
 
     @ApiModelProperty("所在区")
     private String area;
+
+    @ApiModelProperty("所属店家种类ID")
+    @Column(name = "shop_type_id")
+    private Long shopTypeId;
+
+    @ApiModelProperty("所属店家种类名称")
+    @Column(name = "shop_type_name")
+    private String shopTypeName;
 
     public String getProvince() {
         return province;
@@ -223,25 +225,6 @@ public class ShopModel extends BaseModel {
         this.price = price;
     }
 
-
-    /**
-     * 获取店家类型；0：组队店家，1：体验券店家
-     *
-     * @return type - 店家类型；0：组队店家，1：体验券店家
-     */
-    public Integer getType() {
-        return type;
-    }
-
-    /**
-     * 设置店家类型；0：组队店家，1：体验券店家
-     *
-     * @param type 店家类型；0：组队店家，1：体验券店家
-     */
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     /**
      * 获取店家封面照片
      *
@@ -349,5 +332,21 @@ public class ShopModel extends BaseModel {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getShopTypeId() {
+        return shopTypeId;
+    }
+
+    public void setShopTypeId(Long shopTypeId) {
+        this.shopTypeId = shopTypeId;
+    }
+
+    public String getShopTypeName() {
+        return shopTypeName;
+    }
+
+    public void setShopTypeName(String shopTypeName) {
+        this.shopTypeName = shopTypeName;
     }
 }

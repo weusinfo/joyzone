@@ -22,16 +22,57 @@
     <result column="province" property="province" jdbcType="VARCHAR"/>
     <result column="city" property="city" jdbcType="VARCHAR"/>
     <result column="area" property="area" jdbcType="VARCHAR"/>
+    <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT"/>
+    <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR"/>
   </resultMap>
-  
+
+    <resultMap id="ShopHomeDtoMap" type="com.joyzone.platform.core.dto.ShopHomeDto">
+        <id column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <collection property="shopHomeBannerDtoList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeBannerDtoList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeBannerDto">
+
+        </collection>
+        <collection property="shopHomeTypeDtoList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeTypeDtoList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeTypeDto">
+
+        </collection>
+        <collection property="shopHomeListDtoList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeListDtoList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeListDto">
+
+        </collection>
+    </resultMap>
+
+    <resultMap id="shopHomeBannerDtoMap" type="com.joyzone.platform.core.dto.ShopHomeBannerDto">
+        <id column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="shopCoverImg" property="shopCoverImg" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="shopHomeTypeDtoMap" type="com.joyzone.platform.core.dto.ShopHomeTypeDto">
+        <id column="shopTypeId" property="shopTypeId" jdbcType="BIGINT" />
+        <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="shopHomeListDtoMap" type="com.joyzone.platform.core.dto.ShopHomeListDto">
+        <id column="shopTypeId" property="shopTypeId" jdbcType="BIGINT" />
+        <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
+        <collection property="shopHomeCoverList" javaType="ArrayList" column="{shopTypeId=shopTypeId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeCoverList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeListCoverDto">
+
+        </collection>
+    </resultMap>
+    <resultMap id="shopHomeCoverMap" type="com.joyzone.platform.core.dto.ShopHomeListCoverDto">
+        <id column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="shopCover" property="shopCover" jdbcType="VARCHAR" />
+    </resultMap>
+
   <insert id="addShop" parameterType="com.joyzone.platform.core.model.ShopModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   insert into shop(name,phone,address,description,price,cover_img,status,
-  	reg_img,legal_person_img,create_time,province,city,area,lng,lat)
+  	reg_img,legal_person_img,create_time,province,city,area,lng,lat,shop_type_id,shop_type_name)
   values(#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
   #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},
   #{coverImg,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
   #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},
-  #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL})
+  #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL},
+  #{shopTypeId,jdbcType=BIGINT},#{shopTypeName,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateShop" parameterType="com.joyzone.platform.core.model.ShopModel">
@@ -76,6 +117,12 @@
       <if test="area != null">
         area = #{area,jdbcType=VARCHAR},
       </if>
+     <if test="shopTypeId != null">
+        shop_type_id = #{shopTypeId,jdbcType=BIGINT},
+     </if>
+     <if test="shopTypeName != null and shopTypeName != ''">
+        shop_type_name = #{shopTypeName,jdbcType=VARCHAR},
+     </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -90,7 +137,7 @@
   <select id="getAppShopList" resultType="com.joyzone.platform.core.vo.AppShopVO"
                               parameterType="com.joyzone.platform.core.dto.ShopDto">
       select
-         id,name,shop_type_id as shopTypeId,price,address,lng,lat,cover_img as coverImg,lng,lat
+         id,name,shop_type_id as shopTypeId,shop_type_name as shopTypeName,price,address,lng,lat,cover_img as coverImg,description
       from shop
       <where>
         <if test="status != null">
@@ -108,4 +155,78 @@
   <select id="findById" resultMap="BaseResultMap">
       select * from shop where id = #{id}
   </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+      select * from shop
+  </select>
+
+  <select id="getAppShopHomeList" resultType="com.joyzone.platform.core.vo.AppShopVO">
+    select
+      st.name as shopTypeName,s.id,s.name,s.price,s.address,s.lng,
+      s.lat,s.cover_img as coverImg,s.description
+    from shop s inner join shop_type st on st.id = s.shop_type_id
+    where s.status = 1 and st.type = 1 and st.status = 1 and st.id = #{shopTypeId}  limit #{size}
+  </select>
+
+  <select id="getShopPicList" resultType="java.lang.String">
+     select cover_img from shop where status = 1 limit #{size}
+  </select>
+
+    <select id="getShopHomeList" resultMap="ShopHomeDtoMap">
+         SELECT
+             id AS userId,
+             user_name AS userName
+         FROM user
+         WHERE id = #{userId}
+    </select>
+
+    <select id="queryShopHomeBannerDtoList" resultMap="shopHomeBannerDtoMap">
+        SELECT
+          id AS shopId,
+          cover_img AS shopCoverImg
+        FROM shop
+        WHERE STATUS = 1 LIMIT 6
+    </select>
+
+    <select id="queryShopHomeTypeDtoList" resultMap="shopHomeTypeDtoMap">
+        SELECT
+            id AS shopTypeId,
+            NAME AS shopTypeName
+        FROM shop_type
+        WHERE STATUS = 1 AND TYPE = 1 LIMIT 5
+    </select>
+
+    <select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">
+          SELECT
+              st.id AS shopTypeId,
+              st.name AS shopTypeName
+         FROM shop s
+         LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
+         WHERE st.type = 1
+         GROUP BY st.id
+    </select>
+
+    <select id="queryShopHomeCoverList" resultMap="shopHomeCoverMap">
+         SELECT
+         id AS shopId,
+         cover_img AS shopCover
+         FROM shop
+         WHERE shop_type_id = #{shopTypeId}
+    </select>
+
+    <select id="getAppShopByTypeId" resultType="com.joyzone.platform.core.model.ShopModel">
+         SELECT
+         id,NAME,shop_type_id AS shopTypeId,shop_type_name AS shopTypeName,price,address,lng,lat,cover_img AS coverImg,description
+         FROM shop
+         WHERE shop_type_id = #{typeId}
+         AND STATUS = 1
+    </select>
+
+    <select id="getShopMapList" resultType="java.util.Map">
+        SELECT id,NAME FROM shop where 1=1
+        <if test="name != null and name != ''">
+            and name like concat('%',#{name},'%')
+        </if>
+    </select>
+
 </mapper>

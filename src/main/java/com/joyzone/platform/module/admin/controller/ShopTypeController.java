@@ -6,6 +6,7 @@ import com.joyzone.platform.core.model.ShopModel;
 import com.joyzone.platform.core.service.ShopService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,9 @@ public class ShopTypeController {
 	private ShopTypeService shopTypeService;
 	
 	@GetMapping("getShopTypeList")
-	@ApiOperation("店家的类型及类型旗下的种类")
-	public R getShopTypeList(Long pid) {
-		if(pid == null){
-			return R.ok(shopTypeService.findByShopType());
-		}
-		return R.ok(shopTypeService.findByPid(pid));
+	@ApiOperation("店家的类型及类型旗下的种：1 组队店家 2 体验店家")
+	public R getShopTypeList(@RequestParam("type") Integer type) {
+		return R.ok(shopTypeService.findByShopType(type));
 	}
 
 }
