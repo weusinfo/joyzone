@@ -14,6 +14,6 @@ public interface OrderMapper extends Mapper<OrderModel> {
 
     OrderDto findById(@Param("id") Long id);
 
-    List<OrderMineDto> getTeamOrderList(OrderModel orderModel);
+    List<OrderMineDto> getTeamOrderList(OrderModel orderModel,@Param("userId") Long userId, @Param("type") Integer type);
 
 }

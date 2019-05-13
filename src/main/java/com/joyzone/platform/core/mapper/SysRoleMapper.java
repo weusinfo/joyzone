@@ -1,10 +1,13 @@
 package com.joyzone.platform.core.mapper;
 
+import com.joyzone.platform.core.model.SysUserModel;
 import org.apache.ibatis.annotations.Param;
 
 import com.joyzone.platform.core.model.SysRoleModel;
 
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 public interface SysRoleMapper extends Mapper<SysRoleModel> {
 	
@@ -19,5 +22,7 @@ public interface SysRoleMapper extends Mapper<SysRoleModel> {
 	int grantRole(@Param("roleId") Long roleId, @Param("userId") Long userId);
 	
 	int revokeRole(@Param("userId") Long userId);
+
+	List<SysRoleModel> getRoleList();
 
 }

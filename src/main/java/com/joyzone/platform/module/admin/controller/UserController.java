@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("saveUser")
-    @ApiOperation("添加用户信息 @Mr.Gx")
+    @ApiOperation("添加及更新用户信息 @Mr.Gx")
     public R saveUser(UserModel userModel){
         if(userModel == null)
             return R.error("用户信息不能为空.");
@@ -66,13 +66,13 @@ public class UserController {
         return userSerivce.saveUser(userModel) > 0 ? R.ok() : R.error("添加失败");
     }
 
-    @PostMapping("delUsers")
+    @PostMapping("delUsers @Mr.Gx")
     @ApiOperation("批量删除")
     public R delUsers(@RequestParam("ids") Long[] ids){
         return userSerivce.delUsers(ids) > 0 ? R.ok() : R.error("删除失败");
     }
 
-    @GetMapping("/exportUserXls")
+    @GetMapping("/exportUserXls @Mr.Gx")
     @ApiOperation("用户清单导出")
     public void exportUserXls(UserModel userModel,HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");

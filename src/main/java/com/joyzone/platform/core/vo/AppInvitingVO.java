@@ -37,6 +37,9 @@ public class AppInvitingVO {
     @ApiModelProperty("支付类型名称")
     private String payWayName;
 
+    @ApiModelProperty("邀约类型")
+    private String inviteType;
+
     public String getUserName() {
         return userName;
     }
@@ -91,5 +94,13 @@ public class AppInvitingVO {
 
     public void setPayWayName(String payWayName) {
         this.payWayName = payWayName;
+    }
+
+    public String getInviteType() {
+        return inviteType;
+    }
+
+    public void setInviteType(String inviteType) {
+        this.inviteType = inviteType;
     }
 }

@@ -53,18 +53,37 @@
     </resultMap>
 
     <select id="getTeamList" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
-          SELECT
-           t.id AS teamId,
-           t.shop_id AS shopId,
-           s.cover_img AS shopImg,
-           s.name AS shopName,
-           s.address AS shopAddress,
-           t.start_time AS startTime,
-           t.number AS personNum
-          FROM team t
-          LEFT JOIN shop s ON s.id = t.shop_id
-          WHERE t.status = 0
-          AND t.result = 0
+        SELECT
+            t.id AS teamId,
+            t.shop_id AS shopId,
+            s.cover_img AS shopImg,
+            s.name AS shopName,
+            s.address AS shopAddress,
+            t.start_time AS startTime,
+            t.number AS personNum
+        FROM (
+            SELECT * FROM team WHERE id IN (
+                SELECT a.id FROM (
+                    SELECT
+                    t.id,t.`number`,
+                    (SELECT COUNT(*) FROM team_users WHERE team_id =t.id AND STATUS = 0) AS joinNum
+                    FROM team t
+                    LEFT JOIN team_users tu ON tu.team_id = t.id
+                    GROUP BY t.id
+                ) a
+                WHERE 1=1
+                <if test="sort == 0">
+                    and a.number <![CDATA[ <= ]]>   (a.joinNum * 2)
+                </if>
+                <if test="sort == 1">
+                    and a.number > (a.joinNum * 2)
+                </if>
+            )
+        ) t
+        LEFT JOIN shop s ON s.id = t.shop_id
+        WHERE t.status = 0
+        AND t.result = 0
+        AND t.start_time > NOW()
     </select>
 
     <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
@@ -72,6 +91,14 @@
         FROM team_users tu
         LEFT JOIN user u ON u.id = tu.user_id
         WHERE tu.team_id = #{teamId} AND tu.status = 0
+    </select>
+
+    <select id="checkTeamIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        t.number,
+        (SELECT COUNT(*) FROM team_users WHERE team_id =#{teamId} AND STATUS = 0) AS joinNum
+        FROM team t
+        WHERE t.id = #{teamId}
     </select>
 
     <select id="getAppTeamList" resultType="com.joyzone.platform.core.vo.AppTeamVO">

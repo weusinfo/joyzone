@@ -8,9 +8,11 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TeamMapper extends Mapper<TeamModel> {
-
+    List<TeamDto> getTeamList(TeamModel teamModel, @Param("sort") Integer sort);
+    Map<String,Object> checkTeamIfSuccess(@Param("teamId") Long teamId);
     List<TeamDto> getTeamList(TeamModel teamModel);
 
     List<AppTeamVO> getAppTeamList(@Param("userId") Long userId,
