@@ -1,6 +1,8 @@
 package com.joyzone.platform.module.admin.controller;
 
 import java.util.List;
+
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,8 @@ public class SysUserController {
 	
 	@ApiOperation("更新商户用户信息")
 	@PostMapping("/update")
-	public R updateUser() {
+	public R updateUser(SysUserModel sysUser) {
+		sysUserService.updateUser(sysUser);
 		return R.ok("更新用户成功");
 	}
 	
@@ -45,7 +48,12 @@ public class SysUserController {
 	@PostMapping("/list")
 	public R listUsers(SysUserModel sysUser) {
 		List<SysUserModel> users = sysUserService.listUsers(sysUser);
-		return R.ok(users);
+		if(users != null && users.size() > 0){
+			Page page = new Page();
+			page = (Page)users;
+			return R.pageToData(page.getTotal(),page.getResult());
+		}
+		return R.pageToData(0L,users);
 	}
 
 }

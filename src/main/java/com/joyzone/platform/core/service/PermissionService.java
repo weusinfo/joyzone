@@ -1,6 +1,8 @@
 package com.joyzone.platform.core.service;
 
 import java.util.List;
+
+import com.joyzone.platform.core.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.joyzone.platform.common.exception.JZException;
@@ -23,7 +25,7 @@ public class PermissionService {
 	@Autowired
 	private MenuService menuService;
 	
-	public List<Menus> auth(String userName, String password) {
+	public SysUserVO auth(String userName, String password) {
 		if(!sysUserService.checkUserByName(userName)) throw new JZException("不存在该用户");
 		SysParamsModel paramsModel = paramsService.findByName(Constants.PARAM_LOGIN_FORBIDDEN_NUM);
 		if(paramsModel != null) {
@@ -43,6 +45,10 @@ public class PermissionService {
 			sysUserService.logLogin(userName);
 			throw new JZException("密码错误");
 		}
-		return menuService.list(sysUser.getId());
+		Long id = sysUser.getId();
+		SysUserVO sysUserVO = new SysUserVO();
+		sysUserVO.setUser(sysUserService.selectById(id));
+		sysUserVO.setMenuList(menuService.list(id));
+		return sysUserVO;
 	}
 }

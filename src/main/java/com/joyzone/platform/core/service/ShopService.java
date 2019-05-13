@@ -187,4 +187,15 @@ public class ShopService extends BaseService<ShopModel> {
 		return shopMapper.getAppShopByTypeId(typeId);
 	}
 
+
+	/**
+	 * 获取商家的主键与名称给用户选择（待搜索）
+	 * @param name
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public List<Map<String,Object>> getShopMapList(String name,Integer pageNum,Integer pageSize){
+		return shopMapper.getShopMapList(name, pageNum, pageSize);
+	}
 }

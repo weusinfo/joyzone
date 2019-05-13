@@ -54,7 +54,6 @@ public class MenuService extends BaseService<MenuModel> {
 }]
 	 */
 	public List<Menus> getAllMenus(){
-		
 		List<MenuModel> allMenus = menuMapper.getAllMenus();
 		List<Menus> results = getMenus(allMenus);
 		if(PublicUtil.isEmpty(results)) throw new JZException("没有有效菜单");
