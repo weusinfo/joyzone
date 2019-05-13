@@ -97,7 +97,7 @@ public class AppLoginApiController {
      * 用户注册
      **/
     @PostMapping(value = "/userRegister")
-    @ApiOperation(value = "用户注册 @zhangyu")
+    @ApiOperation(value = "用户注册或登录 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "phone", value = "用户手机号", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "mobileCode", value = "验证码", required = true, dataType = "String", paramType = "query")

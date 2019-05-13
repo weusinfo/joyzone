@@ -4,9 +4,12 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
+import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.InvitingService;
+import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,8 @@ public class AppInvitingController {
 
     @Autowired
     private InvitingService invitingService;
+    @Autowired
+    private UserSerivce userSerivce;
 
     /**
      * Mr.Gx
@@ -26,6 +31,27 @@ public class AppInvitingController {
     @PostMapping("saveInviting")
     @ApiOperation("发起邀请 @Mr.Gx")
     public R saveInviting(InvitingModel invitingModel){
+        if(invitingModel == null)
+            return R.error("参数不能为空.");
+        if(invitingModel.getOwner() == null)
+            return R.error("发起人ID不能为空.");
+        if(StringUtils.isBlank(invitingModel.getContent()))
+            return R.error("邀请主题不能为空.");
+        if(invitingModel.getType() == null)
+            return R.error("邀请类型不能为空.");
+        if(StringUtils.isBlank(invitingModel.getAddress()))
+            return R.error("邀请地址不能为空.");
+        if(invitingModel.getStartTime() == null)
+            return R.error("主题进行时间不能为空.");
+        if(invitingModel.getShopId() != null){
+            if(StringUtils.isBlank(invitingModel.getShopName())){
+                return R.error("店家名称不能为空.");
+            }
+        }
+        UserModel userModel = userSerivce.selectByKey(invitingModel.getOwner());
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
         return invitingService.saveInviting(invitingModel);
     }
 

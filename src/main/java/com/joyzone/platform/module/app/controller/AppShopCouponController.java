@@ -8,8 +8,10 @@ import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.model.CouponUserModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
+import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.CouponUserService;
 import com.joyzone.platform.core.service.ShopCouponService;
+import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -34,6 +36,8 @@ public class AppShopCouponController {
     private CouponUserService couponUserService;
     @Autowired
     private ShopCouponService couponService;
+    @Autowired
+    private UserSerivce userSerivce;
 
 
     /**
@@ -77,6 +81,10 @@ public class AppShopCouponController {
             @ApiImplicitParam(name = "couponId", value = "体验券ID", required = true, dataType = "Long", paramType = "query")
     })
     public R joinTheCoupon(CouponUserModel model, Long userId, Long couponId){
+        UserModel userModel = userSerivce.selectByKey(userId);
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
         CouponUserModel couponUserModel = couponUserService.checkUserInCoupon(model,userId,couponId);
         if(couponUserModel != null && couponUserModel.getStatus() == 0){
             return R.error("用户已领取该体验券！");

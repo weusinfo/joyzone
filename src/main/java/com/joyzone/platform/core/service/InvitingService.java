@@ -76,23 +76,6 @@ public class InvitingService extends BaseService<InvitingModel> {
      * Mr.Gx
      */
     public R saveInviting(InvitingModel invitingModel){
-        if(invitingModel == null)
-            return R.error("参数不能为空.");
-        if(invitingModel.getOwner() == null)
-            return R.error("发起人ID不能为空.");
-        if(StringUtils.isBlank(invitingModel.getContent()))
-            return R.error("邀请主题不能为空.");
-        if(invitingModel.getType() == null)
-            return R.error("邀请类型不能为空.");
-        if(StringUtils.isBlank(invitingModel.getAddress()))
-            return R.error("邀请地址不能为空.");
-        if(invitingModel.getStartTime() == null)
-            return R.error("主题进行时间不能为空.");
-        if(invitingModel.getShopId() != null){
-            if(StringUtils.isBlank(invitingModel.getShopName())){
-                return R.error("店家名称不能为空.");
-            }
-        }
         invitingModel.setCreateTime(new Date());
         return invitingMapper.insertSelective(invitingModel) > 0 ?
                 R.ok("成功发起") : R.error("操作失败");
