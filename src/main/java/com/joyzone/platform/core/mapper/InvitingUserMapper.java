@@ -15,4 +15,6 @@ public interface InvitingUserMapper extends Mapper<InvitingUserModel> {
     List<AppInvitingVO> getRespondInvitings(InvitingDto invitingDto);
 
     Integer agreeOrNotTheInviting(InvitingUserModel invitingUserModel);
+
+    List<InvitingUserModel> getInvitingUserByIds(InvitingDto invitingDto);
 }
