@@ -34,4 +34,9 @@
     where u.status = 0 and i.status = 0 and iur.status = 1 and i.owner = #{userId}
     ORDER BY iur.id desc
   </select>
+  
+  <insert id="agreeOrNotTheInviting" parameterType="com.joyzone.platform.core.model.InvitingUserModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+      insert into inviting_user(inviting_id,user_id,status,create_time)
+      values(#{invitingId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+  </insert>
 </mapper>
