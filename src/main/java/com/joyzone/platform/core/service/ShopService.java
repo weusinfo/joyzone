@@ -103,7 +103,7 @@ public class ShopService extends BaseService<ShopModel> {
 	}
 	
 	public List<ShopModel> listShops(ShopModel shop){
-		return shopMapper.select(shop);
+		return shopMapper.listShops(shop);
 	}
 	
 	public boolean exists(Long shopId) {
@@ -197,5 +197,9 @@ public class ShopService extends BaseService<ShopModel> {
 	 */
 	public List<Map<String,Object>> getShopMapList(String name,Integer pageNum,Integer pageSize){
 		return shopMapper.getShopMapList(name, pageNum, pageSize);
+	}
+
+	public List<ShopModel> getExportShopXls(ShopModel shopModel){
+		return shopMapper.listShops(shopModel);
 	}
 }

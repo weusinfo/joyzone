@@ -23,4 +23,8 @@ public class ShopDiscountService extends BaseService<ShopDiscountModel> {
     public List<ShopDiscountModel> getShopDiscountList(ShopDiscountModel shopDiscountModel){
         return shopDiscountMapper.getShopDiscountList(shopDiscountModel);
     }
+
+    public int delShopDiscounts(Long[] ids ){
+        return shopDiscountMapper.delShopDiscounts(ids);
+    }
 }

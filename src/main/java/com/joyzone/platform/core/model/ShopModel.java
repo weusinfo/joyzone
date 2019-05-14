@@ -1,7 +1,11 @@
 package com.joyzone.platform.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,12 +22,15 @@ public class ShopModel extends BaseModel {
     private Long id;
 
     @ApiModelProperty("名称")
+    @Excel(name="店家名称")
     private String name;
 
     @ApiModelProperty("手机号码")
+    @Excel(name="手机号码")
     private String phone;
 
     @ApiModelProperty("地址")
+    @Excel(name="地址")
     private String address;
 
     @ApiModelProperty("描述")
@@ -33,6 +40,7 @@ public class ShopModel extends BaseModel {
      * 价格
      */
     @ApiModelProperty("价格")
+    @Excel(name="价格")
     private BigDecimal price;
 
     /**
@@ -40,12 +48,14 @@ public class ShopModel extends BaseModel {
      */
     @Column(name = "cover_img")
     @ApiModelProperty("店家封面照片")
+    @Excel(name="店家封面照片")
     private String coverImg;
 
     /**
      * 店家状态；0：签约；1：待审核；2：已禁入
      */
     @ApiModelProperty("店家状态；0：签约；1：待审核；2：已禁入")
+    @Excel(name="店家封面照片",replace= {"签约_0","待审核_1","已禁入_2"})
     private Integer status;
 
     /**
@@ -66,12 +76,16 @@ public class ShopModel extends BaseModel {
      * 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @Excel(name="创建时间",exportFormat = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
+    @Excel(name="更新时间",exportFormat = DateUtils.DATE_TIME_PATTERN)
     private Date updateTime;
 
     @ApiModelProperty("经度")
@@ -95,7 +109,18 @@ public class ShopModel extends BaseModel {
 
     @ApiModelProperty("所属店家种类名称")
     @Column(name = "shop_type_name")
+    @Excel(name="店家种类名称")
     private String shopTypeName;
+
+    @Transient
+    @ApiModelProperty("开始时间 yyyy-MM-dd")
+    @DateTimeFormat(pattern = DateUtils.DATE_PATTERN)
+    private Date startTime;
+
+    @Transient
+    @ApiModelProperty("结束时间 yyyy-MM-dd")
+    @DateTimeFormat(pattern = DateUtils.DATE_PATTERN)
+    private Date endTime;
 
     public String getProvince() {
         return province;

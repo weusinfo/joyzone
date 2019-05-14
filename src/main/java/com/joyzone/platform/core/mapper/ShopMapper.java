@@ -35,4 +35,6 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 	List<Map<String,Object>> getShopMapList(@Param("name") String name,
 											@Param("pageNum") Integer pageNum,
 											@Param("pageSize")Integer pageSize);
+
+	List<ShopModel> listShops(ShopModel shopModel);
 }

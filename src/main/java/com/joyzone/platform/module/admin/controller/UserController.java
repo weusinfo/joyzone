@@ -66,14 +66,14 @@ public class UserController {
         return userSerivce.saveUser(userModel) > 0 ? R.ok() : R.error("添加失败");
     }
 
-    @PostMapping("delUsers @Mr.Gx")
-    @ApiOperation("批量删除")
+    @PostMapping("delUsers")
+    @ApiOperation("批量删除 @Mr.Gx")
     public R delUsers(@RequestParam("ids") Long[] ids){
         return userSerivce.delUsers(ids) > 0 ? R.ok() : R.error("删除失败");
     }
 
-    @GetMapping("/exportUserXls @Mr.Gx")
-    @ApiOperation("用户清单导出")
+    @GetMapping("/exportUserXls")
+    @ApiOperation("用户清单导出  @Mr.Gx")
     public void exportUserXls(UserModel userModel,HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");
         response.setHeader("Content-Disposition",

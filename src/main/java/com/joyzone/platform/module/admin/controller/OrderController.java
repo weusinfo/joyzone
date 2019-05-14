@@ -11,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -32,7 +29,7 @@ public class OrderController {
      * Mr.Gx
      */
     @GetMapping("getOrderList")
-    @ApiOperation("后台订单列表")
+    @ApiOperation("后台订单列表 @Mr.Gx")
     public R getOrderList(OrderDto orderDto){
         return orderService.getOrderList(orderDto);
     }
@@ -41,7 +38,7 @@ public class OrderController {
      * Mr.Gx
      */
     @GetMapping("findById/{id}")
-    @ApiOperation("后台订单详情")
+    @ApiOperation("后台订单详情 @Mr.Gx")
     public R findById(@PathVariable Long id){
         return orderService.findById(id);
     }
@@ -50,13 +47,13 @@ public class OrderController {
      * Mr.Gx
      */
     @GetMapping("getTeamUsers/{teamId}/{pageNum}/{pageSize}")
-    @ApiOperation("后台订单获取参加人员列表")
+    @ApiOperation("后台订单获取参加人员列表 @Mr.Gx")
     public R getTeamUsers(@PathVariable Long teamId,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
         return orderService.getTeamUsers(teamId,pageNum,pageSize);
     }
 
     @GetMapping("/exportOrderXls")
-    @ApiOperation("订单清单导出")
+    @ApiOperation("订单清单导出 @Mr.Gx")
     public void exportShopCouponXls(OrderDto orderDto, HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");
         response.setHeader("Content-Disposition",
@@ -66,5 +63,12 @@ public class OrderController {
         ExportParams params = new ExportParams(Constants.JOY_ORDER, Constants.JOY_ORDER);
         Workbook workbook = ExcelExportUtil.exportExcel(params, OrderDto.class, list);
         workbook.write(response.getOutputStream());
+    }
+
+    @PostMapping("delOrders")
+    @ApiOperation("批量删除订单 @Mr.Gx")
+    public R delOrders(@RequestParam("ids") Long[] ids){
+        return orderService.delOrders(ids) > 0 ? R.ok() : R.error("批量删除失败");
+
     }
 }

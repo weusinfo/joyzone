@@ -15,10 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -92,6 +89,13 @@ public class ShopDiscountController {
         ExportParams params = new ExportParams(Constants.SHOP_DISCOUNT, Constants.SHOP_DISCOUNT);
         Workbook workbook = ExcelExportUtil.exportExcel(params, ShopDiscountModel.class, list);
         workbook.write(response.getOutputStream());
+    }
+
+    @PostMapping("delShopDiscounts")
+    @ApiOperation("批量删除 @Mr.Gx")
+    public R delShopDiscounts(@RequestParam("ids") Long[] ids){
+        return shopDiscountService.delShopDiscounts(ids) > 0 ?
+                R.ok() : R.error("批量删除失败");
     }
 
 }

@@ -16,4 +16,5 @@ public interface OrderMapper extends Mapper<OrderModel> {
 
     List<OrderMineDto> getTeamOrderList(OrderModel orderModel,@Param("userId") Long userId, @Param("type") Integer type);
 
+    int delOrders(@Param("ids") Long[] ids);
 }

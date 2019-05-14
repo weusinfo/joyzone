@@ -62,4 +62,8 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.checkCouponIfSuccess(couponId);
     }
 
+    public int delCoupons(Long[] ids){
+        return shopCouponMapper.delCoupons(ids);
+    }
+
 }
