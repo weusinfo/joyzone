@@ -9,7 +9,7 @@
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT" />
-    <result column="shop_type_name" property="shopTypeIdName" jdbcType="VARCHAR" />
+    <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="back_img" property="backImg" jdbcType="VARCHAR" />
@@ -58,7 +58,7 @@
       from shop_coupon
       where 1=1
        <if test="name != '' and name != null">
-         and name like CONCAT('%','${name}','%')
+         and name like CONCAT('%',#{name},'%')
        </if>
       <if test="shopId != null">
          and shop_id = #{shopId}
@@ -67,10 +67,10 @@
          and status = #{status}
       </if>
       <if test="startTime != null">
-        and create_time >= #{startTime}
+        and start_time >= #{startTime}
       </if>
       <if test="endTime != null">
-        and create_time <![CDATA[ <= ]]> #{endTime}
+        and start_time <![CDATA[ <= ]]> #{endTime}
       </if>
   </select>
 
@@ -141,4 +141,10 @@
         WHERE sc.id = #{couponId}
     </select>
 
+    <delete id="delCoupons">
+        delete from user where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

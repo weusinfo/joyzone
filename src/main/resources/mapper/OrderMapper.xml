@@ -105,5 +105,11 @@
     WHERE tu.team_id = #{teamId} AND tu.status = 0
   </select>
 
+  <delete id="delOrders">
+    delete from orders where id in
+    <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+    </foreach>
+  </delete>
 
 </mapper>
