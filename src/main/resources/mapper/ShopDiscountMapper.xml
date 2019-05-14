@@ -31,7 +31,7 @@
     from shop_discount
     where 1=1
     <if test="name != '' and name != null">
-      and name like CONCAT('%','${name}','%')
+      and name like CONCAT('%',#{name},'%')
     </if>
     <if test="shopId != null">
       and shop_id = #{shopId}
@@ -46,4 +46,11 @@
       and create_time <![CDATA[ <= ]]> #{endTime}
     </if>
   </select>
+
+  <delete id="delShopDiscounts">
+      delete from shop_discount where id in
+      <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+  </delete>
 </mapper>

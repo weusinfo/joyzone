@@ -7,8 +7,10 @@ import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
+import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.TeamService;
 import com.joyzone.platform.core.service.TeamUsersService;
+import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,6 +34,8 @@ public class AppTeamController {
     private TeamService teamService;
     @Autowired
     private TeamUsersService teamUsersService;
+    @Autowired
+    private UserSerivce userSerivce;
 
 
     @PostMapping("/getTeamList")
@@ -57,6 +61,10 @@ public class AppTeamController {
             @ApiImplicitParam(name = "teamId", value = "组队ID", required = true, dataType = "Long", paramType = "query")
     })
     public R joinTheTeam(TeamUsersModel model,Long userId,Long teamId){
+        UserModel userModel = userSerivce.selectByKey(userId);
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
         TeamUsersModel teamUsersModel = teamUsersService.checkUserInTeam(model,userId,teamId);
         if(teamUsersModel != null && teamUsersModel.getStatus() == 0){
             return R.error("用户已报名该组队！");
@@ -101,7 +109,14 @@ public class AppTeamController {
   
     @PostMapping("/saveTeam")
     @ApiOperation("前端用户发起组队信息 @Mr.Gx")
-    public R saveTeam(TeamModel model){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R saveTeam(TeamModel model,Long userId){
+        UserModel userModel = userSerivce.selectByKey(userId);
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
         if(model == null)
             R.error("系统参数不能为空");
         if(model.getOwner() == null)

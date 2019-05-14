@@ -13,4 +13,6 @@ public interface InvitingUserMapper extends Mapper<InvitingUserModel> {
     List<InvitingUserModel> findByInvitingId(@Param("invitingId") Long invitingId);
 
     List<AppInvitingVO> getRespondInvitings(InvitingDto invitingDto);
+
+    Integer agreeOrNotTheInviting(InvitingUserModel invitingUserModel);
 }

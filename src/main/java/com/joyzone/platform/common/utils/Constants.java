@@ -15,4 +15,6 @@ public interface Constants {
 	String PARAM_LOGIN_FORBIDDEN_NUM = "登陆试错次数";
 
 	String APP_USER = "用户清单模板";
+
+	String SYS_SHOP = "店家清单模板";
 }

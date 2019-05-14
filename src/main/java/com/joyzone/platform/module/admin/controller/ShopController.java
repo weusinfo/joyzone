@@ -1,9 +1,15 @@
 package com.joyzone.platform.module.admin.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.github.pagehelper.Page;
+import com.joyzone.platform.common.utils.Constants;
+import com.joyzone.platform.core.model.UserModel;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.joyzone.platform.common.utils.PublicUtil;
@@ -15,6 +21,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/shop")
@@ -58,8 +66,12 @@ public class ShopController {
 	@PostMapping("/list")
 	public R listShops(ShopModel shop) {
 		List<ShopModel> shops = shopService.listShops(shop);
-		if(PublicUtil.isEmpty(shops)) return R.error("没有门店数据");
-		return R.ok(shops);
+		if(shops != null && shops.size() > 0){
+			Page page = new Page();
+			page = (Page)shops;
+			return R.pageToData(page.getTotal(),page.getResult());
+		}
+		return R.pageToData(0L,shops);
 	}
 
 
@@ -101,6 +113,19 @@ public class ShopController {
 			return R.pageToData(page.getTotal(),page.getResult());
 		}
 		return R.pageToData(0L,list);
+	}
+
+	@GetMapping("/exportShopXls")
+	@ApiOperation("店家清单导出  @Mr.Gx")
+	public void exportShopXls(ShopModel  shopModel, HttpServletResponse response) throws Exception{
+		response.setHeader("content-Type", "application/vnd.ms-excel");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=" + URLEncoder.encode(Constants.SYS_SHOP, "UTF-8") + ".xls");
+		response.setCharacterEncoding("UTF-8");
+		List<ShopModel> list = shopService.getExportShopXls(shopModel);;
+		ExportParams params = new ExportParams(Constants.SYS_SHOP, Constants.SYS_SHOP);
+		Workbook workbook = ExcelExportUtil.exportExcel(params, ShopModel.class, list);
+		workbook.write(response.getOutputStream());
 	}
 
 }

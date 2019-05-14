@@ -96,13 +96,14 @@ public class ShopCouponModel extends BaseModel{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "start_time")
     @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty("开始时间")
+    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     @Column(name = "end_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm:ss")
+    @Excel(name="结束时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     /**
@@ -120,6 +121,7 @@ public class ShopCouponModel extends BaseModel{
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="更新时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**

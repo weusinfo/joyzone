@@ -1,6 +1,5 @@
 package com.joyzone.platform.core.service;
 
-
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
@@ -11,11 +10,9 @@ import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.model.InvitingUserModel;
 import com.joyzone.platform.core.vo.AppInvitingVO;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,23 +73,8 @@ public class InvitingService extends BaseService<InvitingModel> {
      * Mr.Gx
      */
     public R saveInviting(InvitingModel invitingModel){
-        if(invitingModel == null)
-            return R.error("参数不能为空.");
-        if(invitingModel.getOwner() == null)
-            return R.error("发起人ID不能为空.");
-        if(StringUtils.isBlank(invitingModel.getContent()))
-            return R.error("邀请主题不能为空.");
-        if(invitingModel.getType() == null)
-            return R.error("邀请类型不能为空.");
-        if(StringUtils.isBlank(invitingModel.getAddress()))
-            return R.error("邀请地址不能为空.");
-        if(invitingModel.getStartTime() == null)
-            return R.error("主题进行时间不能为空.");
-        if(invitingModel.getShopId() != null){
-            if(StringUtils.isBlank(invitingModel.getShopName())){
-                return R.error("店家名称不能为空.");
-            }
-        }
+        invitingModel.setStatus(0);  //邀约有效
+        invitingModel.setResult(2);  //邀约时间未到，还在邀约中
         invitingModel.setCreateTime(new Date());
         return invitingMapper.insertSelective(invitingModel) > 0 ?
                 R.ok("成功发起") : R.error("操作失败");
@@ -176,5 +158,14 @@ public class InvitingService extends BaseService<InvitingModel> {
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,new ArrayList<>());
+    }
+
+    public Integer agreeOrNotTheInviting(InvitingDto invitingDto,Integer type){
+        InvitingUserModel invitingUserModel = new InvitingUserModel();
+        invitingUserModel.setInvitingId(invitingDto.getInvitingId());
+        invitingUserModel.setUserId(invitingDto.getUserId());
+        invitingUserModel.setStatus(type);
+        invitingUserModel.setCreateTime(new Date());
+        return invitingUserMapper.agreeOrNotTheInviting(invitingUserModel);
     }
 }

@@ -32,7 +32,7 @@ public class ShopCouponController {
      * Mr.Gx
      */
     @PostMapping("saveShopCoupon")
-    @ApiOperation("添加店家体验券信息")
+    @ApiOperation("添加店家体验券信息 @Mr.Gx")
     public R saveShopCoupon(ShopCouponModel shopCouponModel){
         if(shopCouponModel == null)
             return R.error(R.STATUS_FAIL,"参数不能为空.");
@@ -64,7 +64,7 @@ public class ShopCouponController {
      * Mr.Gx
      */
     @GetMapping("getShopCouponList")
-    @ApiOperation("体验券清单")
+    @ApiOperation("体验券清单 @Mr.Gx")
     public R getShopCouponList(ShopCouponModel shopCouponModel){
         if(shopCouponModel == null)
             return R.error(R.STATUS_FAIL,"页数与条数不能为空.");
@@ -85,7 +85,7 @@ public class ShopCouponController {
      * Mr.Gx
      */
     @GetMapping("selectById/{id}")
-    @ApiOperation("体验券详情")
+    @ApiOperation("体验券详情 @Mr.Gx")
     public R selectById(@PathVariable Long id){
         if(id == null)
             return  R.error(R.STATUS_FAIL,"体验券ID不能为空");
@@ -97,7 +97,7 @@ public class ShopCouponController {
      * Mr.Gx
      */
     @PostMapping("updateCouponStatus")
-    @ApiOperation("体验券更新状态")
+    @ApiOperation("体验券更新状态 @Mr.Gx")
     public R updateShopCouponStatus(Long id,Integer status){
         if(id == null)
             return R.error(R.STATUS_FAIL,"体验券ID不能为空");
@@ -106,8 +106,17 @@ public class ShopCouponController {
         return shopCouponService.updateShopCouponStatus(id,status);
     }
 
+    @PostMapping("delCoupons")
+    @ApiOperation("批量删除 @Mr.Gx")
+    public R delCoupons(Long[] ids){
+        if(ids == null)
+            return R.error(R.STATUS_FAIL,"体验券ID不能为空");
+
+        return shopCouponService.delCoupons(ids) > 0 ? R.ok() : R.error("批量删除失败");
+    }
+
     @GetMapping("/exportShopCouponXls")
-    @ApiOperation("体验券清单导出")
+    @ApiOperation("体验券清单导出 @Mr.Gx")
     public void exportShopCouponXls(ShopCouponModel shopCouponModel,HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");
         response.setHeader("Content-Disposition",

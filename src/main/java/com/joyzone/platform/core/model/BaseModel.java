@@ -30,7 +30,7 @@ public class BaseModel implements Serializable {
     private Integer pageSize;
 
     public Integer getPageNum() {
-        return pageNum == null ? 1 : pageNum;
+        return pageNum == null ? PAGE_NUM : pageNum;
     }
 
     public void setPageNum(Integer pageNum) {
@@ -38,7 +38,7 @@ public class BaseModel implements Serializable {
     }
 
     public Integer getPageSize() {
-        return pageSize == null ? 10 : pageSize;
+        return pageSize == null ? PAGE_SIZE : pageSize;
     }
 
     public void setPageSize(Integer pageSize) {
