@@ -32,7 +32,7 @@ import net.sf.jmimemagic.MagicParseException;
 @Component
 public class FileUtil {
 
-	@Value("${bucket}")
+	@Value("${tencent.oss.bucket}")
 	private String bucket;
 	
 	@Value("${fileSize}")

@@ -66,10 +66,21 @@ logging:
 using:
   spring:
     schedulerFactory: false
-secretId: AKIDDJF0rh6KckRDjCnpyeeVBkYQNGMIDg9J
-secretKey:  1IRmyGn3FWlvukPSXKAQFy3vgF05rUwk
-bucket:  joyzone-1257127706
 fileSize: 2048000
 scale: 0.8
-
 distance_range: 5000
+tencent:
+  oss:
+    secretId: AKIDDJF0rh6KckRDjCnpyeeVBkYQNGMIDg9J
+    secretKey:  1IRmyGn3FWlvukPSXKAQFy3vgF05rUwk
+    bucket:  joyzone-1257127706
+yunpian:  
+  sms:
+    apiKey: 129afa0712a781de56500b720e5f2c6e
+easemob:
+   host: http://a1.easemob.com/
+   orgName: 1113190505010089
+   appName: joyzone
+   grantType: client_credentials
+   clientId: YXA6eWR-kG9AEemCpmWWikCXLA
+   clientSecret: YXA6XYMzIlVp-y-0BcbYbuxQC1nbDCg
