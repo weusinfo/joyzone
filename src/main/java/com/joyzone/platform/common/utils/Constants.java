@@ -17,4 +17,14 @@ public interface Constants {
 	String APP_USER = "用户清单模板";
 
 	String SYS_SHOP = "店家清单模板";
+	
+	String EASEMOB_GRANT_TYPE = "grant_type";
+	
+	String EASEMOB_CLIENT_ID = "client_id";
+	
+	String EASEMOB_CLIENT_SECRET = "client_secret";
+	
+	String EASEMOB_TOKEN = "easemob_token";
+	
+	String EASEMOB_HEADER_AUTH = "Authorization";
 }
