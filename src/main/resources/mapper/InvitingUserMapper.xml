@@ -26,17 +26,24 @@
 
   <select id="getRespondInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO"
                                                               parameterType="com.joyzone.platform.core.dto.InvitingDto">
-    select u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
-      (CASE i.pay_way WHEN 0 THEN 'AA制' WHEN 1 THEN '女生免费'  WHEN 2 THEN '赢家免费' ELSE null END ) as payWayName
-    from inviting i inner join inviting_user iur on i.id = iur.inviting_id
+    SELECT i.id AS invitingId,u.id AS userId,u.user_name AS userName,u.head_pic AS headPic,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+    i.address,i.content,i.start_time AS startTime,
+    (CASE i.pay_way WHEN 0 THEN 'AA制' WHEN 1 THEN '女生免费'  WHEN 2 THEN '赢家免费' ELSE NULL END ) AS payWayName
+    FROM inviting i INNER JOIN inviting_user iur ON i.id = iur.inviting_id
     INNER JOIN
-    user u on u.id = iur.user_id
-    where u.status = 0 and i.status = 0 and iur.status = 1 and i.owner = #{userId}
-    ORDER BY iur.id desc
+    USER u ON u.id = iur.user_id
+    WHERE u.status = 0 AND i.status = 0 AND iur.status = 1 AND i.owner = #{userId}
+    ORDER BY iur.id DESC
   </select>
   
   <insert id="agreeOrNotTheInviting" parameterType="com.joyzone.platform.core.model.InvitingUserModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
       insert into inviting_user(inviting_id,user_id,status,create_time)
       values(#{invitingId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
   </insert>
+
+    <select id="getInvitingUserByIds" resultType="com.joyzone.platform.core.model.InvitingUserModel" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+        SELECT *
+        FROM inviting_user iu
+        WHERE iu.inviting_id = #{invitingId} AND iu.user_id = #{userId} AND iu.status = 1
+    </select>
 </mapper>

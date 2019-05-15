@@ -99,7 +99,7 @@ public class AppInvitingController {
     }
 
     @PostMapping("agreeOrNotTheInviting")
-    @ApiOperation("用户同意或拒绝某条邀约 @zy")
+    @ApiOperation("受邀列表：用户同意或拒绝某条邀约 @zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
@@ -109,11 +109,45 @@ public class AppInvitingController {
         if(invitingDto == null || invitingDto.getInvitingId() == null || invitingDto.getUserId() == null){
             return R.error("参数不能为空！");
         }
+        UserModel userModel = userSerivce.selectByKey(invitingDto.getUserId());
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
+        InvitingModel invitingModel = invitingService.selectByKey(invitingDto.getInvitingId());
+        if(invitingModel == null || invitingModel.getStatus() == 1){
+            return R.error("该邀约不存在或已失效！");
+        }
         int ret = invitingService.agreeOrNotTheInviting(invitingDto,type);
         if(ret == 0){
             return R.error("操作失败！");
         }
         return R.ok("操作成功！");
     }
+
+    @PostMapping("sendFinalInviting")
+    @ApiOperation("回函：邀请用户正式参与活动 @zy")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "发起邀约者ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R sendFinalInviting(InvitingDto invitingDto){
+        if(invitingDto == null || invitingDto.getInvitingId() == null || invitingDto.getUserId() == null){
+            return R.error("参数不能为空！");
+        }
+        UserModel userModel = userSerivce.selectByKey(invitingDto.getUserId());
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
+        InvitingModel invitingModel = invitingService.selectByKey(invitingDto.getInvitingId());
+        if(invitingModel == null || invitingModel.getStatus() == 1){
+            return R.error("该邀约不存在或已失效！");
+        }
+        int ret = invitingService.sendFinalInviting(invitingDto);
+        if(ret == 0){
+            return R.error("邀请失败！");
+        }
+        return R.ok("邀请成功！");
+    }
+
 
 }

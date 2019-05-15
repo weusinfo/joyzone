@@ -60,21 +60,21 @@ public class AppLoginApiController {
                 map.put("identify", null);
                 return R.error("此电话号码已因不当言行被拉入黑名单!");
             }
+
 //            Map<String, Object> map1 = Sendsms.sendMS(content, phone);
-            Map<String, Object> map1 = null;
-            if (map1 != null && map1.get("code").equals("2")) {
+
+            /*Map<String, Object> map1 = null;
+            if (map1 != null && map1.get("code").equals("2")) {*/
                 boolean flag = redisService.set("mobile_code",String.valueOf(mobile_code),300);
                 if(flag == false){
                     return R.error("缓存手机验证码失败!");
                 }
                 map.put("type", 0);
-                map.put("identify", mobile_code);
-                com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
-                jsonObject.put("data", map);
-                return R.ok(jsonObject.toJSONString());
-            } else {
+                map.put("mobileCode", mobile_code);
+                return R.ok(map);
+           /* } else {
                 return R.error("发送验证码失败！");
-            }
+            }*/
         } else {
             return R.error("手机号格式不正确!");
         }

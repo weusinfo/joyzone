@@ -168,4 +168,17 @@ public class InvitingService extends BaseService<InvitingModel> {
         invitingUserModel.setCreateTime(new Date());
         return invitingUserMapper.agreeOrNotTheInviting(invitingUserModel);
     }
+
+    public Integer sendFinalInviting(InvitingDto invitingDto){
+        List<InvitingUserModel> invitingUserModels = invitingUserMapper.getInvitingUserByIds(invitingDto);
+        if(invitingUserModels == null || invitingUserModels.size() != 1){
+            return 0;
+        }
+        Long invitingUserId = invitingUserModels.get(0).getId();
+        InvitingUserModel invitingUserModel = new InvitingUserModel();
+        invitingUserModel.setId(invitingUserId);
+        invitingUserModel.setConfirm(0);  //收到邀请者的正式函
+        invitingUserModel.setUpdateTime(new Date());
+        return invitingUserMapper.updateByPrimaryKeySelective(invitingUserModel);
+    }
 }
