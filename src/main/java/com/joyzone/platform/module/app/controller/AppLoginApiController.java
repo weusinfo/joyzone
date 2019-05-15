@@ -64,11 +64,11 @@ public class AppLoginApiController {
 //            Map<String, Object> map1 = Sendsms.sendMS(content, phone);
 
             /*Map<String, Object> map1 = null;
-            if (map1 != null && map1.get("code").equals("2")) {*/
+            if (map1 != null && map1.get("code").equals("2")) {
                 boolean flag = redisService.set("mobile_code",String.valueOf(mobile_code),300);
                 if(flag == false){
                     return R.error("缓存手机验证码失败!");
-                }
+                }*/
                 map.put("type", 0);
                 map.put("mobileCode", mobile_code);
                 return R.ok(map);
@@ -106,13 +106,13 @@ public class AppLoginApiController {
         if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(mobileCode)) {
             return R.error("参数有误！");
         }
-        String mobileCodeRedis = redisService.get("mobile_code");
+        /*String mobileCodeRedis = redisService.get("mobile_code");
         if("".equals(mobileCodeRedis) || mobileCodeRedis == null){
             return R.error("验证码过期！");
         }
         if(!mobileCodeRedis.equals(mobileCode)){
             return R.error("验证码有误！");
-        }
+        }*/
         List<UserModel> userModelList = userSerivce.getUserByPhone(phone);
         if(userModelList.size() > 0){
             return R.ok("该手机号已注册！");
