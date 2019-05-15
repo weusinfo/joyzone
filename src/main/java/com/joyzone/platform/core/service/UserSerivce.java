@@ -51,7 +51,7 @@ public class UserSerivce extends BaseService<UserModel> {
         }
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
-        return userMapper.insertSelective(userModel);
+        return userMapper.saveUser(userModel);
     }
 
     /**
