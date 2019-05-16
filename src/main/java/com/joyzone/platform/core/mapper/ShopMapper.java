@@ -28,7 +28,7 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 
 	List<String> getShopPicList(@Param("size") Integer size);
 
-	List<ShopHomeDto> getShopHomeList(@Param("userId") Long userId);
+	ShopHomeDto getShopHomeList(@Param("userId") Long userId);
 
 	List<ShopModel> getAppShopByTypeId(@Param("typeId") Long typeId);
 

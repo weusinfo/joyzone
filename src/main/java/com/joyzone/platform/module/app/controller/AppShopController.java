@@ -57,13 +57,11 @@ public class AppShopController {
     })
     public R getShopHomeList(@RequestParam("userId") Long userId){
         PageHelper.startPage(0,10);
-        List<ShopHomeDto> shopHomeList = shopService.getShopHomeList(userId);
-        if(shopHomeList != null && shopHomeList.size() > 0){
-            Page page = new Page();
-            page = (Page)shopHomeList;
-            return R.pageToData(page.getTotal(),page.getResult());
+        ShopHomeDto shopHome = shopService.getShopHomeList(userId);
+        if(shopHome != null){
+            return R.ok(shopHome);
         }
-        return R.pageToData(0L,new ArrayList<>());
+        return R.error("未获取到数据！");
     }
 
     @PostMapping("findByShopId")
