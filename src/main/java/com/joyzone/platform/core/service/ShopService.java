@@ -179,7 +179,7 @@ public class ShopService extends BaseService<ShopModel> {
 		return R.ok(appShopHomeVO);
 	}
 
-	public List<ShopHomeDto> getShopHomeList(Long userId){
+	public ShopHomeDto getShopHomeList(Long userId){
 		return shopMapper.getShopHomeList(userId);
 	}
 
