@@ -46,6 +46,9 @@ public class AppInvitingVO {
     @ApiModelProperty("邀约类型")
     private String inviteType;
 
+    @ApiModelProperty("4个tab页对应的值：1:受邀列表 2：正式函 3：我的邀请 4：回函")
+    private Integer type;
+
     public String getUserName() {
         return userName;
     }
@@ -125,4 +128,13 @@ public class AppInvitingVO {
     public void setUserAge(Integer userAge) {
         this.userAge = userAge;
     }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
 }

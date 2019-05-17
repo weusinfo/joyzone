@@ -49,7 +49,8 @@
               WHEN 0 THEN 'AA制'
               WHEN 1 THEN '女生免费'
               WHEN 2 THEN '赢家免费'
-              ELSE null END ) as payWayName
+              ELSE null END ) as payWayName,
+        1 as type
       from inviting i inner join user u on u.id = i.`owner`
       where u.status = 0 and i.status = 0
       <if test="userId != null">
@@ -69,7 +70,8 @@
             WHEN 0 THEN 'AA制'
             WHEN 1 THEN '女生免费'
             WHEN 2 THEN '赢家免费'
-            ELSE NULL END ) AS payWayName
+            ELSE NULL END ) AS payWayName,
+        2 as type
         FROM inviting_user iu
         INNER JOIN inviting i ON i.id = iu.inviting_id
         INNER JOIN user u ON u.id = i.owner
@@ -86,7 +88,8 @@
         WHEN 0 THEN 'AA制'
         WHEN 1 THEN '女生免费'
         WHEN 2 THEN '赢家免费'
-        ELSE null END ) as payWayName
+        ELSE null END ) as payWayName,
+        3 as type
         from inviting i inner join user u on u.id = i.`owner`
         where u.status = 0 and i.status = 0
         <if test="userId != null">
