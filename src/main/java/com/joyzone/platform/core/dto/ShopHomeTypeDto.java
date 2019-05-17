@@ -20,6 +20,9 @@ public class ShopHomeTypeDto extends BaseModel {
     @ApiModelProperty("店家类型名称")
     private String shopTypeName;
 
+    @ApiModelProperty("店家类型图片")
+    private String typeImage;
+
     public Long getShopTypeId() {
         return shopTypeId;
     }
@@ -34,5 +37,13 @@ public class ShopHomeTypeDto extends BaseModel {
 
     public void setShopTypeName(String shopTypeName) {
         this.shopTypeName = shopTypeName;
+    }
+
+    public String getTypeImage() {
+        return typeImage;
+    }
+
+    public void setTypeImage(String typeImage) {
+        this.typeImage = typeImage;
     }
 }
