@@ -15,6 +15,8 @@ public interface UserMapper extends Mapper<UserModel> {
     List<UserModel> getUserByPhone(@Param("phone") String phone);
 
     int delUsers(@Param("ids") Long[] ids);
+
+    UserModel getUserInfo(@Param("userId") Long userId);
     
     int saveUser(UserModel userModel);
 }
