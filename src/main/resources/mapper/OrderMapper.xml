@@ -20,21 +20,23 @@
   </resultMap>
 
   <resultMap id="teamOrderListMap" type="com.joyzone.platform.core.dto.OrderMineDto">
-    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <id column="teamOrCouponId" property="teamOrCouponId" jdbcType="BIGINT" />
+    <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <result column="shopId" property="shopId" jdbcType="BIGINT" />
     <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
     <result column="shopName" property="shopName" jdbcType="VARCHAR" />
     <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
     <result column="startTime" property="startTime" jdbcType="DATE" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
-    <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
+    <collection property="userJoinList" javaType="ArrayList" column="{teamOrCouponId=teamOrCouponId,orderType=orderType}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
 
     </collection>
   </resultMap>
 
   <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
-    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <id column="teamOrCouponId" property="teamOrCouponId" jdbcType="BIGINT" />
+    <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
   </resultMap>
@@ -77,7 +79,8 @@
 
   <select id="getTeamOrderList" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
     SELECT
-    t.id AS teamId,
+    t.id AS teamOrCouponId,
+    0 AS orderType,
     t.shop_id AS shopId,
     s.cover_img AS shopImg,
     s.name AS shopName,
@@ -87,8 +90,9 @@
     FROM team_users tu
     LEFT JOIN team t ON t.id = tu.team_id
     LEFT JOIN shop s ON s.id = t.shop_id
-    WHERE user_id = #{userId}
+    WHERE tu.user_id = #{userId}
     AND t.status = 0
+    AND tu.status = 0
     <if test="type == 0">
       AND t.result = 0
       AND t.start_time > NOW()
@@ -96,13 +100,55 @@
     <if test="type == 1">
       AND t.result = 1
     </if>
+
+    UNION
+
+    SELECT
+    sc.id AS teamOrCouponId,
+    1 AS orderType,
+    sc.shop_id AS shopId,
+    s.cover_img AS shopImg,
+    s.name AS shopName,
+    s.address AS shopAddress,
+    sc.start_time AS startTime,
+    sc.number AS personNum
+    FROM coupon_user cu
+    LEFT JOIN shop_coupon sc ON sc.id = cu.coupon_id
+    LEFT JOIN shop s ON s.id = sc.shop_id
+    WHERE cu.user_id = 1
+    AND cu.status = 0
+    AND sc.status = 1
+    AND sc.result = 0
+    <if test="type == 0">
+      AND sc.result = 0
+      AND sc.start_time > NOW()
+    </if>
+    <if test="type == 1">
+      AND sc.result = 1
+    </if>
   </select>
 
   <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
-    SELECT tu.team_id AS teamId,u.id AS userId,u.head_pic AS userHeadImg
-    FROM team_users tu
-    LEFT JOIN user u ON u.id = tu.user_id
-    WHERE tu.team_id = #{teamId} AND tu.status = 0
+    <if test="orderType == 0">
+      SELECT
+      tu.team_id AS teamOrCouponId,
+      0 AS orderType,
+      u.id AS userId,
+      u.head_pic AS userHeadImg
+      FROM team_users tu
+      LEFT JOIN user u ON u.id = tu.user_id
+      WHERE tu.team_id = #{teamOrCouponId} AND tu.status = 0
+    </if>
+    <if test="orderType == 1">
+      SELECT
+      cu.coupon_id AS teamOrCouponId,
+      1 AS orderType,
+      u.id AS userId,
+      u.head_pic AS userHeadImg
+      FROM coupon_user cu
+      LEFT JOIN user u ON u.id = cu.user_id
+      WHERE cu.coupon_id = #{teamOrCouponId}  AND cu.status = 0
+    </if>
   </select>
 
   <delete id="delOrders">

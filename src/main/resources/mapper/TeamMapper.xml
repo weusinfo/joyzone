@@ -34,7 +34,7 @@
   </resultMap>
 
   <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
-    <id column="teamId" property="teamId" jdbcType="BIGINT" />
+    <id column="teamOrCouponId" property="teamOrCouponId" jdbcType="BIGINT" />
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
   </resultMap>
@@ -87,7 +87,10 @@
     </select>
 
     <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
-        SELECT tu.team_id AS teamId,u.id AS userId,u.head_pic AS userHeadImg
+        SELECT
+        tu.team_id AS teamOrCouponId,
+        u.id AS userId,
+        u.head_pic AS userHeadImg
         FROM team_users tu
         LEFT JOIN user u ON u.id = tu.user_id
         WHERE tu.team_id = #{teamId} AND tu.status = 0

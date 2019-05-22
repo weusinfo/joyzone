@@ -32,6 +32,13 @@ public class ShopTypeModel extends BaseModel{
     @ApiModelProperty("0 : 组队类型   1：体验类型")
     private Integer type;
 
+    /**
+     * 店家类型图片
+     */
+    @Column(name = "type_image")
+    @ApiModelProperty("店家类型图片")
+    private String typeImage;
+
     @ApiModelProperty("父级ID")
     private Long pid;
 
@@ -99,6 +106,14 @@ public class ShopTypeModel extends BaseModel{
      */
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getTypeImage() {
+        return typeImage;
+    }
+
+    public void setTypeImage(String typeImage) {
+        this.typeImage = typeImage;
     }
 
     /**

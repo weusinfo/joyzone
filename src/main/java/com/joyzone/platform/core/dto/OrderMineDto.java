@@ -22,8 +22,11 @@ public class OrderMineDto extends BaseModel{
     }
 
     //体验券ID
-    @ApiModelProperty("店家组队主键")
-    private Long teamId;
+    @ApiModelProperty("店家组队或体验券主键")
+    private Long teamOrCouponId;
+
+    @ApiModelProperty("0：店家组队订单 1：体验券订单")
+    private Integer orderType;
 
     //店家ID
     @ApiModelProperty("店家ID")
@@ -51,12 +54,20 @@ public class OrderMineDto extends BaseModel{
 
     private List<UserJoinTeamDto> userJoinList;
 
-    public Long getTeamId() {
-        return teamId;
+    public Long getTeamOrCouponId() {
+        return teamOrCouponId;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setTeamOrCouponId(Long teamOrCouponId) {
+        this.teamOrCouponId = teamOrCouponId;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     public Long getShopId() {
