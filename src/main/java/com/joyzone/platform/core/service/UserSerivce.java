@@ -88,4 +88,15 @@ public class UserSerivce extends BaseService<UserModel> {
     public List<UserModel> getExportUserXls(UserModel userModel){
         return userMapper.getUserList(userModel);
     }
+
+
+    /**
+     * 根据条件获取用户信息
+     * @param userId
+     * Mr.Gx
+     */
+    public UserModel getUserInfo(Long userId){
+        return userMapper.getUserInfo(userId);
+    }
+
 }

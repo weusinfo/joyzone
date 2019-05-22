@@ -1,11 +1,13 @@
 package com.joyzone.platform.module.app.controller;
 
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,4 +39,36 @@ public class AppUserController {
         userSerivce.saveUserLngAndLat(userId,lng,lat);
         return R.ok("操作成功");
     }
+
+
+    @ApiOperation("根据ID获取用户信息")
+    @PostMapping("getUserInfo")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R getUserInfo(@RequestParam("userId") Long userId){
+        return R.ok(userSerivce.getUserInfo(userId));
+    }
+
+    @ApiOperation("添加或修改用户信息")
+    @PostMapping("saveUser")
+    public R saveUser(UserModel userModel){
+        if(userModel == null)
+            return R.error("参数不能为空");
+        if(StringUtils.isBlank(userModel.getUserName()))
+            return R.error("用户名不能为空");
+        if(StringUtils.isBlank(userModel.getPhone()))
+            return R.error("联系方式不能为空");
+        if(StringUtils.isBlank(userModel.getHeadPic()))
+            return R.error("头像地址不能为空");
+        if(userModel.getSex() == null)
+            return R.error("性别不能为空");
+        if(userModel.getProfession() == null)
+            return R.error("职业不能为空");
+        if(userModel.getEducation() == null)
+            return R.error("学历不能为空");
+
+        return  userSerivce.saveUser(userModel) > 0 ? R.ok() : R.error("添加失败");
+    }
+
 }
