@@ -49,4 +49,11 @@
       <include refid="BaseResultSQL"></include>
     FROM user WHERE  id = #{userId}
   </select>
+  
+    <insert id="saveUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="UserModel" >
+  insert into user(user_name, login_name,password,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time)
+  values(#{userName,jdbcType=VARCHAR},#{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{type,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
+  #{headPic,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{sex,jdbcType=INTEGER},
+  #{birthday,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+  </insert>
 </mapper>
