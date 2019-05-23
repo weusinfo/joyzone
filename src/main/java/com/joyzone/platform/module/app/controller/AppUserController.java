@@ -55,18 +55,6 @@ public class AppUserController {
     public R saveUser(UserModel userModel){
         if(userModel == null)
             return R.error("参数不能为空");
-        if(StringUtils.isBlank(userModel.getUserName()))
-            return R.error("用户名不能为空");
-        if(StringUtils.isBlank(userModel.getPhone()))
-            return R.error("联系方式不能为空");
-        if(StringUtils.isBlank(userModel.getHeadPic()))
-            return R.error("头像地址不能为空");
-        if(userModel.getSex() == null)
-            return R.error("性别不能为空");
-        if(userModel.getProfession() == null)
-            return R.error("职业不能为空");
-        if(userModel.getEducation() == null)
-            return R.error("学历不能为空");
 
         return  userSerivce.saveUser(userModel) > 0 ? R.ok() : R.error("添加失败");
     }
