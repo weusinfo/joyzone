@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.mapper;
 
 import com.joyzone.platform.core.dto.CouponDto;
+import com.joyzone.platform.core.dto.CouponRuleDto;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.ShopCouponModel;
 import org.apache.ibatis.annotations.Param;
@@ -21,4 +22,6 @@ public interface ShopCouponMapper extends Mapper<ShopCouponModel> {
     Map<String,Object> checkCouponIfSuccess(@Param("couponId") Long couponId);
 
     int delCoupons(@Param("ids")Long[] ids);
+
+    CouponRuleDto getCouponRuleInfo(@Param("couponId") Long couponId);
 }

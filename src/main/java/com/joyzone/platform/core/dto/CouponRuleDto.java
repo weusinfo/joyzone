@@ -15,15 +15,15 @@ import java.util.List;
 @Configuration
 @ApiModel("前端店家组队列表交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class TeamRuleDto extends BaseModel{
+public class CouponRuleDto extends BaseModel{
 
-    public TeamRuleDto(){
+    public CouponRuleDto(){
 
     }
 
     //体验券ID
-    @ApiModelProperty("店家组队主键")
-    private Long teamId;
+    @ApiModelProperty("体验券ID")
+    private Long couponId;
 
     //店家ID
     @ApiModelProperty("店家ID")
@@ -49,30 +49,26 @@ public class TeamRuleDto extends BaseModel{
     @ApiModelProperty("店家电话")
     private String shopPhone;
 
-    //支付方式
-    @ApiModelProperty("支付方式")
-    private Integer payWay;
-
-    //性别比例
-    @ApiModelProperty("性别比例")
-    private Integer sexWant;
+    //活动内容
+    @ApiModelProperty("活动内容")
+    private String couponContent;
 
     //体验活动开始时间
-    @ApiModelProperty("店家组队开始时间")
+    @ApiModelProperty("体验券开始时间")
     private Date startTime;
 
     //允许的最大人数
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
-    private List<UserJoinTeamDto> userJoinList;
+    private List<UserJoinCouponDto> userJoinList;
 
-    public Long getTeamId() {
-        return teamId;
+    public Long getCouponId() {
+        return couponId;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setCouponId(Long couponId) {
+        this.couponId = couponId;
     }
 
     public Long getShopId() {
@@ -123,20 +119,12 @@ public class TeamRuleDto extends BaseModel{
         this.shopPhone = shopPhone;
     }
 
-    public Integer getPayWay() {
-        return payWay;
+    public String getCouponContent() {
+        return couponContent;
     }
 
-    public void setPayWay(Integer payWay) {
-        this.payWay = payWay;
-    }
-
-    public Integer getSexWant() {
-        return sexWant;
-    }
-
-    public void setSexWant(Integer sexWant) {
-        this.sexWant = sexWant;
+    public void setCouponContent(String couponContent) {
+        this.couponContent = couponContent;
     }
 
     public Date getStartTime() {
@@ -155,11 +143,11 @@ public class TeamRuleDto extends BaseModel{
         this.personNum = personNum;
     }
 
-    public List<UserJoinTeamDto> getUserJoinList() {
+    public List<UserJoinCouponDto> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinCouponDto> userJoinList) {
         this.userJoinList = userJoinList;
     }
 }
