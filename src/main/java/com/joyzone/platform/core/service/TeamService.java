@@ -6,6 +6,7 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
 import com.joyzone.platform.core.model.BaseModel;
@@ -78,6 +79,10 @@ public class TeamService extends BaseService<TeamModel> {
 
     public List<ShopTeamsDto> getShopTeamListByShopId(Long shopId){
         return teamMapper.getShopTeamListByShopId(shopId);
+    }
+
+    public TeamRuleDto getTeamRuleList(Long teamId){
+        return teamMapper.getTeamRuleList(teamId);
     }
 
 }

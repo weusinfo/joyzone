@@ -2,6 +2,7 @@ package com.joyzone.platform.core.mapper;
 
 import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.vo.AppTeamVO;
 import org.apache.ibatis.annotations.Param;
@@ -22,5 +23,7 @@ public interface TeamMapper extends Mapper<TeamModel> {
     List<ShopTeamsDto> getShopTeamListByShopId(@Param("shopId") Long shopId);
 
     List<TeamModel> checkUserStartTeam(@Param("userId") Long userId,@Param("shopId") Long shopId);
+
+    TeamRuleDto getTeamRuleList(@Param("teamId")  Long teamId);
 
 }

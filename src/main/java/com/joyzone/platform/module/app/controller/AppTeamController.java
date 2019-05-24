@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.model.UserModel;
@@ -148,4 +149,19 @@ public class AppTeamController {
     public R getAppTeamList(Long userId,Integer pageNum,Integer pageSize){
         return teamService.getAppTeamList(userId,pageNum,pageSize);
     }
+
+    @PostMapping("/getTeamRuleList")
+    @ApiOperation("首页组队列表点击规则后的页面 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "teamId", value = "组队id", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R getTeamRuleList(Long teamId){
+        TeamRuleDto teamRuleDto = teamService.getTeamRuleList(teamId);
+        if(teamRuleDto == null){
+            return R.error("没有数据！");
+        }
+        return R.ok(teamRuleDto);
+    }
+
+
 }
