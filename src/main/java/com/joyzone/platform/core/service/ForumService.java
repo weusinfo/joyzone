@@ -109,8 +109,8 @@ public class ForumService extends BaseService<ForumModel> {
      * @param pageSize
      * @return
      */
-    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize){
-        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize);
+    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize,Integer type,Integer queryType){
+        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize,type,queryType);
         if(list != null && list.size() > 0){
             for(AppForumVO appForumVO : list){
                 appForumVO.setForumDetails(forumDetailMapper.selectForumDetails(appForumVO.getId()));

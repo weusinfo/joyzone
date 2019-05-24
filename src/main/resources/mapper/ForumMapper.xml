@@ -41,6 +41,15 @@
             u.profession,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age
         FROM forum f INNER JOIN `user` u on (f.user_id = u.id and u.`status` = 0)
         WHERE f.`status` = 1
+        <if test="type != null">
+            and f.type = #{type}
+        </if>
+        <if test="queryType == 0">
+            order by f.point_num desc
+        </if>
+        <if test="queryType == 1">
+            order by f.id desc
+        </if>
     </select>
 
     <update id="updateForumPointNum">
