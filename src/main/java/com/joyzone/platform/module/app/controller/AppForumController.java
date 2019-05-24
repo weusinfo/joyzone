@@ -48,11 +48,13 @@ public class AppForumController {
     @ApiOperation("获取论坛发帖信息及跟帖信息 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
+            @ApiImplicitParam(name = "type",value = "类型：0.建议,1.吐槽 ",paramType = "form"),
+            @ApiImplicitParam(name = "queryType",value = "0 热点,1 最新",paramType = "form",defaultValue = "0"),
             @ApiImplicitParam(name = "pageNum",value = "页数",paramType = "form",defaultValue = "1"),
             @ApiImplicitParam(name = "pageSize",value = "每页条数",paramType = "form",defaultValue = "10")
     })
-    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize){
-        return forumService.getAppForumList(userId,pageNum,pageSize);
+    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize,Integer type,Integer queryType){
+        return forumService.getAppForumList(userId,pageNum,pageSize,type,queryType);
     }
 
     @PostMapping("updateForumPointNum")
