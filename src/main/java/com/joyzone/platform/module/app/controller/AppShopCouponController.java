@@ -5,6 +5,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.CouponDto;
+import com.joyzone.platform.core.dto.CouponRuleDto;
+import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.CouponUserModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
@@ -125,6 +127,19 @@ public class AppShopCouponController {
             model.setUpdateTime(new Date());
             couponService.update(model);
         }
+    }
+
+    @PostMapping("/getCouponRuleInfo")
+    @ApiOperation("首页组队列表点击规则后的页面 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "couponId", value = "体验券id", required = true, dataType = "Long", paramType = "query")
+    })
+    public R getCouponRuleInfo(Long couponId){
+        CouponRuleDto couponRuleDto = couponService.getCouponRuleInfo(couponId);
+        if(couponRuleDto == null){
+            return R.error("没有数据！");
+        }
+        return R.ok(couponRuleDto);
     }
 
 }

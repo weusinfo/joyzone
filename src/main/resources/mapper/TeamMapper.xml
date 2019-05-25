@@ -52,6 +52,24 @@
         </collection>
     </resultMap>
 
+    <resultMap id="teamRuleMap" type="com.joyzone.platform.core.dto.TeamRuleDto">
+        <id column="teamId" property="teamId" jdbcType="BIGINT" />
+        <result column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
+        <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+        <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+        <result column="shopPrice" property="shopPrice" jdbcType="DECIMAL" />
+        <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
+        <result column="payWay" property="payWay" jdbcType="INTEGER" />
+        <result column="sexWant" property="sexWant" jdbcType="INTEGER" />
+        <result column="startTime" property="startTime" jdbcType="DATE" />
+        <result column="personNum" property="personNum" jdbcType="INTEGER" />
+        <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
+
+        </collection>
+    </resultMap>
+
     <select id="getTeamList" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
         SELECT
             t.id AS teamId,
@@ -139,5 +157,23 @@
         WHERE t.owner = #{userId}
         AND t.shop_id = #{shopId}
         AND t.status = 0
+    </select>
+
+    <select id="getTeamRuleList" resultMap="teamRuleMap">
+        SELECT
+            t.id AS teamId,
+            s.id AS shopId,
+            s.`cover_img` AS shopImg,
+            s.`name` AS shopName,
+            s.`address` AS shopAddress,
+            s.`price` AS shopPrice,
+            s.`phone` AS shopPhone,
+            t.number AS personNum,
+            t.pay_way AS payWay,
+            t.sex_want AS sexWant,
+            t.start_time AS startTime
+        FROM team t
+        LEFT JOIN shop s ON s.id = t.shop_id
+        WHERE t.id = #{teamId}
     </select>
 </mapper>
