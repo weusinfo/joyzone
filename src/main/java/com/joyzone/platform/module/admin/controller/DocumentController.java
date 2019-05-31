@@ -17,6 +17,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.HashMap;
+
 /**
  * 腾讯云对象存储， 需要指定文件名
  * @author Administrator
@@ -47,7 +49,8 @@ public class DocumentController {
 	public R uploadUserDoc(MultipartFile file) {
 		try {
 			String filePath = fileUtil.uploadPersonalImg(file);
-			return R.ok(filePath);
+			String[] filePaths = {filePath};
+			return R.ok(filePaths);
 		} catch (Exception e) {
 			//ignore
 		}
