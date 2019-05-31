@@ -47,7 +47,7 @@ public class DocumentController {
 	public R uploadUserDoc(MultipartFile file) {
 		try {
 			String filePath = fileUtil.uploadPersonalImg(file);
-			return R.ok("上传成功").put("filePath", filePath);
+			return R.ok(filePath);
 		} catch (Exception e) {
 			//ignore
 		}
