@@ -77,11 +77,13 @@
   </select>
   
   <select id="listUsers" parameterType="com.joyzone.platform.core.model.SysUserModel" resultType="com.joyzone.platform.core.model.SysUserModel">
-  select id,shop_id, name, phone, sex, head_img,status,create_time,update_time,last_login_time from sys_user
+    select id,shop_id, name, phone, sex, head_img,status,create_time,update_time,last_login_time from sys_user
 	  <where>
 	  	<if test="id != null ">id=#{id}</if>
 	  	<if test="name != null and name.length()>0" >and name like "%"#{name}"%"</if>
 	  	<if test="shopId != null">and shop_id = #{shopId}</if>
+        <if test="startTime != null">and create_time >= #{startTime}</if>
+        <if test="endTime != null">and create_time <![CDATA[ <= ]]> #{endTime}</if>
 	  </where>
   </select>
 
