@@ -1,5 +1,6 @@
 package com.joyzone.platform.module.admin.controller;
 
+import com.joyzone.platform.core.model.DocumentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,8 +50,8 @@ public class DocumentController {
 	public R uploadUserDoc(MultipartFile file) {
 		try {
 			String filePath = fileUtil.uploadPersonalImg(file);
-			String[] filePaths = {filePath};
-			return R.ok(filePaths);
+			DocumentModel documentModel = new DocumentModel(filePath);
+			return R.ok(documentModel);
 		} catch (Exception e) {
 			//ignore
 		}
