@@ -50,6 +50,16 @@ public class SysUserModel  extends BaseModel{
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    @Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
+
     /**
      * 用户状态；0：激活，1：禁用
      */
@@ -254,4 +264,20 @@ public class SysUserModel  extends BaseModel{
 	public void setTryErrTimes(Integer tryErrTimes) {
 		this.tryErrTimes = tryErrTimes;
 	}
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 }
