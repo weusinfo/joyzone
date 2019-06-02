@@ -13,6 +13,11 @@ public class DocumentModel extends BaseModel{
 
     protected static final String TABLE_NAME = "document";
 
+    public DocumentModel(){}
+
+    public DocumentModel(String filePath){
+        this.filePath = filePath;
+    }
     /**
      * 自增长主键
      */
