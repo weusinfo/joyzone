@@ -41,8 +41,8 @@ public class SysRoleController {
 		return R.ok("角色设置成功");
 	}
 
-	@ApiOperation(value="获取角色列表")
-	@PostMapping("/getRoleList  @Mr.Gx")
+	@ApiOperation(value="获取角色列表   @Mr.Gx")
+	@PostMapping("/getRoleList")
 	public R getRoleList() {
 		return R.ok(roleService.getRoleList());
 	}
