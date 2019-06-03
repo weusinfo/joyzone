@@ -82,6 +82,7 @@ public class UserModel extends BaseModel{
      */
     @ApiModelProperty("生日(yyyy-MM-dd)")
     @DateTimeFormat(pattern = DateUtils.DATE_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @Excel(name="生日",exportFormat = DateUtils.DATE_PATTERN)
     private Date birthday;
 

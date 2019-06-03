@@ -1,11 +1,8 @@
 package com.joyzone.platform.module.admin.controller;
 
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.SysRoleModel;
@@ -15,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,8 +40,14 @@ public class SysRoleController {
 	}
 
 	@ApiOperation(value="获取角色列表   @Mr.Gx")
-	@PostMapping("/getRoleList")
-	public R getRoleList() {
-		return R.ok(roleService.getRoleList());
+	@GetMapping("/getRoleList")
+	public R getRoleList(SysRoleModel sysRoleModel) {
+        List<SysRoleModel> list = roleService.getRoleList(sysRoleModel);
+        if(list != null && list.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
 	}
 }

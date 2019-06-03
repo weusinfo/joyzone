@@ -1,7 +1,9 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joyzone.platform.common.utils.DateUtils;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -51,10 +53,12 @@ public class CouponDto extends BaseModel{
 
     //体验活动开始时间
     @ApiModelProperty("体验券开始时间")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date startTime;
 
     //体验活动结束时间
     @ApiModelProperty("体验券结束时间")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date endTime;
 
     //店家类型名称

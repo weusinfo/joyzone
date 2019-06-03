@@ -1,5 +1,7 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 
 import java.util.Date;
@@ -35,12 +37,14 @@ public class ShopCollectModel  extends BaseModel{
      * 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date updateTime;
 
     /**

@@ -1,5 +1,7 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -36,9 +38,11 @@ public class InvitingUserModel extends BaseModel{
     private Integer confirm;
 
     @Column(name = "create_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;
 
     @Column(name = "update_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date updateTime;
 
     /**

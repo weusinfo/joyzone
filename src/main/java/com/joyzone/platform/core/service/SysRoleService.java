@@ -40,8 +40,8 @@ public class SysRoleService extends BaseService<SysRoleModel> {
 		roleMapper.grantRole(roleId, userId);
 	}
 
-	public List<SysRoleModel> getRoleList(){
-		return roleMapper.getRoleList();
+	public List<SysRoleModel> getRoleList(SysRoleModel sysRoleModel){
+		return roleMapper.getRoleList(sysRoleModel);
 	}
 
 }

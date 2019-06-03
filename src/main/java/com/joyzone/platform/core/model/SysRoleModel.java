@@ -2,6 +2,8 @@ package com.joyzone.platform.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joyzone.platform.common.utils.DateUtils;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -42,6 +44,16 @@ public class SysRoleModel  extends BaseModel{
 
 	@Transient
     private Long[] menuIds;
+
+	@Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+	@Transient
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
 	/**
      * @return id
@@ -134,4 +146,20 @@ public class SysRoleModel  extends BaseModel{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 }

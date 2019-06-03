@@ -1,5 +1,8 @@
 package com.joyzone.platform.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -32,12 +35,14 @@ public class CouponUserModel  extends BaseModel{
      * 领券时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;
 
     /**
      * 更新时间
      */
     @Column(name = "update_time")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date updateTime;
 
     /**
