@@ -40,6 +40,13 @@ public class UserModel extends BaseModel{
     @Column(name = "user_name")
     private String userName;
 
+    /**
+     * 畅玩号
+     */
+    @ApiModelProperty("畅玩号")
+    @Column(name = "play_num")
+    private String playNum;
+
     @Column(name="login_name")
     @ApiModelProperty("用户登录账号")
     private String loginName;
@@ -164,6 +171,14 @@ public class UserModel extends BaseModel{
      */
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPlayNum() {
+        return playNum;
+    }
+
+    public void setPlayNum(String playNum) {
+        this.playNum = playNum;
     }
 
     /**

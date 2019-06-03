@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.*;
 import com.joyzone.platform.core.dto.ShopDto;
 import com.joyzone.platform.core.dto.ShopHomeDto;
+import com.joyzone.platform.core.dto.ShopInfoDto;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.vo.AppShopHomeVO;
@@ -123,6 +124,10 @@ public class ShopService extends BaseService<ShopModel> {
 	 */
 	public ShopModel findById(Long id){
 		return shopMapper.findById(id);
+	}
+
+	public ShopInfoDto findShopInfoDtoByShopId(Long shopId){
+		return shopMapper.findShopInfoDtoByShopId(shopId);
 	}
 
 	/**
