@@ -48,6 +48,10 @@ public class ShopTypeModel extends BaseModel{
     @ApiModelProperty("0 失效  1 正常")
     private Integer status;
 
+    @Column(name = "sort")
+    @ApiModelProperty("排序")
+    private String sort;
+
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -146,6 +150,14 @@ public class ShopTypeModel extends BaseModel{
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
     /**

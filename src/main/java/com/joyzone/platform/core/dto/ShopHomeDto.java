@@ -26,7 +26,10 @@ public class ShopHomeDto extends BaseModel {
     private List<ShopHomeBannerDto> shopHomeBannerDtoList;
 
     @ApiModelProperty("商家首页店家类型DTO集合")
-    private List<ShopHomeTypeDto> shopHomeTypeDtoList;
+    private List<ShopHomeTypeDto> shopHomeTypeDtoList;    //暂时按UI图上的那8个店家种类来，前端先写死
+
+    @ApiModelProperty("商家首页热门店家DTO集合")
+    private List<ShopHomeHotDto> shopHomeHotDtoList;
 
     @ApiModelProperty("商家首页店家DTO集合")
     private List<ShopHomeListDto> shopHomeListDtoList;
@@ -71,5 +74,11 @@ public class ShopHomeDto extends BaseModel {
         this.shopHomeListDtoList = shopHomeListDtoList;
     }
 
+    public List<ShopHomeHotDto> getShopHomeHotDtoList() {
+        return shopHomeHotDtoList;
+    }
 
+    public void setShopHomeHotDtoList(List<ShopHomeHotDto> shopHomeHotDtoList) {
+        this.shopHomeHotDtoList = shopHomeHotDtoList;
+    }
 }
