@@ -70,5 +70,22 @@
       select
         <include refid="BaseResultSQL"></include>
       from sys_role where status = 0
+      <if test="roleName != null and roleName != ''">
+          and role_name like CONCAT('%',#{roleName},'%')
+      </if>
+      <if test="startTime != null">
+          and create_time >= #{startTime}
+      </if>
+      <if test="endTime != null">
+          and create_time <![CDATA[ <= ]]> #{endTime}
+      </if>
+      order by id desc
+  </select>
+
+  <select id="getUserRoleList" resultMap="BaseResultMap">
+      select
+         r.id,r.role_name,r.create_time,r.remark
+      from sys_role r inner join role_user ru on ru.role_id = r.id
+      where r.status = 0 and ru.user_id = #{userId}
   </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.ShopDto;
 import com.joyzone.platform.core.dto.ShopHomeDto;
+import com.joyzone.platform.core.dto.ShopInfoDto;
 import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopModel;
@@ -65,10 +66,14 @@ public class AppShopController {
     }
 
     @PostMapping("findByShopId")
-    @ApiOperation("查看商家首页信息 @Mr.Gx")
+    @ApiOperation("查看商家詳情信息 @Mr.Gx")
     @ApiImplicitParam(name="id", value="商户id",paramType ="form")
     public R findByShopId(Long id){
-        return R.ok(shopService.findById(id));
+        ShopInfoDto shopInfoDto = shopService.findShopInfoDtoByShopId(id);
+        if(shopInfoDto != null){
+            return R.ok(shopInfoDto);
+        }
+        return R.error("未获取到数据！");
     }
 
     @PostMapping("getAppShopList")

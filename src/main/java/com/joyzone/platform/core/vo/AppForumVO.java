@@ -50,7 +50,7 @@ public class AppForumVO {
     private Integer age;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty("年龄")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     @ApiModelProperty("跟帖人数")

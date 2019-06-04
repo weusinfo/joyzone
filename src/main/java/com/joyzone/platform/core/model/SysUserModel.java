@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "sys_user")
@@ -88,6 +89,17 @@ public class SysUserModel  extends BaseModel{
     @ApiModelProperty("登陆出错次数")
     @Column(name = "try_err_times")
 	private Integer tryErrTimes;
+
+    @Transient
+    private List<SysRoleModel> userRoles;
+
+    public List<SysRoleModel> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<SysRoleModel> userRoles) {
+        this.userRoles = userRoles;
+    }
 
     /**
      * @return id

@@ -23,6 +23,10 @@ public interface SysRoleMapper extends Mapper<SysRoleModel> {
 	
 	int revokeRole(@Param("userId") Long userId);
 
-	List<SysRoleModel> getRoleList();
+	List<SysRoleModel> getRoleList(SysRoleModel sysRoleModel);
+
+	List<SysRoleModel> getUserRoleList(@Param("userId") Long userId);
+
+
 
 }

@@ -3,6 +3,8 @@ package com.joyzone.platform.module.admin.controller;
 import java.util.List;
 
 import com.github.pagehelper.Page;
+import com.joyzone.platform.core.model.SysRoleModel;
+import com.joyzone.platform.core.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class SysUserController {
 	
 	@Autowired
 	private SysUserService sysUserService;
+	@Autowired
+	private SysRoleService sysRoleService;
 	
 	@ApiOperation("更新商户用户")
 	@PostMapping("/add")
@@ -49,6 +53,9 @@ public class SysUserController {
 	public R listUsers(SysUserModel sysUser) {
 		List<SysUserModel> users = sysUserService.listUsers(sysUser);
 		if(users != null && users.size() > 0){
+			for(SysUserModel sysUserModel : users){
+				sysUserModel.setUserRoles(sysRoleService.getUserRoleList(sysUserModel.getId()));
+			}
 			Page page = new Page();
 			page = (Page)users;
 			return R.pageToData(page.getTotal(),page.getResult());
