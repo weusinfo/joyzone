@@ -11,6 +11,7 @@
     <result column="typeImage" property="typeImage" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>

@@ -23,6 +23,9 @@ public class ShopHomeTypeDto extends BaseModel {
     @ApiModelProperty("店家类型图片")
     private String typeImage;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
     public Long getShopTypeId() {
         return shopTypeId;
     }
@@ -45,5 +48,13 @@ public class ShopHomeTypeDto extends BaseModel {
 
     public void setTypeImage(String typeImage) {
         this.typeImage = typeImage;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }
