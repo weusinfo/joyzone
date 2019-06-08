@@ -85,4 +85,14 @@ public class SysUserService extends BaseService<SysUserModel> {
 	public SysUserModel selectById(Long id){
 		return sysUserMapper.selectById(id);
 	}
+	
+	/**
+	 * 通过门店编号获取店小二， 只取一个店小二
+	 * @param shopId
+	 * @return
+	 */
+	public SysUserModel selectByShopId(Long shopId)
+	{
+		return sysUserMapper.selectByShopId(shopId);
+	}
 }

@@ -2,10 +2,11 @@ package com.joyzone.platform.core.service;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.JacksonUtil;
 import com.joyzone.platform.common.utils.PublicUtil;
@@ -22,6 +27,8 @@ import com.joyzone.platform.config.EasemobConfig;
 import com.joyzone.platform.core.dto.EasemobToken;
 import com.joyzone.platform.core.dto.EasemobUser;
 import com.joyzone.platform.core.dto.EasemobUserResponse;
+
+import cn.hutool.json.JSONObject;
 
 
 @Service
@@ -129,5 +136,58 @@ public class ChatService {
 			logger.error("Change PWD error happended...");
 		}
 		return false;
+	}
+	
+	/**
+	 * 创建聊天群
+	 * @param ownerId
+	 * @param groupName
+	 */
+	public String createGroup(Long ownerId, String groupName,String desc) {
+		String createGroupUrl = easemob.getChatGrpUrl();
+		Map<String,Object> map = Maps.newHashMap();
+		map.put("groupname", groupName);
+		map.put("desc", desc);
+		map.put("public", true);
+		map.put("maxusers", Constants.PARAM_CHATGROUP_MAXUSERS);
+		map.put("approval", false);
+		map.put("owner", ownerId);
+		String jsonStr = JacksonUtil.deserializer(map);
+		Map<String,String> headers = getAuthHeaders();
+		try {
+			String result = RestTemplateUtil.sendJson(createGroupUrl, jsonStr, headers, HttpMethod.POST);
+			if(PublicUtil.isNotEmpty(result)) {
+				logger.info(String.format("==== d% 创建群 s% 成功...", ownerId, groupName));
+				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
+				JsonElement ele = jsonObj.get("data");
+				JsonObject groupObj = ele.getAsJsonObject();
+				return groupObj.getAsString();
+			}
+		} catch (Exception e) {
+			logger.error(String.format("==== d% 创建群 s% 失败...", ownerId, groupName), e);
+		}
+		return null;
+	}
+	
+	public void joinGroup(String groupId, Long userId) {
+		String joinGroupUrl = easemob.getJoinGroupUrl();
+		joinGroupUrl = joinGroupUrl.replace("{groupId}", groupId);
+		Map<String,String> headers = getAuthHeaders();
+		Map<String,Object> map = Maps.newHashMap();
+		List<String> list = Lists.newArrayList();
+		list.add(String.valueOf(userId));
+		map.put("usernames", list);
+		Map<String,Object> jsonMap = Maps.newHashMap();
+		jsonMap.put("content", map);
+		String jsonStr = JacksonUtil.deserializer(jsonMap);
+		try {
+			String result = RestTemplateUtil.sendJson(joinGroupUrl, jsonStr, headers, HttpMethod.POST);
+			if(PublicUtil.isEmpty(result)) {
+				logger.error(String.format("用户 d% 加入群 d% 失败...", userId, groupId));
+			}
+		}catch(Exception e) {
+			//
+		}
+		
 	}
 }

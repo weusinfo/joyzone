@@ -87,8 +87,12 @@ public class TeamModel extends BaseModel {
     @ApiModelProperty("希望组队成员性别比例：0：约1:1   1：女>0  2随便")
     @Column(name = "sex_want")
     private Integer sexWant;
+    
+    @ApiModelProperty("组队时自动创建聊天群")
+    @Column(name = "chat_group_id")
+    private String chatGroupId;
 
-    /**
+	/**
      * @return id
      */
     public Long getId() {
@@ -261,4 +265,12 @@ public class TeamModel extends BaseModel {
     public void setSexWant(Integer sexWant) {
         this.sexWant = sexWant;
     }
+    
+    public String getChatGroupId() {
+		return chatGroupId;
+	}
+
+	public void setChatGroupId(String chatGroupId) {
+		this.chatGroupId = chatGroupId;
+	}
 }

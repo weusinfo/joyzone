@@ -15,8 +15,9 @@
     <result column="number" property="number" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-      <result column="pay_way" property="payWay" jdbcType="INTEGER" />
-      <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
+    <result column="pay_way" property="payWay" jdbcType="INTEGER" />
+    <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
+    <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
 
   <resultMap id="teamListMap" type="com.joyzone.platform.core.dto.TeamDto">

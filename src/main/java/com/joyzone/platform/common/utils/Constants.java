@@ -27,4 +27,8 @@ public interface Constants {
 	String EASEMOB_TOKEN = "easemob_token";
 	
 	String EASEMOB_HEADER_AUTH = "Authorization";
+	
+	String PARAM_CHATGROUP_OWNER = "组队的群主";
+	
+	public Integer PARAM_CHATGROUP_MAXUSERS = 20;
 }

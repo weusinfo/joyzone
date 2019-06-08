@@ -102,4 +102,13 @@ public class EasemobConfig {
 	public String getPwdUrl() {
 		return this.host + this.orgName + "/" + this.appName + "/users/{userName}/password";
 	}
+	
+	/**
+	 * 加入聊天群
+	 * @return
+	 */
+	public String getJoinGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users";
+	}
+	
 }

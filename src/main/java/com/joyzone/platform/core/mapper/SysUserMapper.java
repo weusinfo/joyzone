@@ -24,4 +24,6 @@ public interface SysUserMapper extends BaseMapper<SysUserModel> {
 	SysUserModel selectByName(@Param("userName") String userName);
 
 	SysUserModel selectById(Long id);
+	
+	SysUserModel selectByShopId(@Param("shopId") Long shopId);
 }
