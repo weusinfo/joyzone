@@ -6,6 +6,7 @@ import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.properties.IntegerProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -30,7 +31,9 @@ public class TeamModel extends BaseModel {
      */
     @ApiModelProperty("活动开始时间")
     @Column(name = "start_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Excel(name="活动开始时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**

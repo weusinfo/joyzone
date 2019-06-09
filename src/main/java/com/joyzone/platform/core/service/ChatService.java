@@ -5,15 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -157,14 +155,14 @@ public class ChatService {
 		try {
 			String result = RestTemplateUtil.sendJson(createGroupUrl, jsonStr, headers, HttpMethod.POST);
 			if(PublicUtil.isNotEmpty(result)) {
-				logger.info(String.format("==== d% 创建群 s% 成功...", ownerId, groupName));
+				logger.info(String.format("==== %s 创建群 %s 成功...", ownerId, groupName));
 				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
 				JsonElement ele = jsonObj.get("data");
 				JsonObject groupObj = ele.getAsJsonObject();
 				return groupObj.getAsString();
 			}
 		} catch (Exception e) {
-			logger.error(String.format("==== d% 创建群 s% 失败...", ownerId, groupName), e);
+			logger.error(String.format("==== %s 创建群 %s 失败...", ownerId, groupName), e);
 		}
 		return null;
 	}
