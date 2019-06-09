@@ -192,6 +192,7 @@ public class ChatService {
 	
 	public void cancelGroup(String groupId, Long userId) {
 		String cancelGroupUrl = easemob.getRemoveMemberFromGroupUrl();
+		cancelGroupUrl = cancelGroupUrl.replace("{groupId}",groupId);
 		cancelGroupUrl = cancelGroupUrl.replace("{userName}",userId+"");
 		Map<String,String> headers = getAuthHeaders();
 		try {
