@@ -37,6 +37,9 @@ public class AppOrderController {
     private TeamService teamService;
     @Autowired
     private ShopCouponService couponService;
+    
+    @Autowired
+    private GroupService groupService;
 
     /**
      * zy
@@ -89,6 +92,7 @@ public class AppOrderController {
             Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
             teamUsersModel.setStatus(1);
             teamUsersModel.setUpdateTime(new Date());
+            groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
             int result = teamUsersService.update(teamUsersModel);
             if(result == 1){
                 if(number == joinNum){

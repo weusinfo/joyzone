@@ -188,6 +188,17 @@ public class ChatService {
 		}catch(Exception e) {
 			//
 		}
+	}
+	
+	public void cancelGroup(String groupId, Long userId) {
+		String cancelGroupUrl = easemob.getRemoveMemberFromGroupUrl();
+		cancelGroupUrl = cancelGroupUrl.replace("{userName}",userId+"");
+		Map<String,String> headers = getAuthHeaders();
+		try {
+			RestTemplateUtil.sendhttp(cancelGroupUrl, null, headers, HttpMethod.DELETE);
+		}catch(Exception e) {
+			logger.error(String.format("从群组 d% 删除用户 userId d% 出错", groupId, userId), e);
+		}
 		
 	}
 }

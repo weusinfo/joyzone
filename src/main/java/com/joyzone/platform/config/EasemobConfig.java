@@ -111,4 +111,8 @@ public class EasemobConfig {
 		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users";
 	}
 	
+	public String getRemoveMemberFromGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
+	}
+	
 }

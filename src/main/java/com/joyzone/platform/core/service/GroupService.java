@@ -58,5 +58,17 @@ public class GroupService {
 		team = teamService.selectOne(team);
 		chatService.joinGroup(team.getChatGroupId(), userId);
 	}
+	
+	public void cancelGroup(Long teamId, Long userId) {
+		TeamModel teamModel = new TeamModel();
+		teamModel.setId(teamId);
+		teamModel = teamService.selectOne(teamModel);
+		String groupId = teamModel.getChatGroupId();
+		if(PublicUtil.isEmpty(teamModel) || PublicUtil.isEmpty(groupId)){
+			LOGGER.warn(String.format("Team ID d% 没有环信群ID", teamId));
+			return;
+		}
+		chatService.cancelGroup(groupId, userId);
+	}
 
 }

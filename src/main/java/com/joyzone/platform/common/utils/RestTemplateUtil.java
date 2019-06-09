@@ -51,6 +51,9 @@ public class RestTemplateUtil  {
         	stringResponseEntity = restTemplate.postForEntity(url, entity, String.class);
         }else if(method.equals(HttpMethod.GET)) {
         	stringResponseEntity = restTemplate.getForEntity(url, String.class, entity);
+        }else if(method.equals(HttpMethod.DELETE)) {
+        	restTemplate.delete(url, entity);
+        	responseData = "deleted";
         }
         if(null!=stringResponseEntity){
             HttpStatus httpCode = stringResponseEntity.getStatusCode();
