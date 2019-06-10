@@ -45,12 +45,7 @@
 
     <select id="getUserToInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
       select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
-             (CASE i.pay_way
-              WHEN 0 THEN 'AA制'
-              WHEN 1 THEN '女生免费'
-              WHEN 2 THEN '赢家免费'
-              ELSE null END ) as payWayName,
-        1 as type
+             i.pay_way as payWayName,i.type as inviteType, 1 as type
       from inviting i inner join user u on u.id = i.`owner`
       where u.status = 0 and i.status = 0
       <if test="userId != null">
@@ -61,17 +56,7 @@
 
     <select id="getConfirmInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
         SELECT i.id AS invitingId,u.id AS userId,u.user_name AS userName,u.head_pic AS headPic,i.address,i.content,i.start_time AS startTime,
-            (CASE i.type
-            WHEN 0 THEN '吃喝'
-            WHEN 1 THEN '玩乐'
-            WHEN 2 THEN '其他'
-            ELSE NULL END) AS inviteType,
-            (CASE i.pay_way
-            WHEN 0 THEN 'AA制'
-            WHEN 1 THEN '女生免费'
-            WHEN 2 THEN '赢家免费'
-            ELSE NULL END ) AS payWayName,
-        2 as type
+                i.type AS inviteType, i.pay_way AS payWayName, 2 as type
         FROM inviting_user iu
         INNER JOIN inviting i ON i.id = iu.inviting_id
         INNER JOIN user u ON u.id = i.owner
@@ -84,12 +69,7 @@
 
     <select id="getMyInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
         select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
-        (CASE i.pay_way
-        WHEN 0 THEN 'AA制'
-        WHEN 1 THEN '女生免费'
-        WHEN 2 THEN '赢家免费'
-        ELSE null END ) as payWayName,
-        3 as type
+                i.type AS inviteType, i.pay_way as payWayName, 3 as type
         from inviting i inner join user u on u.id = i.`owner`
         where u.status = 0 and i.status = 0
         <if test="userId != null">
