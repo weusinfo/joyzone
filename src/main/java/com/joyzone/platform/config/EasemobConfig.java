@@ -96,10 +96,31 @@ public class EasemobConfig {
 	 * @return
 	 */
 	public String getChatGrpUrl() {
-		return this.host + this.orgName + "/" + this.appName + "/chargroups";
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups";
 	}
 	
 	public String getPwdUrl() {
 		return this.host + this.orgName + "/" + this.appName + "/users/{userName}/password";
 	}
+	
+	/**
+	 * 加入聊天群
+	 * @return
+	 */
+	public String getJoinGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
+	}
+	
+	public String getRemoveMemberFromGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
+	}
+	
+	/**
+	 * 删除群组
+	 * @return
+	 */
+	public String getDeleteGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}";
+	}
+	
 }

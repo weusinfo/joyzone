@@ -9,6 +9,7 @@ import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.GroupService;
 import com.joyzone.platform.core.service.TeamService;
 import com.joyzone.platform.core.service.TeamUsersService;
 import com.joyzone.platform.core.service.UserSerivce;
@@ -37,6 +38,9 @@ public class AppTeamController {
     private TeamUsersService teamUsersService;
     @Autowired
     private UserSerivce userSerivce;
+    
+    @Autowired
+    private GroupService groupService;
 
 
     @PostMapping("/getTeamList")
@@ -81,6 +85,7 @@ public class AppTeamController {
                 return R.error("用户报名失败！");
             }
         }
+        groupService.joinChatGroup(teamId,userId);// join the chat group
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);

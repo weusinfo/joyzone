@@ -28,6 +28,9 @@ public class TeamService extends BaseService<TeamModel> {
 
     @Autowired
     private TeamMapper teamMapper;
+    
+    @Autowired
+    private GroupService groupService;
 
     public  List<TeamDto> getTeamList(TeamModel teamModel, Integer sort){
         return teamMapper.getTeamList(teamModel,sort);
@@ -53,6 +56,9 @@ public class TeamService extends BaseService<TeamModel> {
             teamModel.setStatus(0); //组队有效
             teamModel.setCreateTime(date);
             teamModel.setResult(0); //组队中
+           //添加组队时创建聊天群
+           String groupId = groupService.createChatGroup(teamModel.getShopId());
+           teamModel.setChatGroupId(groupId);
             return teamMapper.insertSelective(teamModel);
         }
         //更新

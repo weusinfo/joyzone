@@ -90,4 +90,9 @@
   <select id="selectById" resultType="com.joyzone.platform.core.model.SysUserModel" parameterType="java.lang.Long">
       select id,shop_id,name, phone, sex, head_img,status,last_login_time,create_time,update_time from sys_user where id = #{id}
   </select>
+  
+  <select id="selectByShopId" resultType="SysUserModel">
+  select id, shop_id, name, head_img from sys_user
+  where shop_id = #{shopId} and status = 0 limit 1
+  </select>
 </mapper>
