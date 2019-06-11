@@ -41,7 +41,7 @@ public class GroupService {
 		Long owner = null;
 		SysUserModel shopUser = sysUserService.selectByShopId(shopId);
 		if(PublicUtil.isEmpty(shopUser)) {
-			LOGGER.warn(String.format("本门店 d% 没有店小二", shopId));
+			LOGGER.warn(String.format("本门店 %d 没有店小二", shopId));
 			SysParamsModel param = paramService.findByName(Constants.PARAM_CHATGROUP_OWNER);
 			if(PublicUtil.isEmpty(param) || PublicUtil.isEmpty(param.getParamValue())) return null;
 			owner = Long.parseLong(param.getParamValue());
@@ -65,7 +65,7 @@ public class GroupService {
 		teamModel = teamService.selectOne(teamModel);
 		String groupId = teamModel.getChatGroupId();
 		if(PublicUtil.isEmpty(teamModel) || PublicUtil.isEmpty(groupId)){
-			LOGGER.warn(String.format("Team ID d% 没有环信群ID", teamId));
+			LOGGER.warn(String.format("Team ID %d 没有环信群ID", teamId));
 			return;
 		}
 		chatService.cancelGroup(groupId, userId);

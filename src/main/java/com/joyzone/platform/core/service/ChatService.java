@@ -176,7 +176,7 @@ public class ChatService {
 		try {
 			String result = RestTemplateUtil.sendJson(joinGroupUrl, null, headers, HttpMethod.POST);
 			if(PublicUtil.isEmpty(result)) {
-				logger.error(String.format("用户 d% 加入群 d% 失败...", userId, groupId));
+				logger.error(String.format("用户 %d 加入群 %d 失败...", userId, groupId));
 			}
 		}catch(Exception e) {
 			//
@@ -191,7 +191,7 @@ public class ChatService {
 		try {
 			RestTemplateUtil.sendJson(cancelGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			logger.error(String.format("从群组 d% 删除用户 userId d% 出错", groupId, userId), e);
+			logger.error(String.format("从群组 d% 删除用户 userId %d 出错", groupId, userId), e);
 		}
 	}
 	
@@ -202,7 +202,7 @@ public class ChatService {
 		try {
 			RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			logger.error(String.format("删除群组 s% 出错", groupId), e);
+			logger.error(String.format("删除群组 %s 出错", groupId), e);
 		}
 	}
 }
