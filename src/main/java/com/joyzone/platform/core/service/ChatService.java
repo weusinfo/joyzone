@@ -193,6 +193,16 @@ public class ChatService {
 		}catch(Exception e) {
 			logger.error(String.format("从群组 d% 删除用户 userId d% 出错", groupId, userId), e);
 		}
-		
+	}
+	
+	public void deleteGroup(String groupId) {
+		String delGroupUrl = easemob.getDeleteGroupUrl();
+		delGroupUrl = delGroupUrl.replace("{groupId}", groupId);
+		Map<String,String> headers = getAuthHeaders();
+		try {
+			RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
+		}catch(Exception e) {
+			logger.error(String.format("删除群组 s% 出错", groupId), e);
+		}
 	}
 }

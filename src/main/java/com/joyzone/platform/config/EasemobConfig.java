@@ -115,4 +115,12 @@ public class EasemobConfig {
 		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
 	}
 	
+	/**
+	 * 删除群组
+	 * @return
+	 */
+	public String getDeleteGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}";
+	}
+	
 }
