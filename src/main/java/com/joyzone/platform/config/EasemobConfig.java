@@ -96,7 +96,7 @@ public class EasemobConfig {
 	 * @return
 	 */
 	public String getChatGrpUrl() {
-		return this.host + this.orgName + "/" + this.appName + "/chargroups";
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups";
 	}
 	
 	public String getPwdUrl() {
@@ -108,7 +108,7 @@ public class EasemobConfig {
 	 * @return
 	 */
 	public String getJoinGroupUrl() {
-		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users";
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
 	}
 	
 	public String getRemoveMemberFromGroupUrl() {

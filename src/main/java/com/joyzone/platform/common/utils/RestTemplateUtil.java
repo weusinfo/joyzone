@@ -33,8 +33,9 @@ public class RestTemplateUtil  {
     public static String sendhttp(String url,Map<String, String> params,Map<String, String> headerParams, HttpMethod method) throws Exception{
         String responseData="";
         RestTemplate restTemplate = new RestTemplate();
-        MultiValueMap<String, String> newParams = new LinkedMultiValueMap<>();
+        MultiValueMap<String, String> newParams = null;
         if (params != null) {
+        	newParams = new LinkedMultiValueMap<>();
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 newParams.add(entry.getKey(), entry.getValue());
             }
@@ -53,7 +54,7 @@ public class RestTemplateUtil  {
         	stringResponseEntity = restTemplate.getForEntity(url, String.class, entity);
         }else if(method.equals(HttpMethod.DELETE)) {
         	restTemplate.delete(url, entity);
-        	responseData = "deleted";
+        	responseData = "Deleted";
         }
         if(null!=stringResponseEntity){
             HttpStatus httpCode = stringResponseEntity.getStatusCode();
@@ -86,6 +87,9 @@ public class RestTemplateUtil  {
         	stringResponseEntity = restTemplate.getForEntity(url, String.class, entity);
         }else if(method.equals(HttpMethod.PUT)) {
         	stringResponseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+        }else if(method.equals(HttpMethod.DELETE)) {
+        	restTemplate.exchange(url, method, entity, Void.class);
+        	responseData = "Deleted";
         }
         if(null!=stringResponseEntity){
             HttpStatus httpCode = stringResponseEntity.getStatusCode();

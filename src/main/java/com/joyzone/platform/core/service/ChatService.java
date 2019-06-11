@@ -149,7 +149,7 @@ public class ChatService {
 		map.put("public", true);
 		map.put("maxusers", Constants.PARAM_CHATGROUP_MAXUSERS);
 		map.put("approval", false);
-		map.put("owner", ownerId);
+		map.put("owner", ownerId+"");
 		String jsonStr = JacksonUtil.deserializer(map);
 		Map<String,String> headers = getAuthHeaders();
 		try {
@@ -159,7 +159,7 @@ public class ChatService {
 				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
 				JsonElement ele = jsonObj.get("data");
 				JsonObject groupObj = ele.getAsJsonObject();
-				return groupObj.getAsString();
+				return groupObj.get("groupid").getAsString();
 			}
 		} catch (Exception e) {
 			logger.error(String.format("==== %s 创建群 %s 失败...", ownerId, groupName), e);
@@ -170,16 +170,11 @@ public class ChatService {
 	public void joinGroup(String groupId, Long userId) {
 		String joinGroupUrl = easemob.getJoinGroupUrl();
 		joinGroupUrl = joinGroupUrl.replace("{groupId}", groupId);
+		joinGroupUrl = joinGroupUrl.replace("{userName}", userId+"");
 		Map<String,String> headers = getAuthHeaders();
 		Map<String,Object> map = Maps.newHashMap();
-		List<String> list = Lists.newArrayList();
-		list.add(String.valueOf(userId));
-		map.put("usernames", list);
-		Map<String,Object> jsonMap = Maps.newHashMap();
-		jsonMap.put("content", map);
-		String jsonStr = JacksonUtil.deserializer(jsonMap);
 		try {
-			String result = RestTemplateUtil.sendJson(joinGroupUrl, jsonStr, headers, HttpMethod.POST);
+			String result = RestTemplateUtil.sendJson(joinGroupUrl, null, headers, HttpMethod.POST);
 			if(PublicUtil.isEmpty(result)) {
 				logger.error(String.format("用户 d% 加入群 d% 失败...", userId, groupId));
 			}
@@ -194,7 +189,7 @@ public class ChatService {
 		cancelGroupUrl = cancelGroupUrl.replace("{userName}",userId+"");
 		Map<String,String> headers = getAuthHeaders();
 		try {
-			RestTemplateUtil.sendhttp(cancelGroupUrl, null, headers, HttpMethod.DELETE);
+			RestTemplateUtil.sendJson(cancelGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
 			logger.error(String.format("从群组 d% 删除用户 userId d% 出错", groupId, userId), e);
 		}
