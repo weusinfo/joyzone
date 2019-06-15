@@ -23,7 +23,7 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 
 	ShopModel findById(@Param("id") Long id);
 
-	ShopInfoDto findShopInfoDtoByShopId(@Param("shopId") Long shopId);
+	ShopInfoDto findShopInfoDtoByShopId(@Param("shopId") Long shopId,@Param("userId") Long userId);
 
 	List<ShopModel> findAll();
 

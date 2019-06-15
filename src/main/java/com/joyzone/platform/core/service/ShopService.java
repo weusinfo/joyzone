@@ -126,8 +126,8 @@ public class ShopService extends BaseService<ShopModel> {
 		return shopMapper.findById(id);
 	}
 
-	public ShopInfoDto findShopInfoDtoByShopId(Long shopId){
-		return shopMapper.findShopInfoDtoByShopId(shopId);
+	public ShopInfoDto findShopInfoDtoByShopId(Long shopId,Long userId){
+		return shopMapper.findShopInfoDtoByShopId(shopId,userId);
 	}
 
 	/**
