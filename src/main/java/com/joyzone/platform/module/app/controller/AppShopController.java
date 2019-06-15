@@ -72,9 +72,12 @@ public class AppShopController {
 
     @PostMapping("findByShopId")
     @ApiOperation("查看商家詳情信息 @Mr.Gx")
-    @ApiImplicitParam(name="id", value="商户id",paramType ="form")
-    public R findByShopId(Long id){
-        ShopInfoDto shopInfoDto = shopService.findShopInfoDtoByShopId(id);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "店家ID",paramType = "form"),
+            @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form")
+    })
+    public R findByShopId(Long id,Long userId){
+        ShopInfoDto shopInfoDto = shopService.findShopInfoDtoByShopId(id,userId);
         if(shopInfoDto != null){
             return R.ok(shopInfoDto);
         }

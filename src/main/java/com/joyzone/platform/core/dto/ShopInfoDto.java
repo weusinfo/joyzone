@@ -108,6 +108,9 @@ public class ShopInfoDto extends BaseModel {
     @ApiModelProperty("所属店家种类名称")
     private String shopTypeName;
 
+    @ApiModelProperty("店家是否被收藏 0：收藏 1未收藏")
+    private Integer shopCollectStatus;
+
     @ApiModelProperty("商家有效正在组队信息集合")
     private List<ShopTeamsDto> shopTeamsDtoList;
 
@@ -261,6 +264,14 @@ public class ShopInfoDto extends BaseModel {
 
     public void setShopTypeName(String shopTypeName) {
         this.shopTypeName = shopTypeName;
+    }
+
+    public Integer getShopCollectStatus() {
+        return shopCollectStatus;
+    }
+
+    public void setShopCollectStatus(Integer shopCollectStatus) {
+        this.shopCollectStatus = shopCollectStatus;
     }
 
     public List<ShopTeamsDto> getShopTeamsDtoList() {

@@ -94,6 +94,7 @@
         <result column="area" property="area" jdbcType="VARCHAR"/>
         <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT"/>
         <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR"/>
+        <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="shopTeamsDtoList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopTeamListByShopId"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopTeamsDto">
 
@@ -211,7 +212,10 @@
         city,
         area,
         shop_type_id as shopTypeId,
-        shop_type_name as shopTypeName
+        shop_type_name as shopTypeName,
+        (
+	        SELECT status FROM shop_collect WHERE user_id = #{userId} AND shop_id = #{shopId}
+        ) AS shopCollectStatus
         from shop
         where id = #{shopId}
     </select>
