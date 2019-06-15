@@ -7,7 +7,6 @@ import com.joyzone.platform.core.model.ShopModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 
@@ -22,4 +21,7 @@ public class ShopCollectService extends BaseService<ShopCollectModel> {
         return shopCollectMapper.getMyShopCollectList(model,userId);
     }
 
+    public List<ShopCollectModel> getShopCollectByConditions(Long userId,Long shopId){
+        return shopCollectMapper.getShopCollectByConditions(userId,shopId);
+    }
 }
