@@ -87,8 +87,8 @@ public class TeamService extends BaseService<TeamModel> {
         return teamMapper.getShopTeamListByShopId(shopId);
     }
 
-    public TeamRuleDto getTeamRuleList(Long teamId){
-        return teamMapper.getTeamRuleList(teamId);
+    public TeamRuleDto getTeamRuleList(Long teamId,Long userId){
+        return teamMapper.getTeamRuleList(teamId,userId);
     }
 
 }

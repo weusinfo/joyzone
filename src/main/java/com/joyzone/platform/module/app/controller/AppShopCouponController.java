@@ -132,10 +132,11 @@ public class AppShopCouponController {
     @PostMapping("/getCouponRuleInfo")
     @ApiOperation("首页组队列表点击规则后的页面 @zhangyu")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "couponId", value = "体验券id", required = true, dataType = "Long", paramType = "query")
+            @ApiImplicitParam(name = "couponId", value = "体验券id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long", paramType = "query")
     })
-    public R getCouponRuleInfo(Long couponId){
-        CouponRuleDto couponRuleDto = couponService.getCouponRuleInfo(couponId);
+    public R getCouponRuleInfo(Long couponId,Long userId){
+        CouponRuleDto couponRuleDto = couponService.getCouponRuleInfo(couponId,userId);
         if(couponRuleDto == null){
             return R.error("没有数据！");
         }
