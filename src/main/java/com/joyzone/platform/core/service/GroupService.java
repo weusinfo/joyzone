@@ -64,11 +64,22 @@ public class GroupService {
 		teamModel.setId(teamId);
 		teamModel = teamService.selectOne(teamModel);
 		String groupId = teamModel.getChatGroupId();
-		if(PublicUtil.isEmpty(teamModel) || PublicUtil.isEmpty(groupId)){
+		if(PublicUtil.isEmpty(groupId)){
 			LOGGER.warn(String.format("Team ID %d 没有环信群ID", teamId));
 			return;
 		}
 		chatService.cancelGroup(groupId, userId);
+	}
+	
+	public void deleteGroup(Long teamId) {
+		TeamModel team = new TeamModel();
+		team.setId(teamId);
+		team = teamService.selectOne(team);
+		String groupId = team.getChatGroupId();
+		if(PublicUtil.isEmpty(groupId)) {
+			LOGGER.error(String.format("TeamID %d 没有群ID", teamId));
+		}
+		chatService.deleteGroup(String.valueOf(teamId));
 	}
 
 }

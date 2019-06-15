@@ -8,8 +8,10 @@ import com.joyzone.platform.core.dto.ShopHomeDto;
 import com.joyzone.platform.core.dto.ShopInfoDto;
 import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.model.ShopCollectModel;
 import com.joyzone.platform.core.model.ShopModel;
 import com.joyzone.platform.core.model.ShopTypeModel;
+import com.joyzone.platform.core.service.ShopCollectService;
 import com.joyzone.platform.core.service.ShopService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +43,8 @@ public class AppShopController {
     private ShopTypeService shopTypeService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private ShopCollectService shopCollectService;
 
     @PostMapping("getAppShopHomeList")
     @ApiOperation("商家首页信息展示 @Mr.Gx")
@@ -122,5 +127,48 @@ public class AppShopController {
     public R getAppShopTypeList(){
         return R.ok(shopTypeService.findByShopType(ShopTypeModel.SHOP_TYPE_ZD));
     }
+
+    @PostMapping("saveShopCollect")
+    @ApiOperation("收藏或取消收藏店家 @zy")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
+            @ApiImplicitParam(name = "shopId",value = "店家ID",paramType = "form"),
+            @ApiImplicitParam(name = "type",value = "0：收藏；1取消收藏",paramType = "form")
+    })
+    public R saveShopCollect(@RequestParam("userId") Long userId,@RequestParam("shopId") Long shopId,@RequestParam("type") Integer type){
+        List<ShopCollectModel> shopCollects = shopCollectService.getShopCollectByConditions(userId,shopId);
+        if(shopCollects == null || shopCollects.size() == 0){
+            if(type == 1){
+                return R.error("未收藏过该店家！无法取消");
+            }
+            if(type == 0){
+                ShopCollectModel shopCollectModel = new ShopCollectModel();
+                shopCollectModel.setUserId(userId);
+                shopCollectModel.setShopId(shopId);
+                shopCollectModel.setStatus(0);
+                shopCollectModel.setCreateTime(new Date());
+                int ret = shopCollectService.save(shopCollectModel);
+                if(ret == 1){
+                    return R.ok("收藏成功！");
+                }else {
+                    return R.error("收藏失败！");
+                }
+            }
+        }
+        if(shopCollects.size() == 1){
+            ShopCollectModel bean = shopCollects.get(0);
+            bean.setStatus(type);
+            bean.setUpdateTime(new Date());
+            int ret = shopCollectService.update(bean);
+            if(ret == 1){
+                return R.ok("操作成功！");
+            }else {
+                return R.error("操作失败！");
+            }
+        }
+        return R.error("数据库脏数据！");
+    }
+
+
 
 }

@@ -11,5 +11,6 @@ public interface ShopCollectMapper extends Mapper<ShopCollectModel> {
 
     List<ShopModel> getMyShopCollectList(ShopCollectModel model, @Param("userId") Long userId);
 
+    List<ShopCollectModel> getShopCollectByConditions(@Param("userId") Long userId,@Param("shopId") Long shopId);
 
 }
