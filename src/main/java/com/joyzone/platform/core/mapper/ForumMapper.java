@@ -16,5 +16,5 @@ public interface ForumMapper extends Mapper<ForumModel> {
                                      @Param("type") Integer type,
                                      @Param("queryType") Integer queryType);
 
-    int updateForumPointNum(@Param("id") Long id);
+    int updateForumPointNum(@Param("id") Long id, @Param("type") Integer type);
 }

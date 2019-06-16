@@ -6,9 +6,11 @@ import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.ForumDetailMapper;
+import com.joyzone.platform.core.mapper.ForumFabulousMapper;
 import com.joyzone.platform.core.mapper.ForumMapper;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ForumDetailModel;
+import com.joyzone.platform.core.model.ForumFabulous;
 import com.joyzone.platform.core.model.ForumModel;
 import com.joyzone.platform.core.vo.AppForumVO;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +29,8 @@ public class ForumService extends BaseService<ForumModel> {
     private ForumMapper forumMapper;
     @Autowired
     private ForumDetailMapper forumDetailMapper;
+    @Autowired
+    private ForumFabulousMapper forumFabulousMapper;
 
 
     /**
@@ -113,7 +117,13 @@ public class ForumService extends BaseService<ForumModel> {
         List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize,type,queryType);
         if(list != null && list.size() > 0){
             for(AppForumVO appForumVO : list){
-                appForumVO.setForumDetails(forumDetailMapper.selectForumDetails(appForumVO.getId()));
+                ForumFabulous forumFabulous = forumFabulousMapper.findByUserForum(userId,appForumVO.getId());
+                Boolean status = false;
+                if(forumFabulous != null){
+                    status = true;
+                }
+                appForumVO.setUserIsPoint(status);
+                appForumVO.setForumDetails(getForumDetails(userId,appForumVO.getId()));
             }
             Page page = new Page();
             page=(Page)list;
@@ -123,13 +133,58 @@ public class ForumService extends BaseService<ForumModel> {
     }
 
     /**
+     * 获取论坛跟帖明细
+     * @param userId
+     * @param forumId
+     * @return
+     */
+    private List<AppForumVO> getForumDetails(Long userId,Long forumId){
+        List<AppForumVO> list = forumDetailMapper.selectForumDetails(forumId);
+        if(list != null && list.size() > 0) {
+            for (AppForumVO appForumVO : list) {
+                ForumFabulous forumFabulous = forumFabulousMapper.findByUserForumDetail(userId, appForumVO.getId());
+                Boolean status = false;
+                if (forumFabulous != null) {
+                    status = true;
+                }
+                appForumVO.setUserIsPoint(status);
+            }
+        }
+        return list;
+    }
+
+    /**
      * 对主评论进行点赞
      * @param userId
      * @return
      */
-    public R updateForumPointNum(Long userId,Long forumId){
-        return forumMapper.updateForumPointNum(forumId) > 0 ?
-                R.ok() : R.error("操作失败");
+    public R updateForumPointNum(Long userId,Long forumId,Integer type){
+        ForumFabulous forumFabulous = forumFabulousMapper.findByUserForum(userId,forumId);
+        if(type == 1){//点赞
+            if(forumFabulous != null){
+                return R.error("您已经点过赞了");
+            }
+            forumFabulous = new ForumFabulous();
+            forumFabulous.setUserId(userId);
+            forumFabulous.setForumId(forumId);
+            forumFabulous.setType(ForumFabulous.FORUM_TYPE_ZT);
+            forumFabulous.setCreateTime(new Date());
+            int ret = forumFabulousMapper.insertSelective(forumFabulous);
+            if(ret > 0){
+                forumMapper.updateForumPointNum(forumId,type);
+                return R.ok();
+            }
+        }
+        if(type == 2){//取消
+            if(forumFabulous != null){
+                int ret =  forumFabulousMapper.deleteByPrimaryKey(forumFabulous.getId());
+                if(ret > 0){
+                    forumMapper.updateForumPointNum(forumId,type);
+                    return R.ok();
+                }
+            }
+        }
+        return R.error("操作失败");
     }
 
     /**
@@ -137,8 +192,32 @@ public class ForumService extends BaseService<ForumModel> {
      * @param userId
      * @return
      */
-    public R updateForumDetailPointNum(Long userId,Long forumDetailId){
-        return forumDetailMapper.updateForumDetailPointNum(forumDetailId) > 0 ?
-                R.ok() : R.error("操作失败");
+    public R updateForumDetailPointNum(Long userId,Long forumDetailId,Integer type){
+        ForumFabulous forumFabulous = forumFabulousMapper.findByUserForumDetail(userId,forumDetailId);
+        if(type == 1){
+            if(forumFabulous != null){
+                return R.error("您已经点过赞了");
+            }
+            forumFabulous = new ForumFabulous();
+            forumFabulous.setUserId(userId);
+            forumFabulous.setForumDetailId(forumDetailId);
+            forumFabulous.setType(ForumFabulous.FORUM_TYPE_GT);
+            forumFabulous.setCreateTime(new Date());
+            int ret = forumFabulousMapper.insertSelective(forumFabulous);
+            if(ret > 0){
+                forumDetailMapper.updateForumDetailPointNum(forumDetailId,type);
+                return R.ok();
+            }
+        }
+        if(type == 2){
+            if(forumFabulous != null){
+               int ret = forumFabulousMapper.deleteByPrimaryKey(forumFabulous.getId());
+               if(ret > 0){
+                   forumDetailMapper.updateForumDetailPointNum(forumDetailId,type);
+                   return R.ok();
+               }
+            }
+        }
+        return  R.error("操作失败");
     }
 }

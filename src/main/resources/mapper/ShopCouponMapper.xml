@@ -58,6 +58,7 @@
         <result column="couponContent" property="couponContent" jdbcType="VARCHAR" />
         <result column="startTime" property="startTime" jdbcType="DATE" />
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
+        <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="userJoinList" javaType="ArrayList" column="{couponId=couponId}" select="com.joyzone.platform.core.mapper.ShopCouponMapper.queryUserJoinCouponList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
 
@@ -176,7 +177,13 @@
             s.`price` AS shopPrice,
             sc.number AS personNum,
             sc.content AS couponContent,
-            sc.start_time AS startTime
+            sc.start_time AS startTime,
+            (
+                SELECT sc.status
+                FROM shop_collect sc
+                LEFT JOIN shop_coupon c ON c.shop_id = sc.shop_id
+                WHERE sc.user_id = #{userId} AND c.id = #{couponId}
+            ) AS shopCollectStatus
         FROM shop_coupon sc
         LEFT JOIN shop s ON s.id = sc.shop_id
         WHERE sc.id = #{couponId}

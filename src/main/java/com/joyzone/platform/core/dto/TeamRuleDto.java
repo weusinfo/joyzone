@@ -65,6 +65,9 @@ public class TeamRuleDto extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
+    @ApiModelProperty("店家收藏状态 0：收藏 1：未收藏")
+    private Integer shopCollectStatus;
+
     private List<UserJoinTeamDto> userJoinList;
 
     public Long getTeamId() {
@@ -153,6 +156,14 @@ public class TeamRuleDto extends BaseModel{
 
     public void setPersonNum(Integer personNum) {
         this.personNum = personNum;
+    }
+
+    public Integer getShopCollectStatus() {
+        return shopCollectStatus;
+    }
+
+    public void setShopCollectStatus(Integer shopCollectStatus) {
+        this.shopCollectStatus = shopCollectStatus;
     }
 
     public List<UserJoinTeamDto> getUserJoinList() {

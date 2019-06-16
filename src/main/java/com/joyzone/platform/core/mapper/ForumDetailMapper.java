@@ -13,5 +13,5 @@ public interface ForumDetailMapper extends Mapper<ForumDetailModel> {
 
     List<AppForumVO> selectForumDetails(@Param("forumId") Long forumId);
 
-    int updateForumDetailPointNum(@Param("id") Long id);
+    int updateForumDetailPointNum(@Param("id") Long id,@Param("type") Integer type);
 }

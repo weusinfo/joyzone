@@ -158,10 +158,11 @@ public class AppTeamController {
     @PostMapping("/getTeamRuleInfo")
     @ApiOperation("首页组队列表点击规则后的页面 @zhangyu")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "teamId", value = "组队id", required = true, dataType = "Long", paramType = "query")
+            @ApiImplicitParam(name = "teamId", value = "组队id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long", paramType = "query")
     })
-    public R getTeamRuleInfo(Long teamId){
-        TeamRuleDto teamRuleDto = teamService.getTeamRuleList(teamId);
+    public R getTeamRuleInfo(Long teamId,Long userId){
+        TeamRuleDto teamRuleDto = teamService.getTeamRuleList(teamId,userId);
         if(teamRuleDto == null){
             return R.error("没有数据！");
         }

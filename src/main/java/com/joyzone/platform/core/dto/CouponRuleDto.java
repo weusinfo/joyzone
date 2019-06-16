@@ -64,6 +64,9 @@ public class CouponRuleDto extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
+    @ApiModelProperty("店家收藏状态 0：收藏 1：未收藏")
+    private Integer shopCollectStatus;
+
     private List<UserJoinCouponDto> userJoinList;
 
     public Long getCouponId() {
@@ -144,6 +147,14 @@ public class CouponRuleDto extends BaseModel{
 
     public void setPersonNum(Integer personNum) {
         this.personNum = personNum;
+    }
+
+    public Integer getShopCollectStatus() {
+        return shopCollectStatus;
+    }
+
+    public void setShopCollectStatus(Integer shopCollectStatus) {
+        this.shopCollectStatus = shopCollectStatus;
     }
 
     public List<UserJoinCouponDto> getUserJoinList() {

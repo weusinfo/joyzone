@@ -67,8 +67,8 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.delCoupons(ids);
     }
 
-    public CouponRuleDto getCouponRuleInfo(Long couponId){
-        return shopCouponMapper.getCouponRuleInfo(couponId);
+    public CouponRuleDto getCouponRuleInfo(Long couponId,Long userId){
+        return shopCouponMapper.getCouponRuleInfo(couponId,userId);
     }
 
 }

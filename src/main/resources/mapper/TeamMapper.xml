@@ -65,6 +65,7 @@
         <result column="sexWant" property="sexWant" jdbcType="INTEGER" />
         <result column="startTime" property="startTime" jdbcType="DATE" />
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
+        <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
 
@@ -172,7 +173,13 @@
             t.number AS personNum,
             t.pay_way AS payWay,
             t.sex_want AS sexWant,
-            t.start_time AS startTime
+            t.start_time AS startTime,
+            (
+                SELECT sc.status
+                FROM shop_collect sc
+                LEFT JOIN team t ON t.shop_id = sc.shop_id
+                WHERE sc.user_id = #{userId} AND t.id = #{teamId}
+            ) AS shopCollectStatus
         FROM team t
         LEFT JOIN shop s ON s.id = t.shop_id
         WHERE t.id = #{teamId}
