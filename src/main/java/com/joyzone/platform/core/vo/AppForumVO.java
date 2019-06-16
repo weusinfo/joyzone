@@ -56,6 +56,16 @@ public class AppForumVO {
     @ApiModelProperty("跟帖人数")
     private List<AppForumVO> forumDetails;
 
+    private Boolean userIsPoint;
+
+    public Boolean getUserIsPoint() {
+        return userIsPoint;
+    }
+
+    public void setUserIsPoint(Boolean userIsPoint) {
+        this.userIsPoint = userIsPoint;
+    }
+
     public Long getId() {
         return id;
     }

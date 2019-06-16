@@ -36,6 +36,13 @@
   </select>
 
   <update id="updateForumDetailPointNum">
-    update forum_detail set point_num = point_num + 1 where id = #{id}
+    update forum_detail set
+    <if test="type == 1">
+      point_num = point_num + 1
+    </if>
+    <if test="type == 2">
+      point_num = point_num - 1
+    </if>
+    where id = #{id}
   </update>
 </mapper>

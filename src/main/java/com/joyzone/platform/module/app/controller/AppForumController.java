@@ -58,23 +58,25 @@ public class AppForumController {
     }
 
     @PostMapping("updateForumPointNum")
-    @ApiOperation("给论坛主评论进行点赞 @Mr.Gx")
+    @ApiOperation("给论坛主评论进行点赞及取消 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
             @ApiImplicitParam(name = "forumId",value = "评论ID",paramType = "form"),
+            @ApiImplicitParam(name = "type",value = "1.点赞 2 取消",paramType = "form")
     })
-    public R updateForumPointNum(@RequestParam("userId") Long userId,@RequestParam("forumId") Long forumId){
-        return forumService.updateForumPointNum(userId,forumId);
+    public R updateForumPointNum(@RequestParam("userId") Long userId,@RequestParam("forumId") Long forumId,@RequestParam("type") Integer type){
+        return forumService.updateForumPointNum(userId,forumId,type);
     }
 
     @PostMapping("updateForumDetailPointNum")
-    @ApiOperation("给论坛跟帖评论进行点赞 @Mr.Gx")
+    @ApiOperation("给论坛跟帖评论进行点赞及取消 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
             @ApiImplicitParam(name = "forumDetailId",value = "跟帖评论ID",paramType = "form"),
+            @ApiImplicitParam(name = "type",value = "1.点赞 2 取消",paramType = "form")
     })
-    public R updateForumDetailPointNum(@RequestParam("userId") Long userId,@RequestParam("forumDetailId") Long forumDetailId){
-        return forumService.updateForumDetailPointNum(userId,forumDetailId);
+    public R updateForumDetailPointNum(@RequestParam("userId") Long userId,@RequestParam("forumDetailId") Long forumDetailId,Integer type){
+        return forumService.updateForumDetailPointNum(userId,forumDetailId,type);
     }
 
 }
