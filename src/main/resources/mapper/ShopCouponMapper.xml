@@ -103,7 +103,7 @@
             st.name AS shopTypeName
         FROM shop s
         LEFT JOIN shop_type st ON st.id = s.shop_type_id
-        WHERE s.status = 1 AND st.status = 1 AND st.type = 2
+        WHERE s.status = 1 AND st.status = 1 AND st.type = 1
     </select>
 
     <select id="getCouponList" resultMap="couponShopList" parameterType="com.joyzone.platform.core.model.ShopCouponModel">
