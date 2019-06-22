@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.joyzone.platform.PlayApplication;
 import com.joyzone.platform.core.service.ChatService;
+import com.joyzone.platform.core.service.GroupService;
 
 
 @SpringBootTest(classes = PlayApplication.class)
@@ -17,19 +18,27 @@ public class ChatServiceTest {
 	@Autowired
 	private ChatService chatService;
 	
-	@Test
-	public void testCreateGroup() {
-		chatService.createGroup(1111l, "test12", "Test create group.");
-	}
+	@Autowired
+	private GroupService groupService;
+	
+//	@Test
+//	public void testCreateGroup() {
+//		chatService.createTeamGroup(1111l, "test12", "Test create group.");
+//	}
+//	
+//	@Test
+//	public void testJoinGroup() {
+//		chatService.joinTeamGroup("84791033659394", 13l);
+//	}
+//	
+//	@Test
+//	public void cancelGroup() {
+//		chatService.cancelTeamGroup("84791033659394", 13l);
+//	}
 	
 	@Test
-	public void testJoinGroup() {
-		chatService.joinGroup("84791033659394", 13l);
-	}
-	
-	@Test
-	public void cancelGroup() {
-		chatService.cancelGroup("84791033659394", 13l);
+	public void joinCouponGroup() {
+		groupService.joinCouponGroup(4l, 20l);
 	}
 
 }

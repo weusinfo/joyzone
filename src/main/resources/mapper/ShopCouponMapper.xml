@@ -21,6 +21,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
 
    <resultMap id="couponShopList" type="com.joyzone.platform.core.dto.CouponDto">
@@ -187,5 +188,13 @@
         FROM shop_coupon sc
         LEFT JOIN shop s ON s.id = sc.shop_id
         WHERE sc.id = #{couponId}
+    </select>
+    
+    <update id="updChatGroupId">
+    update shop_coupon set chat_group_id = #{groupId} where id = #{couponId} and chat_group_id is null
+    </update>
+    
+    <select id="getCouponInfo" resultType="java.util.HashMap">
+    select name, shop_id as shopId, chat_group_id as chatGroupId from shop_coupon where id = #{couponId}
     </select>
 </mapper>

@@ -1,10 +1,13 @@
 package com.joyzone.platform.core.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.core.model.ShopModel;
@@ -32,7 +35,11 @@ public class GroupService {
 	@Autowired
 	private SysParamsService paramService;
 	
-	public String createChatGroup(Long shopId) {
+	@Autowired
+	private ShopCouponService couponService;
+	
+	public Map<String, Object> getService(Long shopId) {
+		Map<String,Object> service = Maps.newHashMap();
 		ShopModel shop = shopService.findById(shopId);
 		if(PublicUtil.isEmpty(shop)) {
 			LOGGER.warn(String.format("ShopId d% 没有找到对应的商家", shopId));
@@ -48,15 +55,33 @@ public class GroupService {
 		}else {
 			owner = shopUser.getId();
 		}
-		String shopName = shop.getName();
-		return chatService.createGroup(owner, shopName, "组队建群");
+		service.put("owner", owner);
+		service.put("shopName", shop.getName());
+		return service;
+	}
+	
+	public String createTeamGroup(Long shopId) {
+		Map<String, Object> map = getService(shopId);
+		return chatService.createTeamGroup((Long)map.get("owner"), (String)map.get("shopName"), "组队建群");
+	}
+	
+	public void joinCouponGroup(Long couponId, Long userId) {
+		Map<String, Object> couponMap = couponService.getCouponInfo(couponId);
+		if(PublicUtil.isEmpty(couponMap.get("chatGroupId"))) {
+			Map<String, Object> map = getService((Long) couponMap.get("shopId"));
+			String groupId = chatService.createTeamGroup((Long)map.get("owner"), (String)couponMap.get("name"),  (String)map.get("shopName") + "--" + (String)couponMap.get("name"));
+			couponService.updChatGroupId(groupId, couponId);
+			chatService.joinTeamGroup(groupId, userId);
+		}else {
+			chatService.joinTeamGroup((String)couponMap.get("chatGroupId"), userId);
+		}
 	}
 	
 	public void joinChatGroup(Long teamId, Long userId) {
 		TeamModel team = new TeamModel();
 		team.setId(teamId);
 		team = teamService.selectOne(team);
-		chatService.joinGroup(team.getChatGroupId(), userId);
+		chatService.joinTeamGroup(team.getChatGroupId(), userId);
 	}
 	
 	public void cancelGroup(Long teamId, Long userId) {
@@ -68,7 +93,7 @@ public class GroupService {
 			LOGGER.warn(String.format("Team ID %d 没有环信群ID", teamId));
 			return;
 		}
-		chatService.cancelGroup(groupId, userId);
+		chatService.cancelTeamGroup(groupId, userId);
 	}
 	
 	public void deleteGroup(Long teamId) {
@@ -79,7 +104,7 @@ public class GroupService {
 		if(PublicUtil.isEmpty(groupId)) {
 			LOGGER.error(String.format("TeamID %d 没有群ID", teamId));
 		}
-		chatService.deleteGroup(String.valueOf(teamId));
+		chatService.deleteTeamGroup(String.valueOf(teamId));
 	}
 
 }

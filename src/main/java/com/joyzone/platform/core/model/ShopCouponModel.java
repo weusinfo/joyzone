@@ -128,9 +128,14 @@ public class ShopCouponModel extends BaseModel{
      * 活动内容
      */
     private String content;
-
-
+    
     /**
+     * 领取优惠券时的群ID
+     */
+    @Column(name = "chat_group_id")
+    private String chatGroupId;
+
+	/**
      * @return id
      */
     public Long getId() {
@@ -355,4 +360,12 @@ public class ShopCouponModel extends BaseModel{
     public void setShopTypeName(String shopTypeName) {
         this.shopTypeName = shopTypeName;
     }
+    
+    public String getChatGroupId() {
+		return chatGroupId;
+	}
+
+	public void setChatGroupId(String chatGroupId) {
+		this.chatGroupId = chatGroupId;
+	}
 }
