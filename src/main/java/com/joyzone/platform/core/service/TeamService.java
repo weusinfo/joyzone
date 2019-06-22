@@ -57,7 +57,7 @@ public class TeamService extends BaseService<TeamModel> {
             teamModel.setCreateTime(date);
             teamModel.setResult(0); //组队中
            //添加组队时创建聊天群
-           String groupId = groupService.createChatGroup(teamModel.getShopId());
+           String groupId = groupService.createTeamGroup(teamModel.getShopId());
            teamModel.setChatGroupId(groupId);
             return teamMapper.insertSelective(teamModel);
         }

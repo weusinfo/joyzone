@@ -71,4 +71,11 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.getCouponRuleInfo(couponId,userId);
     }
 
+    public int updChatGroupId(String groupId, Long couponId) {
+    	return shopCouponMapper.updChatGroupId(groupId, couponId);
+    }
+    
+    public Map<String,Object> getCouponInfo(Long couponId) {
+    	return shopCouponMapper.getCouponInfo(couponId);
+    }
 }

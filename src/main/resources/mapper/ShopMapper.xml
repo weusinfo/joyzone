@@ -76,24 +76,24 @@
 
     <resultMap id="shopInfoDto" type="com.joyzone.platform.core.dto.ShopInfoDto" >
         <id column="shopId" property="shopId" jdbcType="BIGINT" />
-        <result column="name" property="shopName" jdbcType="VARCHAR" />
+        <result column="shopName" property="shopName" jdbcType="VARCHAR" />
         <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="price" property="price" jdbcType="DECIMAL" />
-        <result column="cover_img" property="coverImg" jdbcType="VARCHAR" />
+        <result column="coverImg" property="coverImg" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
-        <result column="reg_img" property="regImg" jdbcType="VARCHAR" />
-        <result column="legal_person_img" property="legalPersonImg" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="regImg" property="regImg" jdbcType="VARCHAR" />
+        <result column="legalPersonImg" property="legalPersonImg" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="lng" property="lng" jdbcType="DECIMAL"/>
         <result column="lat" property="lat" jdbcType="DECIMAL"/>
         <result column="province" property="province" jdbcType="VARCHAR"/>
         <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="area" property="area" jdbcType="VARCHAR"/>
-        <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT"/>
-        <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR"/>
+        <result column="shopTypeId" property="shopTypeId" jdbcType="BIGINT"/>
+        <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR"/>
         <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="shopTeamsDtoList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopTeamListByShopId"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopTeamsDto">

@@ -24,4 +24,8 @@ public interface ShopCouponMapper extends Mapper<ShopCouponModel> {
     int delCoupons(@Param("ids")Long[] ids);
 
     CouponRuleDto getCouponRuleInfo(@Param("couponId") Long couponId,@Param("userId") Long userId);
+    
+    int updChatGroupId(@Param("groupId") String groupId, @Param("couponId") Long couponId);
+    
+    Map<String, Object> getCouponInfo(@Param("couponId") Long couponId);
 }

@@ -30,5 +30,5 @@ public interface Constants {
 	
 	String PARAM_CHATGROUP_OWNER = "组队的群主";
 	
-	public Integer PARAM_CHATGROUP_MAXUSERS = 20;
+	public Integer PARAM_GROUP_MAXUSERS = 400;
 }

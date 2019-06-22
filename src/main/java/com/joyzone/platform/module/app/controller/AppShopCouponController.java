@@ -12,6 +12,7 @@ import com.joyzone.platform.core.model.ShopCouponModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.CouponUserService;
+import com.joyzone.platform.core.service.GroupService;
 import com.joyzone.platform.core.service.ShopCouponService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
@@ -42,6 +43,9 @@ public class AppShopCouponController {
     private UserSerivce userSerivce;
 
 
+    @Autowired
+    private GroupService groupService;
+    
     /**
      * zy
      */
@@ -109,6 +113,7 @@ public class AppShopCouponController {
         bean.setCreateTime(new Date());
         int ret = couponUserService.save(bean);
         checkCouponIfSuccess(couponId);
+        groupService.joinCouponGroup(couponId, userId);
         if(ret == 1){
             return R.ok("用户领取成功！");
         }else {
