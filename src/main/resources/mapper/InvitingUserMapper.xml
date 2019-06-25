@@ -31,7 +31,7 @@
     FROM inviting i INNER JOIN inviting_user iur ON i.id = iur.inviting_id
     INNER JOIN
     user u ON u.id = iur.user_id
-    WHERE u.status = 0 AND i.status = 0 AND iur.status = 1 AND i.owner = #{userId}
+    WHERE u.status = 0 AND i.status = 0 AND iur.status = 1 AND i.owner = #{userId} AND i.start_time > NOW()
     ORDER BY iur.id DESC
   </select>
   
