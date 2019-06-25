@@ -52,11 +52,12 @@ public class AppShopCouponController {
     @PostMapping("/getCouponList")
     @ApiOperation("前端获取体验券列表 @zhangyu")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
-    public R getCouponList(ShopCouponModel shopCouponModel, Integer sort){
+    public R getCouponList(ShopCouponModel shopCouponModel,Long userId, Integer sort){
         PageHelper.startPage(0,10);
-        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel,sort);
+        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel,userId,sort);
         if(couponDtoList != null && couponDtoList.size() > 0){
             Page page = new Page();
             page = (Page)couponDtoList;
