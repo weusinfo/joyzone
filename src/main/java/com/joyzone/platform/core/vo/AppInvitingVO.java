@@ -49,6 +49,12 @@ public class AppInvitingVO {
     @ApiModelProperty("4个tab页对应的值：1:受邀列表 2：正式函 3：我的邀请 4：回函")
     private Integer type;
 
+    @ApiModelProperty("第一个tab列表，受邀列表，0未同意 1已同意")
+    private Integer agreeOrNot;
+
+    @ApiModelProperty("第四个tab列表，我的回函，0未邀请 1已邀请")
+    private Integer inviteOrNot;
+
     public String getUserName() {
         return userName;
     }
@@ -137,4 +143,19 @@ public class AppInvitingVO {
         this.type = type;
     }
 
+    public Integer getAgreeOrNot() {
+        return agreeOrNot;
+    }
+
+    public void setAgreeOrNot(Integer agreeOrNot) {
+        this.agreeOrNot = agreeOrNot;
+    }
+
+    public Integer getInviteOrNot() {
+        return inviteOrNot;
+    }
+
+    public void setInviteOrNot(Integer inviteOrNot) {
+        this.inviteOrNot = inviteOrNot;
+    }
 }
