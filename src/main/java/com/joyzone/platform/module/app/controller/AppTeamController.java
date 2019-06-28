@@ -46,11 +46,12 @@ public class AppTeamController {
     @PostMapping("/getTeamList")
     @ApiOperation("前端获取店家組隊列表 @zhangyu")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "sort", value = "0:热点 1：最新", required = true, dataType = "Integer", paramType = "query")
     })
-    public R getTeamList(TeamModel teamModel, Integer sort){
+    public R getTeamList(TeamModel teamModel,Long userId, Integer sort){
         PageHelper.startPage(0,10);
-        List<TeamDto> teamList = teamService.getTeamList(teamModel,sort);
+        List<TeamDto> teamList = teamService.getTeamList(teamModel,userId,sort);
         if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;

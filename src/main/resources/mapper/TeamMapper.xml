@@ -101,6 +101,7 @@
                     and a.number > (a.joinNum * 2)
                 </if>
             )
+            AND id NOT IN (SELECT DISTINCT team_id FROM team_users WHERE user_id = #{userId} AND STATUS = 0)
         ) t
         LEFT JOIN shop s ON s.id = t.shop_id
         WHERE t.status = 0
