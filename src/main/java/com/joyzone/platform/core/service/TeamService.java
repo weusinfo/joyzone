@@ -32,8 +32,8 @@ public class TeamService extends BaseService<TeamModel> {
     @Autowired
     private GroupService groupService;
 
-    public  List<TeamDto> getTeamList(TeamModel teamModel, Integer sort){
-        return teamMapper.getTeamList(teamModel,sort);
+    public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
+        return teamMapper.getTeamList(teamModel,userId,sort);
     }
 
     public Map<String,Object> checkTeamIfSuccess(Long teamId){

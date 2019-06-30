@@ -41,6 +41,12 @@ public class TeamRuleDto extends BaseModel{
     @ApiModelProperty("店家地址")
     private String shopAddress;
 
+    @ApiModelProperty("经度")
+    private BigDecimal lng;
+
+    @ApiModelProperty("纬度")
+    private BigDecimal lat;
+
     //店家价格
     @ApiModelProperty("店家价格")
     private BigDecimal shopPrice;
@@ -108,6 +114,22 @@ public class TeamRuleDto extends BaseModel{
 
     public void setShopAddress(String shopAddress) {
         this.shopAddress = shopAddress;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
     }
 
     public BigDecimal getShopPrice() {

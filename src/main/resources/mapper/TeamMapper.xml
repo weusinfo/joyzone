@@ -59,6 +59,8 @@
         <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
         <result column="shopName" property="shopName" jdbcType="VARCHAR" />
         <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+        <result column="lng" property="lng" jdbcType="DECIMAL"/>
+        <result column="lat" property="lat" jdbcType="DECIMAL"/>
         <result column="shopPrice" property="shopPrice" jdbcType="DECIMAL" />
         <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
         <result column="payWay" property="payWay" jdbcType="INTEGER" />
@@ -99,6 +101,7 @@
                     and a.number > (a.joinNum * 2)
                 </if>
             )
+            AND id NOT IN (SELECT DISTINCT team_id FROM team_users WHERE user_id = #{userId} AND STATUS = 0)
         ) t
         LEFT JOIN shop s ON s.id = t.shop_id
         WHERE t.status = 0
@@ -168,6 +171,8 @@
             s.`cover_img` AS shopImg,
             s.`name` AS shopName,
             s.`address` AS shopAddress,
+            s.lng,
+            s.lat,
             s.`price` AS shopPrice,
             s.`phone` AS shopPhone,
             t.number AS personNum,

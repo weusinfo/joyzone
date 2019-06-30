@@ -45,9 +45,16 @@
 
     <select id="getUserToInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
       select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
-             i.pay_way as payWayName,i.type as inviteType, 1 as type
+             i.pay_way as payWayName,i.type as inviteType, 1 as type,
+            (CASE WHEN i.id IN (SELECT DISTINCT inviting_id FROM inviting_user
+            WHERE user_id = #{userId} AND STATUS = 1) THEN 1
+            ELSE 0
+            END
+            ) AS agreeOrNot
       from inviting i inner join user u on u.id = i.`owner`
-      where u.status = 0 and i.status = 0
+      where u.status = 0
+      AND i.status = 0
+      AND i.start_time > NOW()
       <if test="userId != null">
           and i.owner <![CDATA[ <> ]]> #{userId}
       </if>
@@ -60,7 +67,7 @@
         FROM inviting_user iu
         INNER JOIN inviting i ON i.id = iu.inviting_id
         INNER JOIN user u ON u.id = i.owner
-        WHERE u.status = 0 AND i.status = 0 AND i.result = 1 AND confirm = 0
+        WHERE u.status = 0 AND i.status = 0 AND i.result = 1 AND confirm = 0 AND i.start_time > NOW()
         <if test="userId != null">
             and iu.user_id = #{userId}
         </if>
@@ -71,7 +78,7 @@
         select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
                 i.type AS inviteType, i.pay_way as payWayName, 3 as type
         from inviting i inner join user u on u.id = i.`owner`
-        where u.status = 0 and i.status = 0
+        where u.status = 0 and i.status = 0 AND i.start_time > NOW()
         <if test="userId != null">
             and i.owner = #{userId}
         </if>
