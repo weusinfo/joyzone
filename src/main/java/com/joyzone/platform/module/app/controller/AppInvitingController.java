@@ -128,7 +128,7 @@ public class AppInvitingController {
     @ApiOperation("回函：邀请用户正式参与活动 @zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "userId", value = "发起邀约者ID", required = true, dataType = "Long", paramType = "query")
+            @ApiImplicitParam(name = "userId", value = "被邀约者ID", required = true, dataType = "Long", paramType = "query")
     })
     public R sendFinalInviting(InvitingDto invitingDto){
         if(invitingDto == null || invitingDto.getInvitingId() == null || invitingDto.getUserId() == null){

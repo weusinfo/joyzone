@@ -93,9 +93,9 @@
     WHERE tu.user_id = #{userId}
     AND t.status = 0
     AND tu.status = 0
+    AND t.start_time > NOW()
     <if test="type == 0">
       AND t.result = 0
-      AND t.start_time > NOW()
     </if>
     <if test="type == 1">
       AND t.result = 1
@@ -115,13 +115,12 @@
     FROM coupon_user cu
     LEFT JOIN shop_coupon sc ON sc.id = cu.coupon_id
     LEFT JOIN shop s ON s.id = sc.shop_id
-    WHERE cu.user_id = 1
+    WHERE cu.user_id = #{userId}
     AND cu.status = 0
     AND sc.status = 1
-    AND sc.result = 0
+    AND sc.start_time > NOW()
     <if test="type == 0">
       AND sc.result = 0
-      AND sc.start_time > NOW()
     </if>
     <if test="type == 1">
       AND sc.result = 1

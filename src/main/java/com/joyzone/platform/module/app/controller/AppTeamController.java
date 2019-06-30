@@ -86,7 +86,8 @@ public class AppTeamController {
                 return R.error("用户报名失败！");
             }
         }
-        groupService.joinChatGroup(teamId,userId);// join the chat group
+        //需要修改，报空指针
+        //groupService.joinChatGroup(teamId,userId);// join the chat group
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);
@@ -125,19 +126,18 @@ public class AppTeamController {
             return R.error(100,"请完善个人必要信息：昵称/性别/生日");
         }
         if(model == null)
-            R.error("系统参数不能为空");
-        if(model.getOwner() == null)
-            R.error("发起人的ID不能为空");
+            return R.error("系统参数不能为空");
         if(model.getShopId() == null)
-            R.error("所属店家ID不能为空");
+            return R.error("所属店家ID不能为空");
         if(model.getStartTime() == null)
-            R.error("开始时间不能为空");
+            return R.error("开始时间不能为空");
         if(model.getNumber() == null)
-            R.error("请填写限制人数");
+            return R.error("请填写限制人数");
         if(model.getPayWay() == null)
-            R.error("请填写付款方式");
+            return R.error("请填写付款方式");
         if(model.getSexWant() == null)
-            R.error("请填写希望的男女比列");
+            return R.error("请填写希望的男女比列");
+        model.setOwner(userId);
         int ret = teamService.saveTeam(model);
         if(ret == 999){
             return R.error("用户已在该店内发起了有效组队！");
