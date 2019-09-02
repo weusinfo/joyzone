@@ -43,14 +43,14 @@ public class ChatService extends BaseChatService{
 		try {
 			String result = RestTemplateUtil.sendJson(createGroupUrl, jsonStr, headers, HttpMethod.POST);
 			if(PublicUtil.isNotEmpty(result)) {
-				LOGGER.info(String.format("==== %s 创建群 %s 成功...", ownerId, groupName));
+				LOGGER.info(String.format("==== %s create group%s success...", ownerId, groupName));
 				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
 				JsonElement ele = jsonObj.get("data");
 				JsonObject groupObj = ele.getAsJsonObject();
 				return groupObj.get("groupid").getAsString();
 			}
 		} catch (Exception e) {
-			LOGGER.error(String.format("==== %s 创建群 %s 失败...", ownerId, groupName), e);
+			LOGGER.error(String.format("==== %s create group%s failed...", ownerId, groupName), e);
 		}
 		return null;
 	}
@@ -63,7 +63,7 @@ public class ChatService extends BaseChatService{
 		try {
 			String result = RestTemplateUtil.sendJson(joinGroupUrl, null, headers, HttpMethod.POST);
 			if(PublicUtil.isEmpty(result)) {
-				LOGGER.error(String.format("用户 %d 加入群 %d 失败...", userId, groupId));
+				LOGGER.error(String.format("User %d join group %d failed...", userId, groupId));
 			}
 		}catch(Exception e) {
 			//
@@ -78,7 +78,7 @@ public class ChatService extends BaseChatService{
 		try {
 			RestTemplateUtil.sendJson(cancelGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			LOGGER.error(String.format("从群组 d% 删除用户 userId %d 出错", groupId, userId), e);
+			LOGGER.error(String.format("Deletev user userId %d failed from d%", groupId, userId), e);
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class ChatService extends BaseChatService{
 		try {
 			RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			LOGGER.error(String.format("删除群组 %s 出错", groupId), e);
+			LOGGER.error(String.format("Delete group %s failed", groupId), e);
 		}
 	}
 }
