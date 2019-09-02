@@ -61,8 +61,11 @@ public class ShopTypeModel extends BaseModel{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+    
+    @Column(name = "chat_group_id")
+    private String chatGroupId;
 
-    /**
+	/**
      * @return id
      */
     public Long getId() {
@@ -187,4 +190,12 @@ public class ShopTypeModel extends BaseModel{
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+    
+    public String getChatGroupId() {
+		return chatGroupId;
+	}
+
+	public void setChatGroupId(String chatGroupId) {
+		this.chatGroupId = chatGroupId;
+	}
 }

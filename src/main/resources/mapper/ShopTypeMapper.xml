@@ -28,4 +28,8 @@
     select * from shop_type where status = 1 and type = #{type}
   </select>
 
+	<insert id="addShopTye" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.joyzone.platform.core.model.ShopTypeModel">
+	insert into shop_type(name, type, typeImage, pid, status, sort, create_time)
+	values(#{name},#{type}, #{typeImage},#{pid},#{status}, #{sort},#{createTime})
+	</insert>
 </mapper>

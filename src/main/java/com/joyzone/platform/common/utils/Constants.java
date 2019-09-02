@@ -30,5 +30,9 @@ public interface Constants {
 	
 	String PARAM_CHATGROUP_OWNER = "组队的群主";
 	
-	public Integer PARAM_GROUP_MAXUSERS = 400;
+	Integer PARAM_GROUP_MAXUSERS = 400;
+	
+	String TRIBE_COMMITTEE = "tribe_committee";
+	
+	String CACHE_KEY = "JOYZONE:CACHE_KEY:";
 }
