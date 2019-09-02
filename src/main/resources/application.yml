@@ -74,6 +74,12 @@ tencent:
     secretId: AKIDDJF0rh6KckRDjCnpyeeVBkYQNGMIDg9J
     secretKey:  1IRmyGn3FWlvukPSXKAQFy3vgF05rUwk
     bucket:  joyzone-1257127706
+ali:
+  oss:
+    secretId: LTAI4FhPLUnfs3buVqXJxe86
+    secretKey: YpWzyGQsJOEeqrVSiLkOVEnRNgbBgi
+    bucket: 9da
+    domain: oss-cn-shenzhen.aliyuncs.com
 yunpian:  
   sms:
     apiKey: 129afa0712a781de56500b720e5f2c6e

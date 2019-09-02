@@ -4,19 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.PutObjectRequest;
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.RandomUtil;
 import net.coobird.thumbnailator.Thumbnails;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
@@ -24,25 +19,13 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
-/**
- * 腾讯云对象存储， 需要指定文件名
- * @author Administrator
- *
- */
-@Component
-public class FileUtil {
-
-	@Value("${tencent.oss.bucket}")
-	private String bucket;
+public abstract class BaseFileUtil {
 	
 	@Value("${fileSize}")
 	private String fileSize;
 	
 	@Value("${scale}")
 	private String scale;
-
-	@Autowired
-	private COSClient cosClient;
 	
 	private int sequence = 1;
 	
@@ -66,13 +49,7 @@ public class FileUtil {
 	 * @return
 	 * @throws IOException 
 	 */
-	public String uploadShopImg(MultipartFile file) throws Exception {
-		String fileName = genTempFileName(file);
-		InputStream inStream = handleFile(file);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "shop/"+fileName, inStream, null);
-		cosClient.putObject(putObjectRequest);
-		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/shop/"+fileName;
-	}
+	public abstract String uploadShopImg(MultipartFile file) throws Exception;
 	
 	/**
 	 * 保存用户相关文件
@@ -81,13 +58,7 @@ public class FileUtil {
 	 * @return
 	 * @throws IOException 
 	 */
-	public String uploadPersonalImg(MultipartFile file) throws Exception {
-		String fileName = genTempFileName(file);
-		InputStream inStream = handleFile(file);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, "personal/"+fileName, inStream ,null);
-		cosClient.putObject(putObjectRequest);
-		return "https://" + bucket + ".cos.ap-shenzhen-fsi.myqcloud.com/personal/"+fileName;
-	}
+	public abstract String uploadPersonalImg(MultipartFile file) throws Exception;
 	
 	/**
 	 * 生成唯一文件名
