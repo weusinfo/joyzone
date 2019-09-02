@@ -40,6 +40,7 @@ public class ShopTypeController {
 	 * 初始化部落群
 	 * @return
 	 */
+	@PostMapping("/initTribes")
 	public R initTribes() {
 		shopTypeService.initTribles();
 		return R.ok("群部落初始化完毕");
