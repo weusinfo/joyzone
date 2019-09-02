@@ -8,12 +8,13 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="typeImage" property="typeImage" jdbcType="VARCHAR" />
+    <result column="type_image" property="typeImage" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR" />
   </resultMap>
 
   <select id="findByShopType" resultType="java.util.Map" >
@@ -29,7 +30,7 @@
   </select>
 
 	<insert id="addShopTye" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.joyzone.platform.core.model.ShopTypeModel">
-	insert into shop_type(name, type, typeImage, pid, status, sort, create_time)
-	values(#{name},#{type}, #{typeImage},#{pid},#{status}, #{sort},#{createTime})
+	insert into shop_type(name, type, type_image, pid, status, sort, create_time,chat_group_id)
+	values(#{name},#{type}, #{typeImage},#{pid},#{status}, #{sort},#{createTime}, #{chatGroupId})
 	</insert>
 </mapper>

@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.service;
 
 
+import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -95,12 +96,15 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
     	}
     	catch(Exception e) {
     		chatService.deleteTeamGroup(chatGroupId);
+    		throw new JZException("添加商户类型失败", e);
     	}
     	return null;
     }
     
     public void initTribles() {
     	ShopTypeModel typeModel = new ShopTypeModel();
+    	typeModel.setPageNum(0);
+    	typeModel.setPageSize(Integer.MAX_VALUE);
     	List<ShopTypeModel> models = shopTypeMapper.select(typeModel);
     	Long owner = paramsService.getTribeOwner();
     	List<String> guests = paramsService.getTribberGuests();

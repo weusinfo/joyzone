@@ -2,6 +2,7 @@ package com.joyzone.platform.core.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,6 @@ import com.joyzone.platform.common.utils.RedisUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.SysParamsMapper;
 import com.joyzone.platform.core.model.SysParamsModel;
-import com.mysql.jdbc.StringUtils;
 
 @Service
 public class SysParamsService extends BaseService<SysParamsModel>{
@@ -41,7 +41,7 @@ public class SysParamsService extends BaseService<SysParamsModel>{
 		SysParamsModel model = findByName(Constants.TRIBE_COMMITTEE);
 		if(model != null) {
 			String paramValue = model.getParamValue();
-			if(StringUtils.isNullOrEmpty(paramValue)) {
+			if(StringUtils.isNotEmpty(paramValue)) {
 				String[] committes = paramValue.split("|");
 				return Long.parseLong(committes[0]);
 			}
@@ -53,9 +53,9 @@ public class SysParamsService extends BaseService<SysParamsModel>{
 		SysParamsModel model = findByName(Constants.TRIBE_COMMITTEE);
 		if(model != null) {
 			String paramValue = model.getParamValue();
-			if(StringUtils.isNullOrEmpty(paramValue)) {
-				String[] committes = paramValue.split("|");
-				Splitter.on(",").splitToList(committes[1]);
+			if(StringUtils.isNotEmpty(paramValue)) {
+				String[] committes = paramValue.split("[|]");
+				return Splitter.on(",").splitToList(committes[1]);
 			}
 		}
 		return null;
