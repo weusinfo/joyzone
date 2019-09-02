@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.joyzone.platform.common.utils.FileUtil;
+import com.joyzone.platform.common.utils.AliFileUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.model.DocumentModel;
 
@@ -14,7 +14,7 @@ public class DocumentService extends BaseService<DocumentModel>{
 	private Logger logger = LoggerFactory.getLogger(DocumentService.class);
 	
 	@Autowired
-	private FileUtil fileUtil;
+	private AliFileUtil fileUtil;
 	
 	public String saveShopDoc(MultipartFile file) {
 		try {

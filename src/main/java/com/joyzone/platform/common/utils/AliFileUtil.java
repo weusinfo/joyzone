@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
-import com.joyzone.platform.config.AliOSSConfiguration;
+import com.joyzone.platform.config.AliConfiguration;
 
 @Component
 public class AliFileUtil extends BaseFileUtil {
@@ -18,7 +18,7 @@ public class AliFileUtil extends BaseFileUtil {
 	private OSS ossClient;
 	
 	@Autowired
-	private AliOSSConfiguration ossConf;
+	private AliConfiguration ossConf;
 
 	@Override
 	public String uploadShopImg(MultipartFile file) throws Exception {

@@ -9,7 +9,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 
 @Configuration
-public class AliOSSConfiguration {
+public class AliConfiguration {
 	
 	@Value("${ali.oss.secretId}")
 	private String secretId;
@@ -22,6 +22,12 @@ public class AliOSSConfiguration {
 	
 	@Value("${ali.oss.domain}")
 	private String domain;
+	
+	@Value("${ali.oss.signName}")
+	private String signName;
+	
+	@Value("${ali.oss.codeTemplateCode}")
+	private String codeTempateCode;
 
 	public String getSecretId() {
 		return secretId;
@@ -53,6 +59,22 @@ public class AliOSSConfiguration {
 
 	public void setDomain(String domain) {
 		this.domain = domain;
+	}
+	
+	public String getSignName() {
+		return signName;
+	}
+
+	public void setSignName(String signName) {
+		this.signName = signName;
+	}
+
+	public String getCodeTempateCode() {
+		return codeTempateCode;
+	}
+
+	public void setCodeTempateCode(String codeTempateCode) {
+		this.codeTempateCode = codeTempateCode;
 	}
 	
 	@Bean
