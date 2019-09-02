@@ -55,6 +55,10 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
         return shopTypeMapper.selectByPageSize(pageNum,pageSize,type);
     }
     
+    public String getGroupIdByTypeId(Long typeId) {
+    	return shopTypeMapper.getGroupIdByTypeId(typeId);
+    }
+    
     /**
      * 添加商户类型及建立部落
      * @param typeModel

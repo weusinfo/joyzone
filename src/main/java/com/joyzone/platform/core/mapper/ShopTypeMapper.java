@@ -21,4 +21,6 @@ public interface ShopTypeMapper extends Mapper<ShopTypeModel> {
                                          @Param("type")Integer type);
     
     int addShopTye(ShopTypeModel typeModel);
+    
+    String getGroupIdByTypeId(@Param("typeId") Long typeId);
 }

@@ -2,6 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.ShopDto;
 import com.joyzone.platform.core.dto.ShopHomeDto;
@@ -16,6 +17,8 @@ import com.joyzone.platform.core.service.ShopService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
 import io.swagger.annotations.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -171,7 +174,24 @@ public class AppShopController {
         }
         return R.error("数据库脏数据！");
     }
-
+    
+    /**
+     * 根据商户类型获取该类型的部落
+     * @param userId
+     * @param typeId
+     * @return
+     */
+    @PostMapping("/getGroupByTypeId")
+    public R getGroupIdByTypeId(@RequestParam("userId") Long userId, @RequestParam("typeId") Long typeId) {
+    	String groupId = shopTypeService.getGroupIdByTypeId(typeId);
+    	if(StringUtils.isNotEmpty(groupId)) {
+    		Map<String, Object> groupMap = Maps.newHashMap();
+    		groupMap.put("groupId", groupId);
+    		return R.ok(groupMap);
+    	}
+		return R.error("系统错误, 该商户类型没有部落");
+    	
+    }
 
 
 }

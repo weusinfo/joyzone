@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 
@@ -23,10 +22,10 @@ public class AliConfiguration {
 	@Value("${ali.oss.domain}")
 	private String domain;
 	
-	@Value("${ali.oss.signName}")
+	@Value("${ali.sms.signName}")
 	private String signName;
 	
-	@Value("${ali.oss.codeTemplateCode}")
+	@Value("${ali.sms.codeTemplateCode}")
 	private String codeTempateCode;
 
 	public String getSecretId() {

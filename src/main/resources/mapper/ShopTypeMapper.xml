@@ -33,4 +33,8 @@
 	insert into shop_type(name, type, type_image, pid, status, sort, create_time,chat_group_id)
 	values(#{name},#{type}, #{typeImage},#{pid},#{status}, #{sort},#{createTime}, #{chatGroupId})
 	</insert>
+	
+	<select id="getGroupIdByTypeId" resultType="java.lang.String">
+		select chat_group_id from shop_type where id = #{typeId}
+	</select>
 </mapper>
