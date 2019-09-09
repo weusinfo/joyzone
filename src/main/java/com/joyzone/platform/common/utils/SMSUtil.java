@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.joyzone.platform.config.AliConfiguration;
+import com.joyzone.platform.core.service.RedisService;
 
 /**
  * 短信发送工具类
@@ -27,7 +27,17 @@ public class SMSUtil {
 	private final String domain = "dysmsapi.aliyuncs.com";
 
 	private final String product = "Dysmsapi";
+	
+	@Autowired
+	private RedisService redisService;
 
+	/**
+	 * 短信发送
+	 * @param mobile
+	 * @param codeParam
+	 * @return
+	 * @throws ClientException
+	 */
 	public void sendCodeSMS(String mobile, String codeParam) throws ClientException {
 		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
 		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -39,8 +49,9 @@ public class SMSUtil {
 		request.setPhoneNumbers(mobile);
 		request.setSignName(conf.getSignName());
 		request.setTemplateCode(conf.getCodeTempateCode());
-		request.setTemplateParam(codeParam);
-		SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
+		request.setTemplateParam("{\"code\":\""+codeParam+"\"}");
+		acsClient.getAcsResponse(request);
+		redisService.hset(Constants.CACHE_KEY_CODE, mobile, codeParam, Constants.CACHE_CODE_EXPIRES);
 	}
 
 }

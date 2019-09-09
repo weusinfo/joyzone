@@ -35,4 +35,8 @@ public interface Constants {
 	String TRIBE_COMMITTEE = "tribe_committee";
 	
 	String CACHE_KEY = "JOYZONE:CACHE_KEY:";
+	
+	String CACHE_KEY_CODE = CACHE_KEY + "CODE";
+	
+	Integer CACHE_CODE_EXPIRES = 5 * 60 * 1000;
 }

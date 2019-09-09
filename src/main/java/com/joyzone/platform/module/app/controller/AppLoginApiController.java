@@ -1,7 +1,10 @@
 package com.joyzone.platform.module.app.controller;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.github.pagehelper.util.StringUtil;
+import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.common.utils.SMSUtil;
 import com.joyzone.platform.core.model.PhoneBlackModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.ChatService;
@@ -14,6 +17,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +38,8 @@ import java.util.regex.Pattern;
 @RequestMapping("/app_loginApi")
 @Api(tags = "app注册登录相关接口",description = "AppLoginApiController")
 public class AppLoginApiController {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(AppLoginApiController.class);
 
     @Autowired
     private PhoneBlackService phoneBlackService;
@@ -42,6 +50,9 @@ public class AppLoginApiController {
     
     @Autowired
     private ChatService chatService;
+    
+    @Autowired
+    private SMSUtil smsUtil;
 
     /**
      * zy
@@ -58,7 +69,6 @@ public class AppLoginApiController {
         }
         Map map = new HashMap();
         int mobile_code = (int) ((Math.random() * 9 + 1) * 100000);
-        String content = "您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。";
         if (isMobileNO(phone)) {
             //判断手机号是否属于黑名单
             PhoneBlackModel phoneBlack = phoneBlackService.isBlack(phone);
@@ -67,21 +77,14 @@ public class AppLoginApiController {
                 map.put("identify", null);
                 return R.error("此电话号码已因不当言行被拉入黑名单!");
             }
-
-//            Map<String, Object> map1 = Sendsms.sendMS(content, phone);
-
-            /*Map<String, Object> map1 = null;
-            if (map1 != null && map1.get("code").equals("2")) {
-                boolean flag = redisService.set("mobile_code",String.valueOf(mobile_code),300);
-                if(flag == false){
-                    return R.error("缓存手机验证码失败!");
-                }*/
-                map.put("type", 0);
-                map.put("mobileCode", mobile_code);
-                return R.ok((Object)map);
-           /* } else {
-                return R.error("发送验证码失败！");
-            }*/
+            try {
+				smsUtil.sendCodeSMS(phone, ""+mobile_code);
+			} catch (ClientException e) {
+				LOGGER.error("Send code to phone s% error, ",e);
+				return R.error("请重试");
+			}
+            map.put("type", 0);
+            return R.ok((Object)map);
         } else {
             return R.error("手机号格式不正确!");
         }
@@ -114,13 +117,10 @@ public class AppLoginApiController {
         if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(mobileCode)) {
             return R.error("参数有误！");
         }
-        /*String mobileCodeRedis = redisService.get("mobile_code");
-        if("".equals(mobileCodeRedis) || mobileCodeRedis == null){
-            return R.error("验证码过期！");
+        Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
+        if(obj == null) {
+        	return R.error("验证码无效");
         }
-        if(!mobileCodeRedis.equals(mobileCode)){
-            return R.error("验证码有误！");
-        }*/
         List<UserModel> userModelList = userSerivce.getUserByPhone(phone);
         if(userModelList.size() > 0){
             Long userId = userModelList.get(0).getId();
