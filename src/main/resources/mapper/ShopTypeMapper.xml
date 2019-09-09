@@ -37,4 +37,8 @@
 	<select id="getGroupIdByTypeId" resultType="java.lang.String">
 		select chat_group_id from shop_type where id = #{typeId}
 	</select>
+	
+	<select id="getTribes" resultType="java.util.Map">
+	select name, chat_group_id as groupId from shop_type where status = 1 and chat_group_id is not null
+	</select>
 </mapper>

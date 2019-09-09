@@ -23,4 +23,6 @@ public interface ShopTypeMapper extends Mapper<ShopTypeModel> {
     int addShopTye(ShopTypeModel typeModel);
     
     String getGroupIdByTypeId(@Param("typeId") Long typeId);
+    
+    List<Map<String,Object>> getTribes();
 }

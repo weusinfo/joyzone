@@ -128,5 +128,9 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
     		}
     	}
     }
+    
+    public List<Map<String,Object>> getTribes(){
+    	return shopTypeMapper.getTribes();
+    }
 
 }
