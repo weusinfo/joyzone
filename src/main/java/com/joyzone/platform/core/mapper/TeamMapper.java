@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface TeamMapper extends Mapper<TeamModel> {
-    List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId, @Param("sort") Integer sort);
+    /*List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId, @Param("sort") Integer sort);*/
+    List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId);
     Map<String,Object> checkTeamIfSuccess(@Param("teamId") Long teamId);
     List<TeamDto> getTeamList(TeamModel teamModel);
 
