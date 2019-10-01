@@ -5,7 +5,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.OrderMineDto;
-import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.service.*;
 import io.swagger.annotations.Api;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +75,7 @@ public class AppOrderController {
         return R.pageToData(0L,new ArrayList<>());
     }
 
-    @PostMapping("/quitTheTeamOrCoupon")
+    /*@PostMapping("/quitTheTeamOrCoupon")
     @ApiOperation("前端用户退出已有组队或取消领取的体验券 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
@@ -155,6 +153,48 @@ public class AppOrderController {
             }
         }
         return R.error("未知错误！");
+    }*/
+    @PostMapping("/quitTheTeamOrCoupon")
+    @ApiOperation("前端用户退出已有组队 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "teamOrCouponId", value = "组队ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R quitTheTeamOrCoupon(TeamUsersModel model, Long userId, Long teamOrCouponId){
+         return quitTheTeam(model,userId,teamOrCouponId);
     }
+
+    public R quitTheTeam(TeamUsersModel model, Long userId, Long teamOrCouponId){
+        TeamUsersModel teamUsersModel = teamUsersService.checkUserInTeam(model,userId,teamOrCouponId);
+        if(teamUsersModel == null){
+            return R.error("用户未报名该组队！");
+        }
+        if(teamUsersModel != null && teamUsersModel.getStatus() == 1){
+            return R.error("用户未报名该组队！");
+        }
+        if(teamUsersModel != null && teamUsersModel.getStatus() == 0){
+            Map<String,Object> teamInfo = teamService.checkTeamIfSuccess(teamOrCouponId);
+            Integer number = (Integer) teamInfo.get("number");
+            Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
+            teamUsersModel.setStatus(1);
+            teamUsersModel.setUpdateTime(new Date());
+            groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
+            int result = teamUsersService.update(teamUsersModel);
+            if(result == 1){
+                if(number == joinNum){
+                    TeamModel teamModel = new TeamModel();
+                    teamModel.setId(teamOrCouponId);
+                    teamModel.setResult(0);
+                    teamModel.setUpdateTime(new Date());
+                    teamService.update(teamModel);
+                }
+                return R.ok("用户退出成功！");
+            }else {
+                return R.error("用户退出失败！");
+            }
+        }
+        return R.error("未知错误！");
+    }
+
 
 }
