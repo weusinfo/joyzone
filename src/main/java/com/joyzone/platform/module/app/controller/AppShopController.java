@@ -46,7 +46,7 @@ public class AppShopController {
     @Autowired
     private ShopCollectService shopCollectService;
 
-    @PostMapping("getAppShopHomeList")
+    /*@PostMapping("getAppShopHomeList")
     @ApiOperation("商家首页信息展示 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
@@ -54,7 +54,7 @@ public class AppShopController {
     })
     public R getAppShopHomeList(@RequestParam("userId") Long userId, @RequestParam("pageSize") Integer pageSize){
         return R.ok(shopService.getAppShopHomeList(userId,pageSize));
-    }
+    }*/
 
     @PostMapping("getShopHomeList")
     @ApiOperation("商家首页信息展示 @zy")

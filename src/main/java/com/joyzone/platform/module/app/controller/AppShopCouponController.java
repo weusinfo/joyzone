@@ -30,7 +30,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/app_shopcoupon")
-@Api(tags = "app商家体验券相关接口",description = "AppShopCouponController")
+@Api(tags = "废弃：app商家体验券相关接口",description = "AppShopCouponController")
 public class AppShopCouponController {
 
     @Autowired

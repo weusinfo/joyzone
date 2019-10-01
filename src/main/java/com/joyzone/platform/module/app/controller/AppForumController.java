@@ -35,11 +35,11 @@ public class AppForumController {
     /**
      * Mr.Gx
      */
-    @PostMapping("saveForumDetail")
+    /*@PostMapping("saveForumDetail")
     @ApiOperation("添加跟帖信息 @Mr.Gx")
     public R saveForumDetail(ForumDetailModel forumDetailModel){
         return forumService.saveForumDetail(forumDetailModel);
-    }
+    }*/
 
     /**
      * Mr.Gx
@@ -47,14 +47,11 @@ public class AppForumController {
     @PostMapping("getAppForumList")
     @ApiOperation("获取论坛发帖信息及跟帖信息 @Mr.Gx")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
-            @ApiImplicitParam(name = "type",value = "类型：0.建议,1.吐槽 ",paramType = "form"),
-            @ApiImplicitParam(name = "queryType",value = "0 热点,1 最新",paramType = "form",defaultValue = "0"),
             @ApiImplicitParam(name = "pageNum",value = "页数",paramType = "form",defaultValue = "1"),
             @ApiImplicitParam(name = "pageSize",value = "每页条数",paramType = "form",defaultValue = "10")
     })
-    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize,Integer type,Integer queryType){
-        return forumService.getAppForumList(userId,pageNum,pageSize,type,queryType);
+    public R getAppForumList(Integer pageNum,Integer pageSize){
+        return forumService.getAppForumList(pageNum,pageSize);
     }
 
     @PostMapping("updateForumPointNum")
@@ -68,7 +65,7 @@ public class AppForumController {
         return forumService.updateForumPointNum(userId,forumId,type);
     }
 
-    @PostMapping("updateForumDetailPointNum")
+    /*@PostMapping("updateForumDetailPointNum")
     @ApiOperation("给论坛跟帖评论进行点赞及取消 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form"),
@@ -77,6 +74,6 @@ public class AppForumController {
     })
     public R updateForumDetailPointNum(@RequestParam("userId") Long userId,@RequestParam("forumDetailId") Long forumDetailId,Integer type){
         return forumService.updateForumDetailPointNum(userId,forumDetailId,type);
-    }
+    }*/
 
 }

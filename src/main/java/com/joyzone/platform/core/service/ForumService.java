@@ -108,15 +108,14 @@ public class ForumService extends BaseService<ForumModel> {
 
     /**
      * App我的论坛列表
-     * @param userId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize,Integer type,Integer queryType){
-        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize,type,queryType);
+    public R getAppForumList(Integer pageNum,Integer pageSize){
+        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize);
         if(list != null && list.size() > 0){
-            for(AppForumVO appForumVO : list){
+            /*for(AppForumVO appForumVO : list){
                 ForumFabulous forumFabulous = forumFabulousMapper.findByUserForum(userId,appForumVO.getId());
                 Boolean status = false;
                 if(forumFabulous != null){
@@ -124,7 +123,7 @@ public class ForumService extends BaseService<ForumModel> {
                 }
                 appForumVO.setUserIsPoint(status);
                 appForumVO.setForumDetails(getForumDetails(userId,appForumVO.getId()));
-            }
+            }*/
             Page page = new Page();
             page=(Page)list;
             return R.pageToData(page.getTotal(),page.getResult());
