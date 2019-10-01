@@ -44,11 +44,27 @@ public class AppOrderController {
     /**
      * zy
      */
-    @PostMapping("/getMyOrderList")
+    /*@PostMapping("/getMyOrderList")
     @ApiOperation("前端获取订单組隊相关列表 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0:报名 1：成功", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
+        PageHelper.startPage(0,10);
+        List<OrderMineDto> myOrderList = orderService.getTeamOrderList(orderModel,userId,type);
+        if(myOrderList != null && myOrderList.size() > 0){
+            Page page = new Page();
+            page = (Page)myOrderList;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
+    }*/
+    @PostMapping("/getMyOrderList")
+    @ApiOperation("新版：前端获取订单組隊相关列表 返回值orderType为0：进行中；1：已完成 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0:我发起 1：我加入", required = true, dataType = "Integer", paramType = "query")
     })
     public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
         PageHelper.startPage(0,10);
