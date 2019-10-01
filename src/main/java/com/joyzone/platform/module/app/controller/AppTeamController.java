@@ -61,7 +61,7 @@ public class AppTeamController {
     }*/
 
     @PostMapping("/getTeamList")
-    @ApiOperation("新版：前端获取店家組隊列表 @zhangyu")
+    @ApiOperation("新版：前端获取店家組隊列表。快组完的队排前，且按startTime升序 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
@@ -158,10 +158,13 @@ public class AppTeamController {
         if(ret == 999){
             return R.error("用户已在该店内发起了有效组队！");
         }
+        if(ret == 111){
+            return R.error("用户组队后保存team_user失败！");
+        }
         return ret > 0 ? R.ok() : R.error("操作失败");
     }
 
-    @PostMapping("/getAppTeamList")
+    /*@PostMapping("/getAppTeamList")
     @ApiOperation("App获取组队列表信息 @Mr.Gx")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
@@ -170,7 +173,7 @@ public class AppTeamController {
     })
     public R getAppTeamList(Long userId,Integer pageNum,Integer pageSize){
         return teamService.getAppTeamList(userId,pageNum,pageSize);
-    }
+    }*/
 
     @PostMapping("/getTeamRuleInfo")
     @ApiOperation("首页组队列表点击规则后的页面 @zhangyu")

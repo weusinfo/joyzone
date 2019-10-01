@@ -109,6 +109,7 @@
         AND t.start_time > NOW()
     </select>
     <select id="getTeamList" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
+        (
         SELECT
             t.id AS teamId,
             t.shop_id AS shopId,
@@ -135,9 +136,11 @@
         WHERE t.status = 0
         AND t.result = 0
         AND t.start_time > NOW()
-
+        ORDER BY t.start_time ASC
+        LIMIT 100
+        )
         UNION
-
+        (
         SELECT
             t.id AS teamId,
             t.shop_id AS shopId,
@@ -165,6 +168,9 @@
         WHERE t.status = 0
         AND t.result = 0
         AND t.start_time > NOW()
+        ORDER BY t.start_time ASC
+        LIMIT 100
+        )
     </select>
 
     <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
