@@ -67,7 +67,7 @@ public class AppInvitingController {
      * Mr.Gx
      */
     @PostMapping("getUserToInvitings")
-    @ApiOperation("获取受邀列表   @Mr.Gx")
+    @ApiOperation("获取个人邀请列表   @Mr.Gx")
     public R getUserToInvitings(InvitingDto invitingDto){
         return invitingService.getUserToInvitings(invitingDto);
     }
@@ -75,29 +75,29 @@ public class AppInvitingController {
     /**
      * Mr.Gx
      */
-    @PostMapping("getConfirmInvitings")
+   /* @PostMapping("getConfirmInvitings")
     @ApiOperation("获取我的受邀正式函列表 @Mr.Gx")
     public R getConfirmInvitings(InvitingDto invitingDto){
         return invitingService.getConfirmInvitings(invitingDto);
-    }
+    }*/
 
     /**
      * Mr.Gx
      */
-    @PostMapping("getMyInvitings")
+    /*@PostMapping("getMyInvitings")
     @ApiOperation("获取我的邀请列表 @Mr.Gx")
     public R getMyInvitings(InvitingDto invitingDto){
         return invitingService.getMyInvitings(invitingDto);
-    }
+    }*/
 
     /**
      * Mr.Gx
      */
-    @PostMapping("getRespondInvitings")
+    /*@PostMapping("getRespondInvitings")
     @ApiOperation("获取回应我的邀请列表 @Mr.Gx")
     public R getRespondInvitings(InvitingDto invitingDto){
         return invitingService.getRespondInvitings(invitingDto);
-    }
+    }*/
 
     @PostMapping("agreeOrNotTheInviting")
     @ApiOperation("受邀列表：用户同意或拒绝某条邀约 @zy")
@@ -125,7 +125,7 @@ public class AppInvitingController {
         return R.ok("操作成功！");
     }
 
-    @PostMapping("sendFinalInviting")
+    /*@PostMapping("sendFinalInviting")
     @ApiOperation("回函：邀请用户正式参与活动 @zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
@@ -148,7 +148,7 @@ public class AppInvitingController {
             return R.error("邀请失败！");
         }
         return R.ok("邀请成功！");
-    }
+    }*/
 
 
 }

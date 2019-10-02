@@ -58,7 +58,7 @@
       <if test="userId != null">
           and i.owner <![CDATA[ <> ]]> #{userId}
       </if>
-      ORDER BY i.id desc
+      ORDER BY i.start_time ASC
     </select>
 
     <select id="getConfirmInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
