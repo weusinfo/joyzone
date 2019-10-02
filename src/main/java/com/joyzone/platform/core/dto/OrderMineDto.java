@@ -22,27 +22,24 @@ public class OrderMineDto extends BaseModel{
     }
 
     //体验券ID
-    @ApiModelProperty("店家组队或体验券主键")
-    private Long teamOrCouponId;
-
-    @ApiModelProperty("0：店家组队订单 1：体验券订单")
-    private Integer orderType;
+    @ApiModelProperty("店家组队或个人邀请主键")
+    private Long teamOrInvitingId;
 
     //店家ID
     @ApiModelProperty("店家ID")
     private Long shopId;
 
     //店家图片
-    @ApiModelProperty("店家图片")
-    private String shopImg;
+    @ApiModelProperty("店家或个人图片")
+    private String shopOrUserImg;
 
     //店家名称
-    @ApiModelProperty("店家名称")
-    private String shopName;
+    @ApiModelProperty("店家或个人邀请活动名称")
+    private String shopOrContentName;
 
     //店家地址
-    @ApiModelProperty("店家地址")
-    private String shopAddress;
+    @ApiModelProperty("店家或个人邀请地址")
+    private String address;
 
     //体验活动开始时间
     @ApiModelProperty("店家组队开始时间")
@@ -52,22 +49,20 @@ public class OrderMineDto extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
+    @ApiModelProperty("0：进行中 1：已完成")
+    private Integer orderStatus;
+
+    @ApiModelProperty("0：店家组队订单 1：个人邀请订单")
+    private Integer orderType;
+
     private List<UserJoinTeamDto> userJoinList;
 
-    public Long getTeamOrCouponId() {
-        return teamOrCouponId;
+    public Long getTeamOrInvitingId() {
+        return teamOrInvitingId;
     }
 
-    public void setTeamOrCouponId(Long teamOrCouponId) {
-        this.teamOrCouponId = teamOrCouponId;
-    }
-
-    public Integer getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(Integer orderType) {
-        this.orderType = orderType;
+    public void setTeamOrInvitingId(Long teamOrInvitingId) {
+        this.teamOrInvitingId = teamOrInvitingId;
     }
 
     public Long getShopId() {
@@ -78,28 +73,28 @@ public class OrderMineDto extends BaseModel{
         this.shopId = shopId;
     }
 
-    public String getShopImg() {
-        return shopImg;
+    public String getShopOrUserImg() {
+        return shopOrUserImg;
     }
 
-    public void setShopImg(String shopImg) {
-        this.shopImg = shopImg;
+    public void setShopOrUserImg(String shopOrUserImg) {
+        this.shopOrUserImg = shopOrUserImg;
     }
 
-    public String getShopName() {
-        return shopName;
+    public String getShopOrContentName() {
+        return shopOrContentName;
     }
 
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+    public void setShopOrContentName(String shopOrContentName) {
+        this.shopOrContentName = shopOrContentName;
     }
 
-    public String getShopAddress() {
-        return shopAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setShopAddress(String shopAddress) {
-        this.shopAddress = shopAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getStartTime() {
@@ -116,6 +111,22 @@ public class OrderMineDto extends BaseModel{
 
     public void setPersonNum(Integer personNum) {
         this.personNum = personNum;
+    }
+
+    public Integer getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     public List<UserJoinTeamDto> getUserJoinList() {
