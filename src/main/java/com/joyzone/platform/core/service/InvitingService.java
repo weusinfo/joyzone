@@ -6,9 +6,7 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.mapper.InvitingMapper;
 import com.joyzone.platform.core.mapper.InvitingUserMapper;
-import com.joyzone.platform.core.model.BaseModel;
-import com.joyzone.platform.core.model.InvitingModel;
-import com.joyzone.platform.core.model.InvitingUserModel;
+import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.vo.AppInvitingVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +16,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional
 public class InvitingService extends BaseService<InvitingModel> {
 
     @Autowired
     private InvitingMapper invitingMapper;
     @Autowired
     private InvitingUserMapper invitingUserMapper;
+    @Autowired
+    private GroupService groupService;
 
     /**
      * 获取邀约列表
@@ -72,12 +71,33 @@ public class InvitingService extends BaseService<InvitingModel> {
      * @param invitingModel
      * Mr.Gx
      */
-    public R saveInviting(InvitingModel invitingModel){
+    public int saveInviting(InvitingModel invitingModel){
         invitingModel.setStatus(0);  //邀约有效
         invitingModel.setResult(2);  //邀约时间未到，还在邀约中
         invitingModel.setCreateTime(new Date());
-        return invitingMapper.insertSelective(invitingModel) > 0 ?
-                R.ok("成功发起") : R.error("操作失败");
+        //todo 个人邀请时创建聊天群
+        /*String groupId = groupService.createTeamGroup(teamModel.getShopId());
+        teamModel.setChatGroupId(groupId);*/
+        int flag = invitingMapper.insertSelective(invitingModel);
+        List<InvitingModel> invitingList = invitingMapper.checkUserStartInviting(invitingModel.getOwner(),invitingModel.getContent(),invitingModel.getStartTime());
+        if(invitingList == null || invitingList.size() == 0){
+            return 0;
+        }
+        int res = saveInvitingUsers(invitingModel,invitingList);
+        if(res == 0){
+            return 111;
+        }
+        return flag;
+    }
+    public int saveInvitingUsers(InvitingModel invitingModel,List<InvitingModel> invitingList){
+        InvitingUserModel invitingUserModel = new InvitingUserModel();
+        invitingUserModel.setInvitingId(invitingList.get(0).getId());
+        invitingUserModel.setUserId(invitingModel.getOwner());
+        invitingUserModel.setStatus(0);  //加入
+        invitingUserModel.setCreateTime(new Date());
+        invitingUserModel.setUpdateTime(new Date());
+        int flag = invitingUserMapper.insertSelective(invitingUserModel);
+        return flag;
     }
 
     /**
@@ -177,7 +197,7 @@ public class InvitingService extends BaseService<InvitingModel> {
         Long invitingUserId = invitingUserModels.get(0).getId();
         InvitingUserModel invitingUserModel = new InvitingUserModel();
         invitingUserModel.setId(invitingUserId);
-        invitingUserModel.setConfirm(0);  //收到邀请者的正式函
+        /*invitingUserModel.setConfirm(0);*/  //收到邀请者的正式函
         invitingUserModel.setUpdateTime(new Date());
         return invitingUserMapper.updateByPrimaryKeySelective(invitingUserModel);
     }

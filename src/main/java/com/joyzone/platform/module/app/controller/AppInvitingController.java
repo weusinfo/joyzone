@@ -50,16 +50,17 @@ public class AppInvitingController {
             return R.error("支付方式不能为空.");
         if(invitingModel.getSexWant() == null)
             return R.error("对象性别选择不能为空.");
-        if(invitingModel.getShopId() != null){
-            if(StringUtils.isBlank(invitingModel.getShopName())){
-                return R.error("店家名称不能为空.");
-            }
-        }
+        if(invitingModel.getNumber() == null)
+            return R.error("人数不能为空.");
         UserModel userModel = userSerivce.selectByKey(invitingModel.getOwner());
         if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
             return R.error(100,"请完善个人必要信息：昵称/性别/生日");
         }
-        return invitingService.saveInviting(invitingModel);
+        int ret = invitingService.saveInviting(invitingModel);
+        if(ret == 111){
+            return R.error("用户组队后保存team_user失败！");
+        }
+        return ret > 0 ? R.ok() : R.error("操作失败");
     }
 
     /**

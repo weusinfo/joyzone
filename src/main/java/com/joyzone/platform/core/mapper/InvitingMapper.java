@@ -3,8 +3,10 @@ package com.joyzone.platform.core.mapper;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.vo.AppInvitingVO;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.Date;
 import java.util.List;
 
 public interface InvitingMapper extends Mapper<InvitingModel> {
@@ -16,4 +18,6 @@ public interface InvitingMapper extends Mapper<InvitingModel> {
     List<AppInvitingVO> getConfirmInvitings(InvitingDto invitingDto);
 
     List<AppInvitingVO> getMyInvitings(InvitingDto invitingDto);
+
+    List<InvitingModel> checkUserStartInviting(@Param("owner") Long owner,@Param("content") String content,@Param("startTime") Date startTime);
 }
