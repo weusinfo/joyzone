@@ -55,6 +55,7 @@
       where u.status = 0
       AND i.status = 0
       AND i.start_time > NOW()
+      AND i.result = 2
       <if test="userId != null">
           and i.owner <![CDATA[ <> ]]> #{userId}
       </if>
@@ -91,6 +92,14 @@
         WHERE i.owner = #{owner}
         AND content = #{content}
         AND start_time = #{startTime}
+    </select>
+
+    <select id="checkInvitingIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        i.number,
+        (SELECT COUNT(*) FROM inviting_user WHERE inviting_id =#{invitingId} AND STATUS = 0) AS joinNum
+        FROM inviting i
+        WHERE i.id = #{invitingId}
     </select>
 
 </mapper>

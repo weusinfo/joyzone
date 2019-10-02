@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface InvitingMapper extends Mapper<InvitingModel> {
 
@@ -20,4 +21,6 @@ public interface InvitingMapper extends Mapper<InvitingModel> {
     List<AppInvitingVO> getMyInvitings(InvitingDto invitingDto);
 
     List<InvitingModel> checkUserStartInviting(@Param("owner") Long owner,@Param("content") String content,@Param("startTime") Date startTime);
+
+    Map<String,Object> checkInvitingIfSuccess(@Param("invitingId") Long invitingId);
 }

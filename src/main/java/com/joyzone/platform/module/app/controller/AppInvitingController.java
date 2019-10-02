@@ -4,6 +4,7 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
+import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.InvitingService;
 import com.joyzone.platform.core.service.UserSerivce;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/app_inviting")
@@ -99,7 +103,7 @@ public class AppInvitingController {
         return invitingService.getRespondInvitings(invitingDto);
     }*/
 
-    @PostMapping("agreeOrNotTheInviting")
+    /*@PostMapping("agreeOrNotTheInviting")
     @ApiOperation("受邀列表：用户同意或拒绝某条邀约 @zy")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
@@ -123,6 +127,43 @@ public class AppInvitingController {
             return R.error("操作失败！");
         }
         return R.ok("操作成功！");
+    }*/
+    @PostMapping("agreeOrNotTheInviting")
+    @ApiOperation("个人邀请列表列表：用户同意某条邀约 @zy")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "invitingId", value = "邀约id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
+    })
+    public R agreeOrNotTheInviting(InvitingDto invitingDto){
+        if(invitingDto == null || invitingDto.getInvitingId() == null || invitingDto.getUserId() == null){
+            return R.error("参数不能为空！");
+        }
+        UserModel userModel = userSerivce.selectByKey(invitingDto.getUserId());
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
+        InvitingModel invitingModel = invitingService.selectByKey(invitingDto.getInvitingId());
+        if(invitingModel == null || invitingModel.getStatus() == 1){
+            return R.error("该邀约不存在或已失效！");
+        }
+        int ret = invitingService.agreeOrNotTheInviting(invitingDto);
+        checkInvitingIfSuccess(invitingDto.getInvitingId());
+        if(ret == 0){
+            return R.error("操作失败！");
+        }
+        return R.ok("操作成功！");
+    }
+    public void checkInvitingIfSuccess(Long invitingId){
+        Map<String,Object> invitingInfo = invitingService.checkInvitingIfSuccess(invitingId);
+        Integer number = (Integer) invitingInfo.get("number");
+        Integer joinNum = Integer.parseInt(invitingInfo.get("joinNum").toString());
+        if(number == joinNum){
+            InvitingModel model = new InvitingModel();
+            model.setId(invitingId);
+            model.setResult(1);  //个人邀请订单成功
+            model.setUpdateTime(new Date());
+            invitingService.update(model);
+        }
     }
 
     /*@PostMapping("sendFinalInviting")

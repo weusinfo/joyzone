@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class InvitingService extends BaseService<InvitingModel> {
@@ -180,11 +181,11 @@ public class InvitingService extends BaseService<InvitingModel> {
         return R.pageToData(0L,new ArrayList<>());
     }
 
-    public Integer agreeOrNotTheInviting(InvitingDto invitingDto,Integer type){
+    public Integer agreeOrNotTheInviting(InvitingDto invitingDto){
         InvitingUserModel invitingUserModel = new InvitingUserModel();
         invitingUserModel.setInvitingId(invitingDto.getInvitingId());
         invitingUserModel.setUserId(invitingDto.getUserId());
-        invitingUserModel.setStatus(type);
+        invitingUserModel.setStatus(0);  //加入
         invitingUserModel.setCreateTime(new Date());
         return invitingUserMapper.agreeOrNotTheInviting(invitingUserModel);
     }
@@ -200,5 +201,9 @@ public class InvitingService extends BaseService<InvitingModel> {
         /*invitingUserModel.setConfirm(0);*/  //收到邀请者的正式函
         invitingUserModel.setUpdateTime(new Date());
         return invitingUserMapper.updateByPrimaryKeySelective(invitingUserModel);
+    }
+
+    public Map<String,Object> checkInvitingIfSuccess(Long invitingId){
+        return invitingMapper.checkInvitingIfSuccess(invitingId);
     }
 }
