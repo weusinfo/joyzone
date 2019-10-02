@@ -206,4 +206,5 @@ public class InvitingService extends BaseService<InvitingModel> {
     public Map<String,Object> checkInvitingIfSuccess(Long invitingId){
         return invitingMapper.checkInvitingIfSuccess(invitingId);
     }
+
 }

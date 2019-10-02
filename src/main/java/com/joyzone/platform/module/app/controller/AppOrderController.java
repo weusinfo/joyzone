@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.OrderMineDto;
+import com.joyzone.platform.core.mapper.InvitingUserMapper;
 import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.service.*;
 import io.swagger.annotations.Api;
@@ -35,9 +36,12 @@ public class AppOrderController {
     private TeamService teamService;
     @Autowired
     private ShopCouponService couponService;
-    
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private InvitingUserService invitingUserService;
+    @Autowired
+    private InvitingService invitingService;
 
     /**
      * zy
@@ -154,18 +158,25 @@ public class AppOrderController {
         }
         return R.error("未知错误！");
     }*/
-    @PostMapping("/quitTheTeamOrCoupon")
+    @PostMapping("/quitTheTeamOrInviting")
     @ApiOperation("前端用户退出已有组队 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "teamOrCouponId", value = "组队ID", required = true, dataType = "Long", paramType = "query")
+            @ApiImplicitParam(name = "teamOrInvitingId", value = "组队ID或个人邀请ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "orderType", value = "0:店家组队 1:个人邀请", required = true, dataType = "Integer", paramType = "query")
     })
-    public R quitTheTeamOrCoupon(TeamUsersModel model, Long userId, Long teamOrCouponId){
-         return quitTheTeam(model,userId,teamOrCouponId);
+    public R quitTheTeamOrInviting(TeamUsersModel model, Long userId, Long teamOrInvitingId, Integer orderType){
+        if(orderType == 0){
+            return quitTheTeam(model,userId,teamOrInvitingId);
+        }
+        if(orderType == 1){
+            return quitTheInviting(userId,teamOrInvitingId);
+        }
+        return R.error("type参数有误");
     }
 
-    public R quitTheTeam(TeamUsersModel model, Long userId, Long teamOrCouponId){
-        TeamUsersModel teamUsersModel = teamUsersService.checkUserInTeam(model,userId,teamOrCouponId);
+    public R quitTheTeam(TeamUsersModel model, Long userId, Long teamOrInvitingId){
+        TeamUsersModel teamUsersModel = teamUsersService.checkUserInTeam(model,userId,teamOrInvitingId);
         if(teamUsersModel == null){
             return R.error("用户未报名该组队！");
         }
@@ -173,7 +184,7 @@ public class AppOrderController {
             return R.error("用户未报名该组队！");
         }
         if(teamUsersModel != null && teamUsersModel.getStatus() == 0){
-            Map<String,Object> teamInfo = teamService.checkTeamIfSuccess(teamOrCouponId);
+            Map<String,Object> teamInfo = teamService.checkTeamIfSuccess(teamOrInvitingId);
             Integer number = (Integer) teamInfo.get("number");
             Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
             teamUsersModel.setStatus(1);
@@ -183,7 +194,7 @@ public class AppOrderController {
             if(result == 1){
                 if(number == joinNum){
                     TeamModel teamModel = new TeamModel();
-                    teamModel.setId(teamOrCouponId);
+                    teamModel.setId(teamOrInvitingId);
                     teamModel.setResult(0);
                     teamModel.setUpdateTime(new Date());
                     teamService.update(teamModel);
@@ -191,6 +202,37 @@ public class AppOrderController {
                 return R.ok("用户退出成功！");
             }else {
                 return R.error("用户退出失败！");
+            }
+        }
+        return R.error("未知错误！");
+    }
+
+    public R quitTheInviting(Long userId, Long teamOrInvitingId){
+        InvitingUserModel invitingUserModel = invitingUserService.checkUserInInviting(new InvitingUserModel(),userId,teamOrInvitingId);
+        if(invitingUserModel == null){
+            return R.error("用户未加入该个人邀请！");
+        }
+        if(invitingUserModel != null && invitingUserModel.getStatus() == 1){
+            return R.error("用户未加入该个人邀请！");
+        }
+        if(invitingUserModel != null && invitingUserModel.getStatus() == 0){
+            Map<String,Object> invitingInfo = invitingService.checkInvitingIfSuccess(teamOrInvitingId);
+            Integer number = (Integer) invitingInfo.get("number");
+            Integer joinNum = Integer.parseInt(invitingInfo.get("joinNum").toString());
+            invitingUserModel.setStatus(1);
+            invitingUserModel.setUpdateTime(new Date());
+            int result = invitingUserService.update(invitingUserModel);
+            if(result == 1){
+                if(number == joinNum) {
+                    InvitingModel invitingModel = new InvitingModel();
+                    invitingModel.setId(teamOrInvitingId);
+                    invitingModel.setResult(2);
+                    invitingModel.setUpdateTime(new Date());
+                    invitingService.update(invitingModel);
+                }
+                return R.ok("用户取消个人邀请成功！");
+            }else {
+                return R.error("用户取消个人邀请失败！");
             }
         }
         return R.error("未知错误！");
