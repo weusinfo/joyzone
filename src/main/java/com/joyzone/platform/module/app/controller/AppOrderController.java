@@ -221,6 +221,8 @@ public class AppOrderController {
             Integer joinNum = Integer.parseInt(invitingInfo.get("joinNum").toString());
             invitingUserModel.setStatus(1);
             invitingUserModel.setUpdateTime(new Date());
+            //todo 退出个人邀请的群
+            /*groupService.cancelGroup(teamUsersModel.getTeamId(), userId);*/
             int result = invitingUserService.update(invitingUserModel);
             if(result == 1){
                 if(number == joinNum) {
