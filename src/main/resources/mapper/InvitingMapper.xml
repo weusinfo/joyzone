@@ -7,22 +7,22 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="owner" property="owner" jdbcType="BIGINT" />
-    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
-    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="pay_way" property="payWay" jdbcType="INTEGER" />
-      <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
+    <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
+    <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
 
     <sql id="BaseResultSql">
-        id,owner,shop_id,shop_name,address,content,type,start_time,status,result,create_time,update_time,pay_way,sex_want
+        id,owner,address,content,type,start_time,status,result,number,create_time,update_time,pay_way,sex_want,chat_group_id
     </sql>
 
     <select id="getInvitingList" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingModel">
@@ -55,10 +55,11 @@
       where u.status = 0
       AND i.status = 0
       AND i.start_time > NOW()
+      AND i.result = 2
       <if test="userId != null">
           and i.owner <![CDATA[ <> ]]> #{userId}
       </if>
-      ORDER BY i.id desc
+      ORDER BY i.start_time ASC
     </select>
 
     <select id="getConfirmInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
@@ -83,6 +84,22 @@
             and i.owner = #{userId}
         </if>
         ORDER BY i.id desc
+    </select>
+
+    <select id="checkUserStartInviting" resultMap="BaseResultMap">
+        SELECT *
+        FROM inviting i
+        WHERE i.owner = #{owner}
+        AND content = #{content}
+        AND start_time = #{startTime}
+    </select>
+
+    <select id="checkInvitingIfSuccess" resultType="java.util.HashMap">
+        SELECT
+        i.number,
+        (SELECT COUNT(*) FROM inviting_user WHERE inviting_id =#{invitingId} AND STATUS = 0) AS joinNum
+        FROM inviting i
+        WHERE i.id = #{invitingId}
     </select>
 
 </mapper>

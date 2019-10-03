@@ -12,9 +12,7 @@ public interface ForumMapper extends Mapper<ForumModel> {
     List<ForumModel> getForumList(ForumModel forumModel);
 
     List<AppForumVO> getAppForumList(@Param("pageNum") Integer pageNum,
-                                     @Param("pageSize") Integer pageSize,
-                                     @Param("type") Integer type,
-                                     @Param("queryType") Integer queryType);
+                                     @Param("pageSize") Integer pageSize);
 
     int updateForumPointNum(@Param("id") Long id, @Param("type") Integer type);
 }

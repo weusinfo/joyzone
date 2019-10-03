@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class UserJoinTeamDto extends BaseModel {
 
     @ApiModelProperty("店家组队ID")
-    private Long teamOrCouponId;
+    private Long teamOrInvitingId;
 
     @ApiModelProperty("0：店家组队订单 1：体验券订单")
     private Integer orderType;
@@ -26,12 +26,12 @@ public class UserJoinTeamDto extends BaseModel {
     @ApiModelProperty("用户头像")
     private String userHeadImg;
 
-    public Long getTeamOrCouponId() {
-        return teamOrCouponId;
+    public Long getTeamOrInvitingId() {
+        return teamOrInvitingId;
     }
 
-    public void setTeamOrCouponId(Long teamOrCouponId) {
-        this.teamOrCouponId = teamOrCouponId;
+    public void setTeamOrInvitingId(Long teamOrInvitingId) {
+        this.teamOrInvitingId = teamOrInvitingId;
     }
 
     public Integer getOrderType() {

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InvitingUserMapper extends Mapper<InvitingUserModel> {
 
@@ -17,4 +18,7 @@ public interface InvitingUserMapper extends Mapper<InvitingUserModel> {
     Integer agreeOrNotTheInviting(InvitingUserModel invitingUserModel);
 
     List<InvitingUserModel> getInvitingUserByIds(InvitingDto invitingDto);
+
+    InvitingUserModel checkUserInInviting(InvitingUserModel model,@Param("userId") Long userId, @Param("teamOrInvitingId") Long teamOrInvitingId);
+
 }
