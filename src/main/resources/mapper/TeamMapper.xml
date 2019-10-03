@@ -175,7 +175,7 @@
 
     <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
         SELECT
-        tu.team_id AS teamOrCouponId,
+        tu.team_id AS teamOrInvitingId,
         u.id AS userId,
         u.head_pic AS userHeadImg
         FROM team_users tu
