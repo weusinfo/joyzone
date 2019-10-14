@@ -59,8 +59,8 @@ public class ForumService extends BaseService<ForumModel> {
             return R.error(R.STATUS_FAIL,"参数不能为空.");
         if(forumModel.getUserId() == null)
             return R.error(R.STATUS_FAIL,"发帖人ID不能为空.");
-        if(forumModel.getType() == null)
-            return R.error(R.STATUS_FAIL,"发帖类型不能为空.");
+        /*if(forumModel.getType() == null)
+            return R.error(R.STATUS_FAIL,"发帖类型不能为空.");*/
         String content = forumModel.getContent();
         if(StringUtils.isBlank(content))
             return R.error(R.STATUS_FAIL,"发帖内容不能为空.");
@@ -112,8 +112,8 @@ public class ForumService extends BaseService<ForumModel> {
      * @param pageSize
      * @return
      */
-    public R getAppForumList(Integer pageNum,Integer pageSize){
-        List<AppForumVO> list =  forumMapper.getAppForumList(pageNum,pageSize);
+    public R getAppForumList(Long userId,Integer pageNum,Integer pageSize){
+        List<AppForumVO> list =  forumMapper.getAppForumList(userId,pageNum,pageSize);
         if(list != null && list.size() > 0){
             /*for(AppForumVO appForumVO : list){
                 ForumFabulous forumFabulous = forumFabulousMapper.findByUserForum(userId,appForumVO.getId());
@@ -142,9 +142,9 @@ public class ForumService extends BaseService<ForumModel> {
         if(list != null && list.size() > 0) {
             for (AppForumVO appForumVO : list) {
                 ForumFabulous forumFabulous = forumFabulousMapper.findByUserForumDetail(userId, appForumVO.getId());
-                Boolean status = false;
+                Integer status = 0;
                 if (forumFabulous != null) {
-                    status = true;
+                    status = 1;
                 }
                 appForumVO.setUserIsPoint(status);
             }
