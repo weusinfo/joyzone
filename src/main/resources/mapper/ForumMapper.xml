@@ -38,7 +38,8 @@
         SELECT
             f.id,f.content,f.type,f.point_num as pointNum,f.create_time as createTime,
             u.id as userId,u.login_name as userName,u.head_pic as headPic,u.sex,u.education,
-            u.profession,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age
+            u.profession,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age,
+            IF((IFNULL((SELECT id FROM forum_fabulous ff WHERE ff.user_id = #{userId} AND ff.forum_id =f.id),0)=0),0,1) AS userIsPoint
         FROM forum f INNER JOIN `user` u on (f.user_id = u.id and u.`status` = 0)
         WHERE f.`status` = 1
     </select>

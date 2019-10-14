@@ -50,8 +50,8 @@ public class AppForumController {
             @ApiImplicitParam(name = "pageNum",value = "页数",paramType = "form",defaultValue = "1"),
             @ApiImplicitParam(name = "pageSize",value = "每页条数",paramType = "form",defaultValue = "10")
     })
-    public R getAppForumList(Integer pageNum,Integer pageSize){
-        return forumService.getAppForumList(pageNum,pageSize);
+    public R getAppForumList(@RequestParam("userId") Long userId,Integer pageNum,Integer pageSize){
+        return forumService.getAppForumList(userId,pageNum,pageSize);
     }
 
     @PostMapping("updateForumPointNum")

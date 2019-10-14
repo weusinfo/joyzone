@@ -56,13 +56,13 @@ public class AppForumVO {
     @ApiModelProperty("跟帖人数")
     private List<AppForumVO> forumDetails;
 
-    private Boolean userIsPoint;
+    private Integer userIsPoint;  //登录用户是否点赞该条评论
 
-    public Boolean getUserIsPoint() {
+    public Integer getUserIsPoint() {
         return userIsPoint;
     }
 
-    public void setUserIsPoint(Boolean userIsPoint) {
+    public void setUserIsPoint(Integer userIsPoint) {
         this.userIsPoint = userIsPoint;
     }
 
