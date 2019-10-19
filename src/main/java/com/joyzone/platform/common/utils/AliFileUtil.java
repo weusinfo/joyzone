@@ -35,7 +35,7 @@ public class AliFileUtil extends BaseFileUtil {
 		InputStream inStream = handleFile(file);
 		PutObjectRequest putObjectRequest = new PutObjectRequest(ossConf.getBucket(), "joyzone/"+fileName, inStream ,null);
 		PutObjectResult rst = ossClient.putObject(putObjectRequest);
-		return "http://" + ossConf.getBucket() + ossConf.getDomain() + "/joyzone/" + fileName;
+		return "http://" + ossConf.getBucket() + "." + ossConf.getDomain() + "/joyzone/" + fileName;
 	}
 
 }
