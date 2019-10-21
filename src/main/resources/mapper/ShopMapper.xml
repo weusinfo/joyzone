@@ -277,7 +277,7 @@
               st.name AS shopTypeName
          FROM shop s
          LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
-         WHERE st.type = 1
+         WHERE st.type = 0
          GROUP BY st.id
     </select>
 
