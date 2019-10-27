@@ -31,9 +31,9 @@ public class TeamModel extends BaseModel {
      */
     @ApiModelProperty("活动开始时间")
     @Column(name = "start_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Excel(name="活动开始时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
+    @Excel(name="活动开始时间",exportFormat = "yyyy-MM-dd HH:mm")
     private Date startTime;
 
     /**
@@ -65,14 +65,14 @@ public class TeamModel extends BaseModel {
      * 创建时间
      */
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 更新时间
      */
     @Column(name = "update_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date updateTime;
 
     /**
