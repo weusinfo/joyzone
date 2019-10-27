@@ -56,9 +56,6 @@
       AND i.status = 0
       AND i.start_time > NOW()
       AND i.result = 2
-      <if test="userId != null">
-          and i.owner <![CDATA[ <> ]]> #{userId}
-      </if>
       ORDER BY i.start_time ASC
     </select>
 
