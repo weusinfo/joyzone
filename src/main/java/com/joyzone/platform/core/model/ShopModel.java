@@ -76,7 +76,7 @@ public class ShopModel extends BaseModel {
      * 创建时间
      */
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     @Excel(name="创建时间",exportFormat = DateUtils.DATE_TIME_PATTERN)
     private Date createTime;

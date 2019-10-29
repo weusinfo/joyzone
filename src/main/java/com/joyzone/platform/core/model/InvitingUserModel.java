@@ -32,11 +32,11 @@ public class InvitingUserModel extends BaseModel{
     private Integer status;
 
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     @Column(name = "update_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date updateTime;
 
     /**

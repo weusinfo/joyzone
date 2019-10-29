@@ -46,7 +46,7 @@ public class PhoneBlackModel  extends BaseModel{
      * 更新时间
      */
     @Column(name = "update_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date updateTime;
 
     /**

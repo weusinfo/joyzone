@@ -2,6 +2,7 @@ package com.joyzone.platform.core.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -92,36 +93,36 @@ public class ShopCouponModel extends BaseModel{
     /**
      * 开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @Column(name = "start_time")
-    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm:ss")
+    @Excel(name="体验时间",exportFormat = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm")
     private Date startTime;
 
     @Column(name = "end_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm:ss")
-    @Excel(name="结束时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
+    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm")
+    @Excel(name="结束时间",exportFormat = "yyyy-MM-dd HH:mm")
     private Date endTime;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
+    @Excel(name="创建时间",exportFormat = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
     /**
      * 更新时间
      */
     @Column(name = "update_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Excel(name="更新时间",exportFormat = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
+    @Excel(name="更新时间",exportFormat = "yyyy-MM-dd HH:mm")
     private Date updateTime;
 
     /**

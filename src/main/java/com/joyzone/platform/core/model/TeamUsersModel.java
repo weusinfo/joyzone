@@ -37,7 +37,7 @@ public class TeamUsersModel extends BaseModel{
      */
     @ApiModelProperty("加入时间")
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     /**
@@ -45,7 +45,7 @@ public class TeamUsersModel extends BaseModel{
      */
     @ApiModelProperty("修改时间")
     @Column(name = "update_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date updateTime;
 
     /**
