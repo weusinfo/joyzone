@@ -61,6 +61,9 @@ druid:
   min-idle: 1
   max-active: 20
   test-on-borrow: true
+  testConnectionOnCheckout: false
+  testConnectionOnCheckin : true
+  idleConnectionTestPeriod : 90
 logging:
   config: classpath:logback.xml
 using:
