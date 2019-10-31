@@ -23,6 +23,7 @@
   <resultMap id="teamListMap" type="com.joyzone.platform.core.dto.TeamDto">
     <id column="teamId" property="teamId" jdbcType="BIGINT" />
     <result column="shopId" property="shopId" jdbcType="BIGINT" />
+    <result column="owner" property="owner" jdbcType="BIGINT" />
     <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
     <result column="shopName" property="shopName" jdbcType="VARCHAR" />
     <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
@@ -35,7 +36,7 @@
   </resultMap>
 
   <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
-    <id column="teamOrCouponId" property="teamOrCouponId" jdbcType="BIGINT" />
+    <id column="teamOrInvitingId" property="teamOrInvitingId" jdbcType="BIGINT" />
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
   </resultMap>
@@ -113,6 +114,7 @@
         SELECT
             t.id AS teamId,
             t.shop_id AS shopId,
+            t.owner,
             s.cover_img AS shopImg,
             s.name AS shopName,
             s.address AS shopAddress,
@@ -143,6 +145,7 @@
         SELECT
             t.id AS teamId,
             t.shop_id AS shopId,
+            t.owner,
             s.cover_img AS shopImg,
             s.name AS shopName,
             s.address AS shopAddress,
