@@ -3,13 +3,16 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.dto.TeamRuleDto;
+import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.GroupService;
+import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
 import com.joyzone.platform.core.service.TeamUsersService;
 import com.joyzone.platform.core.service.UserSerivce;
@@ -17,6 +20,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +46,7 @@ public class AppTeamController {
     private UserSerivce userSerivce;
     
     @Autowired
-    private GroupService groupService;
+    private ShopTypeService typeService;
 
 
     /*@PostMapping("/getTeamList")
@@ -189,5 +195,17 @@ public class AppTeamController {
         return R.ok(teamRuleDto);
     }
 
+    /**
+     * 获取部落列表
+     */
+    @ApiOperation("获取有效的部落")
+    @PostMapping("/getTribes")
+    public R getTribes() {
+    	List<Map<String,Object>> tribes = typeService.getTribes();
+    	if(PublicUtil.isNotEmpty(tribes)) {
+    		return R.ok(tribes);
+    	}
+    	return R.error("还没有部落");
+    }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.joyzone.platform.common.utils.FileUtil;
+import com.joyzone.platform.common.utils.AliFileUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.model.DocumentModel;
 
@@ -18,6 +18,7 @@ public class DocumentService extends BaseService<DocumentModel>{
 	@Autowired
 	private FileUtil fileUtil;
 
+	
 	public String saveShopDoc(MultipartFile file) {
 		try {
 			String filePath = fileUtil.uploadShopImg(file);

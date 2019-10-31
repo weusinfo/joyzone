@@ -3,22 +3,17 @@ package com.joyzone.platform.module.admin.controller;
 import com.joyzone.platform.core.model.DocumentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.joyzone.platform.common.utils.FileUtil;
+import com.joyzone.platform.common.utils.AliFileUtil;
 import com.joyzone.platform.common.utils.R;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-import java.util.HashMap;
 
 /**
  * 腾讯云对象存储， 需要指定文件名
@@ -31,7 +26,7 @@ import java.util.HashMap;
 public class DocumentController {
 	
 	@Autowired
-	private FileUtil fileUtil;
+	private AliFileUtil fileUtil;
 	
 	@ApiOperation("添加商户文件")
 	@PostMapping(path="/uploadShopDoc", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)

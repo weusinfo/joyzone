@@ -19,4 +19,10 @@ public interface ShopTypeMapper extends Mapper<ShopTypeModel> {
     List<ShopTypeModel> selectByPageSize(@Param("pageNum") Integer pageNum,
                                          @Param("pageSize")Integer pageSize,
                                          @Param("type")Integer type);
+    
+    int addShopTye(ShopTypeModel typeModel);
+    
+    String getGroupIdByTypeId(@Param("typeId") Long typeId);
+    
+    List<Map<String,Object>> getTribes();
 }
