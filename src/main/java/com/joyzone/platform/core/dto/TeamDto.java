@@ -30,6 +30,9 @@ public class TeamDto extends BaseModel{
     @ApiModelProperty("店家ID")
     private Long shopId;
 
+    @ApiModelProperty("发起者")
+    private Long owner;
+
     //店家图片
     @ApiModelProperty("店家图片")
     private String shopImg;
@@ -68,6 +71,14 @@ public class TeamDto extends BaseModel{
 
     public void setShopId(Long shopId) {
         this.shopId = shopId;
+    }
+
+    public Long getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Long owner) {
+        this.owner = owner;
     }
 
     public String getShopImg() {
