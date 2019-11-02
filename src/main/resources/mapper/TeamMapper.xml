@@ -71,7 +71,9 @@
         <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
-
+        </collection>
+        <collection property="coverImgList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.ShopMapper.getShopCoverListByShopId"
+                    fetchType="lazy" ofType="java.lang.String">
         </collection>
     </resultMap>
 

@@ -81,6 +81,9 @@ public class TeamRuleDto extends BaseModel{
 
     private List<UserJoinTeamDto> userJoinList;
 
+    @ApiModelProperty("店家轮播图片")
+    private List<String> coverImgList;
+
     public Long getTeamId() {
         return teamId;
     }
@@ -200,4 +203,13 @@ public class TeamRuleDto extends BaseModel{
     public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
         this.userJoinList = userJoinList;
     }
+
+    public List<String> getCoverImgList() {
+        return coverImgList;
+    }
+
+    public void setCoverImgList(List<String> coverImgList) {
+        this.coverImgList = coverImgList;
+    }
+
 }
