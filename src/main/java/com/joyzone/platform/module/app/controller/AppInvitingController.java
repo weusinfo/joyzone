@@ -4,7 +4,6 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
-import com.joyzone.platform.core.model.PersonalChatGroup;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.ChatService;
