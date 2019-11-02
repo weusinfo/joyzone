@@ -9,7 +9,6 @@ import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.InvitingService;
-import com.joyzone.platform.core.service.PersonalChatGroupService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,9 +40,6 @@ public class AppInvitingController {
     
     @Autowired
     private ChatService chatService;
-    
-    @Autowired
-    private PersonalChatGroupService personalChatService;
 
     /**
      * Mr.Gx
