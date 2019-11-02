@@ -126,6 +126,7 @@ public class AppLoginApiController {
             Long userId = userModelList.get(0).getId();
             map.put("message","该手机号已注册！");
             map.put("userId",userId);
+            map.put("user",userModelList.get(0));
             return R.ok((Object)map);
         }
         UserModel userModel = new UserModel();
@@ -143,6 +144,7 @@ public class AppLoginApiController {
         List<UserModel> userModels = userSerivce.getUserByPhone(phone);
         map.put("message","注册成功！");
         map.put("userId",userModels.get(0).getId());
+        map.put("user",userModels.get(0));
         return R.ok((Object)map);
     }
 

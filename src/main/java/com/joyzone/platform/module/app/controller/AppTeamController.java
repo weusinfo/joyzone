@@ -72,14 +72,13 @@ public class AppTeamController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel,Long userId){
-        PageHelper.startPage(0,10);
-        List<TeamDto> teamList = teamService.getTeamList(teamModel,userId);
-        if(teamList != null && teamList.size() > 0){
+        return teamService.getTeamList(teamModel,userId);
+        /*if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
             return R.pageToData(page.getTotal(),page.getResult());
         }
-        return R.pageToData(0L,new ArrayList<>());
+        return R.pageToData(0L,new ArrayList<>());*/
     }
 
     @PostMapping("/joinTheTeam")
