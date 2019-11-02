@@ -4,7 +4,10 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.*;
+import com.joyzone.platform.core.dto.CouponDto;
+import com.joyzone.platform.core.dto.ShopTeamsDto;
+import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
@@ -43,12 +46,6 @@ public class TeamService extends BaseService<TeamModel> {
     }
     
     public  R getTeamList(TeamModel teamModel,Long userId){
-        if(userId == null)
-            return R.error("用户ID不能为空.");
-        if(teamModel.getPageNum() == null)
-            teamModel.setPageNum(BaseModel.PAGE_NUM);
-        if(teamModel.getPageSize() == null)
-            teamModel.setPageSize(BaseModel.PAGE_SIZE);
         PageHelper.startPage(teamModel.getPageNum(), teamModel.getPageSize());
         return pageToRet(teamMapper.getTeamList(teamModel,userId));
     }

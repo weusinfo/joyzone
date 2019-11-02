@@ -73,14 +73,7 @@ public class AppOrderController {
             @ApiImplicitParam(name = "type", value = "0:我发起 1：我加入", required = true, dataType = "Integer", paramType = "query")
     })
     public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
-        PageHelper.startPage(0,10);
-        List<OrderMineDto> myOrderList = orderService.getTeamOrderList(orderModel,userId,type);
-        if(myOrderList != null && myOrderList.size() > 0){
-            Page page = new Page();
-            page = (Page)myOrderList;
-            return R.pageToData(page.getTotal(),page.getResult());
-        }
-        return R.pageToData(0L,new ArrayList<>());
+        return orderService.getTeamOrderList(orderModel,userId,type);
     }
 
     /*@PostMapping("/quitTheTeamOrCoupon")

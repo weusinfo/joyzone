@@ -40,4 +40,6 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 											@Param("pageSize")Integer pageSize);
 
 	List<ShopModel> listShops(ShopModel shopModel);
+
+	List<String> getShopCoverListByShopId(@Param("shopId") Long shopId);
 }

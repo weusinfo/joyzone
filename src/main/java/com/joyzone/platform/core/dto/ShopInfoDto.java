@@ -114,6 +114,9 @@ public class ShopInfoDto extends BaseModel {
     @ApiModelProperty("商家有效正在组队信息集合")
     private List<ShopTeamsDto> shopTeamsDtoList;
 
+    @ApiModelProperty("店家轮播图片")
+    private List<String> coverImgList;
+
     public Long getShopId() {
         return shopId;
     }
@@ -280,5 +283,13 @@ public class ShopInfoDto extends BaseModel {
 
     public void setShopTeamsDtoList(List<ShopTeamsDto> shopTeamsDtoList) {
         this.shopTeamsDtoList = shopTeamsDtoList;
+    }
+
+    public List<String> getCoverImgList() {
+        return coverImgList;
+    }
+
+    public void setCoverImgList(List<String> coverImgList) {
+        this.coverImgList = coverImgList;
     }
 }
