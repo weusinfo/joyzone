@@ -254,4 +254,8 @@
         LEFT JOIN shop s ON s.id = t.shop_id
         WHERE t.id = #{teamId}
     </select>
+    
+    <select id="checkTeamOwner" resultType="java.lang.Integer">
+    select 1 from team where id = ${teamId} and owner = ${userId}
+    </select>
 </mapper>

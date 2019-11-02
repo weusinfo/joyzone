@@ -189,7 +189,12 @@ public class AppOrderController {
             Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
             teamUsersModel.setStatus(1);
             teamUsersModel.setUpdateTime(new Date());
-            groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
+            boolean isOwner = teamService.isTeamOwner(teamUsersModel.getTeamId(), userId);
+            if(isOwner) {
+            	groupService.deleteGroup(teamUsersModel.getTeamId());
+            }else {
+            	groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
+            }
             int result = teamUsersService.update(teamUsersModel);
             if(result == 1){
                 if(number == joinNum){

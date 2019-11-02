@@ -124,4 +124,9 @@ public class TeamService extends BaseService<TeamModel> {
         return teamMapper.getTeamRuleList(teamId,userId);
     }
 
+    public boolean isTeamOwner(Long teamId, Long userId) {
+    	Integer i = teamMapper.checkTeamOwner(teamId, userId);
+    	if(i != null && i.equals(1)) return true;
+    	return false;
+    }
 }
