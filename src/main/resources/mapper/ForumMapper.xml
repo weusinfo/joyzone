@@ -41,7 +41,7 @@
             u.profession,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS age,
             IF((IFNULL((SELECT id FROM forum_fabulous ff WHERE ff.user_id = #{userId} AND ff.forum_id =f.id),0)=0),0,1) AS userIsPoint
         FROM forum f INNER JOIN `user` u on (f.user_id = u.id and u.`status` = 0)
-        WHERE f.`status` = 1
+        WHERE f.`status` = 1 order by pointNum desc, id desc
     </select>
 
     <update id="updateForumPointNum">
