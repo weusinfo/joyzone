@@ -11,6 +11,7 @@ import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.GroupService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
@@ -47,6 +48,9 @@ public class AppTeamController {
     
     @Autowired
     private ShopTypeService typeService;
+    
+    @Autowired
+    private ChatService chatService;
 
 
     /*@PostMapping("/getTeamList")
@@ -108,7 +112,7 @@ public class AppTeamController {
             }
         }
         //需要修改，报空指针
-        //groupService.joinChatGroup(teamId,userId);// join the chat group
+        chatService.joinTeamGroup(teamId+"",userId);// join the chat group
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);

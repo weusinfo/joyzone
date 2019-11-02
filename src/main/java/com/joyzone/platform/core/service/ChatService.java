@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
@@ -55,6 +56,7 @@ public class ChatService extends BaseChatService{
 		return null;
 	}
 	
+	@Async
 	public void joinTeamGroup(String groupId, Long userId) {
 		String joinGroupUrl = easemob.getJoinGroupUrl();
 		joinGroupUrl = joinGroupUrl.replace("{groupId}", groupId);
