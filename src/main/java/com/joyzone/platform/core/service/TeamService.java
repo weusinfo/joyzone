@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.service;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.*;
@@ -40,6 +41,7 @@ public class TeamService extends BaseService<TeamModel> {
         }
         return R.pageToData(0L,new ArrayList<>());
     }
+    
     public  R getTeamList(TeamModel teamModel,Long userId){
         if(userId == null)
             return R.error("用户ID不能为空.");
@@ -47,6 +49,7 @@ public class TeamService extends BaseService<TeamModel> {
             teamModel.setPageNum(BaseModel.PAGE_NUM);
         if(teamModel.getPageSize() == null)
             teamModel.setPageSize(BaseModel.PAGE_SIZE);
+        PageHelper.startPage(teamModel.getPageNum(), teamModel.getPageSize());
         return pageToRet(teamMapper.getTeamList(teamModel,userId));
     }
 
