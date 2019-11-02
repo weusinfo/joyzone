@@ -4,15 +4,20 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
+import com.joyzone.platform.core.model.PersonalChatGroup;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.InvitingService;
+import com.joyzone.platform.core.service.PersonalChatGroupService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +31,19 @@ import java.util.Map;
 @RequestMapping("/app_inviting")
 @Api(tags = "app邀请函相关接口",description = "AppInvitingController")
 public class AppInvitingController {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(AppInvitingController.class);
 
     @Autowired
     private InvitingService invitingService;
     @Autowired
     private UserSerivce userSerivce;
+    
+    @Autowired
+    private ChatService chatService;
+    
+    @Autowired
+    private PersonalChatGroupService personalChatService;
 
     /**
      * Mr.Gx
@@ -63,6 +76,14 @@ public class AppInvitingController {
         int ret = invitingService.saveInviting(invitingModel);
         if(ret == 111){
             return R.error("用户组队后保存team_user失败！");
+        }
+        if(ret > 0) {
+        	try {
+        		String groupId = chatService.createTeamGroup(invitingModel.getOwner(), invitingModel.getContent(), "个人邀约建群");
+        		invitingService.updateChatGroupId(invitingModel.getId(), groupId);
+        	}catch(Exception e) {
+        		LOGGER.error("Error happened when create personal chat group...", e);
+        	}
         }
         return ret > 0 ? R.ok() : R.error("操作失败");
     }

@@ -1,8 +1,10 @@
 package com.joyzone.platform.module.app.controller;
 
 
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.OrderMineDto;
 import com.joyzone.platform.core.mapper.InvitingUserMapper;
@@ -43,6 +45,8 @@ public class AppOrderController {
     @Autowired
     private InvitingService invitingService;
 
+    @Autowired
+    private ChatService chatService;
     /**
      * zy
      */
@@ -227,6 +231,13 @@ public class AppOrderController {
             invitingUserModel.setStatus(1);
             invitingUserModel.setUpdateTime(new Date());
             //todo 退出个人邀请的群
+            String groupId = invitingService.isInvitingOwner(teamOrInvitingId, userId);
+            if(StringUtil.isNotEmpty(groupId)) {
+            	chatService.deleteTeamGroup(groupId);
+            }else {
+            	groupId = invitingService.getChatGroupId(teamOrInvitingId);
+            	chatService.cancelTeamGroup(groupId, userId);
+            }
             /*groupService.cancelGroup(teamUsersModel.getTeamId(), userId);*/
             int result = invitingUserService.update(invitingUserModel);
             if(result == 1){

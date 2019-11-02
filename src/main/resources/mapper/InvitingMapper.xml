@@ -20,6 +20,12 @@
     <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
     <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
+  
+  	<insert id="saveInviting" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="InvitingModel" >
+  insert into inviting(owner,address, content,type,type,start_time,status,result,number,create_time,pay_way,sex_want)
+  values(#{owner,jdbcType=BIGINT},#{address,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},
+  #{result,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP},#{payWay,jdbcType=INTEGER},#{chatGroupId,jdbcType=VARCHAR})
+  </insert>
 
     <sql id="BaseResultSql">
         id,owner,address,content,type,start_time,status,result,number,create_time,update_time,pay_way,sex_want,chat_group_id
@@ -98,5 +104,16 @@
         FROM inviting i
         WHERE i.id = #{invitingId}
     </select>
-
+    
+    <update id="updateChatGroupId">
+    	update inviting set chat_group_id = #{chatGroupId} where id = ${invitingId}
+    </update>
+    
+    <select id="checkInvitingOwner" resultType="java.lang.String">
+    select chat_group_id as chatGroupId from inviting where id=${invitingId} and owner = ${ownerId}
+    </select>
+    
+    <select id="getGroupId" resultType="java.lang.String">
+    select chat_group_id as chatGroupId from inviting where id = ${invitingId}
+    </select>
 </mapper>
