@@ -118,7 +118,7 @@ public class AppLoginApiController {
             return R.error("参数有误！");
         }
         Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
-        if(obj == null) {
+        if(obj == null || !mobileCode.equals((String)obj)) {
         	return R.error("验证码无效");
         }
         List<UserModel> userModelList = userSerivce.getUserByPhone(phone);
