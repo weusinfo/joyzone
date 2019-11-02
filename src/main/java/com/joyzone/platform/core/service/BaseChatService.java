@@ -57,7 +57,7 @@ public class BaseChatService {
 				return easemobUser.getEntities().get(0);
 			}
 		} catch (Exception e) {
-			LOGGER.error("Register easemob user and error happended...");
+			LOGGER.error("Register easemob user and error happended...",e);
 		}
 		return null;
 	}
@@ -96,7 +96,7 @@ public class BaseChatService {
 				}
 			}
 		}catch(Exception e) {
-			LOGGER.error("Error happened when try to get token..。");
+			LOGGER.error("Error happened when try to get token...",e);
 		}
 		return null;
 	}

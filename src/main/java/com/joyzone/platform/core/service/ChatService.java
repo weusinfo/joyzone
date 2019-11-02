@@ -43,14 +43,14 @@ public class ChatService extends BaseChatService{
 		try {
 			String result = RestTemplateUtil.sendJson(createGroupUrl, jsonStr, headers, HttpMethod.POST);
 			if(PublicUtil.isNotEmpty(result)) {
-				LOGGER.info(String.format("==== %s create group%s success...", ownerId, groupName));
+				LOGGER.info(String.format("==== %s create group %s success...", ownerId, groupName));
 				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
 				JsonElement ele = jsonObj.get("data");
 				JsonObject groupObj = ele.getAsJsonObject();
 				return groupObj.get("groupid").getAsString();
 			}
 		} catch (Exception e) {
-			LOGGER.error(String.format("==== %s create group%s failed...", ownerId, groupName), e);
+			LOGGER.error(String.format("==== %s create group %s failed...", ownerId, groupName), e);
 		}
 		return null;
 	}
