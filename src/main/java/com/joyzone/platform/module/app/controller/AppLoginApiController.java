@@ -127,6 +127,7 @@ public class AppLoginApiController {
             map.put("message","该手机号已注册！");
             map.put("userId",userId);
             map.put("user",userModelList.get(0));
+            redisService.hdel(Constants.CACHE_KEY_CODE, phone);
             return R.ok((Object)map);
         }
         UserModel userModel = new UserModel();
