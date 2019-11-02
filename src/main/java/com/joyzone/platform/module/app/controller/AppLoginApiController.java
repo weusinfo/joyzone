@@ -145,6 +145,7 @@ public class AppLoginApiController {
         map.put("message","注册成功！");
         map.put("userId",userModels.get(0).getId());
         map.put("user",userModels.get(0));
+        redisService.hdel(Constants.CACHE_KEY_CODE, phone);
         return R.ok((Object)map);
     }
 
