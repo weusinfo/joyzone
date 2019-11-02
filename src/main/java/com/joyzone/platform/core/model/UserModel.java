@@ -131,8 +131,13 @@ public class UserModel extends BaseModel{
     @ApiModelProperty("学历")
     @Excel(name = "学历")
     private String education;
-
+    
     /**
+     * @ApiModelProperty("环信注册用户密码")
+     */
+    private String chatIdMd5;
+
+	/**
      * 年龄
      */
     private Integer age;
@@ -344,4 +349,11 @@ public class UserModel extends BaseModel{
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    public String getChatIdMd5() {
+		return chatIdMd5;
+	}
+	public void setChatIdMd5(String chatIdMd5) {
+		this.chatIdMd5 = chatIdMd5;
+	}
 }

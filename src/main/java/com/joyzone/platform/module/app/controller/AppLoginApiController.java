@@ -138,6 +138,7 @@ public class AppLoginApiController {
             return R.error("用户注册失败！");
         }
         String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
+        userSerivce.updateChatMD5(userModel.getId(), chatPwd);
         chatService.registerUser(userModel.getId().toString(), chatPwd);
         List<UserModel> userModels = userSerivce.getUserByPhone(phone);
         map.put("message","注册成功！");

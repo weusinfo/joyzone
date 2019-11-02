@@ -8,6 +8,7 @@ import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +27,12 @@ public class UserSerivce extends BaseService<UserModel> {
 
     @Autowired
     private UserMapper userMapper;
+    
     @Autowired
     private RedisService redisService;
+    
+    @Autowired
+    private ChatService chatService;
 
     /**
      * 后台用户管理清单
@@ -47,7 +52,10 @@ public class UserSerivce extends BaseService<UserModel> {
         Date date = new Date();
         if(userModel.getId() != null){
             userModel.setUpdateTime(date);
-            return userMapper.updateByPrimaryKeySelective(userModel);
+            int i = userMapper.updateByPrimaryKeySelective(userModel);
+            if(i > 0) {
+            	chatService.updateUser(""+userModel.getId(), userModel.getUserName());
+            }
         }
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
@@ -97,6 +105,11 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public UserModel getUserInfo(Long userId){
         return userMapper.getUserInfo(userId);
+    }
+    
+    @Async
+    public int updateChatMD5(Long userId, String md5) {
+    	return userMapper.updateChatMD5(userId, md5);
     }
 
 }

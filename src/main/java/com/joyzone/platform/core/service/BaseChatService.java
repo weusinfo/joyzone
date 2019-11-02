@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
@@ -43,6 +44,7 @@ public class BaseChatService {
 	 * @param password
 	 * @return
 	 */
+	@Async
 	public EasemobUser registerUser(String userName, String password) {
 		String userOpeUrl = easemob.getOpeUsersUrl();
 		Map<String,String> headers = getAuthHeaders();
@@ -60,6 +62,25 @@ public class BaseChatService {
 			LOGGER.error("Register easemob user and error happended...",e);
 		}
 		return null;
+	}
+	
+	/**
+	 *Update user nick name
+	 * @param userName
+	 * @param nickName
+	 */
+	@Async
+	public void updateUser(String userName, String nickName) {
+		String userOpeUrl = easemob.getOpeUsersUrl();
+		Map<String,String> headers = getAuthHeaders();
+		Map<String,String> params = Maps.newHashMap();
+		params.put("nickname", nickName);
+		String jsonStr = JacksonUtil.deserializer(params);
+		try {
+			RestTemplateUtil.sendJson(userOpeUrl, jsonStr, headers, null);
+		}catch(Exception e) {
+			LOGGER.error("Register easemob user and error happened...",e);
+		}
 	}
 	
 	/**
