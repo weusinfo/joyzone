@@ -270,7 +270,7 @@
         SELECT
          id AS shopId,
          cover_img AS shopCover
-         FROM shop LIMIT 4
+         FROM shop WHERE id IN (24,29,38,42)
     </select>
 
     <select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">
