@@ -1,11 +1,15 @@
 package com.joyzone.platform.core.service;
 
-import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
+
+import cn.hutool.crypto.digest.DigestUtil;
+import io.jsonwebtoken.lang.Collections;
+import tk.mybatis.mapper.entity.Example;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.scheduling.annotation.Async;
@@ -110,6 +114,18 @@ public class UserSerivce extends BaseService<UserModel> {
     @Async
     public Integer updateChatMD5(Long userId, String md5) {
     	return userMapper.updateChatMD5(userId, md5);
+    }
+    
+    public void updateMD5() {
+    	Example example = new Example(UserModel.class);
+    	example.createCriteria().andIsNull("chatIdMd5");
+    	List<UserModel> users = selectByExample(example);
+    	if(!Collections.isEmpty(users)) {
+    		for(UserModel user : users) {
+    			String md5 = DigestUtil.md5Hex(user.getId().toString());
+    			updateChatMD5(user.getId(), md5);
+    		}
+    	}
     }
 
 }
