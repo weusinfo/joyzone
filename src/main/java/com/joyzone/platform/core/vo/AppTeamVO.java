@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class AppTeamVO {
     private String shopTypeName;
 
     @ApiModelProperty("玩耍开始时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date startTime;
 
     @ApiModelProperty("组队加入成员头像")
