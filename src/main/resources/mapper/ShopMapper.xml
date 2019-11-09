@@ -260,7 +260,7 @@
             id AS shopTypeId,
             name AS shopTypeName,
             type_image as typeImage,
-            id AS sort
+            (id-1) AS sort
         FROM shop_type
         WHERE status = 1 AND type = 0
         ORDER BY sort
@@ -278,7 +278,7 @@
           SELECT
               st.id AS shopTypeId,
               st.name AS shopTypeName,
-              st.id AS sort
+              (st.id-1) AS sort
          FROM shop s
          LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
          WHERE st.type = 0
