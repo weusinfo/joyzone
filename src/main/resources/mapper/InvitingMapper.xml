@@ -128,7 +128,7 @@
     </select>
     
     <update id="updateChatGroupId">
-    	update inviting set chat_group_id = #{chatGroupId} where id = ${invitingId}
+    	update inviting set chat_group_id = #{groupId} where id = ${invitingId}
     </update>
     
     <select id="checkInvitingOwner" resultType="java.lang.String">
