@@ -34,4 +34,8 @@ public interface InvitingMapper extends Mapper<InvitingModel> {
     String getGroupId(@Param("invitingId") Long invitingId);
 
     List<UserDto> queryInvitingUserList(@Param("invitingId") Long invitingId);
+    
+    int disableExpiredInviting();
+    
+    List<String> getDisabledInvitingGroupIds();
 }

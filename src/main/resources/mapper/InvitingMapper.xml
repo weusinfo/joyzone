@@ -145,4 +145,12 @@
         LEFT JOIN `user` u ON u.id = iu.user_id
         WHERE iu.inviting_id = #{invitingId}
     </select>
+    
+    <update id="disableExpiredInviting">
+    	update inviting set status = 1 where status = 0 and TO_DAYS(now()) - TO_DAYS(start_time) >= 1
+    </update>
+    
+    <select id="getDisabledInvitingGroupIds" resultType="java.util.List">
+    	select chat_group_id from inviting where status = 1
+    </select>
 </mapper>

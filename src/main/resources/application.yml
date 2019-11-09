@@ -69,6 +69,8 @@ logging:
 using:
   spring:
     schedulerFactory: false
+  quartz:
+    schedulerFactory: true
 fileSize: 2048000
 scale: 0.8
 distance_range: 5000
