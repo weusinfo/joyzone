@@ -84,7 +84,7 @@ public class BaseChatService {
 	}
 	
 	/**
-	 * Get easemob token
+	 * Get Easemob token
 	 * @return
 	 * @throws Exception
 	 */
