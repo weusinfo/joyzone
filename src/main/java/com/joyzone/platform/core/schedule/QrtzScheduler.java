@@ -63,6 +63,6 @@ public class QrtzScheduler {
     @Bean
     public Trigger trigger(JobDetail job) {
 //        logger.info("Configuring trigger to fire every {} seconds", frequencyInSec);
-         return newTrigger().forJob(job).withIdentity(TriggerKey.triggerKey("Qrtz_Trigger")).withDescription("Sample trigger").withSchedule(simpleSchedule().repeatForever().withIntervalInMilliseconds(10000)).build();
+         return newTrigger().forJob(job).withIdentity(TriggerKey.triggerKey("Qrtz_Trigger")).withDescription("Sample trigger").withSchedule(simpleSchedule().repeatForever().withIntervalInHours(3)).build();
     }
 }
