@@ -44,7 +44,7 @@
     </resultMap>
 
   	<insert id="saveInviting" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="InvitingModel" >
-  insert into inviting(owner,address, content,type,type,start_time,status,result,number,create_time,pay_way,sex_want)
+  insert into inviting(owner,address, content,type,start_time,status,result,number,create_time,pay_way,sex_want)
   values(#{owner,jdbcType=BIGINT},#{address,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},
   #{result,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{payWay,jdbcType=INTEGER},#{chatGroupId,jdbcType=VARCHAR})
   </insert>
