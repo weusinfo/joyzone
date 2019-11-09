@@ -71,7 +71,7 @@ public class BaseChatService {
 	 */
 	@Async
 	public void updateUser(String userName, String nickName) {
-		String userOpeUrl = easemob.getOpeUsersUrl();
+		String userOpeUrl = easemob.getOpeUsersUrl() + "/" + userName;
 		Map<String,String> headers = getAuthHeaders();
 		Map<String,String> params = Maps.newHashMap();
 		params.put("nickname", nickName);
@@ -79,7 +79,7 @@ public class BaseChatService {
 		try {
 			RestTemplateUtil.sendJson(userOpeUrl, jsonStr, headers, null);
 		}catch(Exception e) {
-			LOGGER.error("Register easemob user and error happened...",e);
+			LOGGER.error("Update easemob user and error happened...",e);
 		}
 	}
 	
