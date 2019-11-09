@@ -60,6 +60,7 @@
     <resultMap id="shopHomeListDtoMap" type="com.joyzone.platform.core.dto.ShopHomeListDto">
         <id column="shopTypeId" property="shopTypeId" jdbcType="BIGINT" />
         <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
         <collection property="shopHomeCoverList" javaType="ArrayList" column="{shopTypeId=shopTypeId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeCoverList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeListCoverDto">
 
@@ -259,7 +260,7 @@
             id AS shopTypeId,
             name AS shopTypeName,
             type_image as typeImage,
-            sort
+            id AS sort
         FROM shop_type
         WHERE status = 1 AND type = 0
         ORDER BY sort
@@ -276,7 +277,8 @@
     <select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">
           SELECT
               st.id AS shopTypeId,
-              st.name AS shopTypeName
+              st.name AS shopTypeName,
+              st.id AS sort
          FROM shop s
          LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
          WHERE st.type = 0

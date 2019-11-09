@@ -58,6 +58,8 @@ public class AppInvitingController {
             return R.error("邀请地址不能为空.");
         if(invitingModel.getStartTime() == null)
             return R.error("主题进行时间不能为空.");
+        if(invitingModel.getStartTime().compareTo(new Date()) <= 0 )
+            return R.error("开始时间太早");
         if(invitingModel.getPayWay() == null)
             return R.error("支付方式不能为空.");
         if(invitingModel.getSexWant() == null)
