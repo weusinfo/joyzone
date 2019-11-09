@@ -84,4 +84,12 @@ public class UserController {
         Workbook workbook = ExcelExportUtil.exportExcel(params, UserModel.class, list);
         workbook.write(response.getOutputStream());
     }
+    
+    /**
+     * 用于更新用户注册环信时的密码用MD5
+     */
+    @PostMapping("/updateMD5")
+    public void updateMD5() {
+    	userSerivce.updateMD5();
+    }
 }
