@@ -111,7 +111,6 @@ public class UserSerivce extends BaseService<UserModel> {
         return userMapper.getUserInfo(userId);
     }
     
-    @Async
     public Integer updateChatMD5(Long userId, String md5) {
     	return userMapper.updateChatMD5(userId, md5);
     }
