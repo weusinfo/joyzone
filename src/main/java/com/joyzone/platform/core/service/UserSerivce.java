@@ -60,6 +60,7 @@ public class UserSerivce extends BaseService<UserModel> {
             if(i > 0) {
             	chatService.updateUser(""+userModel.getId(), userModel.getUserName());
             }
+            return i;
         }
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
