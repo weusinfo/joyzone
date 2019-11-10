@@ -77,7 +77,7 @@ public class BaseChatService {
 		params.put("nickname", nickName);
 		String jsonStr = JacksonUtil.deserializer(params);
 		try {
-			RestTemplateUtil.sendJson(userOpeUrl, jsonStr, headers, null);
+			RestTemplateUtil.sendJson(userOpeUrl, jsonStr, headers, HttpMethod.PUT);
 		}catch(Exception e) {
 			LOGGER.error("Update easemob user and error happened...",e);
 		}
