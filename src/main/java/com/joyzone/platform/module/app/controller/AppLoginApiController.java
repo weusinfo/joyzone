@@ -78,7 +78,10 @@ public class AppLoginApiController {
                 return R.error("此电话号码已因不当言行被拉入黑名单!");
             }
             try {
-				smsUtil.sendCodeSMS(phone, ""+mobile_code);
+				boolean isSent = smsUtil.sendCodeSMS(phone, ""+mobile_code);
+				if(!isSent) {
+					return R.error("短信验证码发送已超过限制");
+				}
 			} catch (ClientException e) {
 				LOGGER.error("Send code to phone s% error, ",e);
 				return R.error("请重试");
