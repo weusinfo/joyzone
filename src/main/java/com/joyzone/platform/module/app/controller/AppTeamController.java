@@ -3,8 +3,10 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.ShopTypeModel;
@@ -111,8 +113,8 @@ public class AppTeamController {
                 return R.error("用户报名失败！");
             }
         }
-        //需要修改，报空指针
-        chatService.joinTeamGroup(teamId+"",userId);// join the chat group
+        String groupId = teamService.getGroupId(teamId);
+        chatService.joinTeamGroup(groupId,userId);// join the chat group
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);
@@ -121,6 +123,8 @@ public class AppTeamController {
         int ret = teamUsersService.save(bean);
         checkTeamIfSuccess(teamId);
         if(ret == 1){
+        	Map<String,String> map = Maps.newHashMap();
+        	map.put("chatGroupId", groupId);
             return R.ok("用户报名成功！");
         }else {
             return R.error("用户报名失败！");
@@ -170,7 +174,9 @@ public class AppTeamController {
         if(ret == 111){
             return R.error("用户组队后保存team_user失败！");
         }
-        return ret > 0 ? R.ok() : R.error("操作失败");
+        Map<String,String> map = Maps.newHashMap();
+        map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));
+        return ret > 0 ? R.ok(map) : R.error("操作失败");
     }
 
     /*@PostMapping("/getAppTeamList")

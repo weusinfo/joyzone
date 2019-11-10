@@ -28,5 +28,7 @@ public interface TeamMapper extends Mapper<TeamModel> {
     TeamRuleDto getTeamRuleList(@Param("teamId")  Long teamId,@Param("userId") Long userId);
     
     Integer checkTeamOwner(@Param("teamId") Long teamId, @Param("userId") Long userId);
+    
+    String getGroupId(@Param("teamId") Long teamId);
 
 }

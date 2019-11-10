@@ -1,6 +1,7 @@
 package com.joyzone.platform.module.app.controller;
 
 
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
@@ -74,14 +75,17 @@ public class AppInvitingController {
         if(ret == 111){
             return R.error("用户组队后保存team_user失败！");
         }
+        String groupId = null;
         if(ret > 0) {
         	try {
-        		String groupId = chatService.createTeamGroup(invitingModel.getOwner(), invitingModel.getContent(), "个人邀约建群");
+        		groupId = chatService.createTeamGroup(invitingModel.getOwner(), invitingModel.getContent(), "个人邀约建群");
         		invitingService.updateChatGroupId(invitingModel.getId(), groupId);
         	}catch(Exception e) {
         		LOGGER.error("Error happened when create personal chat group...", e);
         	}
         }
+        Map<String,String> map = Maps.newHashMap();
+        map.put("chatGroupId", groupId);
         return ret > 0 ? R.ok() : R.error("操作失败");
     }
 

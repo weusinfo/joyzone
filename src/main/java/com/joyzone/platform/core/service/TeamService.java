@@ -3,6 +3,7 @@ package com.joyzone.platform.core.service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.CouponDto;
 import com.joyzone.platform.core.dto.ShopTeamsDto;
@@ -74,6 +75,7 @@ public class TeamService extends BaseService<TeamModel> {
            String groupId = groupService.createTeamGroup(teamModel.getShopId());
            teamModel.setChatGroupId(groupId);
            int flag =  teamMapper.insertSelective(teamModel);
+           ThreadLocalMap.put("chatGroupId", groupId);
             List<TeamModel> teamList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
             if(teamList == null || teamList.size() == 0){
                 return 0;
@@ -128,5 +130,9 @@ public class TeamService extends BaseService<TeamModel> {
     	Integer i = teamMapper.checkTeamOwner(teamId, userId);
     	if(i != null && i.equals(1)) return true;
     	return false;
+    }
+    
+    public String getGroupId(Long teamId) {
+    	return teamMapper.getGroupId(teamId);
     }
 }

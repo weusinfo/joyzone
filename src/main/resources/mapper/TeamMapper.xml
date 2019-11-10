@@ -260,4 +260,8 @@
     <select id="checkTeamOwner" resultType="java.lang.Integer">
     select 1 from team where id = ${teamId} and owner = ${userId}
     </select>
+    
+    <select id="getGroupId" resultType="java.lang.String">
+    select chat_group_id from team where id = #{teamId} limit 1
+    </select>
 </mapper>
