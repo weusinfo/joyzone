@@ -121,16 +121,15 @@ public class AppLoginApiController {
         if(obj == null || !mobileCode.equals((String)obj)) {
         	return R.error("验证码无效");
         }
-        List<UserModel> userModelList = userSerivce.getUserByPhone(phone);
-        if(userModelList.size() > 0){
-            Long userId = userModelList.get(0).getId();
+        UserModel userModel = userSerivce.getUserByPhone(phone);
+        if(userModel != null){
             map.put("message","该手机号已注册！");
-            map.put("userId",userId);
-            map.put("user",userModelList.get(0));
+            map.put("userId",userModel.getId());
+            map.put("user",userModel);
             redisService.hdel(Constants.CACHE_KEY_CODE, phone);
             return R.ok((Object)map);
         }
-        UserModel userModel = new UserModel();
+        userModel = new UserModel();
         userModel.setPhone(phone);
         userModel.setType(0);  //0:用户
         userModel.setStatus(0);   //用户状态: 0 激活 ， 1 封号， 2禁入
@@ -142,10 +141,10 @@ public class AppLoginApiController {
         String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
         userSerivce.updateChatMD5(userModel.getId(), chatPwd);
         chatService.registerUser(userModel.getId().toString(), chatPwd);
-        List<UserModel> userModels = userSerivce.getUserByPhone(phone);
+        userModel = userSerivce.getUserByPhone(phone);
         map.put("message","注册成功！");
-        map.put("userId",userModels.get(0).getId());
-        map.put("user",userModels.get(0));
+        map.put("userId",userModel.getId());
+        map.put("user",userModel);
         redisService.hdel(Constants.CACHE_KEY_CODE, phone);
         return R.ok((Object)map);
     }

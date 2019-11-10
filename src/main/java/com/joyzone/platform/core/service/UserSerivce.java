@@ -72,7 +72,7 @@ public class UserSerivce extends BaseService<UserModel> {
      * @param userModel
      * Mr.Gx
      */
-    public List<UserModel> getUserByPhone(String phone){
+    public UserModel getUserByPhone(String phone){
         return userMapper.getUserByPhone(phone);
     }
 
