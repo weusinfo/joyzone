@@ -89,7 +89,7 @@ public class ChatService extends BaseChatService{
 		delGroupUrl = delGroupUrl.replace("{groupId}", groupId);
 		Map<String,String> headers = getAuthHeaders();
 		try {
-			//RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
+			RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
 			LOGGER.error(String.format("Delete group %s failed", groupId), e);
 		}
