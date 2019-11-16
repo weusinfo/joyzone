@@ -80,7 +80,7 @@ public class ChatService extends BaseChatService{
 		try {
 			RestTemplateUtil.sendJson(cancelGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			LOGGER.error(String.format("Deletev user userId %d failed from d%", groupId, userId), e);
+			LOGGER.error(String.format("Cancel user userId %d failed from d%", groupId, userId), e);
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class ChatService extends BaseChatService{
 		delGroupUrl = delGroupUrl.replace("{groupId}", groupId);
 		Map<String,String> headers = getAuthHeaders();
 		try {
-			RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
+			//RestTemplateUtil.sendJson(delGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
 			LOGGER.error(String.format("Delete group %s failed", groupId), e);
 		}

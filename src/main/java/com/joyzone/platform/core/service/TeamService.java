@@ -33,6 +33,9 @@ public class TeamService extends BaseService<TeamModel> {
     private TeamUsersMapper teamUsersMapper;
     @Autowired
     private GroupService groupService;
+    
+    @Autowired
+    ChatService chatService;
 
     /*public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
         return teamMapper.getTeamList(teamModel,userId,sort);
@@ -74,6 +77,7 @@ public class TeamService extends BaseService<TeamModel> {
            //添加组队时创建聊天群
            String groupId = groupService.createTeamGroup(teamModel.getShopId());
            teamModel.setChatGroupId(groupId);
+           chatService.joinTeamGroup(groupId, teamModel.getOwner());
            int flag =  teamMapper.insertSelective(teamModel);
            ThreadLocalMap.put("chatGroupId", groupId);
             List<TeamModel> teamList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());

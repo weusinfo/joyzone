@@ -173,8 +173,10 @@ public class AppInvitingController {
         if(ret == 0){
             return R.error("操作失败！");
         }
+        chatService.joinTeamGroup(invitingModel.getChatGroupId(), invitingDto.getUserId());
         return R.ok("操作成功！");
     }
+    
     public void checkInvitingIfSuccess(Long invitingId){
         Map<String,Object> invitingInfo = invitingService.checkInvitingIfSuccess(invitingId);
         Integer number = (Integer) invitingInfo.get("number");
