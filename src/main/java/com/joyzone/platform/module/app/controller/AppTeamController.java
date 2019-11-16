@@ -121,8 +121,8 @@ public class AppTeamController {
         bean.setStatus(0);
         bean.setCreateTime(new Date());
         int ret = teamUsersService.save(bean);
-        checkTeamIfSuccess(teamId);
         if(ret == 1){
+        	checkTeamIfSuccess(teamId);
         	Map<String,String> map = Maps.newHashMap();
         	map.put("chatGroupId", groupId);
             return R.ok("用户报名成功！");
