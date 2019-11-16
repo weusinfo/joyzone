@@ -225,13 +225,13 @@
     </if>
     <if test="orderType == 1">
       SELECT
-      cu.coupon_id AS teamOrInvitingId,
+      iu.inviting_id AS teamOrInvitingId,
       1 AS orderType,
       u.id AS userId,
       u.head_pic AS userHeadImg
-      FROM coupon_user cu
-      LEFT JOIN user u ON u.id = cu.user_id
-      WHERE cu.coupon_id = #{teamOrInvitingId}  AND cu.status = 0
+      FROM inviting_user iu
+      LEFT JOIN `user` u ON u.id = iu.user_id
+      WHERE iu.inviting_id = #{teamOrInvitingId} AND iu.status = 0
     </if>
   </select>
 
