@@ -104,7 +104,7 @@ public class GroupService {
 		if(PublicUtil.isEmpty(groupId)) {
 			LOGGER.error(String.format("TeamID %d 没有群ID", teamId));
 		}
-		chatService.deleteTeamGroup(String.valueOf(teamId));
+		chatService.deleteTeamGroup(String.valueOf(groupId));
 	}
 
 }
