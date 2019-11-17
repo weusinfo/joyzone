@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.PublicUtil;
@@ -14,6 +15,8 @@ import com.joyzone.platform.core.model.ShopModel;
 import com.joyzone.platform.core.model.SysParamsModel;
 import com.joyzone.platform.core.model.SysUserModel;
 import com.joyzone.platform.core.model.TeamModel;
+
+import cn.hutool.core.util.ObjectUtil;
 
 @Service
 public class GroupService {
@@ -88,23 +91,27 @@ public class GroupService {
 		TeamModel teamModel = new TeamModel();
 		teamModel.setId(teamId);
 		teamModel = teamService.selectOne(teamModel);
-		String groupId = teamModel.getChatGroupId();
-		if(PublicUtil.isEmpty(groupId)){
+		
+		if(ObjectUtil.isNotNull(teamModel) && !StringUtils.isEmpty(teamModel.getChatGroupId()))
+		{
+			chatService.cancelTeamGroup(teamModel.getChatGroupId(), userId);
+		}else {
 			LOGGER.warn(String.format("Team ID %d 没有环信群ID", teamId));
 			return;
 		}
-		chatService.cancelTeamGroup(groupId, userId);
 	}
 	
 	public void deleteGroup(Long teamId) {
 		TeamModel team = new TeamModel();
 		team.setId(teamId);
 		team = teamService.selectOne(team);
-		String groupId = team.getChatGroupId();
-		if(PublicUtil.isEmpty(groupId)) {
+		if(ObjectUtil.isNotNull(team) && !StringUtils.isEmpty(team.getChatGroupId())) {
+			chatService.deleteTeamGroup(team.getChatGroupId());
+		}
+		else{
 			LOGGER.error(String.format("TeamID %d 没有群ID", teamId));
 		}
-		chatService.deleteTeamGroup(String.valueOf(groupId));
+		
 	}
 
 }
