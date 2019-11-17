@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
@@ -43,6 +44,7 @@ public class BaseChatService {
 	 * @param password
 	 * @return
 	 */
+	@Async
 	public EasemobUser registerUser(String userName, String password) {
 		String userOpeUrl = easemob.getOpeUsersUrl();
 		Map<String,String> headers = getAuthHeaders();
@@ -57,13 +59,32 @@ public class BaseChatService {
 				return easemobUser.getEntities().get(0);
 			}
 		} catch (Exception e) {
-			LOGGER.error("Register easemob user and error happended...");
+			LOGGER.error("Register easemob user and error happended...",e);
 		}
 		return null;
 	}
 	
 	/**
-	 * Get easemob token
+	 *Update user nick name
+	 * @param userName
+	 * @param nickName
+	 */
+	@Async
+	public void updateUser(String userName, String nickName) {
+		String userOpeUrl = easemob.getOpeUsersUrl() + "/" + userName;
+		Map<String,String> headers = getAuthHeaders();
+		Map<String,String> params = Maps.newHashMap();
+		params.put("nickname", nickName);
+		String jsonStr = JacksonUtil.deserializer(params);
+		try {
+			RestTemplateUtil.sendJson(userOpeUrl, jsonStr, headers, HttpMethod.PUT);
+		}catch(Exception e) {
+			LOGGER.error("Update easemob user and error happened...",e);
+		}
+	}
+	
+	/**
+	 * Get Easemob token
 	 * @return
 	 * @throws Exception
 	 */
@@ -96,7 +117,7 @@ public class BaseChatService {
 				}
 			}
 		}catch(Exception e) {
-			LOGGER.error("Error happened when try to get token..。");
+			LOGGER.error("Error happened when try to get token...",e);
 		}
 		return null;
 	}

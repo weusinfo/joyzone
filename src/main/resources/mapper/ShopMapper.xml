@@ -60,6 +60,7 @@
     <resultMap id="shopHomeListDtoMap" type="com.joyzone.platform.core.dto.ShopHomeListDto">
         <id column="shopTypeId" property="shopTypeId" jdbcType="BIGINT" />
         <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
         <collection property="shopHomeCoverList" javaType="ArrayList" column="{shopTypeId=shopTypeId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeCoverList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeListCoverDto">
 
@@ -97,7 +98,9 @@
         <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="shopTeamsDtoList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopTeamListByShopId"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopTeamsDto">
-
+        </collection>
+        <collection property="coverImgList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.ShopMapper.getShopCoverListByShopId"
+                    fetchType="lazy" ofType="java.lang.String">
         </collection>
     </resultMap>
 
@@ -257,7 +260,7 @@
             id AS shopTypeId,
             name AS shopTypeName,
             type_image as typeImage,
-            sort
+            (id-1) AS sort
         FROM shop_type
         WHERE status = 1 AND type = 0
         ORDER BY sort
@@ -268,16 +271,17 @@
         SELECT
          id AS shopId,
          cover_img AS shopCover
-         FROM shop LIMIT 4
+         FROM shop WHERE id IN (24,29,38,42)
     </select>
 
     <select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">
           SELECT
               st.id AS shopTypeId,
-              st.name AS shopTypeName
+              st.name AS shopTypeName,
+              (st.id-1) AS sort
          FROM shop s
          LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
-         WHERE st.type = 1
+         WHERE st.type = 0
          GROUP BY st.id
     </select>
 
@@ -315,6 +319,10 @@
         <if test="endTime != null">
             and create_time <![CDATA[ <= ]]> #{endTime}
         </if>
+    </select>
+
+    <select id="getShopCoverListByShopId" resultType="java.lang.String">
+        SELECT File_path FROM document WHERE OWNER = #{shopId} AND file_name = 'shopImg' AND TYPE = 0
     </select>
 
 </mapper>

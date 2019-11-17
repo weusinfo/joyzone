@@ -25,7 +25,7 @@
     <result column="shopOrUserImg" property="shopOrUserImg" jdbcType="VARCHAR" />
     <result column="shopOrContentName" property="shopOrContentName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="startTime" property="startTime" jdbcType="DATE" />
+    <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
     <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
     <result column="orderType" property="orderType" jdbcType="INTEGER" />
@@ -129,7 +129,7 @@
   </select>
   <select id="getTeamOrderList" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
     <if test="type == 0">
-      SELECT
+      (SELECT
         t.id AS teamOrInvitingId,
         t.shop_id AS shopId,
         s.cover_img AS shopOrUserImg,
@@ -143,10 +143,12 @@
       LEFT JOIN shop s ON s.id = t.shop_id
       WHERE t.owner = #{userId}
       AND t.status = 0
+      ORDER BY t.start_time DESC
+      LIMIT 100)
 
       UNION
 
-      SELECT
+      (SELECT
         i.id AS teamOrInvitingId,
         NULL AS shopId,
         u.head_pic AS shopOrUserImg,
@@ -161,9 +163,11 @@
       WHERE i.owner = #{userId}
       AND i.status = 0
       AND u.status = 0
+      ORDER BY i.start_time DESC
+      LIMIT 100)
     </if>
     <if test="type == 1">
-      SELECT
+      (SELECT
       t.id AS teamOrInvitingId,
       t.shop_id AS shopId,
       s.cover_img AS shopOrUserImg,
@@ -180,10 +184,12 @@
       AND tu.status = 0
       AND t.owner <![CDATA[ <> ]]> #{userId}
       AND t.status = 0
+      ORDER BY t.start_time DESC
+      LIMIT 100)
 
       UNION
 
-      SELECT
+      (SELECT
       i.id AS teamOrInvitingId,
       NULL AS shopId,
       u.head_pic AS shopOrUserImg,
@@ -201,6 +207,8 @@
       AND i.status = 0
       AND u.status = 0
       AND iu.status = 0
+      ORDER BY i.start_time DESC
+      LIMIT 100)
     </if>
   </select>
 
@@ -217,13 +225,13 @@
     </if>
     <if test="orderType == 1">
       SELECT
-      cu.coupon_id AS teamOrInvitingId,
+      iu.inviting_id AS teamOrInvitingId,
       1 AS orderType,
       u.id AS userId,
       u.head_pic AS userHeadImg
-      FROM coupon_user cu
-      LEFT JOIN user u ON u.id = cu.user_id
-      WHERE cu.coupon_id = #{teamOrInvitingId}  AND cu.status = 0
+      FROM inviting_user iu
+      LEFT JOIN `user` u ON u.id = iu.user_id
+      WHERE iu.inviting_id = #{teamOrInvitingId} AND iu.status = 0
     </if>
   </select>
 

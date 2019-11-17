@@ -23,14 +23,14 @@ public class SysRoleModel  extends BaseModel{
      * 创建时间
      */
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date updateTime;
     
     /**
@@ -46,13 +46,13 @@ public class SysRoleModel  extends BaseModel{
     private Long[] menuIds;
 
 	@Transient
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @ApiModelProperty("开始时间 yyyy-MM-dd HH:mm")
     private Date startTime;
 
 	@Transient
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @ApiModelProperty("结束时间 yyyy-MM-dd HH:mm")
     private Date endTime;
 
 	/**

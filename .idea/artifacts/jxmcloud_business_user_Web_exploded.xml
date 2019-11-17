@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="jxmcloud-business-user:Web exploded">
+    <output-path>$PROJECT_DIR$/classes/artifacts/jxmcloud_business_user_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="jxmcloud-business-user/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="jxmcloud-business-user" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

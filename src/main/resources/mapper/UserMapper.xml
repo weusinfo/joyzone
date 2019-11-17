@@ -35,7 +35,7 @@
 
   <select id="getUserByPhone" resultType="com.joyzone.platform.core.model.UserModel" >
       SELECT * FROM user
-      WHERE phone = #{phone}
+      WHERE phone = #{phone} limit 1
   </select>
 
   <delete id="delUsers">
@@ -58,4 +58,8 @@
   #{headPic,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{sex,jdbcType=INTEGER},
   #{birthday,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
   </insert>
+  
+  <update id="updateChatMD5">
+  	update user set chat_id_md5 = #{md5} where id = ${userId}
+  </update>
 </mapper>

@@ -78,7 +78,10 @@ public class AppLoginApiController {
                 return R.error("此电话号码已因不当言行被拉入黑名单!");
             }
             try {
-				smsUtil.sendCodeSMS(phone, ""+mobile_code);
+				boolean isSent = smsUtil.sendCodeSMS(phone, ""+mobile_code);
+				if(!isSent) {
+					return R.error("短信验证码发送已超过限制");
+				}
 			} catch (ClientException e) {
 				LOGGER.error("Send code to phone s% error, ",e);
 				return R.error("请重试");
@@ -118,17 +121,18 @@ public class AppLoginApiController {
             return R.error("参数有误！");
         }
         Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
-        if(obj == null) {
+        if(obj == null || !mobileCode.equals((String)obj)) {
         	return R.error("验证码无效");
         }
-        List<UserModel> userModelList = userSerivce.getUserByPhone(phone);
-        if(userModelList.size() > 0){
-            Long userId = userModelList.get(0).getId();
+        UserModel userModel = userSerivce.getUserByPhone(phone);
+        if(userModel != null){
             map.put("message","该手机号已注册！");
-            map.put("userId",userId);
+            map.put("userId",userModel.getId());
+            map.put("user",userModel);
+            redisService.hdel(Constants.CACHE_KEY_CODE, phone);
             return R.ok((Object)map);
         }
-        UserModel userModel = new UserModel();
+        userModel = new UserModel();
         userModel.setPhone(phone);
         userModel.setType(0);  //0:用户
         userModel.setStatus(0);   //用户状态: 0 激活 ， 1 封号， 2禁入
@@ -138,10 +142,13 @@ public class AppLoginApiController {
             return R.error("用户注册失败！");
         }
         String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
+        userSerivce.updateChatMD5(userModel.getId(), chatPwd);
         chatService.registerUser(userModel.getId().toString(), chatPwd);
-        List<UserModel> userModels = userSerivce.getUserByPhone(phone);
+        userModel = userSerivce.getUserByPhone(phone);
         map.put("message","注册成功！");
-        map.put("userId",userModels.get(0).getId());
+        map.put("userId",userModel.getId());
+        map.put("user",userModel);
+        redisService.hdel(Constants.CACHE_KEY_CODE, phone);
         return R.ok((Object)map);
     }
 

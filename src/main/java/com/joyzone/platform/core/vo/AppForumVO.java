@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -49,7 +50,7 @@ public class AppForumVO {
     @ApiModelProperty("年龄")
     private Integer age;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     @ApiModelProperty("创建时间")
     private Date createTime;
 

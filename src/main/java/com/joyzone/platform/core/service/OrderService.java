@@ -1,10 +1,12 @@
 package com.joyzone.platform.core.service;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.OrderDto;
 import com.joyzone.platform.core.dto.OrderMineDto;
+import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.mapper.OrderMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.BaseModel;
@@ -82,8 +84,17 @@ public class OrderService extends BaseService<OrderModel> {
         return orderMapper.getOrderList(orderDto);
     }
 
-    public List<OrderMineDto> getTeamOrderList(OrderModel orderModel, Long userId, Integer type){
-        return orderMapper.getTeamOrderList(orderModel,userId,type);
+    private R pageToRet(List<OrderMineDto> list){
+        if(list != null && list.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
+    }
+    public R getTeamOrderList(OrderModel orderModel, Long userId, Integer type){
+        PageHelper.startPage(orderModel.getPageNum(),orderModel.getPageSize());
+        return pageToRet(orderMapper.getTeamOrderList(orderModel,userId,type));
     }
 
     public int delOrders(Long[] ids){

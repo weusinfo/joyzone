@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class InvitingService extends BaseService<InvitingModel> {
 
     @Autowired
@@ -79,7 +80,7 @@ public class InvitingService extends BaseService<InvitingModel> {
         //todo 个人邀请时创建聊天群
         /*String groupId = groupService.createTeamGroup(teamModel.getShopId());
         teamModel.setChatGroupId(groupId);*/
-        int flag = invitingMapper.insertSelective(invitingModel);
+        int flag = invitingMapper.saveInviting(invitingModel);
         List<InvitingModel> invitingList = invitingMapper.checkUserStartInviting(invitingModel.getOwner(),invitingModel.getContent(),invitingModel.getStartTime());
         if(invitingList == null || invitingList.size() == 0){
             return 0;
@@ -205,6 +206,18 @@ public class InvitingService extends BaseService<InvitingModel> {
 
     public Map<String,Object> checkInvitingIfSuccess(Long invitingId){
         return invitingMapper.checkInvitingIfSuccess(invitingId);
+    }
+    
+    public String isInvitingOwner(Long invitingId, Long userId) {
+    	return invitingMapper.checkInvitingOwner(invitingId, userId);
+    }
+    
+    public int updateChatGroupId(Long invitingId, String groupId) {
+    	return invitingMapper.updateChatGroupId(invitingId, groupId);
+    }
+    
+    public String getChatGroupId(Long invitingId) {
+    	return invitingMapper.getGroupId(invitingId);
     }
 
 }

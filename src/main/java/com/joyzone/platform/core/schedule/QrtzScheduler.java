@@ -18,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 import com.joyzone.platform.config.AutoWiringSpringBeanJobFactory;
+import com.joyzone.platform.module.sys.task.GroupCleanJob;
 
 @Configuration
 @ConditionalOnExpression("'${using.quartz.schedulerFactory}'=='true'")
@@ -54,15 +55,14 @@ public class QrtzScheduler {
         return scheduler;
     }
 
-//    @Bean
-//    public JobDetail jobDetail() {
-//        return newJob().ofType(SampleJob.class).storeDurably().withIdentity(JobKey.jobKey("Qrtz_Job_Detail")).withDescription("Invoke Sample Job service...").build();
-//    }
+    @Bean
+    public JobDetail jobDetail() {
+        return newJob().ofType(GroupCleanJob.class).storeDurably().withIdentity(JobKey.jobKey("Qrtz_Job_Detail")).withDescription("Invoke Group Clean Job service...").build();
+    }
 
     @Bean
     public Trigger trigger(JobDetail job) {
-        int frequencyInSec = 10;
-        logger.info("Configuring trigger to fire every {} seconds", frequencyInSec);
-        return newTrigger().forJob(job).withIdentity(TriggerKey.triggerKey("Qrtz_Trigger")).withDescription("Sample trigger").withSchedule(simpleSchedule().withIntervalInSeconds(frequencyInSec).repeatForever()).build();
+//        logger.info("Configuring trigger to fire every {} seconds", frequencyInSec);
+         return newTrigger().forJob(job).withIdentity(TriggerKey.triggerKey("Qrtz_Trigger")).withDescription("Sample trigger").withSchedule(simpleSchedule().repeatForever().withIntervalInHours(3)).build();
     }
 }

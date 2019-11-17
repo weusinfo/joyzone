@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
@@ -38,7 +39,7 @@ public class SMSUtil {
 	 * @return
 	 * @throws ClientException
 	 */
-	public void sendCodeSMS(String mobile, String codeParam) throws ClientException {
+	public boolean sendCodeSMS(String mobile, String codeParam) throws ClientException {
 		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
 		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", conf.getSecretId(), conf.getSecretKey());
@@ -50,8 +51,12 @@ public class SMSUtil {
 		request.setSignName(conf.getSignName());
 		request.setTemplateCode(conf.getCodeTempateCode());
 		request.setTemplateParam("{\"code\":\""+codeParam+"\"}");
-		acsClient.getAcsResponse(request);
+		SendSmsResponse res = acsClient.getAcsResponse(request);
+		if(res.getCode().equals("isv.BUSINESS_LIMIT_CONTROL")) {
+			return false;
+		}
 		redisService.hset(Constants.CACHE_KEY_CODE, mobile, codeParam, Constants.CACHE_CODE_EXPIRES);
+		return true;
 	}
 
 }

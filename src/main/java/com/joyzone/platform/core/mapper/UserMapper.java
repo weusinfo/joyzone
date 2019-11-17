@@ -12,11 +12,13 @@ public interface UserMapper extends Mapper<UserModel> {
     //用户清单
     List<UserModel> getUserList(UserModel userModel);
 
-    List<UserModel> getUserByPhone(@Param("phone") String phone);
+    UserModel getUserByPhone(@Param("phone") String phone);
 
     int delUsers(@Param("ids") Long[] ids);
 
     UserModel getUserInfo(@Param("userId") Long userId);
     
     int saveUser(UserModel userModel);
+    
+    Integer updateChatMD5(@Param("userId") Long userId, @Param("md5") String md5);
 }

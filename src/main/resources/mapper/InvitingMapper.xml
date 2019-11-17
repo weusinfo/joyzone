@@ -21,6 +21,34 @@
     <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
 
+    <resultMap id="invitingUserMap" type="com.joyzone.platform.core.vo.AppInvitingVO">
+        <id column="invitingId" property="invitingId" jdbcType="BIGINT" />
+        <result column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="headPic" property="headPic" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="payWayName" property="payWayName" jdbcType="VARCHAR" />
+        <result column="inviteType" property="inviteType" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="agreeOrNot" property="agreeOrNot" jdbcType="INTEGER" />
+        <collection property="userDtoList" javaType="ArrayList" column="{invitingId=invitingId}" select="com.joyzone.platform.core.mapper.InvitingMapper.queryInvitingUserList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDto">
+
+        </collection>
+    </resultMap>
+    <resultMap id="invitingUserDtoMap" type="com.joyzone.platform.core.dto.UserDto">
+        <id column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
+    </resultMap>
+
+  	<insert id="saveInviting" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="InvitingModel" >
+  insert into inviting(owner,address, content,type,start_time,status,result,number,create_time,pay_way,sex_want)
+  values(#{owner,jdbcType=BIGINT},#{address,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},
+  #{result,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{payWay,jdbcType=INTEGER},#{chatGroupId,jdbcType=VARCHAR})
+  </insert>
+
     <sql id="BaseResultSql">
         id,owner,address,content,type,start_time,status,result,number,create_time,update_time,pay_way,sex_want,chat_group_id
     </sql>
@@ -43,7 +71,7 @@
       </if>
     </select>
 
-    <select id="getUserToInvitings" resultType="com.joyzone.platform.core.vo.AppInvitingVO" parameterType="com.joyzone.platform.core.dto.InvitingDto">
+    <select id="getUserToInvitings" resultMap="invitingUserMap" parameterType="com.joyzone.platform.core.dto.InvitingDto">
       select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
              i.pay_way as payWayName,i.type as inviteType, 1 as type,
             (CASE WHEN i.id IN (SELECT DISTINCT inviting_id FROM inviting_user
@@ -56,9 +84,6 @@
       AND i.status = 0
       AND i.start_time > NOW()
       AND i.result = 2
-      <if test="userId != null">
-          and i.owner <![CDATA[ <> ]]> #{userId}
-      </if>
       ORDER BY i.start_time ASC
     </select>
 
@@ -101,5 +126,31 @@
         FROM inviting i
         WHERE i.id = #{invitingId}
     </select>
+    
+    <update id="updateChatGroupId">
+    	update inviting set chat_group_id = #{groupId} where id = ${invitingId}
+    </update>
+    
+    <select id="checkInvitingOwner" resultType="java.lang.String">
+    select chat_group_id as chatGroupId from inviting where id=${invitingId} and owner = ${ownerId}
+    </select>
+    
+    <select id="getGroupId" resultType="java.lang.String">
+    select chat_group_id as chatGroupId from inviting where id = ${invitingId}
+    </select>
 
+    <select id="queryInvitingUserList" resultMap="invitingUserDtoMap">
+        SELECT u.id AS userId,u.head_pic AS userHeadImg
+        FROM inviting_user iu
+        LEFT JOIN `user` u ON u.id = iu.user_id
+        WHERE iu.inviting_id = #{invitingId}
+    </select>
+    
+    <update id="disableExpiredInviting">
+    	update inviting set status = 1 where status = 0 and TO_DAYS(now()) - TO_DAYS(start_time) >= 1
+    </update>
+    
+    <select id="getDisabledInvitingGroupIds" resultType="java.lang.String">
+    	select chat_group_id from inviting where status = 1
+    </select>
 </mapper>

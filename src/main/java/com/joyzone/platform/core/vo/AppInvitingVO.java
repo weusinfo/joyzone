@@ -1,11 +1,15 @@
 package com.joyzone.platform.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joyzone.platform.common.utils.DateUtils;
+import com.joyzone.platform.core.dto.UserDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Description:TODO
@@ -13,6 +17,7 @@ import java.util.Date;
  * date: 2019/4/21
  */
 @ApiModel("App输出数据信息VO")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class AppInvitingVO {
 
     @ApiModelProperty("邀约ID")
@@ -37,7 +42,7 @@ public class AppInvitingVO {
     private String content;
 
     @ApiModelProperty("玩耍时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date startTime;
 
     @ApiModelProperty("支付类型名称")
@@ -54,6 +59,9 @@ public class AppInvitingVO {
 
     @ApiModelProperty("第四个tab列表，我的回函，0未邀请 1已邀请")
     private Integer inviteOrNot;
+
+    @ApiModelProperty("参与邀请的人员集合")
+    private List<UserDto> userDtoList;
 
     public String getUserName() {
         return userName;
@@ -157,5 +165,13 @@ public class AppInvitingVO {
 
     public void setInviteOrNot(Integer inviteOrNot) {
         this.inviteOrNot = inviteOrNot;
+    }
+
+    public List<UserDto> getUserDtoList() {
+        return userDtoList;
+    }
+
+    public void setUserDtoList(List<UserDto> userDtoList) {
+        this.userDtoList = userDtoList;
     }
 }

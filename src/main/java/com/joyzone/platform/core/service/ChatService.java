@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
@@ -43,18 +44,19 @@ public class ChatService extends BaseChatService{
 		try {
 			String result = RestTemplateUtil.sendJson(createGroupUrl, jsonStr, headers, HttpMethod.POST);
 			if(PublicUtil.isNotEmpty(result)) {
-				LOGGER.info(String.format("==== %s create group%s success...", ownerId, groupName));
+				LOGGER.info(String.format("==== %s create group %s success...", ownerId, groupName));
 				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
 				JsonElement ele = jsonObj.get("data");
 				JsonObject groupObj = ele.getAsJsonObject();
 				return groupObj.get("groupid").getAsString();
 			}
 		} catch (Exception e) {
-			LOGGER.error(String.format("==== %s create group%s failed...", ownerId, groupName), e);
+			LOGGER.error(String.format("==== %s create group %s failed...", ownerId, groupName), e);
 		}
 		return null;
 	}
 	
+	@Async
 	public void joinTeamGroup(String groupId, Long userId) {
 		String joinGroupUrl = easemob.getJoinGroupUrl();
 		joinGroupUrl = joinGroupUrl.replace("{groupId}", groupId);
@@ -78,7 +80,7 @@ public class ChatService extends BaseChatService{
 		try {
 			RestTemplateUtil.sendJson(cancelGroupUrl, null, headers, HttpMethod.DELETE);
 		}catch(Exception e) {
-			LOGGER.error(String.format("Deletev user userId %d failed from d%", groupId, userId), e);
+			LOGGER.error(String.format("Cancel user userId %d failed from d%", groupId, userId), e);
 		}
 	}
 	

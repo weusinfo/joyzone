@@ -1,11 +1,13 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,9 @@ public class TeamDto extends BaseModel{
     @ApiModelProperty("店家ID")
     private Long shopId;
 
+    @ApiModelProperty("发起者")
+    private Long owner;
+
     //店家图片
     @ApiModelProperty("店家图片")
     private String shopImg;
@@ -42,6 +47,8 @@ public class TeamDto extends BaseModel{
 
     //体验活动开始时间
     @ApiModelProperty("店家组队开始时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     //允许的最大人数
@@ -64,6 +71,14 @@ public class TeamDto extends BaseModel{
 
     public void setShopId(Long shopId) {
         this.shopId = shopId;
+    }
+
+    public Long getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Long owner) {
+        this.owner = owner;
     }
 
     public String getShopImg() {

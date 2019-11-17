@@ -39,6 +39,6 @@
         <!--mapper-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.targetPackage}"  targetProject="${mapper.targetProject}"/>
 
-        <table tableName="sys_role" domainObjectName="SysRoleModel"></table>
+        <table tableName="personal_chat_group" domainObjectName="PersonalChatGroup"></table>
     </context>
 </generatorConfiguration>

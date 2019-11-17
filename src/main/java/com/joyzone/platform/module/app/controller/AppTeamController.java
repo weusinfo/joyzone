@@ -3,14 +3,17 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.dto.TeamRuleDto;
 import com.joyzone.platform.core.model.ShopTypeModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.GroupService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
@@ -47,6 +50,9 @@ public class AppTeamController {
     
     @Autowired
     private ShopTypeService typeService;
+    
+    @Autowired
+    private ChatService chatService;
 
 
     /*@PostMapping("/getTeamList")
@@ -72,14 +78,13 @@ public class AppTeamController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
     public R getTeamList(TeamModel teamModel,Long userId){
-        PageHelper.startPage(0,10);
-        List<TeamDto> teamList = teamService.getTeamList(teamModel,userId);
-        if(teamList != null && teamList.size() > 0){
+        return teamService.getTeamList(teamModel,userId);
+        /*if(teamList != null && teamList.size() > 0){
             Page page = new Page();
             page = (Page)teamList;
             return R.pageToData(page.getTotal(),page.getResult());
         }
-        return R.pageToData(0L,new ArrayList<>());
+        return R.pageToData(0L,new ArrayList<>());*/
     }
 
     @PostMapping("/joinTheTeam")
@@ -108,16 +113,18 @@ public class AppTeamController {
                 return R.error("用户报名失败！");
             }
         }
-        //需要修改，报空指针
-        //groupService.joinChatGroup(teamId,userId);// join the chat group
+        String groupId = teamService.getGroupId(teamId);
+        chatService.joinTeamGroup(groupId,userId);// join the chat group
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);
         bean.setStatus(0);
         bean.setCreateTime(new Date());
         int ret = teamUsersService.save(bean);
-        checkTeamIfSuccess(teamId);
         if(ret == 1){
+        	checkTeamIfSuccess(teamId);
+        	Map<String,String> map = Maps.newHashMap();
+        	map.put("chatGroupId", groupId);
             return R.ok("用户报名成功！");
         }else {
             return R.error("用户报名失败！");
@@ -167,7 +174,9 @@ public class AppTeamController {
         if(ret == 111){
             return R.error("用户组队后保存team_user失败！");
         }
-        return ret > 0 ? R.ok() : R.error("操作失败");
+        Map<String,String> map = Maps.newHashMap();
+        map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));
+        return ret > 0 ? R.ok(map) : R.error("操作失败");
     }
 
     /*@PostMapping("/getAppTeamList")

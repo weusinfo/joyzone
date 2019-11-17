@@ -1,11 +1,13 @@
 package com.joyzone.platform.module.app.controller;
 
 
+import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.InvitingDto;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.InvitingService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
@@ -13,6 +15,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +30,16 @@ import java.util.Map;
 @RequestMapping("/app_inviting")
 @Api(tags = "app邀请函相关接口",description = "AppInvitingController")
 public class AppInvitingController {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(AppInvitingController.class);
 
     @Autowired
     private InvitingService invitingService;
     @Autowired
     private UserSerivce userSerivce;
+    
+    @Autowired
+    private ChatService chatService;
 
     /**
      * Mr.Gx
@@ -50,6 +59,8 @@ public class AppInvitingController {
             return R.error("邀请地址不能为空.");
         if(invitingModel.getStartTime() == null)
             return R.error("主题进行时间不能为空.");
+        if(invitingModel.getStartTime().compareTo(new Date()) <= 0 )
+            return R.error("开始时间必须晚于现在");
         if(invitingModel.getPayWay() == null)
             return R.error("支付方式不能为空.");
         if(invitingModel.getSexWant() == null)
@@ -64,6 +75,17 @@ public class AppInvitingController {
         if(ret == 111){
             return R.error("用户组队后保存team_user失败！");
         }
+        String groupId = null;
+        if(ret > 0) {
+        	try {
+        		groupId = chatService.createTeamGroup(invitingModel.getOwner(), invitingModel.getContent(), "个人邀约建群");
+        		invitingService.updateChatGroupId(invitingModel.getId(), groupId);
+        	}catch(Exception e) {
+        		LOGGER.error("Error happened when create personal chat group...", e);
+        	}
+        }
+        Map<String,String> map = Maps.newHashMap();
+        map.put("chatGroupId", groupId);
         return ret > 0 ? R.ok() : R.error("操作失败");
     }
 
@@ -151,8 +173,10 @@ public class AppInvitingController {
         if(ret == 0){
             return R.error("操作失败！");
         }
+        chatService.joinTeamGroup(invitingModel.getChatGroupId(), invitingDto.getUserId());
         return R.ok("操作成功！");
     }
+    
     public void checkInvitingIfSuccess(Long invitingId){
         Map<String,Object> invitingInfo = invitingService.checkInvitingIfSuccess(invitingId);
         Integer number = (Integer) invitingInfo.get("number");

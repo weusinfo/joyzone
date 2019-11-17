@@ -1,11 +1,14 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joyzone.platform.common.utils.DateUtils;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -65,6 +68,8 @@ public class TeamRuleDto extends BaseModel{
 
     //体验活动开始时间
     @ApiModelProperty("店家组队开始时间")
+    @JsonFormat(timezone = "GMT+8", pattern = DateUtils.DATE_TIME_PATTERN)
+    @DateTimeFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date startTime;
 
     //允许的最大人数
@@ -75,6 +80,9 @@ public class TeamRuleDto extends BaseModel{
     private Integer shopCollectStatus;
 
     private List<UserJoinTeamDto> userJoinList;
+
+    @ApiModelProperty("店家轮播图片")
+    private List<String> coverImgList;
 
     public Long getTeamId() {
         return teamId;
@@ -195,4 +203,13 @@ public class TeamRuleDto extends BaseModel{
     public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
         this.userJoinList = userJoinList;
     }
+
+    public List<String> getCoverImgList() {
+        return coverImgList;
+    }
+
+    public void setCoverImgList(List<String> coverImgList) {
+        this.coverImgList = coverImgList;
+    }
+
 }

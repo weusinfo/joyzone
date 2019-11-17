@@ -20,7 +20,7 @@
 
   <select id="checkUserInTeam" resultType="com.joyzone.platform.core.model.TeamUsersModel" parameterType="com.joyzone.platform.core.model.TeamUsersModel">
     SELECT tu.* FROM team_users tu
-    WHERE tu.user_id = #{userId} AND tu.team_id  = #{teamId}
+    WHERE tu.user_id = #{userId} AND tu.team_id  = #{teamId} limit 1
   </select>
 
 </mapper>

@@ -1,8 +1,10 @@
 package com.joyzone.platform.module.app.controller;
 
 
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.OrderMineDto;
 import com.joyzone.platform.core.mapper.InvitingUserMapper;
@@ -43,6 +45,8 @@ public class AppOrderController {
     @Autowired
     private InvitingService invitingService;
 
+    @Autowired
+    private ChatService chatService;
     /**
      * zy
      */
@@ -69,14 +73,7 @@ public class AppOrderController {
             @ApiImplicitParam(name = "type", value = "0:我发起 1：我加入", required = true, dataType = "Integer", paramType = "query")
     })
     public R getMyOrderList(OrderModel orderModel, Long userId, Integer type){
-        PageHelper.startPage(0,10);
-        List<OrderMineDto> myOrderList = orderService.getTeamOrderList(orderModel,userId,type);
-        if(myOrderList != null && myOrderList.size() > 0){
-            Page page = new Page();
-            page = (Page)myOrderList;
-            return R.pageToData(page.getTotal(),page.getResult());
-        }
-        return R.pageToData(0L,new ArrayList<>());
+        return orderService.getTeamOrderList(orderModel,userId,type);
     }
 
     /*@PostMapping("/quitTheTeamOrCoupon")
@@ -189,19 +186,33 @@ public class AppOrderController {
             Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
             teamUsersModel.setStatus(1);
             teamUsersModel.setUpdateTime(new Date());
-            groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
-            int result = teamUsersService.update(teamUsersModel);
-            if(result == 1){
-                if(number == joinNum){
-                    TeamModel teamModel = new TeamModel();
-                    teamModel.setId(teamOrInvitingId);
-                    teamModel.setResult(0);
-                    teamModel.setUpdateTime(new Date());
-                    teamService.update(teamModel);
-                }
+            boolean isOwner = teamService.isTeamOwner(teamUsersModel.getTeamId(), userId);
+            if(isOwner) {
+                //userId为发起者时，删掉对应的群并吧team的状态要改为已失效，已失败。
+                groupService.deleteGroup(teamUsersModel.getTeamId());
+                TeamModel teamModel = new TeamModel();
+                teamModel.setId(teamOrInvitingId);
+                teamModel.setStatus(1);  //组队无效
+                teamModel.setResult(2);  //组队失败
+                teamModel.setUpdateTime(new Date());
+                teamService.update(teamModel);
                 return R.ok("用户退出成功！");
             }else {
-                return R.error("用户退出失败！");
+                //userId为参与者时，退出对应的群。且若number == joinNum时吧team的状态要改为已组队中。
+            	groupService.cancelGroup(teamUsersModel.getTeamId(), userId);
+                int result = teamUsersService.update(teamUsersModel);
+                if(result == 1){
+                    if(number == joinNum){
+                        TeamModel teamModel = new TeamModel();
+                        teamModel.setId(teamOrInvitingId);
+                        teamModel.setResult(0);
+                        teamModel.setUpdateTime(new Date());
+                        teamService.update(teamModel);
+                    }
+                    return R.ok("用户退出成功！");
+                }else {
+                    return R.error("用户退出失败！");
+                }
             }
         }
         return R.error("未知错误！");
@@ -222,20 +233,37 @@ public class AppOrderController {
             invitingUserModel.setStatus(1);
             invitingUserModel.setUpdateTime(new Date());
             //todo 退出个人邀请的群
-            /*groupService.cancelGroup(teamUsersModel.getTeamId(), userId);*/
-            int result = invitingUserService.update(invitingUserModel);
-            if(result == 1){
-                if(number == joinNum) {
-                    InvitingModel invitingModel = new InvitingModel();
-                    invitingModel.setId(teamOrInvitingId);
-                    invitingModel.setResult(2);
-                    invitingModel.setUpdateTime(new Date());
-                    invitingService.update(invitingModel);
-                }
+            String groupId = invitingService.isInvitingOwner(teamOrInvitingId, userId);
+            if(StringUtil.isNotEmpty(groupId)) {
+                //userId为发起者时，删掉对应的群并吧inviting的状态要改为已失效，已失败。
+            	chatService.deleteTeamGroup(groupId);
+                InvitingModel invitingModel = new InvitingModel();
+                invitingModel.setId(teamOrInvitingId);
+                invitingModel.setStatus(1);  //已失效
+                invitingModel.setResult(2);  //已失败
+                invitingModel.setUpdateTime(new Date());
+                invitingService.update(invitingModel);
                 return R.ok("用户取消个人邀请成功！");
             }else {
-                return R.error("用户取消个人邀请失败！");
+                //userId为参与者时，退出对应的群。且若number == joinNum时吧inviting的状态要改为邀约中。
+            	groupId = invitingService.getChatGroupId(teamOrInvitingId);
+            	chatService.cancelTeamGroup(groupId, userId);
+                /*groupService.cancelGroup(teamUsersModel.getTeamId(), userId);*/
+                int result = invitingUserService.update(invitingUserModel);
+                if(result == 1){
+                    if(number == joinNum) {
+                        InvitingModel invitingModel = new InvitingModel();
+                        invitingModel.setId(teamOrInvitingId);
+                        invitingModel.setResult(2);
+                        invitingModel.setUpdateTime(new Date());
+                        invitingService.update(invitingModel);
+                    }
+                    return R.ok("用户取消个人邀请成功！");
+                }else {
+                    return R.error("用户取消个人邀请失败！");
+                }
             }
+
         }
         return R.error("未知错误！");
     }

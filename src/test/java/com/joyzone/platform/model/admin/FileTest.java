@@ -11,15 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.joyzone.platform.common.utils.FileUtil;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest()
 @WebAppConfiguration
 public class FileTest {
 	
-	@Autowired
-	private FileUtil util;
+	/*@Autowired
+	private FileUtil util;*/
 	
 	@Test
 	public void testFile() throws FileNotFoundException {

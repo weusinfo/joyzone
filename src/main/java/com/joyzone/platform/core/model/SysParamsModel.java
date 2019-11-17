@@ -30,7 +30,7 @@ public class SysParamsModel  extends BaseModel{
     private String remark;
 
     @Column(name = "create_time")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     /**

@@ -52,6 +52,6 @@
 
     <select id="checkUserInInviting" resultMap="BaseResultMap" parameterType="com.joyzone.platform.core.model.InvitingUserModel">
         SELECT iu.* FROM inviting_user iu
-        WHERE iu.user_id = #{userId} AND iu.inviting_id  = #{teamOrInvitingId}
+        WHERE iu.user_id = #{userId} AND iu.inviting_id  = #{teamOrInvitingId} limit 1
     </select>
 </mapper>

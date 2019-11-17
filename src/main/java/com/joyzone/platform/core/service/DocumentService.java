@@ -2,19 +2,18 @@ package com.joyzone.platform.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.joyzone.platform.common.utils.AliFileUtil;
+import org.springframework.stereotype.Service;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.model.DocumentModel;
 
+@Service
 public class DocumentService extends BaseService<DocumentModel>{
-	
+
 	private Logger logger = LoggerFactory.getLogger(DocumentService.class);
-	
-	@Autowired
-	private AliFileUtil fileUtil;
+
+	/*@Autowired
+	private FileUtil fileUtil;
+
 	
 	public String saveShopDoc(MultipartFile file) {
 		try {
@@ -24,7 +23,7 @@ public class DocumentService extends BaseService<DocumentModel>{
 		}
 		return null;
 	}
-	
+
 	public String saveUserDoc(MultipartFile file) {
 		try {
 			String filePath = fileUtil.uploadPersonalImg(file);
@@ -32,6 +31,7 @@ public class DocumentService extends BaseService<DocumentModel>{
 			logger.error("Upload user file error...",e);
 		}
 		return null;
-	}
+	}*/
 
 }
+

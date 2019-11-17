@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.impl.JobDetailImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import com.joyzone.platform.config.AutoWiringSpringBeanJobFactory;
+import com.joyzone.platform.module.sys.task.GroupCleanJob;
 
 @Configuration
 @ConditionalOnExpression("'${using.spring.schedulerFactory}'=='true'")
@@ -61,5 +63,11 @@ public class SpringQrtzScheduler {
         trigger.setName("Trigger_Joyzone");
         return trigger;
     }
+	
+	@Bean
+	public JobDetail jobDeil() {
+		JobDetail jobDetail = new JobDetailImpl("GroupCleanJob", GroupCleanJob.class);
+		return jobDetail;
+	}
 
 }
