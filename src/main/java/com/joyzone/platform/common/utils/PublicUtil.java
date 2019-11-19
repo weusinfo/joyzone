@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 
 public class PublicUtil {
+	
+	private static byte[] lock = new byte[0];
+	
+	private final static long position = 10000000;
 
 	public static boolean isEmpty(Object pObj) {
 		if (pObj == null) {
@@ -37,6 +41,12 @@ public class PublicUtil {
 			return ((Map) pObj).size() != 0;
 		}
 		return true;
+	}
+	
+	public static String generateID(Long id) {
+		long r = (long) ((Math.random() + 1) * position);
+		String defValue = String.valueOf(r);
+		return defValue.substring(0, defValue.length() - id.toString().length()) + id.toString();
 	}
 
 }

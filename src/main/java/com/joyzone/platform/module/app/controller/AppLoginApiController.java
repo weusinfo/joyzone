@@ -3,6 +3,7 @@ package com.joyzone.platform.module.app.controller;
 import com.aliyuncs.exceptions.ClientException;
 import com.github.pagehelper.util.StringUtil;
 import com.joyzone.platform.common.utils.Constants;
+import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.SMSUtil;
 import com.joyzone.platform.core.model.PhoneBlackModel;
@@ -142,7 +143,7 @@ public class AppLoginApiController {
             return R.error("用户注册失败！");
         }
         String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
-        userSerivce.updateChatMD5(userModel.getId(), chatPwd);
+        userSerivce.updateSign(userModel.getId(), chatPwd);
         chatService.registerUser(userModel.getId().toString(), chatPwd);
         userModel = userSerivce.getUserByPhone(phone);
         map.put("message","注册成功！");

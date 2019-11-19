@@ -60,6 +60,6 @@
   </insert>
   
   <update id="updateChatMD5">
-  	update user set chat_id_md5 = #{md5} where id = ${userId}
+  	update user set chat_id_md5 = #{md5}, play_num = #{playNum} where id = ${userId}
   </update>
 </mapper>

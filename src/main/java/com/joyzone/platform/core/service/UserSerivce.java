@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.service;
 
+import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -112,8 +113,9 @@ public class UserSerivce extends BaseService<UserModel> {
         return userMapper.getUserInfo(userId);
     }
     
-    public Integer updateChatMD5(Long userId, String md5) {
-    	return userMapper.updateChatMD5(userId, md5);
+    public Integer updateSign(Long userId, String md5) {
+    	String playNum = PublicUtil.generateID(userId);
+    	return userMapper.updateChatMD5(userId, md5, playNum);
     }
     
     public void updateMD5() {
@@ -123,9 +125,9 @@ public class UserSerivce extends BaseService<UserModel> {
     	if(!Collections.isEmpty(users)) {
     		for(UserModel user : users) {
     			String md5 = DigestUtil.md5Hex(user.getId().toString());
-    			updateChatMD5(user.getId(), md5);
+    			String playNum = PublicUtil.generateID(user.getId());
+    			updateSign(user.getId(), md5);
     		}
     	}
     }
-
 }
