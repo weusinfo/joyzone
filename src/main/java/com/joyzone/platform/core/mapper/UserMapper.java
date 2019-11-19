@@ -21,4 +21,6 @@ public interface UserMapper extends Mapper<UserModel> {
     int saveUser(UserModel userModel);
     
     Integer updateChatMD5(@Param("userId") Long userId, @Param("md5") String md5, @Param("playNum") String playNum);
+    
+    Long getParentId(@Param("playNum") String playNum);
 }

@@ -130,4 +130,13 @@ public class UserSerivce extends BaseService<UserModel> {
     		}
     	}
     }
+    
+    /**
+     * 根据邀请码获取用户ID
+     * @param playNum
+     * @return
+     */
+    public Long getParentId(String playNum){
+    	return userMapper.getParentId(playNum);
+    }
 }

@@ -21,6 +21,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="parent" property="parent" jdbcType="BIGINT" />
   </resultMap>
 
   <sql id="BaseResultSQL">
@@ -53,13 +54,17 @@
   </select>
   
     <insert id="saveUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="UserModel" >
-  insert into user(user_name,play_num, login_name,password,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time)
+  insert into user(user_name,play_num, login_name,password,type,phone,head_pic,profession,education,age,sex,birthday,status,create_time,update_time, parent)
   values(#{userName,jdbcType=VARCHAR},#{playNum,jdbcType=VARCHAR},#{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{type,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
   #{headPic,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{sex,jdbcType=INTEGER},
-  #{birthday,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+  #{birthday,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{parent,jdbcType=BIGINT})
   </insert>
   
   <update id="updateChatMD5">
   	update user set chat_id_md5 = #{md5}, play_num = #{playNum} where id = ${userId}
   </update>
+  
+  <select id="getParentId" resultType="java.lang.Long">
+  select id from user where play_num = #{playNum} limit 1
+  </select>
 </mapper>

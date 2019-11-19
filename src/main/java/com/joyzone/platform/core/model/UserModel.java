@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -141,8 +142,13 @@ public class UserModel extends BaseModel{
      * 年龄
      */
     private Integer age;
-
+    
     /**
+     * 邀请人
+     */
+    private Long parent;
+
+	/**
      * 获取自增长主键
      *
      * @return id - 自增长主键
@@ -355,5 +361,13 @@ public class UserModel extends BaseModel{
 	}
 	public void setChatIdMd5(String chatIdMd5) {
 		this.chatIdMd5 = chatIdMd5;
+	}
+	
+	public Long getParent() {
+		return parent;
+	}
+	
+	public void setParent(Long parent) {
+		this.parent = parent;
 	}
 }
