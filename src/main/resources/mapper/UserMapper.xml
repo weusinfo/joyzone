@@ -67,4 +67,8 @@
   <select id="getParentId" resultType="java.lang.Long">
   select id from user where play_num = #{playNum} limit 1
   </select>
+  
+  <select id="isNew" resultType="java.lang.Integer">
+  select 1 from user where phone = #{phoneNum} limit 1
+  </select>
 </mapper>

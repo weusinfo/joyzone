@@ -78,16 +78,19 @@ public class AppLoginApiController {
                 map.put("identify", null);
                 return R.error("此电话号码已因不当言行被拉入黑名单!");
             }
+            int isNewUser = 1;
             try {
 				boolean isSent = smsUtil.sendCodeSMS(phone, ""+mobile_code);
 				if(!isSent) {
 					return R.error("短信验证码发送已超过限制");
 				}
+				isNewUser = userSerivce.isNew(phone);
 			} catch (ClientException e) {
 				LOGGER.error("Send code to phone s% error, ",e);
 				return R.error("请重试");
 			}
             map.put("type", 0);
+            map.put("isNew", isNewUser);//0: 新用户； 1：老用户
             return R.ok((Object)map);
         } else {
             return R.error("手机号格式不正确!");

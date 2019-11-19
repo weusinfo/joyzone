@@ -139,4 +139,9 @@ public class UserSerivce extends BaseService<UserModel> {
     public Long getParentId(String playNum){
     	return userMapper.getParentId(playNum);
     }
+    
+    public int isNew(String phoneNum) {
+    	Integer num = userMapper.isNew(phoneNum);
+    	return num == null ? 0 : 1;
+    }
 }
