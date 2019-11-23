@@ -29,9 +29,10 @@
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="content" property="content" jdbcType="VARCHAR" />
         <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
-        <result column="payWayName" property="payWayName" jdbcType="VARCHAR" />
+        <result column="payWay" property="payWay" jdbcType="VARCHAR" />
         <result column="inviteType" property="inviteType" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="personNum" property="personNum" jdbcType="INTEGER" />
         <result column="agreeOrNot" property="agreeOrNot" jdbcType="INTEGER" />
         <collection property="userDtoList" javaType="ArrayList" column="{invitingId=invitingId}" select="com.joyzone.platform.core.mapper.InvitingMapper.queryInvitingUserList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDto">
@@ -73,7 +74,7 @@
 
     <select id="getUserToInvitings" resultMap="invitingUserMap" parameterType="com.joyzone.platform.core.dto.InvitingDto">
       select i.id AS invitingId,u.id as userId,u.user_name as userName,u.head_pic as headPic,i.address,i.content,i.start_time as startTime,
-             i.pay_way as payWayName,i.type as inviteType, 1 as type,
+             i.pay_way as payWay,i.type as inviteType, 1 as type,i.number as personNum,
             (CASE WHEN i.id IN (SELECT DISTINCT inviting_id FROM inviting_user
             WHERE user_id = #{userId} AND STATUS = 1) THEN 1
             ELSE 0

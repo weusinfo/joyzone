@@ -46,13 +46,16 @@ public class AppInvitingVO {
     private Date startTime;
 
     @ApiModelProperty("支付类型名称")
-    private String payWayName;
+    private String payWay;
 
     @ApiModelProperty("邀约类型")
     private String inviteType;
 
     @ApiModelProperty("4个tab页对应的值：1:受邀列表 2：正式函 3：我的邀请 4：回函")
     private Integer type;
+
+    @ApiModelProperty("组队人数")
+    private String personNum;
 
     @ApiModelProperty("第一个tab列表，受邀列表，0未同意 1已同意")
     private Integer agreeOrNot;
@@ -111,12 +114,12 @@ public class AppInvitingVO {
         this.startTime = startTime;
     }
 
-    public String getPayWayName() {
-        return payWayName;
+    public String getPayWay() {
+        return payWay;
     }
 
-    public void setPayWayName(String payWayName) {
-        this.payWayName = payWayName;
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
     }
 
     public String getInviteType() {
@@ -149,6 +152,14 @@ public class AppInvitingVO {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getPersonNum() {
+        return personNum;
+    }
+
+    public void setPersonNum(String personNum) {
+        this.personNum = personNum;
     }
 
     public Integer getAgreeOrNot() {

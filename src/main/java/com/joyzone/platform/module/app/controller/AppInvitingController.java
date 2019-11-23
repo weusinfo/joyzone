@@ -65,8 +65,8 @@ public class AppInvitingController {
             return R.error("支付方式不能为空.");
         if(invitingModel.getSexWant() == null)
             return R.error("对象性别选择不能为空.");
-        if(invitingModel.getNumber() == null)
-            return R.error("人数不能为空.");
+        if(invitingModel.getNumber() == null || invitingModel.getNumber() < 2)
+            return R.error("请填写限制人数,且人数大于1");
         UserModel userModel = userSerivce.selectByKey(invitingModel.getOwner());
         if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
             return R.error(100,"请完善个人必要信息：昵称/性别/生日");

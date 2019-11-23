@@ -27,7 +27,7 @@
     <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />
     <result column="shopName" property="shopName" jdbcType="VARCHAR" />
     <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
-    <result column="startTime" property="startTime" jdbcType="DATE" />
+    <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
     <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
@@ -66,7 +66,7 @@
         <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
         <result column="payWay" property="payWay" jdbcType="INTEGER" />
         <result column="sexWant" property="sexWant" jdbcType="INTEGER" />
-        <result column="startTime" property="startTime" jdbcType="DATE" />
+        <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
         <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="userJoinList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryUserJoinTeamList"
