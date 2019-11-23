@@ -29,8 +29,8 @@
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="content" property="content" jdbcType="VARCHAR" />
         <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
-        <result column="payWay" property="payWay" jdbcType="VARCHAR" />
-        <result column="inviteType" property="inviteType" jdbcType="VARCHAR" />
+        <result column="payWay" property="payWay" jdbcType="INTEGER" />
+        <result column="inviteType" property="inviteType" jdbcType="INTEGER" />
         <result column="type" property="type" jdbcType="INTEGER" />
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
         <result column="agreeOrNot" property="agreeOrNot" jdbcType="INTEGER" />
