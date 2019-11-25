@@ -151,7 +151,7 @@ public class AppShopController {
                 ShopCollectModel shopCollectModel = new ShopCollectModel();
                 shopCollectModel.setUserId(userId);
                 shopCollectModel.setShopId(shopId);
-                shopCollectModel.setStatus(0);
+                shopCollectModel.setStatus(1); //收藏成功
                 shopCollectModel.setCreateTime(new Date());
                 int ret = shopCollectService.save(shopCollectModel);
                 if(ret == 1){
@@ -163,13 +163,35 @@ public class AppShopController {
         }
         if(shopCollects.size() == 1){
             ShopCollectModel bean = shopCollects.get(0);
-            bean.setStatus(type);
-            bean.setUpdateTime(new Date());
-            int ret = shopCollectService.update(bean);
-            if(ret == 1){
-                return R.ok("操作成功！");
-            }else {
-                return R.error("操作失败！");
+            if(type == 1){
+                if(bean.getStatus() == 1){
+                    bean.setStatus(0);
+                    bean.setUpdateTime(new Date());
+                    int ret = shopCollectService.update(bean);
+                    if (ret == 1) {
+                        return R.ok("操作成功！");
+                    } else {
+                        return R.error("操作失败！");
+                    }
+                }
+                if(bean.getStatus() == 0){
+                    return R.error("未收藏过该店家！无法取消");
+                }
+            }
+            if(type == 0) {
+                if(bean.getStatus() == 1){
+                    return R.error("已收藏过该店家！");
+                }
+                if(bean.getStatus() == 0){
+                    bean.setStatus(1);
+                    bean.setUpdateTime(new Date());
+                    int ret = shopCollectService.update(bean);
+                    if (ret == 1) {
+                        return R.ok("操作成功！");
+                    } else {
+                        return R.error("操作失败！");
+                    }
+                }
             }
         }
         return R.error("数据库脏数据！");

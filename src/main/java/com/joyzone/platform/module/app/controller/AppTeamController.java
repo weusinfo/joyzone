@@ -160,8 +160,8 @@ public class AppTeamController {
             return R.error("所属店家ID不能为空");
         if(model.getStartTime() == null)
             return R.error("开始时间不能为空");
-        if(model.getNumber() == null)
-            return R.error("请填写限制人数");
+        if(model.getNumber() == null || model.getNumber() < 2)
+            return R.error("请填写限制人数,且人数大于1");
         if(model.getPayWay() == null)
             return R.error("请填写付款方式");
         if(model.getSexWant() == null)

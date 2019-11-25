@@ -27,6 +27,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
+    <result column="payWay" property="payWay" jdbcType="INTEGER" />
     <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
     <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <collection property="userJoinList" javaType="ArrayList" column="{teamOrInvitingId=teamOrInvitingId,orderType=orderType}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
@@ -137,6 +138,7 @@
         s.address AS address,
         t.start_time AS startTime,
         t.number AS personNum,
+        t.pay_way AS payWay,
         IF(t.start_time > NOW(),0,1) AS orderStatus,
         0 AS orderType
       FROM team t
@@ -156,6 +158,7 @@
         i.address AS address,
         i.start_time AS startTime,
         i.number AS personNum,
+        i.pay_way AS payWay,
         IF(i.start_time > NOW(),0,1) AS orderStatus,
         1 AS orderType
       FROM inviting i
@@ -175,6 +178,7 @@
       s.address AS address,
       t.start_time AS startTime,
       t.number AS personNum,
+      t.pay_way AS payWay,
       IF(t.start_time > NOW(),0,1) AS orderStatus,
       0 AS orderType
       FROM team_users tu
@@ -197,6 +201,7 @@
       i.address AS address,
       i.start_time AS startTime,
       i.number AS personNum,
+      i.pay_way AS payWay,
       IF(i.start_time > NOW(),0,1) AS orderStatus,
       1 AS orderType
       FROM inviting_user iu
