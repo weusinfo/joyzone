@@ -138,7 +138,12 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
     	//List<String> guests = paramsService.getTribberGuests();
     	for(ShopTypeModel model : models) {
     		if(StringUtils.isEmpty(model.getChatGroupId())) {
-    			chatService.createChatRoom(owner, "聊天室--".concat(model.getName()), "商户类型聊天室");
+    			String roomId = chatService.createChatRoom(owner, "聊天室--".concat(model.getName()), "商户类型聊天室");
+    			if(PublicUtil.isNotEmpty(roomId)) {
+    				model.setChatGroupId(roomId);
+    				update(model);
+    			}
+    			
     		}
     	}
     }
