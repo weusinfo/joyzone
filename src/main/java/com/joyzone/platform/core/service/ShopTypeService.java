@@ -129,6 +129,20 @@ public class ShopTypeService extends BaseService<ShopTypeModel> {
     	}
     }
     
+    public void initChatRoom() {
+    	ShopTypeModel typeModel = new ShopTypeModel();
+    	typeModel.setPageNum(0);
+    	typeModel.setPageSize(Integer.MAX_VALUE);
+    	List<ShopTypeModel> models = shopTypeMapper.select(typeModel);
+    	Long owner = paramsService.getTribeOwner();
+    	//List<String> guests = paramsService.getTribberGuests();
+    	for(ShopTypeModel model : models) {
+    		if(StringUtils.isEmpty(model.getChatGroupId())) {
+    			chatService.createChatRoom(owner, "聊天室--".concat(model.getName()), "商户类型聊天室");
+    		}
+    	}
+    }
+    
     public List<Map<String,Object>> getTribes(){
     	return shopTypeMapper.getTribes();
     }

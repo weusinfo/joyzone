@@ -94,4 +94,27 @@ public class ChatService extends BaseChatService{
 			LOGGER.error(String.format("Delete group %s failed", groupId), e);
 		}
 	}
+	
+	public String createChatRoom(Long ownerId, String roomName,String desc) {
+		String roomUrl = easemob.getChatRoomUrl();
+		Map<String,Object> map = Maps.newHashMap();
+		map.put("name", roomName);
+		map.put("description", desc);
+		map.put("maxusers", Constants.PARAM_GROUP_MAXUSERS);
+		map.put("owner", ""+ownerId);
+		String jsonStr = JacksonUtil.deserializer(map);
+		Map<String,String> headers = getAuthHeaders();
+		try {
+			String result = RestTemplateUtil.sendJson(roomUrl, jsonStr, headers, HttpMethod.POST);
+			if(PublicUtil.isNotEmpty(result)) {
+				JsonObject jsonObj = new JsonParser().parse(result).getAsJsonObject();
+				JsonElement ele = jsonObj.get("data");
+				JsonObject groupObj = ele.getAsJsonObject();
+				return groupObj.get("id").getAsString();
+			}
+		} catch (Exception e) {
+			LOGGER.error(String.format("Create chatroom %s failed for d%", roomName, ownerId), e);
+		}
+		return null;
+	}
 }

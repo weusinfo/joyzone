@@ -123,4 +123,11 @@ public class EasemobConfig {
 		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}";
 	}
 	
+	/**
+	 * 创建聊天室
+	 * @return
+	 */
+	public String getChatRoomUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatrooms";
+	}
 }
