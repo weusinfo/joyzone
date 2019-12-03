@@ -104,6 +104,14 @@ public class EasemobConfig {
 	}
 	
 	/**
+	 * 批量添加用户
+	 * @return
+	 */
+	public String getBatchJoinGroupUrl() {
+		return this.host + this.orgName + "/" + this.appName + "/chatgroups/{groupId}/users/{userName}";
+	}
+	
+	/**
 	 * 加入聊天群
 	 * @return
 	 */

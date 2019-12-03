@@ -115,6 +115,7 @@ public class AppTeamController {
         }
         String groupId = teamService.getGroupId(teamId);
         chatService.joinTeamGroup(groupId,userId);// join the chat group
+        chatService.sendMsg(groupId,userModel.getUserName());
         TeamUsersModel bean = new TeamUsersModel();
         bean.setTeamId(teamId);
         bean.setUserId(userId);

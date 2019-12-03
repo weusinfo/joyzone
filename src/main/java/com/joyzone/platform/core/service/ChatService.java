@@ -117,4 +117,24 @@ public class ChatService extends BaseChatService{
 		}
 		return null;
 	}
+	
+	public void sendMsg(String target, String userName) {
+		String sendMsgUrl = easemob.getSendMsgUrl();
+		Map<String,Object> map = Maps.newHashMap();
+		map.put("target_type", "chatgroups");
+		String[] groups = new String[] {target};
+		map.put("target", groups);
+		Map<String,Object> msgMap = Maps.newHashMap();
+		msgMap.put("type", "txt");
+		msgMap.put("msg","欢迎 " + userName + " 加入群聊");
+		map.put("msg", msgMap);
+		map.put("from", "78");
+		String jsonStr = JacksonUtil.deserializer(map);
+		Map<String,String> headers = getAuthHeaders();
+		try {
+			RestTemplateUtil.sendJson(sendMsgUrl, jsonStr, headers,HttpMethod.POST);
+		}catch(Exception e) {
+			LOGGER.error(String.format("Send msg to %s failed.", userName), e);
+		}
+	}
 }
