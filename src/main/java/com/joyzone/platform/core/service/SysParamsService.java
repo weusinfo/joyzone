@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Splitter;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.JacksonUtil;
+import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.RedisUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.SysParamsMapper;
@@ -56,6 +57,17 @@ public class SysParamsService extends BaseService<SysParamsModel>{
 			if(StringUtils.isNotEmpty(paramValue)) {
 				String[] committes = paramValue.split("[|]");
 				return Splitter.on(",").splitToList(committes[1]);
+			}
+		}
+		return null;
+	}
+	
+	public String[] getSpecialPhoneCode() {
+		SysParamsModel model = findByName(Constants.SPECIAL_CODE);
+		if(model != null && PublicUtil.isNotEmpty(model.getParamValue())) {
+			String[] phoneCode = model.getParamValue().split("[|]");
+			if(phoneCode.length == 2 && StringUtils.isNoneEmpty(phoneCode[0]) && StringUtils.isNoneEmpty(phoneCode[1]) ) {
+				return phoneCode;
 			}
 		}
 		return null;

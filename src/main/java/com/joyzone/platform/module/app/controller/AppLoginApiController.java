@@ -11,6 +11,7 @@ import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.PhoneBlackService;
 import com.joyzone.platform.core.service.RedisService;
+import com.joyzone.platform.core.service.SysParamsService;
 import com.joyzone.platform.core.service.UserSerivce;
 
 import cn.hutool.crypto.digest.DigestUtil;
@@ -54,6 +55,9 @@ public class AppLoginApiController {
     
     @Autowired
     private SMSUtil smsUtil;
+    
+    @Autowired
+    private SysParamsService paramService;
 
     /**
      * zy
@@ -124,10 +128,16 @@ public class AppLoginApiController {
         if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(mobileCode)) {
             return R.error("参数有误！");
         }
-        Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
-        if(obj == null || !mobileCode.equals((String)obj)) {
-        	return R.error("验证码无效");
-        }
+        
+       String[] phoneCode = paramService.getSpecialPhoneCode();
+       if(phoneCode != null && phoneCode.equals(phone) && phoneCode[1].equals(mobileCode)) {
+    	   //
+       }else {
+	       Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
+	       if(obj == null || !mobileCode.equals((String)obj)) {
+	    	   return R.error("验证码无效");
+	       }
+       }
         UserModel userModel = userSerivce.getUserByPhone(phone);
         if(userModel != null){
             map.put("message","该手机号已注册！");
