@@ -130,7 +130,7 @@ public class AppLoginApiController {
         }
         
        String[] phoneCode = paramService.getSpecialPhoneCode();
-       if(phoneCode != null && phoneCode.equals(phone) && phoneCode[1].equals(mobileCode)) {
+       if(phoneCode != null && phoneCode[0].equals(phone) && phoneCode[1].equals(mobileCode)) {
     	   //
        }else {
 	       Object obj = redisService.hget(Constants.CACHE_KEY_CODE, phone);
