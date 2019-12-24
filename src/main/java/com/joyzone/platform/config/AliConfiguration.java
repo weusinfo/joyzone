@@ -25,8 +25,14 @@ public class AliConfiguration {
 	@Value("${ali.sms.signName}")
 	private String signName;
 	
+	@Value("${ali.sms.genericSignName}")
+	private String genericSignName;
+
 	@Value("${ali.sms.codeTemplateCode}")
 	private String codeTempateCode;
+	
+	@Value("${ali.sms.msgTemplateCode}")
+	private String msgTemplateCode;
 
 	public String getSecretId() {
 		return secretId;
@@ -74,6 +80,22 @@ public class AliConfiguration {
 
 	public void setCodeTempateCode(String codeTempateCode) {
 		this.codeTempateCode = codeTempateCode;
+	}
+	
+	public String getMsgTemplateCode() {
+		return msgTemplateCode;
+	}
+
+	public void setMsgTemplateCode(String msgTemplateCode) {
+		this.msgTemplateCode = msgTemplateCode;
+	}
+	
+	public String getGenericSignName() {
+		return genericSignName;
+	}
+
+	public void setGenericSignName(String genericSignName) {
+		this.genericSignName = genericSignName;
 	}
 	
 	@Bean

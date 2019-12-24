@@ -41,4 +41,6 @@ public interface Constants {
 	Integer CACHE_CODE_EXPIRES = 5 * 60 * 1000;
 	
 	String SPECIAL_CODE = "phone_code";
+	
+	String WEBSITE_PHONE = "website_phone";
 }

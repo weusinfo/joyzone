@@ -87,7 +87,9 @@ ali:
     domain: oss-cn-shenzhen.aliyuncs.com
   sms:
     codeTemplateCode: SMS_173348940
+    msgTemplateCode: SMS_181195568
     signName: 九达缘起
+    genericSignName: 网站留言
 yunpian:  
   sms:
     apiKey: 129afa0712a781de56500b720e5f2c6e

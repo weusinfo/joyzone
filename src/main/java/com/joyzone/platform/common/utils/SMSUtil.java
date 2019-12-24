@@ -58,5 +58,31 @@ public class SMSUtil {
 		redisService.hset(Constants.CACHE_KEY_CODE, mobile, codeParam, Constants.CACHE_CODE_EXPIRES);
 		return true;
 	}
+	
+	/**
+	 * 发送通用消息
+	 * @param mobile
+	 * @param content
+	 * @return
+	 * @throws ClientException
+	 */
+	public boolean sendMsgToAdmin(String mobile, String name, String phone) throws ClientException {
+		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
+		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
+		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", conf.getSecretId(), conf.getSecretKey());
+		DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+
+		IAcsClient acsClient = new DefaultAcsClient(profile);
+		SendSmsRequest request = new SendSmsRequest();
+		request.setPhoneNumbers(mobile);
+		request.setSignName(conf.getGenericSignName());
+		request.setTemplateCode(conf.getMsgTemplateCode());
+		request.setTemplateParam("{\"name\":\""+name+"\", \"phone\":\""+phone+"\"}");
+		SendSmsResponse res = acsClient.getAcsResponse(request);
+		if(res.getCode().equals("isv.BUSINESS_LIMIT_CONTROL")) {
+			return false;
+		}
+		return true;
+	}
 
 }
