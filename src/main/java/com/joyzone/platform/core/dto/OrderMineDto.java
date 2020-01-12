@@ -53,6 +53,9 @@ public class OrderMineDto extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
+    @ApiModelProperty("支付方式")
+    private Integer payWay;
+
     @ApiModelProperty("0：进行中 1：已完成")
     private Integer orderStatus;
 
@@ -115,6 +118,14 @@ public class OrderMineDto extends BaseModel{
 
     public void setPersonNum(Integer personNum) {
         this.personNum = personNum;
+    }
+
+    public Integer getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(Integer payWay) {
+        this.payWay = payWay;
     }
 
     public Integer getOrderStatus() {

@@ -39,6 +39,6 @@
 	</select>
 	
 	<select id="getTribes" resultType="java.util.Map">
-	select name, chat_group_id as groupId from shop_type where status = 1 and chat_group_id is not null
+	select name, chat_group_id as groupId,type_image as typeImage from shop_type where status = 1 and chat_group_id is not null
 	</select>
 </mapper>

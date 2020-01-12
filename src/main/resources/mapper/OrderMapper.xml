@@ -27,6 +27,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
     <result column="personNum" property="personNum" jdbcType="INTEGER" />
+    <result column="payWay" property="payWay" jdbcType="INTEGER" />
     <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
     <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <collection property="userJoinList" javaType="ArrayList" column="{teamOrInvitingId=teamOrInvitingId,orderType=orderType}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
@@ -130,44 +131,6 @@
   <select id="getTeamOrderList" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
     <if test="type == 0">
       (SELECT
-        t.id AS teamOrInvitingId,
-        t.shop_id AS shopId,
-        s.cover_img AS shopOrUserImg,
-        s.name AS shopOrContentName,
-        s.address AS address,
-        t.start_time AS startTime,
-        t.number AS personNum,
-        IF(t.start_time > NOW(),0,1) AS orderStatus,
-        0 AS orderType
-      FROM team t
-      LEFT JOIN shop s ON s.id = t.shop_id
-      WHERE t.owner = #{userId}
-      AND t.status = 0
-      ORDER BY t.start_time DESC
-      LIMIT 100)
-
-      UNION
-
-      (SELECT
-        i.id AS teamOrInvitingId,
-        NULL AS shopId,
-        u.head_pic AS shopOrUserImg,
-        i.content AS shopOrContentName,
-        i.address AS address,
-        i.start_time AS startTime,
-        i.number AS personNum,
-        IF(i.start_time > NOW(),0,1) AS orderStatus,
-        1 AS orderType
-      FROM inviting i
-      LEFT JOIN user u ON u.id = i.owner
-      WHERE i.owner = #{userId}
-      AND i.status = 0
-      AND u.status = 0
-      ORDER BY i.start_time DESC
-      LIMIT 100)
-    </if>
-    <if test="type == 1">
-      (SELECT
       t.id AS teamOrInvitingId,
       t.shop_id AS shopId,
       s.cover_img AS shopOrUserImg,
@@ -175,15 +138,15 @@
       s.address AS address,
       t.start_time AS startTime,
       t.number AS personNum,
+      t.pay_way AS payWay,
       IF(t.start_time > NOW(),0,1) AS orderStatus,
       0 AS orderType
-      FROM team_users tu
-      LEFT JOIN team t ON t.id = tu.team_id
+      FROM team t
       LEFT JOIN shop s ON s.id = t.shop_id
-      WHERE tu.user_id = #{userId}
-      AND tu.status = 0
-      AND t.owner <![CDATA[ <> ]]> #{userId}
+      WHERE t.owner = #{userId}
       AND t.status = 0
+      AND t.result IN (0,1)
+      AND TIMESTAMPDIFF(DAY,t.start_time,NOW()) <![CDATA[ <= ]]> 1
       ORDER BY t.start_time DESC
       LIMIT 100)
 
@@ -197,16 +160,66 @@
       i.address AS address,
       i.start_time AS startTime,
       i.number AS personNum,
+      i.pay_way AS payWay,
+      IF(i.start_time > NOW(),0,1) AS orderStatus,
+      1 AS orderType
+      FROM inviting i
+      LEFT JOIN user u ON u.id = i.owner
+      WHERE i.owner = #{userId}
+      AND i.status = 0
+      AND u.status = 0
+      AND i.result IN (1,2)
+      AND TIMESTAMPDIFF(DAY,i.start_time,NOW()) <![CDATA[ <= ]]> 1
+      ORDER BY i.start_time DESC
+      LIMIT 100)
+    </if>
+    <if test="type == 1">
+      (SELECT
+      t.id AS teamOrInvitingId,
+      t.shop_id AS shopId,
+      s.cover_img AS shopOrUserImg,
+      s.name AS shopOrContentName,
+      s.address AS address,
+      t.start_time AS startTime,
+      t.number AS personNum,
+      t.pay_way AS payWay,
+      IF(t.start_time > NOW(),0,1) AS orderStatus,
+      0 AS orderType
+      FROM team_users tu
+      LEFT JOIN team t ON t.id = tu.team_id
+      LEFT JOIN shop s ON s.id = t.shop_id
+      WHERE tu.user_id = #{userId}
+      AND tu.status = 0
+      AND t.owner  <![CDATA[ <> ]]> #{userId}
+      AND t.status = 0
+      AND t.result IN (0,1)
+      AND TIMESTAMPDIFF(DAY,t.start_time,NOW()) <![CDATA[ <= ]]> 1
+      ORDER BY t.start_time DESC
+      LIMIT 100)
+
+      UNION
+
+      (SELECT
+      i.id AS teamOrInvitingId,
+      NULL AS shopId,
+      u.head_pic AS shopOrUserImg,
+      i.content AS shopOrContentName,
+      i.address AS address,
+      i.start_time AS startTime,
+      i.number AS personNum,
+      i.pay_way AS payWay,
       IF(i.start_time > NOW(),0,1) AS orderStatus,
       1 AS orderType
       FROM inviting_user iu
       LEFT JOIN inviting i ON i.id = iu.inviting_id
       LEFT JOIN user u ON u.id = i.owner
       WHERE iu.user_id = #{userId}
-      AND i.owner <![CDATA[ <> ]]> #{userId}
+      AND i.owner  <![CDATA[ <> ]]> #{userId}
       AND i.status = 0
       AND u.status = 0
       AND iu.status = 0
+      AND i.result IN (1,2)
+      AND TIMESTAMPDIFF(DAY,i.start_time,NOW()) <![CDATA[ <= ]]> 1
       ORDER BY i.start_time DESC
       LIMIT 100)
     </if>

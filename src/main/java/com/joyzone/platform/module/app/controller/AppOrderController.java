@@ -67,7 +67,7 @@ public class AppOrderController {
         return R.pageToData(0L,new ArrayList<>());
     }*/
     @PostMapping("/getMyOrderList")
-    @ApiOperation("新版：前端获取订单組隊相关列表 返回值orderType为0：进行中；1：已完成 @zhangyu")
+    @ApiOperation("新版：前端获取订单組隊相关列表 返回值orderType为0：店家组队；1：个人邀请 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0:我发起 1：我加入", required = true, dataType = "Integer", paramType = "query")
