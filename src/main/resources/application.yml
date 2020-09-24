@@ -81,8 +81,8 @@ tencent:
     bucket:  joyzone-1257127706
 ali:
   oss:
-    secretId: LTAI4FhPLUnfs3buVqXJxe86
-    secretKey: YpWzyGQsJOEeqrVSiLkOVEnRNgbBgi
+    secretId: LTAI4G4hHnphArp4VezccRba
+    secretKey: xy623lcU4qwVGQ3DGt9XSEDTaBQPTK
     bucket: 9da
     domain: oss-cn-shenzhen.aliyuncs.com
   sms:
