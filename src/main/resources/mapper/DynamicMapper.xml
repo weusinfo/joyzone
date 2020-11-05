@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.DynamicMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.DynamicModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="thumbs" property="thumbs" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="userDynamic" type="com.joyzone.platform.core.dto.UserDynamicDto">
+    <id column="userId" property="userId" jdbcType="BIGINT"/>
+    <result column="userPic" property="userPic" jdbcType="VARCHAR"/>
+    <result column="userName" property="userName" jdbcType="VARCHAR"/>
+    <result column="userSex" property="userSex" jdbcType="INTEGER"/>
+    <result column="userAge" property="userAge" jdbcType="INTEGER"/>
+    <collection property="userDynamicList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicList"
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicListDto">
+    </collection>
+  </resultMap>
+  
+  <resultMap id="userDynamicList" type="com.joyzone.platform.core.dto.UserDynamicListDto">
+    <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
+    <result column="dynamicContent" property="dynamicContent" jdbcType="VARCHAR"/>
+    <result column="createTime" property="createTime" jdbcType="DATE"/>
+    <collection property="commentDetail" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+    </collection>
+  </resultMap>
+  
+  <resultMap id="userDynamicCommentList" type="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+    <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
+    <result column="pid" property="pid" jdbcType="BIGINT"/>
+    <result column="commentId" property="commentId" jdbcType="BIGINT"/>
+    <result column="userId" property="userId" jdbcType="BIGINT"/>
+    <result column="userPic" property="userPic" jdbcType="VARCHAR"/>
+    <result column="userName" property="userName" jdbcType="VARCHAR"/>
+    <result column="createTime" property="createTime" jdbcType="DATE"/>
+    <result column="content" property="content" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="getUserDynamicList" resultMap="userDynamic">
+    SELECT
+      u.id AS userId,
+      u.head_pic AS userPic,
+      u.user_name AS userName,
+      u.sex AS userSex,
+      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
+    FROM `user` u
+    WHERE u.id = #{userId}
+  </select>
+
+  <select id="queryUserDynamicList" resultMap="userDynamicList">
+    SELECT
+      d.id AS dynamicId,
+      d.content AS dynamicContent,
+      d.create_time AS createTime
+    FROM DYNAMIC d
+    WHERE d.user_id = #{userId}
+  </select>
+
+  <select id="queryUserDynamicCommentList" resultMap="userDynamicCommentList">
+    SELECT
+      dc.dynamic_id AS dynamicId,
+      dc.pid AS pid,
+      dc.id AS commentId,
+      dc.user_id AS userId,
+      u.head_pic AS userPic,
+      u.user_name AS userName,
+      dc.create_time AS createTime,
+      dc.content AS content
+    FROM dynamic_comment dc
+    LEFT JOIN USER u ON u.id = dc.user_id
+    WHERE dc.dynamic_id = #{dynamicId}
+  </select>
+</mapper>
