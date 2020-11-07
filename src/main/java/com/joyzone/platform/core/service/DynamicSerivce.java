@@ -1,23 +1,16 @@
 package com.joyzone.platform.core.service;
 
-import cn.hutool.crypto.digest.DigestUtil;
-import com.joyzone.platform.common.utils.RedisColumn;
-import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.UserDynamicDto;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.DynamicPictureMapper;
-import com.joyzone.platform.core.mapper.UserMapper;
+import com.joyzone.platform.core.mapper.GiveThumbMapper;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.model.DynamicPictureModel;
-import com.joyzone.platform.core.model.UserModel;
-import io.jsonwebtoken.lang.Collections;
+import com.joyzone.platform.core.model.GiveThumbModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
-
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +27,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     private DynamicMapper dynamicMapper;
     @Autowired
     private DynamicPictureMapper dynamicPictureMapper;
+    @Autowired
+    private GiveThumbMapper thumbMapper;
 
     /**
      * 发布动态
@@ -67,6 +62,38 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      */
     public List<UserDynamicDto> getUserDynamicList(Long userId){
         return dynamicMapper.getUserDynamicList(userId);
+    }
+
+    public DynamicModel selectByPrimaryKey(Long dynamicId){
+        return dynamicMapper.selectByPrimaryKey(dynamicId);
+    }
+
+    public int giveThumb(Long userId,DynamicModel dynamicModel,Integer type){
+        GiveThumbModel thumbModel = thumbMapper.findThumbRecord(userId,dynamicModel.getId());
+        if(type == 0){
+            if(thumbModel != null){
+                thumbModel.setStatus(0);
+                thumbModel.setUpdateTime(new Date());
+                thumbMapper.updateByPrimaryKey(thumbModel);
+            } else {
+                thumbModel = new GiveThumbModel();
+                thumbModel.setUserId(userId);
+                thumbModel.setDynamicId(dynamicModel.getId());
+                thumbModel.setStatus(0);
+                thumbModel.setCreateTime(new Date());
+                thumbModel.setUpdateTime(new Date());
+                thumbMapper.insert(thumbModel);
+            }
+            dynamicModel.setThumbs(dynamicModel.getThumbs() + 1);
+        } else if(type == 1){
+            thumbModel.setStatus(1);
+            thumbModel.setUpdateTime(new Date());
+            if(thumbModel != null){
+                thumbMapper.updateByPrimaryKey(thumbModel);
+            }
+            dynamicModel.setThumbs(dynamicModel.getThumbs() - 1);
+        }
+        return dynamicMapper.updateByPrimaryKey(dynamicModel);
     }
 
 }

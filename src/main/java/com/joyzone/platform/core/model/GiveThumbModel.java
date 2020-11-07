@@ -3,8 +3,8 @@ package com.joyzone.platform.core.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "dynamic")
-public class DynamicModel {
+@Table(name = "give_thumb")
+public class GiveThumbModel {
     /**
      * 主键
      */
@@ -12,25 +12,21 @@ public class DynamicModel {
     private Long id;
 
     /**
-     * 发动态者id
+     * 点赞者id
      */
     @Column(name = "user_id")
     private Long userId;
 
     /**
-     * 动态内容
+     * 动态id
      */
-    private String content;
+    @Column(name = "dynamic_id")
+    private Long dynamicId;
 
     /**
-     * 0：谁都可以看 1：我关注和关注我的人
+     * 0：点赞 1：取消点赞
      */
-    private Integer kind;
-
-    /**
-     * 点赞数
-     */
-    private Integer thumbs;
+    private Integer status;
 
     /**
      * 创建时间
@@ -43,9 +39,6 @@ public class DynamicModel {
      */
     @Column(name = "update_time")
     private Date updateTime;
-
-    @Transient
-    private String dynamicPics;
 
     /**
      * 获取主键
@@ -66,75 +59,57 @@ public class DynamicModel {
     }
 
     /**
-     * 获取发动态者id
+     * 获取点赞者id
      *
-     * @return user_id - 发动态者id
+     * @return user_id - 点赞者id
      */
     public Long getUserId() {
         return userId;
     }
 
     /**
-     * 设置发动态者id
+     * 设置点赞者id
      *
-     * @param userId 发动态者id
+     * @param userId 点赞者id
      */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
     /**
-     * 获取动态内容
+     * 获取动态id
      *
-     * @return content - 动态内容
+     * @return dynamic_id - 动态id
      */
-    public String getContent() {
-        return content;
+    public Long getDynamicId() {
+        return dynamicId;
     }
 
     /**
-     * 设置动态内容
+     * 设置动态id
      *
-     * @param content 动态内容
+     * @param dynamicId 动态id
      */
-    public void setContent(String content) {
-        this.content = content;
+    public void setDynamicId(Long dynamicId) {
+        this.dynamicId = dynamicId;
     }
 
     /**
-     * 获取0：谁都可以看 1：我关注和关注我的人
+     * 获取0：点赞 1：取消点赞
      *
-     * @return kind - 0：谁都可以看 1：我关注和关注我的人
+     * @return status - 0：点赞 1：取消点赞
      */
-    public Integer getKind() {
-        return kind;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
-     * 设置0：谁都可以看 1：我关注和关注我的人
+     * 设置0：点赞 1：取消点赞
      *
-     * @param kind 0：谁都可以看 1：我关注和关注我的人
+     * @param status 0：点赞 1：取消点赞
      */
-    public void setKind(Integer kind) {
-        this.kind = kind;
-    }
-
-    /**
-     * 获取点赞数
-     *
-     * @return thumbs - 点赞数
-     */
-    public Integer getThumbs() {
-        return thumbs;
-    }
-
-    /**
-     * 设置点赞数
-     *
-     * @param thumbs 点赞数
-     */
-    public void setThumbs(Integer thumbs) {
-        this.thumbs = thumbs;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**
@@ -172,13 +147,4 @@ public class DynamicModel {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-    public String getDynamicPics() {
-        return dynamicPics;
-    }
-
-    public void setDynamicPics(String dynamicPics) {
-        this.dynamicPics = dynamicPics;
-    }
-
 }

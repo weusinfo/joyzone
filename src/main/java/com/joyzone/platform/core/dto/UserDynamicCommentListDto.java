@@ -6,9 +6,7 @@ import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
-
 import java.util.Date;
-import java.util.List;
 
 
 @Configuration

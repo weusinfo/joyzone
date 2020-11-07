@@ -29,7 +29,7 @@
     <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
     <result column="dynamicContent" property="dynamicContent" jdbcType="VARCHAR"/>
     <result column="createTime" property="createTime" jdbcType="DATE"/>
-    <collection property="commentDetail" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
+    <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
     </collection>
   </resultMap>

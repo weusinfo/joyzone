@@ -12,4 +12,27 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <select id="getUserFollowList" resultType="com.joyzone.platform.core.dto.UserFollowDto">
+    SELECT
+      u.id AS userId,
+      u.head_pic AS userPic,
+      u.user_name AS userName,
+      u.sex AS userSex,
+      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
+    FROM follows f
+    <if test="type == 0">
+      LEFT JOIN `user` u ON u.id = f.target_id
+      WHERE f.user_id = #{userId}
+    </if>
+    <if test="type == 1">
+      LEFT JOIN `user` u ON u.id = f.user_id
+      WHERE f.target_id = #{userId}
+    </if>
+  </select>
+
+  <select id="findFollowRecord" resultType="com.joyzone.platform.core.model.FollowsModel">
+    SELECT * FROM follows
+    WHERE user_id = #{userId} AND target_id = #{targetId}
+  </select>
 </mapper>
