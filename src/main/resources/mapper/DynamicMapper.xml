@@ -44,6 +44,22 @@
     <result column="createTime" property="createTime" jdbcType="DATE"/>
     <result column="content" property="content" jdbcType="VARCHAR"/>
   </resultMap>
+  
+  <resultMap id="indexDynamicListMap" type="com.joyzone.platform.core.dto.IndexDynamicListDto">
+    <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
+    <result column="userId" property="userId" jdbcType="BIGINT"/>
+    <result column="userPic" property="userPic" jdbcType="VARCHAR"/>
+    <result column="userName" property="userName" jdbcType="VARCHAR"/>
+    <result column="userSex" property="userSex" jdbcType="INTEGER"/>
+    <result column="userAge" property="userAge" jdbcType="INTEGER"/>
+    <result column="dynamicContent" property="dynamicContent" jdbcType="VARCHAR"/>
+    <result column="followCount" property="followCount" jdbcType="INTEGER"/>
+    <result column="commentCount" property="commentCount" jdbcType="INTEGER"/>
+    <result column="thumbCount" property="thumbCount" jdbcType="INTEGER"/>
+    <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+    </collection>
+  </resultMap>
 
   <select id="getUserDynamicList" resultMap="userDynamic">
     SELECT
@@ -78,5 +94,21 @@
     FROM dynamic_comment dc
     LEFT JOIN USER u ON u.id = dc.user_id
     WHERE dc.dynamic_id = #{dynamicId}
+  </select>
+
+  <select id="getIndexDynamicList" resultMap="indexDynamicListMap">
+    SELECT
+      d.id AS dynamicId,
+      u.id AS userId,
+      u.head_pic AS userPic,
+      u.user_name AS userName,
+      u.sex AS userSex,
+      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+      d.content AS dynamicContent,
+      d.thumbs AS thumbCount,
+      (SELECT COUNT(*) FROM follows f WHERE f.target_id = d.user_id) AS followCount,
+      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = d.id) AS commentCount
+    FROM DYNAMIC d
+    LEFT JOIN `user` u ON u.id = d.user_id
   </select>
 </mapper>

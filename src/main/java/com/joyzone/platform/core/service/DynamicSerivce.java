@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.service;
 
 import com.joyzone.platform.core.base.BaseService;
+import com.joyzone.platform.core.dto.IndexDynamicListDto;
 import com.joyzone.platform.core.dto.UserDynamicDto;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.DynamicPictureMapper;
@@ -62,6 +63,10 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      */
     public List<UserDynamicDto> getUserDynamicList(Long userId){
         return dynamicMapper.getUserDynamicList(userId);
+    }
+
+    public List<IndexDynamicListDto> getIndexDynamicList(Long userId, Long type){
+        return dynamicMapper.getIndexDynamicList();
     }
 
     public DynamicModel selectByPrimaryKey(Long dynamicId){

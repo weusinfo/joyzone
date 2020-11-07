@@ -3,7 +3,6 @@ package com.joyzone.platform.module.app.controller;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
-import com.joyzone.platform.core.model.FollowsModel;
 import com.joyzone.platform.core.service.DynamicCommentSerivce;
 import com.joyzone.platform.core.service.DynamicSerivce;
 import com.joyzone.platform.core.service.FollowsSerivce;
@@ -63,6 +62,32 @@ public class AppDynamicController {
         return R.ok(dynamicSerivce.getUserDynamicList(userId));
     }
 
+    @ApiOperation("获取动态首页动态列表")
+    @PostMapping("getIndexDynamicList")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：推荐 1：关注", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R getIndexDynamicList(@RequestParam("userId") Long userId,@RequestParam("type") Long type){
+        return R.ok(dynamicSerivce.getIndexDynamicList(userId,type));
+    }
+
+    @ApiOperation("点赞(动态)/取消点赞")
+    @PostMapping("giveThumb")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "dynamicId", value = "动态id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：点赞 1：取消点赞", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R giveThumb(@RequestParam("userId") Long userId,@RequestParam("dynamicId") Long dynamicId,
+                       @RequestParam("type") Integer type){
+        DynamicModel dynamicModel = dynamicSerivce.selectByPrimaryKey(dynamicId);
+        if(dynamicModel == null){
+            return R.error("动态不存在");
+        }
+        return  dynamicSerivce.giveThumb(userId,dynamicModel,type) > 0 ? R.ok() : R.error("点赞(动态)/取消点赞失败");
+    }
+
     @ApiOperation("关注(别人)/取消关注")
     @PostMapping("saveFollows")
     @ApiImplicitParams({
@@ -84,23 +109,5 @@ public class AppDynamicController {
     public R getUserFollowList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type){
         return R.ok(followsSerivce.getUserFollowList(userId,type));
     }
-
-    @ApiOperation("点赞(动态)/取消点赞")
-    @PostMapping("giveThumb")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "dynamicId", value = "动态id", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0：点赞 1：取消点赞", required = true, dataType = "Integer", paramType = "query")
-    })
-    public R giveThumb(@RequestParam("userId") Long userId,@RequestParam("dynamicId") Long dynamicId,
-                       @RequestParam("type") Integer type){
-        DynamicModel dynamicModel = dynamicSerivce.selectByPrimaryKey(dynamicId);
-        if(dynamicModel == null){
-            return R.error("动态不存在");
-        }
-        return  dynamicSerivce.giveThumb(userId,dynamicModel,type) > 0 ? R.ok() : R.error("点赞(动态)/取消点赞失败");
-    }
-
-
 
 }

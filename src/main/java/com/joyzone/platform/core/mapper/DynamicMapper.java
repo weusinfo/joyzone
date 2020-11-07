@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.mapper;
 
+import com.joyzone.platform.core.dto.IndexDynamicListDto;
 import com.joyzone.platform.core.dto.UserDynamicCommentListDto;
 import com.joyzone.platform.core.dto.UserDynamicDto;
 import com.joyzone.platform.core.dto.UserDynamicListDto;
@@ -16,4 +17,7 @@ public interface DynamicMapper extends Mapper<DynamicModel> {
     List<UserDynamicListDto> queryUserDynamicList(@Param("userId") Long userId);
 
     List<UserDynamicCommentListDto> queryUserDynamicCommentList(@Param("dynamicId") Long dynamicId);
+
+    List<IndexDynamicListDto> getIndexDynamicList();
+
 }
