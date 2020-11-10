@@ -66,7 +66,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     }
 
     public List<IndexDynamicListDto> getIndexDynamicList(Long userId, Integer type){
-        return dynamicMapper.getIndexDynamicList();
+        return dynamicMapper.getIndexDynamicList(userId);
     }
 
     public DynamicModel selectByPrimaryKey(Long dynamicId){

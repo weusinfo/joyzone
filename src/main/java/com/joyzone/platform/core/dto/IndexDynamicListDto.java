@@ -50,6 +50,12 @@ public class IndexDynamicListDto extends BaseModel{
     @ApiModelProperty("点赞数量")
     private int thumbCount;
 
+    @ApiModelProperty("是否点赞 0：未点赞 1：已点赞")
+    private int thumbed;
+
+    @ApiModelProperty("是否关注 0：未关注 1：已关注")
+    private int followed;
+
     @ApiModelProperty("评论详情列表")
     private List<UserDynamicCommentListDto> commentDetailList;
 
@@ -85,19 +91,19 @@ public class IndexDynamicListDto extends BaseModel{
         this.userName = userName;
     }
 
-    public Integer getUserSex() {
+    public int getUserSex() {
         return userSex;
     }
 
-    public void setUserSex(Integer userSex) {
+    public void setUserSex(int userSex) {
         this.userSex = userSex;
     }
 
-    public Integer getUserAge() {
+    public int getUserAge() {
         return userAge;
     }
 
-    public void setUserAge(Integer userAge) {
+    public void setUserAge(int userAge) {
         this.userAge = userAge;
     }
 
@@ -131,6 +137,22 @@ public class IndexDynamicListDto extends BaseModel{
 
     public void setThumbCount(int thumbCount) {
         this.thumbCount = thumbCount;
+    }
+
+    public int getThumbed() {
+        return thumbed;
+    }
+
+    public void setThumbed(int thumbed) {
+        this.thumbed = thumbed;
+    }
+
+    public int getFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(int followed) {
+        this.followed = followed;
     }
 
     public List<UserDynamicCommentListDto> getCommentDetailList() {

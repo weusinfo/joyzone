@@ -56,6 +56,8 @@
     <result column="followCount" property="followCount" jdbcType="INTEGER"/>
     <result column="commentCount" property="commentCount" jdbcType="INTEGER"/>
     <result column="thumbCount" property="thumbCount" jdbcType="INTEGER"/>
+    <result column="thumbed" property="thumbed" jdbcType="INTEGER"/>
+    <result column="followed" property="followed" jdbcType="INTEGER"/>
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
     </collection>
@@ -107,7 +109,9 @@
       d.content AS dynamicContent,
       d.thumbs AS thumbCount,
       (SELECT COUNT(*) FROM follows f WHERE f.target_id = d.user_id) AS followCount,
-      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = d.id) AS commentCount
+      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = d.id) AS commentCount,
+      (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = d.id AND gt.status = 0) AS thumbed,
+      (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = d.user_id AND f.status = 0) AS followed
     FROM DYNAMIC d
     LEFT JOIN `user` u ON u.id = d.user_id
   </select>
