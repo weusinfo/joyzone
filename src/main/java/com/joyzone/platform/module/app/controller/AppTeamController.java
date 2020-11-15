@@ -1,20 +1,12 @@
 package com.joyzone.platform.module.app.controller;
 
-
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
-import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.dto.TeamRuleDto;
-import com.joyzone.platform.core.model.ShopTypeModel;
-import com.joyzone.platform.core.model.TeamModel;
-import com.joyzone.platform.core.model.TeamUsersModel;
-import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.service.ChatService;
-import com.joyzone.platform.core.service.GroupService;
 import com.joyzone.platform.core.service.ShopTypeService;
 import com.joyzone.platform.core.service.TeamService;
 import com.joyzone.platform.core.service.TeamUsersService;
@@ -23,15 +15,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.entity.Example.Criteria;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -215,6 +203,59 @@ public class AppTeamController {
     		return R.ok(tribes);
     	}
     	return R.error("还没有部落");
+    }
+
+                                                   /*2020-11-15 第二阶段调整*/
+    @ApiOperation("发布聚会")
+    @PostMapping("saveActivity")
+    public R saveActivity(TeamModel teamModel){
+        if(teamModel == null)
+            return R.error("系统参数不能为空");
+        if(teamModel.getOwner() == null)
+            return R.error("发起者id不能为空");
+        if(teamModel.getActivityType() == null)
+            return R.error("活动类型不能为空");
+        if(teamModel.getActivityName() == null)
+            return R.error("聚会标题不能为空");
+        if(teamModel.getStartTime() == null)
+            return R.error("开始时间不能为空");
+        if(teamModel.getStartTime().compareTo(new Date()) <= 0 )
+            return R.error("开始时间必须晚于现在");
+        if(teamModel.getActivityAddress() == null)
+            return R.error("活动地点不能为空");
+        /*if(teamModel.getToWay() == null)
+            return R.error("可参与人类型不能为空");*/ //一对一邀约时，没有可参与人选项
+        if(teamModel.getPayWay() == null)
+            return R.error("请填写人均费用方式");
+
+        UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
+                userModel.getBirthday() == null || userModel.getHeadPic() == null || userModel.getCoverPic() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像/个人封面");
+        }
+        int ret = teamService.saveActivity(teamModel);
+        if(ret == 999){
+            return R.error("用户已在该店内发起了有效组队！");
+        }
+        if(ret == 111){
+            return R.error("用户组队后保存team_user失败！");
+        }
+        Map<String,String> map = Maps.newHashMap();
+        map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));
+        return ret > 0 ? R.ok(map) : R.error("操作失败");
+    }
+
+    @PostMapping("/getActivityList")
+    @ApiOperation("新版202011：前端获取聚会列表 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：全部 1：收到邀请 2：最快开始 3：最多参与 4：最近距离", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "页数",required = true, dataType = "Integer",defaultValue = "1",paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数",required = true, dataType = "Integer",defaultValue = "10",paramType = "query")
+    })
+    public R getActivityList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type,
+                             Integer pageNum,Integer pageSize){
+        return teamService.getActivityList(userId,type,pageNum,pageSize);
     }
 
 }

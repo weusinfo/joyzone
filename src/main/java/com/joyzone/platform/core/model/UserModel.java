@@ -142,6 +142,10 @@ public class UserModel extends BaseModel{
      */
     private Integer age;
 
+    @ApiModelProperty("用户封面")
+    @Column(name = "cover_pic")
+    private String coverPic;
+
     /**
      * 获取自增长主键
      *
@@ -356,4 +360,12 @@ public class UserModel extends BaseModel{
 	public void setChatIdMd5(String chatIdMd5) {
 		this.chatIdMd5 = chatIdMd5;
 	}
+
+    public String getCoverPic() {
+        return coverPic;
+    }
+
+    public void setCoverPic(String coverPic) {
+        this.coverPic = coverPic;
+    }
 }

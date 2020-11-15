@@ -45,7 +45,7 @@ public class TeamModel extends BaseModel {
     /**
      * 组队状态;0：有效，1：无效
      */
-    @ApiModelProperty("组队状态;0：有效，1：无效")
+    @ApiModelProperty("组队状态; 0进行中 1成功 2失败 3已解散")
     private Integer status;
 
     /**
@@ -57,8 +57,8 @@ public class TeamModel extends BaseModel {
     /**
      * 参加人数限制
      */
-    @Excel(name="限制人数")
-    @ApiModelProperty("限制人数")
+    @Excel(name="活动总人数")
+    @ApiModelProperty("活动总人数")
     private Integer number;
 
     /**
@@ -94,6 +94,38 @@ public class TeamModel extends BaseModel {
     @ApiModelProperty("组队时自动创建聊天群")
     @Column(name = "chat_group_id")
     private String chatGroupId;
+
+    @ApiModelProperty("商家名称")
+    @Column(name = "shop_name")
+    private String shopName;
+
+    @ApiModelProperty("活动类型 0真人cs 1")
+    @Column(name = "activity_type")
+    private Integer activityType;
+
+    @ApiModelProperty("活动名称")
+    @Column(name = "activity_name")
+    private String activityName;
+
+    @ApiModelProperty("活动地址")
+    @Column(name = "activity_address")
+    private String activityAddress;
+
+    @ApiModelProperty("活动男生数")
+    @Column(name = "number_boy")
+    private Integer numberBoy;
+
+    @ApiModelProperty("活动女生数")
+    @Column(name = "number_girl")
+    private Integer numberGirl;
+
+    @ApiModelProperty("0：所有人可见 1：好友 2：我关注和关注我的")
+    @Column(name = "to_way")
+    private Integer toWay;
+
+    @ApiModelProperty("一对一邀约对象id")
+    @Column(name = "invited_id")
+    private Long invitedId;
 
 	/**
      * @return id
@@ -276,4 +308,68 @@ public class TeamModel extends BaseModel {
 	public void setChatGroupId(String chatGroupId) {
 		this.chatGroupId = chatGroupId;
 	}
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Integer getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(Integer activityType) {
+        this.activityType = activityType;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getActivityAddress() {
+        return activityAddress;
+    }
+
+    public void setActivityAddress(String activityAddress) {
+        this.activityAddress = activityAddress;
+    }
+
+    public Integer getNumberBoy() {
+        return numberBoy;
+    }
+
+    public void setNumberBoy(Integer numberBoy) {
+        this.numberBoy = numberBoy;
+    }
+
+    public Integer getNumberGirl() {
+        return numberGirl;
+    }
+
+    public void setNumberGirl(Integer numberGirl) {
+        this.numberGirl = numberGirl;
+    }
+
+    public Integer getToWay() {
+        return toWay;
+    }
+
+    public void setToWay(Integer toWay) {
+        this.toWay = toWay;
+    }
+
+    public Long getInvitedId() {
+        return invitedId;
+    }
+
+    public void setInvitedId(Long invitedId) {
+        this.invitedId = invitedId;
+    }
 }

@@ -18,6 +18,14 @@
     <result column="pay_way" property="payWay" jdbcType="INTEGER" />
     <result column="sex_want" property="sexWant" jdbcType="INTEGER" />
     <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
+      <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+      <result column="activity_type" property="activityType" jdbcType="INTEGER"/>
+      <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+      <result column="activity_address" property="activityAddress" jdbcType="VARCHAR"/>
+      <result column="number_boy" property="numberBoy" jdbcType="INTEGER"/>
+      <result column="number_girl" property="numberGirl" jdbcType="INTEGER"/>
+      <result column="to_way" property="toWay" jdbcType="INTEGER"/>
+      <result column="invited_id" property="invitedId" jdbcType="BIGINT"/>
   </resultMap>
 
   <resultMap id="teamListMap" type="com.joyzone.platform.core.dto.TeamDto">
@@ -231,6 +239,15 @@
         AND t.status = 0
     </select>
 
+    <select id="checkTeamSaveSuccess" resultMap="BaseResultMap">
+        SELECT
+        t.*
+        FROM team t
+        WHERE t.owner = #{userId}
+        AND t.chat_group_id = #{chatGroupId}
+        AND t.status = 0
+    </select>
+
     <select id="getTeamRuleList" resultMap="teamRuleMap">
         SELECT
             t.id AS teamId,
@@ -263,5 +280,28 @@
     
     <select id="getGroupId" resultType="java.lang.String">
     select chat_group_id from team where id = #{teamId} limit 1
+    </select>
+
+    <select id="getActivityList" resultType="com.joyzone.platform.core.dto.ActivityDto">
+        SELECT
+            t.id AS teamId,
+            t.owner AS userId,
+            u.user_name AS userName,
+            u.cover_pic AS userCover,
+            u.sex AS userSex,
+            TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+            t.activity_name AS activityName,
+            t.start_time AS startTime,
+            t.activity_address AS activityAddress,
+            1 AS distance,
+            t.activity_type AS activityType,
+            (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+            t.pay_way AS payWay,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            t.number AS totalUserNum
+        FROM team t
+        LEFT JOIN USER u ON u.id = t.owner
+        WHERE t.status = 0
+        AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
     </select>
 </mapper>

@@ -5,10 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.CouponDto;
-import com.joyzone.platform.core.dto.ShopTeamsDto;
-import com.joyzone.platform.core.dto.TeamDto;
-import com.joyzone.platform.core.dto.TeamRuleDto;
+import com.joyzone.platform.core.dto.*;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
@@ -138,5 +135,58 @@ public class TeamService extends BaseService<TeamModel> {
     
     public String getGroupId(Long teamId) {
     	return teamMapper.getGroupId(teamId);
+    }
+
+    /**
+     * 添加或更新组队信息
+     * @param teamModel
+     * @return
+     */
+    public int saveActivity(TeamModel teamModel){
+        Date date = new Date();
+        String groupId = "";
+        if(teamModel.getId() == null){//添加
+            if(teamModel.getShopId() != null) {
+                List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(), teamModel.getShopId());
+                if (teamModelList != null && teamModelList.size() > 0) {
+                    return 999;
+                }
+                //添加组队时创建聊天群
+                groupId = groupService.createTeamGroup(teamModel.getShopId());
+            } else {
+                //添加组队时创建聊天群
+                groupId = chatService.createTeamGroup(teamModel.getOwner(), teamModel.getActivityName(), "个人建群");
+            }
+            teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
+            teamModel.setStatus(0); //组队中
+            teamModel.setCreateTime(date);
+            teamModel.setChatGroupId(groupId);
+            chatService.joinTeamGroup(groupId, teamModel.getOwner());
+            int flag =  teamMapper.insertSelective(teamModel);
+            ThreadLocalMap.put("chatGroupId", groupId);
+            List<TeamModel> teamList = teamMapper.checkTeamSaveSuccess(teamModel.getOwner(),teamModel.getChatGroupId());
+            if(teamList == null || teamList.size() == 0){
+                return 0;
+            }
+            int res = saveTeamUsers(teamModel,teamList);
+            if(res == 0){
+                return 111;
+            }
+            return flag;
+        }
+        //更新
+        teamModel.setUpdateTime(date);
+        return teamMapper.updateByPrimaryKeySelective(teamModel);
+    }
+
+    public  R getActivityList(Long userId,Integer type,Integer pageNum,Integer pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ActivityDto> list = teamMapper.getActivityList(userId,type);
+        if(list != null && list.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
     }
 }

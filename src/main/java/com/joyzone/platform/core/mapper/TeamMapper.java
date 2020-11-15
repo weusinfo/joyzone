@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.mapper;
 
+import com.joyzone.platform.core.dto.ActivityDto;
 import com.joyzone.platform.core.dto.ShopTeamsDto;
 import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.dto.TeamRuleDto;
@@ -14,7 +15,11 @@ import java.util.Map;
 public interface TeamMapper extends Mapper<TeamModel> {
     /*List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId, @Param("sort") Integer sort);*/
     List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId);
+
+    List<ActivityDto> getActivityList(@Param("userId") Long userId, @Param("type") Integer type);
+
     Map<String,Object> checkTeamIfSuccess(@Param("teamId") Long teamId);
+
     List<TeamDto> getTeamList(TeamModel teamModel);
 
     List<AppTeamVO> getAppTeamList(@Param("userId") Long userId,
@@ -30,5 +35,7 @@ public interface TeamMapper extends Mapper<TeamModel> {
     Integer checkTeamOwner(@Param("teamId") Long teamId, @Param("userId") Long userId);
     
     String getGroupId(@Param("teamId") Long teamId);
+
+    List<TeamModel> checkTeamSaveSuccess(@Param("userId") Long userId,@Param("chatGroupId") String chatGroupId);
 
 }
