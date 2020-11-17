@@ -11,13 +11,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
-@ApiModel("前端聚会列表交互DTO202011")
+@ApiModel("前端聚会详情交互DTO202011")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ActivityDto extends BaseModel{
+public class ActivityDetailDto extends BaseModel{
 
-    public ActivityDto(){
+    public ActivityDetailDto(){
 
     }
 
@@ -27,40 +28,34 @@ public class ActivityDto extends BaseModel{
     @ApiModelProperty("发起者id")
     private Long userId;
 
-    @ApiModelProperty("发起者昵称")
-    private String userName;
+    @ApiModelProperty("活动类型")
+    private Integer activityType;
 
-    @ApiModelProperty("发起者封面")
-    private String userCover;
+    @ApiModelProperty("商家id")
+    private Long shopId;
 
-    @ApiModelProperty("发起者性别")
-    private Integer userSex;
-
-    @ApiModelProperty("发起者年龄")
-    private Integer userAge;
+    @ApiModelProperty("商家名称")
+    private String shopName;
 
     @ApiModelProperty("聚会标题")
     private String activityName;
-
-    @ApiModelProperty("活动地点")
-    private String activityAddress;
 
     @ApiModelProperty("聚会时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
-    @ApiModelProperty("距离")
-    private BigDecimal distance;
-
-    @ApiModelProperty("活动类型")
-    private Integer activityType;
-
-    @ApiModelProperty("商家价格")
-    private BigDecimal price;
+    @ApiModelProperty("活动地点")
+    private String activityAddress;
 
     @ApiModelProperty("人均费用")
     private Integer payWay;
+
+    @ApiModelProperty("男生数量")
+    private Integer boyNumber;
+
+    @ApiModelProperty("女生数量")
+    private Integer girlNumber;
 
     @ApiModelProperty("参与人数")
     private Integer joinUserNum;
@@ -71,8 +66,11 @@ public class ActivityDto extends BaseModel{
     @ApiModelProperty("参与者头像列表")
     private List<String> joinUserImgs;
 
-    @ApiModelProperty("特约或好友标志")
-    private String label;
+    @ApiModelProperty("聚会详情按钮显示文本")
+    private String buttonShow;
+
+    @ApiModelProperty("参与者信息列表")
+    private List<ActivityUserDto> joinUserInfoList;
 
     public Long getTeamId() {
         return teamId;
@@ -90,36 +88,28 @@ public class ActivityDto extends BaseModel{
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getActivityType() {
+        return activityType;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setActivityType(Integer activityType) {
+        this.activityType = activityType;
     }
 
-    public String getUserCover() {
-        return userCover;
+    public Long getShopId() {
+        return shopId;
     }
 
-    public void setUserCover(String userCover) {
-        this.userCover = userCover;
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
     }
 
-    public Integer getUserSex() {
-        return userSex;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setUserSex(Integer userSex) {
-        this.userSex = userSex;
-    }
-
-    public Integer getUserAge() {
-        return userAge;
-    }
-
-    public void setUserAge(Integer userAge) {
-        this.userAge = userAge;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getActivityName() {
@@ -130,14 +120,6 @@ public class ActivityDto extends BaseModel{
         this.activityName = activityName;
     }
 
-    public String getActivityAddress() {
-        return activityAddress;
-    }
-
-    public void setActivityAddress(String activityAddress) {
-        this.activityAddress = activityAddress;
-    }
-
     public Date getStartTime() {
         return startTime;
     }
@@ -146,28 +128,12 @@ public class ActivityDto extends BaseModel{
         this.startTime = startTime;
     }
 
-    public BigDecimal getDistance() {
-        return distance;
+    public String getActivityAddress() {
+        return activityAddress;
     }
 
-    public void setDistance(BigDecimal distance) {
-        this.distance = distance;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(Integer activityType) {
-        this.activityType = activityType;
+    public void setActivityAddress(String activityAddress) {
+        this.activityAddress = activityAddress;
     }
 
     public Integer getPayWay() {
@@ -176,6 +142,22 @@ public class ActivityDto extends BaseModel{
 
     public void setPayWay(Integer payWay) {
         this.payWay = payWay;
+    }
+
+    public Integer getBoyNumber() {
+        return boyNumber;
+    }
+
+    public void setBoyNumber(Integer boyNumber) {
+        this.boyNumber = boyNumber;
+    }
+
+    public Integer getGirlNumber() {
+        return girlNumber;
+    }
+
+    public void setGirlNumber(Integer girlNumber) {
+        this.girlNumber = girlNumber;
     }
 
     public Integer getJoinUserNum() {
@@ -202,11 +184,19 @@ public class ActivityDto extends BaseModel{
         this.joinUserImgs = joinUserImgs;
     }
 
-    public String getLabel() {
-        return label;
+    public String getButtonShow() {
+        return buttonShow;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setButtonShow(String buttonShow) {
+        this.buttonShow = buttonShow;
+    }
+
+    public List<ActivityUserDto> getJoinUserInfoList() {
+        return joinUserInfoList;
+    }
+
+    public void setJoinUserInfoList(List<ActivityUserDto> joinUserInfoList) {
+        this.joinUserInfoList = joinUserInfoList;
     }
 }

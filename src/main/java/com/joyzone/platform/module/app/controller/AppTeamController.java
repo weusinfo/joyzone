@@ -258,4 +258,14 @@ public class AppTeamController {
         return teamService.getActivityList(userId,type,pageNum,pageSize);
     }
 
+    @PostMapping("/getActivityDetail")
+    @ApiOperation("新版202011：前端获取聚会详情 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "teamId", value = "聚会id", required = true, dataType = "Long", paramType = "query")
+            })
+    public R getActivityDetail(@RequestParam("userId") Long userId,@RequestParam("teamId") Long teamId){
+        return teamService.getActivityDetail(userId,teamId);
+    }
+
 }

@@ -26,6 +26,7 @@
       <result column="number_girl" property="numberGirl" jdbcType="INTEGER"/>
       <result column="to_way" property="toWay" jdbcType="INTEGER"/>
       <result column="invited_id" property="invitedId" jdbcType="BIGINT"/>
+      <result column="tag" property="tag" jdbcType="INTEGER"/>
   </resultMap>
 
   <resultMap id="teamListMap" type="com.joyzone.platform.core.dto.TeamDto">
@@ -83,6 +84,52 @@
         <collection property="coverImgList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.ShopMapper.getShopCoverListByShopId"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
+    </resultMap>
+
+    <resultMap id="activityMap" type="com.joyzone.platform.core.dto.ActivityDto">
+        <id column="teamId" property="teamId" jdbcType="BIGINT" />
+        <result column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="userCover" property="userCover" jdbcType="VARCHAR" />
+        <result column="userSex" property="userSex" jdbcType="INTEGER" />
+        <result column="userAge" property="userAge" jdbcType="INTEGER" />
+        <result column="activityName" property="activityName" jdbcType="VARCHAR" />
+        <result column="activityAddress" property="activityAddress" jdbcType="VARCHAR" />
+        <result column="startTime" property="startTime" jdbcType="DATE" />
+        <result column="distance" property="distance" jdbcType="DECIMAL" />
+        <result column="activityType" property="activityType" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="payWay" property="payWay" jdbcType="INTEGER" />
+        <result column="joinUserNum" property="joinUserNum" jdbcType="INTEGER" />
+        <result column="totalUserNum" property="totalUserNum" jdbcType="INTEGER" />
+        <result column="label" property="label" jdbcType="INTEGER" />
+        <collection property="joinUserImgs" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserImgs"
+                    fetchType="lazy" ofType="java.lang.String">
+        </collection>
+    </resultMap>
+
+    <resultMap id="activityDetailMap" type="com.joyzone.platform.core.dto.ActivityDetailDto">
+        <id column="teamId" property="teamId" jdbcType="BIGINT" />
+        <result column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="activityType" property="activityType" jdbcType="INTEGER" />
+        <result column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+        <result column="activityName" property="activityName" jdbcType="VARCHAR" />
+        <result column="startTime" property="startTime" jdbcType="DATE" />
+        <result column="activityAddress" property="activityAddress" jdbcType="VARCHAR" />
+        <result column="payWay" property="payWay" jdbcType="INTEGER" />
+        <result column="boyNumber" property="boyNumber" jdbcType="INTEGER" />
+        <result column="girlNumber" property="girlNumber" jdbcType="INTEGER" />
+        <result column="joinUserNum" property="joinUserNum" jdbcType="INTEGER" />
+        <result column="totalUserNum" property="totalUserNum" jdbcType="INTEGER" />
+        <collection property="joinUserImgs" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserImgs"
+                    fetchType="lazy" ofType="java.lang.String">
+        </collection>
+
+        <collection property="joinUserInfoList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserInfos"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityUserDto">
+        </collection>
+
     </resultMap>
 
     <select id="getTeamListOld" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
@@ -282,7 +329,7 @@
     select chat_group_id from team where id = #{teamId} limit 1
     </select>
 
-    <select id="getActivityList" resultType="com.joyzone.platform.core.dto.ActivityDto">
+    <select id="getActivityList" resultMap="activityMap">
         SELECT
             t.id AS teamId,
             t.owner AS userId,
@@ -298,10 +345,52 @@
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
-            t.number AS totalUserNum
+            t.number AS totalUserNum,
+            t.tag AS label
         FROM team t
         LEFT JOIN USER u ON u.id = t.owner
         WHERE t.status = 0
         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+    </select>
+
+    <select id="queryJoinUserImgs" resultType="java.lang.String">
+        SELECT u.head_pic as headPic
+        FROM team t
+        LEFT JOIN team_users tu ON tu.team_id = t.id
+        LEFT JOIN `user` u ON u.id = tu.user_id
+        WHERE t.id = #{teamId}
+    </select>
+
+    <select id="getActivityDetail" resultMap="activityDetailMap">
+      SELECT
+        t.id AS teamId,
+        t.owner AS userId,
+        t.activity_type AS activityType,
+        t.shop_id AS shopId,
+        s.name AS shopName,
+        t.activity_name AS activityName,
+        t.start_time AS startTime,
+        t.activity_address AS activityAddress,
+        t.pay_way AS payWay,
+        t.number_boy AS boyNumber,
+        t.number_girl AS girlNumber,
+        (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+        t.number AS totalUserNum
+        FROM team t
+        LEFT JOIN shop s ON s.id = t.shop_id
+        WHERE t.id = #{teamId}
+    </select>
+
+    <select id="queryJoinUserInfos" resultType="com.joyzone.platform.core.dto.ActivityUserDto">
+      SELECT
+        u.id AS userId,
+        u.user_name AS userName,
+        u.cover_pic AS userCover,
+        u.sex AS userSex,
+        TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
+        FROM team t
+        LEFT JOIN team_users tu ON tu.team_id = t.id
+        LEFT JOIN USER u ON u.id = tu.user_id
+        WHERE t.id = #{teamId}
     </select>
 </mapper>

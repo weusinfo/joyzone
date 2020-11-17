@@ -162,6 +162,15 @@ public class TeamService extends BaseService<TeamModel> {
             teamModel.setCreateTime(date);
             teamModel.setChatGroupId(groupId);
             chatService.joinTeamGroup(groupId, teamModel.getOwner());
+            if(teamModel.getInvitedId() != null){
+                teamModel.setTag(0); //特约聚会
+            } else {
+                if(teamModel.getToWay() != 0){
+                    teamModel.setTag(1); //好友聚会
+                } else {
+                    teamModel.setTag(2); //普通聚会
+                }
+            }
             int flag =  teamMapper.insertSelective(teamModel);
             ThreadLocalMap.put("chatGroupId", groupId);
             List<TeamModel> teamList = teamMapper.checkTeamSaveSuccess(teamModel.getOwner(),teamModel.getChatGroupId());
@@ -182,11 +191,17 @@ public class TeamService extends BaseService<TeamModel> {
     public  R getActivityList(Long userId,Integer type,Integer pageNum,Integer pageSize){
         PageHelper.startPage(pageNum, pageSize);
         List<ActivityDto> list = teamMapper.getActivityList(userId,type);
+
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,new ArrayList<>());
+    }
+
+    public R getActivityDetail(Long userId,Long teamId){
+        ActivityDetailDto detailDto = teamMapper.getActivityDetail(teamId);
+        return R.ok(detailDto);
     }
 }

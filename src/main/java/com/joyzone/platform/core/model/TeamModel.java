@@ -127,6 +127,10 @@ public class TeamModel extends BaseModel {
     @Column(name = "invited_id")
     private Long invitedId;
 
+    @ApiModelProperty("0:特约 1：好友 2：普通")
+    @Column(name = "tag")
+    private Integer tag;
+
 	/**
      * @return id
      */
@@ -371,5 +375,13 @@ public class TeamModel extends BaseModel {
 
     public void setInvitedId(Long invitedId) {
         this.invitedId = invitedId;
+    }
+
+    public Integer getTag() {
+        return tag;
+    }
+
+    public void setTag(Integer tag) {
+        this.tag = tag;
     }
 }
