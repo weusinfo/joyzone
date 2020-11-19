@@ -268,4 +268,50 @@ public class AppTeamController {
         return teamService.getActivityDetail(userId,teamId);
     }
 
+    @ApiOperation("加入/退出/解散聚会")
+    @PostMapping("detailButton")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "teamId", value = "聚会id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0:加入 1:退出 2:解散聚会", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R detailButton(@RequestParam("userId") Long userId,@RequestParam("teamId") Long teamId,
+                          @RequestParam("type") Integer type){
+        TeamModel teamModel = teamService.selectByKey(teamId);
+        if(teamModel == null){
+            return R.error("聚会不存在");
+        }
+        UserModel userModel = userSerivce.selectByKey(userId);
+        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null || userModel.getBirthday() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日");
+        }
+        int ret = teamService.detailButton(userId,teamModel,type);
+        return ret > 0 ? R.ok() : R.error("操作失败");
+    }
+
+    @PostMapping("/getOrderList")
+    @ApiOperation("新版202011：前端获取订单列表 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0:我发起 1：邀请我", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "页数",required = true, dataType = "Integer",defaultValue = "1",paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数",required = true, dataType = "Integer",defaultValue = "10",paramType = "query")
+    })
+    public R getOrderList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type,
+                             Integer pageNum,Integer pageSize){
+        return teamService.getOrderList(userId,type,pageNum,pageSize);
+    }
+
+    @PostMapping("/getShopTabOne")
+    @ApiOperation("新版202011：前端获取商家详情聚会tab页面 @zhangyu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "shopId", value = "商家ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：聚会tab  1：商家信息tab  2：评价tab", required = true, dataType = "Integer", paramType = "query")
+    })
+    public R getShopTabOne(@RequestParam("shopId") Long shopId,@RequestParam("userId") Long userId,@RequestParam("type") Integer type){
+        return teamService.getShopTabOne(shopId,userId,type);
+    }
+
+
 }

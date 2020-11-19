@@ -69,6 +69,9 @@ public class ActivityDetailDto extends BaseModel{
     @ApiModelProperty("聚会详情按钮显示文本")
     private String buttonShow;
 
+    @ApiModelProperty("订单状态 0：进行中 1：成功 2：失败 3：已解散")
+    private Integer status;
+
     @ApiModelProperty("参与者信息列表")
     private List<ActivityUserDto> joinUserInfoList;
 
@@ -190,6 +193,14 @@ public class ActivityDetailDto extends BaseModel{
 
     public void setButtonShow(String buttonShow) {
         this.buttonShow = buttonShow;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public List<ActivityUserDto> getJoinUserInfoList() {

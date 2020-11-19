@@ -103,6 +103,7 @@
         <result column="joinUserNum" property="joinUserNum" jdbcType="INTEGER" />
         <result column="totalUserNum" property="totalUserNum" jdbcType="INTEGER" />
         <result column="label" property="label" jdbcType="INTEGER" />
+        <result column="teamStatus" property="teamStatus" jdbcType="INTEGER" />
         <collection property="joinUserImgs" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserImgs"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -122,6 +123,7 @@
         <result column="girlNumber" property="girlNumber" jdbcType="INTEGER" />
         <result column="joinUserNum" property="joinUserNum" jdbcType="INTEGER" />
         <result column="totalUserNum" property="totalUserNum" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
         <collection property="joinUserImgs" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserImgs"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -129,7 +131,21 @@
         <collection property="joinUserInfoList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserInfos"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityUserDto">
         </collection>
+    </resultMap>
+    
+    <resultMap id="shopDetailDtoMap" type="com.joyzone.platform.core.dto.ShopDetailDto">
+        <id column="shopId" property="shopId" jdbcType="BIGINT" />
+        <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+        <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
+        <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <collection property="shopPicList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryShopPicList"
+                    fetchType="lazy" ofType="java.lang.String">
+        </collection>
 
+        <collection property="shopTeamList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopActivityList"
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityDto">
+        </collection>
     </resultMap>
 
     <select id="getTeamListOld" resultMap="teamListMap" parameterType="com.joyzone.platform.core.model.TeamModel">
@@ -237,7 +253,7 @@
         u.id AS userId,
         u.head_pic AS userHeadImg
         FROM team_users tu
-        LEFT JOIN user u ON u.id = tu.user_id
+        LEFT JOIN `user` u ON u.id = tu.user_id
         WHERE tu.team_id = #{teamId} AND tu.status = 0
     </select>
 
@@ -256,7 +272,7 @@
             u.profession,u.education,s.name as shopName,s.cover_img as coverImg,
             st.name as shopTypeName,if(IFNULL(tu.id,0) = 0,0,1) as userJoinStatus
         FROM team t
-                 left join user u on u.id = t.owner
+                 left join `user` u on u.id = t.owner
                  left join shop s on s.id = t.shop_id
                  left join shop_type st on st.id = s.shop_type_id
                  left join team_users tu on (tu.team_id = t.id and tu.user_id = #{userId} and tu.status = 0)
@@ -348,7 +364,7 @@
             t.number AS totalUserNum,
             t.tag AS label
         FROM team t
-        LEFT JOIN USER u ON u.id = t.owner
+        LEFT JOIN `user` u ON u.id = t.owner
         WHERE t.status = 0
         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
     </select>
@@ -358,7 +374,7 @@
         FROM team t
         LEFT JOIN team_users tu ON tu.team_id = t.id
         LEFT JOIN `user` u ON u.id = tu.user_id
-        WHERE t.id = #{teamId}
+        WHERE t.id = #{teamId} and tu.status = 0
     </select>
 
     <select id="getActivityDetail" resultMap="activityDetailMap">
@@ -375,10 +391,11 @@
         t.number_boy AS boyNumber,
         t.number_girl AS girlNumber,
         (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
-        t.number AS totalUserNum
-        FROM team t
-        LEFT JOIN shop s ON s.id = t.shop_id
-        WHERE t.id = #{teamId}
+        t.number AS totalUserNum,
+        t.status
+      FROM team t
+      LEFT JOIN shop s ON s.id = t.shop_id
+      WHERE t.id = #{teamId}
     </select>
 
     <select id="queryJoinUserInfos" resultType="com.joyzone.platform.core.dto.ActivityUserDto">
@@ -388,9 +405,80 @@
         u.cover_pic AS userCover,
         u.sex AS userSex,
         TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
+      FROM team t
+      LEFT JOIN team_users tu ON tu.team_id = t.id
+      LEFT JOIN `user` u ON u.id = tu.user_id
+      WHERE t.id = #{teamId} and tu.status = 0
+    </select>
+
+    <select id="getOrderList" resultMap="activityMap">
+        SELECT
+            t.id AS teamId,
+            t.owner AS userId,
+            u.user_name AS userName,
+            u.cover_pic AS userCover,
+            u.sex AS userSex,
+            TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+            t.activity_name AS activityName,
+            t.start_time AS startTime,
+            t.activity_address AS activityAddress,
+            1 AS distance,
+            t.activity_type AS activityType,
+            (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+            t.pay_way AS payWay,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            t.number AS totalUserNum,
+            t.tag AS label,
+            t.status as teamStatus
         FROM team t
-        LEFT JOIN team_users tu ON tu.team_id = t.id
-        LEFT JOIN USER u ON u.id = tu.user_id
-        WHERE t.id = #{teamId}
+        LEFT JOIN `user` u ON u.id = t.owner
+        <if test="type == 0">
+            WHERE t.owner = #{userId}
+        </if>
+        <if test="type == 1">
+            LEFT JOIN team_users tu ON tu.user_id = u.id
+            WHERE tu.user_id = #{userId} AND t.owner != #{userId}
+        </if>
+    </select>
+
+    <select id="getShopTabOne" resultMap="shopDetailDtoMap">
+      SELECT
+          s.id AS shopId,
+          s.name AS shopName,
+          s.address AS shopAddress,
+          s.phone AS shopPhone,
+          s.price AS price
+      FROM shop s
+      WHERE s.id = #{shopId}
+    </select>
+
+    <select id="queryShopPicList" resultType="java.lang.String">
+        SELECT d.file_path FROM document d
+        WHERE d.owner = #{shopId}
+    </select>
+
+    <select id="getShopActivityList" resultMap="activityMap">
+        SELECT
+            t.id AS teamId,
+            t.owner AS userId,
+            u.user_name AS userName,
+            u.cover_pic AS userCover,
+            u.sex AS userSex,
+            TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+            t.activity_name AS activityName,
+            t.start_time AS startTime,
+            t.activity_address AS activityAddress,
+            1 AS distance,
+            t.activity_type AS activityType,
+            (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+            t.pay_way AS payWay,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            t.number AS totalUserNum,
+            t.tag AS label
+        FROM team t
+        LEFT JOIN `user` u ON u.id = t.owner
+        LEFT JOIN shop s on s.id = t.shop_id
+        WHERE t.status = 0 and s.id = #{shopId}
+        AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
     </select>
 </mapper>

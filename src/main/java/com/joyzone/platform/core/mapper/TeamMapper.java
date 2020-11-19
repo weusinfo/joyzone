@@ -40,4 +40,12 @@ public interface TeamMapper extends Mapper<TeamModel> {
     ActivityDetailDto getActivityDetail(@Param("teamId") Long teamId);
 
     List<ActivityUserDto> queryJoinUserInfos(@Param("teamId") Long teamId);
+
+    List<ActivityDto> getOrderList(@Param("userId") Long userId, @Param("type") Integer type);
+
+    ShopDetailDto getShopTabOne(@Param("shopId") Long shopId,@Param("userId") Long userId);
+
+    List<String> queryShopPicList(@Param("shopId") Long shopId);
+
+    List<ActivityDto> getShopActivityList(@Param("shopId") Long shopId);
 }

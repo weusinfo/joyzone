@@ -30,9 +30,10 @@ public class TeamService extends BaseService<TeamModel> {
     private TeamUsersMapper teamUsersMapper;
     @Autowired
     private GroupService groupService;
-    
     @Autowired
     ChatService chatService;
+    @Autowired
+    private TeamUsersService teamUsersService;
 
     /*public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
         return teamMapper.getTeamList(teamModel,userId,sort);
@@ -201,7 +202,117 @@ public class TeamService extends BaseService<TeamModel> {
     }
 
     public R getActivityDetail(Long userId,Long teamId){
+        List userIdList = new ArrayList();
         ActivityDetailDto detailDto = teamMapper.getActivityDetail(teamId);
+        Long owner = detailDto.getUserId();
+        int status = detailDto.getStatus();
+        List<ActivityUserDto> userInfoList = detailDto.getJoinUserInfoList();
+        for(int i=0;i<userInfoList.size();i++){
+            userIdList.add(userInfoList.get(i).getUserId());
+        }
+        if(status == 0){
+            if(userId == owner){
+                detailDto.setButtonShow("解散");
+            } else if (userIdList.contains(userId)) {
+                detailDto.setButtonShow("退出");
+            } else {
+                detailDto.setButtonShow("加入");
+            }
+        }else if(status == 1){
+            detailDto.setButtonShow("成功"); //聚会详情按钮内容为“成功”，“失败”，“失败”时，按钮不显示在前端页面
+        }else if(status == 2){
+            detailDto.setButtonShow("失败");
+        }else if(status == 3){
+            detailDto.setButtonShow("已解散");
+        }
         return R.ok(detailDto);
     }
+
+    public int detailButton(Long userId,TeamModel teamModel,Integer type){
+        int flag = 0;
+        if(type == 0){ //用户加入聚会
+            teamModel.setUpdateTime(new Date());
+            teamMapper.updateByPrimaryKey(teamModel);
+            // join the chat group
+            String groupId = getGroupId(teamModel.getId());
+            chatService.joinTeamGroup(groupId,userId);
+            // team_users表的变更
+            TeamUsersModel bean = teamUsersMapper.checkUserInTeam(new TeamUsersModel(),userId,teamModel.getId());
+            if(bean == null){
+                bean = new TeamUsersModel();
+                bean.setTeamId(teamModel.getId());
+                bean.setUserId(userId);
+                bean.setStatus(0);
+                bean.setCreateTime(new Date());
+                int ret = teamUsersService.save(bean);
+                if(ret == 1){
+                    flag++;
+                }
+            } else {
+                bean.setStatus(0);
+                bean.setUpdateTime(new Date());
+                int ret = teamUsersService.update(bean);
+                if(ret == 1){
+                    flag++;
+                }
+            }
+            // 检查聚会人数，看是否需要更改状态为成功
+            Map<String,Object> teamInfo = checkTeamIfSuccess(teamModel.getId());
+            Integer number = (Integer) teamInfo.get("number");
+            Integer joinNum = Integer.parseInt(teamInfo.get("joinNum").toString());
+            if(number == joinNum){
+                teamModel.setStatus(1); //聚会标志：成功
+                teamModel.setUpdateTime(new Date());
+                update(teamModel);
+            }
+        }
+        if(type == 1) { //用户退出聚会
+            teamModel.setStatus(0);  //聚会标志：进行中
+            teamModel.setUpdateTime(new Date());
+            teamMapper.updateByPrimaryKey(teamModel);
+            //todo backoff the chat group 需要操作群聊吗,一起思考下必要性？
+            //groupService.deleteGroup(teamModel.getId());
+            // team_users表的变更
+            TeamUsersModel bean = teamUsersMapper.checkUserInTeam(new TeamUsersModel(),userId,teamModel.getId());
+            bean.setStatus(1);
+            bean.setUpdateTime(new Date());
+            int ret = teamUsersService.update(bean);
+            if(ret == 1){
+                flag++;
+            }
+        }
+        if(type == 2) { //发起者解散聚会
+            teamModel.setStatus(3); //聚会标志：已解散
+            teamModel.setUpdateTime(new Date());
+            teamMapper.updateByPrimaryKey(teamModel);
+            //todo backoff the chat group 需要操作群聊吗,一起思考下必要性？
+            //groupService.cancelGroup(teamModel.getId(), userId);
+            // team_users表的变更
+            TeamUsersModel bean = teamUsersMapper.checkUserInTeam(new TeamUsersModel(),userId,teamModel.getId());
+            bean.setStatus(1);
+            bean.setUpdateTime(new Date());
+            int ret = teamUsersService.update(bean);
+            if(ret == 1){
+                flag++;
+            }
+        }
+        return flag;
+    }
+
+    public R getOrderList(Long userId,Integer type,Integer pageNum,Integer pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ActivityDto> list = teamMapper.getOrderList(userId,type);
+        if(list != null && list.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
+    }
+
+    public R getShopTabOne(Long shopId,Long userId,Integer type){
+        ShopDetailDto shopDetailDto = teamMapper.getShopTabOne(shopId,userId);
+        return R.ok(shopDetailDto);
+    }
+
 }

@@ -74,6 +74,9 @@ public class ActivityDto extends BaseModel{
     @ApiModelProperty("特约或好友标志")
     private String label;
 
+    @ApiModelProperty("订单状态 0：进行中 1：成功 2：失败 3：已解散")
+    private Integer teamStatus;
+
     public Long getTeamId() {
         return teamId;
     }
@@ -208,5 +211,13 @@ public class ActivityDto extends BaseModel{
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public Integer getTeamStatus() {
+        return teamStatus;
+    }
+
+    public void setTeamStatus(Integer teamStatus) {
+        this.teamStatus = teamStatus;
     }
 }
