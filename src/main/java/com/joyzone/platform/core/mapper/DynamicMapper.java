@@ -18,6 +18,6 @@ public interface DynamicMapper extends Mapper<DynamicModel> {
 
     List<UserDynamicCommentListDto> queryUserDynamicCommentList(@Param("dynamicId") Long dynamicId);
 
-    List<IndexDynamicListDto> getIndexDynamicList(@Param("userId") Long userId);
+    List<IndexDynamicListDto> getIndexDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 
 }

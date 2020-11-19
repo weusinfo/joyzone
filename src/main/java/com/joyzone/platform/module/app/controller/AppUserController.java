@@ -30,11 +30,6 @@ public class AppUserController {
 
     @ApiOperation("根据ID保存用户的经纬度信息")
     @PostMapping("saveUserLngAndLat")
-    @ApiImplicitParams({
-        @ApiImplicitParam(value = "用ID",name = "userId",paramType = "form"),
-        @ApiImplicitParam(value = "经度",name = "lng",paramType = "form"),
-        @ApiImplicitParam(value = "纬度",name = "lat",paramType = "form")
-    })
     public R saveUserLngAndLat(@RequestParam("userId") Long userId,@RequestParam("lng") Double lng,@RequestParam("lat") Double lat){
         userSerivce.saveUserLngAndLat(userId,lng,lat);
         return R.ok("操作成功");

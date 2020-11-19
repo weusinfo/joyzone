@@ -31,6 +31,8 @@ import com.joyzone.platform.core.model.ShopModel;
 import cn.hutool.core.util.NumberUtil;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
+
 @Service
 @Transactional
 public class ShopService extends BaseService<ShopModel> {
@@ -41,13 +43,16 @@ public class ShopService extends BaseService<ShopModel> {
 	private double radius;//设置距离的范围
 
 	@Autowired
-	private ShopMapper shopMapper;
-	@Autowired
 	private RedisService redisService;
+
 	@Autowired
 	private ShopTypeService shopTypeService;
+
 	@Autowired
 	private DocumentService documentService;
+
+	@Resource
+	private ShopMapper shopMapper;
 
 	
 	public void validateShop(ShopModel shop) {
@@ -162,44 +167,6 @@ public class ShopService extends BaseService<ShopModel> {
 			return R.pageToData(page.getTotal(),page.getResult());
 		}
 		return R.pageToData(0L,list);
-	}
-
-
-	/**
-	 * 获取App端商家首页信息
-	 * @Mr.Gx
-	 */
-	public R getAppShopHomeList(Long userId,Integer pageSize){
-		AppShopHomeVO appShopHomeVO = new AppShopHomeVO();
-		//获取轮播图规定六张
-		appShopHomeVO.setShopPicList(shopMapper.getShopPicList(BaseModel.PAGE_SIZE_SIX));
-		//获取组队店家的种类及三组店家相关信息
-		List<ShopTypeModel> list = shopTypeService.selectByPageSize(BaseModel.PAGE_NUM,BaseModel.PAGE_SIZE_SIX, ShopTypeModel.SHOP_TYPE_ZD);
-		if(list != null && list.size() > 0){
-			appShopHomeVO.setShopTypeModels(list);
-			int count = 0;
-			for(ShopTypeModel shopTypeModel : list){
-                if(count == 3){
-                    break;
-                }
-				if(count == 0){
-					appShopHomeVO.setAppShops1(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
-					count++;
-					continue;
-				}
-				if(count == 1){
-					appShopHomeVO.setAppShops2(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
-					count++;
-                    continue;
-				}
-				if(count == 2){
-					appShopHomeVO.setAppShops3(shopMapper.getAppShopHomeList(shopTypeModel.getId(),pageSize));
-					count++;
-                    continue;
-				}
-			}
-		}
-		return R.ok(appShopHomeVO);
 	}
 
 	public ShopHomeDto getShopHomeList(Long userId){

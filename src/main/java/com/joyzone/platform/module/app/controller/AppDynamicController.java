@@ -1,6 +1,9 @@
 package com.joyzone.platform.module.app.controller;
 
+import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.IndexDynamicListDto;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.service.DynamicCommentSerivce;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description:TODO
@@ -36,11 +42,11 @@ public class AppDynamicController {
 
     @ApiOperation("发布动态")
     @PostMapping("saveDynamic")
-    public R saveDynamic(DynamicModel dynamicModel){
-        if(dynamicModel == null || dynamicModel.getUserId() == null || dynamicModel.getKind() == null)
+    public R saveDynamic(DynamicDTO dynamicDTO){
+        if(dynamicDTO == null || dynamicDTO.getUserId() == null || dynamicDTO.getKind() == null)
             return R.error("参数不能为空");
 
-        return  dynamicSerivce.saveDynamic(dynamicModel) > 0 ? R.ok() : R.error("发布失败");
+        return  dynamicSerivce.saveDynamic(dynamicDTO) > 0 ? R.ok() : R.error("发布失败");
     }
 
     @ApiOperation("评论动态")
@@ -64,12 +70,17 @@ public class AppDynamicController {
 
     @ApiOperation("获取动态首页动态列表")
     @PostMapping("getIndexDynamicList")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0：推荐 1：关注", required = true, dataType = "Integer", paramType = "query")
-    })
-    public R getIndexDynamicList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type){
-        return R.ok(dynamicSerivce.getIndexDynamicList(userId,type));
+    public R getIndexDynamicList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type,
+                                 @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                                 @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+
+        List<IndexDynamicListDto> list = dynamicSerivce.getIndexDynamicList(userId,type,pageNum,pageSize);
+        if(list != null && list.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),page.getResult());
+        }
+        return R.pageToData(0L,new ArrayList<>());
     }
 
     @ApiOperation("点赞(动态)/取消点赞")

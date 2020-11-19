@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.service;
 
+import com.alibaba.fastjson.JSON;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -7,6 +8,7 @@ import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
 
 import cn.hutool.crypto.digest.DigestUtil;
+import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
 import tk.mybatis.mapper.entity.Example;
 
@@ -16,6 +18,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +34,13 @@ import java.util.List;
 public class UserSerivce extends BaseService<UserModel> {
 
     @Autowired
-    private UserMapper userMapper;
-    
-    @Autowired
     private RedisService redisService;
     
     @Autowired
     private ChatService chatService;
+
+    @Resource
+    private UserMapper userMapper;
 
     /**
      * 后台用户管理清单
@@ -69,7 +73,6 @@ public class UserSerivce extends BaseService<UserModel> {
 
     /**
      * 根据电话号码获取用户信息
-     * @param userModel
      * Mr.Gx
      */
     public UserModel getUserByPhone(String phone){
@@ -80,8 +83,9 @@ public class UserSerivce extends BaseService<UserModel> {
      * 添加用户的经纬度信息
      * Mr.Gx
      */
-    public Long saveUserLngAndLat(Long userId,Double lng,Double lat){
-        return RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(), RedisColumn.USER_LOCATION,new Point(lng,lat),userId.toString());
+    public void saveUserLngAndLat(Long userId,Double lng,Double lat){
+        // RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(), RedisColumn.USER_LOCATION,new Point(lng,lat),userId.toString());
+        redisService.hset(RedisColumn.USER_LOCATION , userId.toString() ,JSON.toJSON(new LocationVO(lng,lat)));
     }
 
     /**

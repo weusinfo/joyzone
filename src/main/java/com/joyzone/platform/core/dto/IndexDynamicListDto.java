@@ -3,6 +3,7 @@ package com.joyzone.platform.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.vo.LocationVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,20 @@ public class IndexDynamicListDto extends BaseModel{
 
     @ApiModelProperty("是否关注 0：未关注 1：已关注")
     private int followed;
+
+    @ApiModelProperty("经度")
+    private double lnt;
+
+    @ApiModelProperty("纬度")
+    private double lat;
+
+    @ApiModelProperty("距离")
+    private double distance;
+
+    private String pics;
+
+    @ApiModelProperty("图片地址")
+    private List<String> dynamicPics;
 
     @ApiModelProperty("评论详情列表")
     private List<UserDynamicCommentListDto> commentDetailList;
@@ -161,5 +176,45 @@ public class IndexDynamicListDto extends BaseModel{
 
     public void setCommentDetailList(List<UserDynamicCommentListDto> commentDetailList) {
         this.commentDetailList = commentDetailList;
+    }
+
+    public double getLnt() {
+        return lnt;
+    }
+
+    public void setLnt(double lnt) {
+        this.lnt = lnt;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
+
+    public List<String> getDynamicPics() {
+        return dynamicPics;
+    }
+
+    public void setDynamicPics(List<String> dynamicPics) {
+        this.dynamicPics = dynamicPics;
     }
 }
