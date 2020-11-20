@@ -1,10 +1,11 @@
 package com.joyzone.platform.core.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.LocationUtils;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.DynamicDto;
 import com.joyzone.platform.core.dto.IndexDynamicListDto;
 import com.joyzone.platform.core.dto.UserDynamicDto;
 import com.joyzone.platform.core.mapper.DynamicMapper;
@@ -13,18 +14,15 @@ import com.joyzone.platform.core.mapper.GiveThumbMapper;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.model.DynamicPictureModel;
 import com.joyzone.platform.core.model.GiveThumbModel;
-import com.joyzone.platform.core.vo.AppShopVO;
 import com.joyzone.platform.core.vo.LocationVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Description:TODO
@@ -50,7 +48,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param dynamicDTO
      * zhangyu
      */
-    public int saveDynamic(DynamicDTO dynamicDTO){
+    public int saveDynamic(DynamicDto dynamicDTO){
 
         DynamicModel dynamicModel = new DynamicModel(dynamicDTO);
 
@@ -103,6 +101,12 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
                 }
                 // 计算距离
                 m.setDistance(LocationUtils.getDistance(lat1,lnt1,lat2,lnt2));
+                if(StringUtils.isNotBlank(m.getPics())){
+                    m.setDynamicPics(JSONObject.parseArray(m.getPics(),String.class));
+                } else {
+                    m.setDynamicPics(new ArrayList<>());
+                }
+                m.setPics(null);
             });
         }
         // 根据距离进行排序

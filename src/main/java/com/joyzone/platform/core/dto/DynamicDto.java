@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class DynamicDTO {
+public class DynamicDto implements Serializable {
 
     /**
      * 发动态者id
@@ -24,7 +26,7 @@ public class DynamicDTO {
     private Integer kind;
 
 
-    private String[] dynamicPics;
+    private List<String> dynamicPics;
 
 
     /**
@@ -81,12 +83,11 @@ public class DynamicDTO {
         this.kind = kind;
     }
 
-    public String[] getDynamicPics() {
+    public List<String> getDynamicPics() {
         return dynamicPics;
     }
 
-    public void setDynamicPics(String[] dynamicPics) {
+    public void setDynamicPics(List<String> dynamicPics) {
         this.dynamicPics = dynamicPics;
     }
-
 }

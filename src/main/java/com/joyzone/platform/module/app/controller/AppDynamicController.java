@@ -2,7 +2,7 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.DynamicDto;
 import com.joyzone.platform.core.dto.IndexDynamicListDto;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
@@ -42,8 +42,11 @@ public class AppDynamicController {
 
     @ApiOperation("发布动态")
     @PostMapping("saveDynamic")
-    public R saveDynamic(DynamicDTO dynamicDTO){
-        if(dynamicDTO == null || dynamicDTO.getUserId() == null || dynamicDTO.getKind() == null)
+    public R saveDynamic(DynamicDto dynamicDTO){
+        if(dynamicDTO == null
+                || dynamicDTO.getUserId() == null
+                    || dynamicDTO.getKind() == null
+                        || dynamicDTO.getDynamicPics() == null)
             return R.error("参数不能为空");
 
         return  dynamicSerivce.saveDynamic(dynamicDTO) > 0 ? R.ok() : R.error("发布失败");

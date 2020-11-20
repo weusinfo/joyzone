@@ -1,7 +1,6 @@
 package com.joyzone.platform.core.model;
 
-import com.alibaba.fastjson.JSONObject;
-import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.DynamicDto;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -54,7 +53,7 @@ public class DynamicModel {
 
     public DynamicModel() { }
 
-    public DynamicModel(DynamicDTO dynamicDTO) {
+    public DynamicModel(DynamicDto dynamicDTO) {
         this.userId = dynamicDTO.getUserId();
         this.content = dynamicDTO.getContent();
         this.kind = dynamicDTO.getKind();
@@ -62,7 +61,7 @@ public class DynamicModel {
         Date date = new Date();
         this.createTime = date;
         this.updateTime = date;
-        this.dynamicPics = null != dynamicDTO.getDynamicPics() ? JSONObject.toJSONString(dynamicDTO.getDynamicPics()) : "[]";
+        this.pics = null != dynamicDTO.getDynamicPics() ? dynamicDTO.getDynamicPics().toString() : null;
     }
 
     /**
@@ -199,4 +198,11 @@ public class DynamicModel {
         this.dynamicPics = dynamicPics;
     }
 
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
 }
