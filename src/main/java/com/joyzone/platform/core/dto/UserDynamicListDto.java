@@ -29,7 +29,7 @@ public class UserDynamicListDto extends BaseModel{
     private Date createTime;
 
     @ApiModelProperty("评论详情列表")
-    private List<UserDynamicCommentListDto> commentDetailList;
+    private List<UserDynamicCommentListDTO> commentDetailList;
 
     public Long getDynamicId() {
         return dynamicId;
@@ -55,11 +55,11 @@ public class UserDynamicListDto extends BaseModel{
         this.createTime = createTime;
     }
 
-    public List<UserDynamicCommentListDto> getCommentDetailList() {
+    public List<UserDynamicCommentListDTO> getCommentDetailList() {
         return commentDetailList;
     }
 
-    public void setCommentDetailList(List<UserDynamicCommentListDto> commentDetailList) {
+    public void setCommentDetailList(List<UserDynamicCommentListDTO> commentDetailList) {
         this.commentDetailList = commentDetailList;
     }
 }

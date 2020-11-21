@@ -18,9 +18,9 @@ import java.util.List;
 @Configuration
 @ApiModel("前端店家组队列表交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class TeamRuleDto extends BaseModel{
+public class TeamRuleDTO extends BaseModel{
 
-    public TeamRuleDto(){
+    public TeamRuleDTO(){
 
     }
 
@@ -79,7 +79,7 @@ public class TeamRuleDto extends BaseModel{
     @ApiModelProperty("店家收藏状态 0：收藏 1：未收藏")
     private Integer shopCollectStatus;
 
-    private List<UserJoinTeamDto> userJoinList;
+    private List<UserJoinTeamDTO> userJoinList;
 
     @ApiModelProperty("店家轮播图片")
     private List<String> coverImgList;
@@ -196,11 +196,11 @@ public class TeamRuleDto extends BaseModel{
         this.shopCollectStatus = shopCollectStatus;
     }
 
-    public List<UserJoinTeamDto> getUserJoinList() {
+    public List<UserJoinTeamDTO> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinTeamDTO> userJoinList) {
         this.userJoinList = userJoinList;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 @ApiModel("商家首页店家DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopHomeListDto extends BaseModel {
+public class ShopHomeListDTO extends BaseModel {
 
     @ApiModelProperty("店家种类ID")
     private Long shopTypeId;

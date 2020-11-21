@@ -4,10 +4,10 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.ShopDto;
-import com.joyzone.platform.core.dto.ShopHomeDto;
-import com.joyzone.platform.core.dto.ShopInfoDto;
-import com.joyzone.platform.core.dto.ShopTeamsDto;
+import com.joyzone.platform.core.dto.ShopDTO;
+import com.joyzone.platform.core.dto.ShopHomeDTO;
+import com.joyzone.platform.core.dto.ShopInfoDTO;
+import com.joyzone.platform.core.dto.ShopTeamsDTO;
 import com.joyzone.platform.core.model.BaseModel;
 import com.joyzone.platform.core.model.ShopCollectModel;
 import com.joyzone.platform.core.model.ShopModel;
@@ -66,7 +66,7 @@ public class AppShopController {
     })
     public R getShopHomeList(@RequestParam("userId") Long userId){
         PageHelper.startPage(0,10);
-        ShopHomeDto shopHome = shopService.getShopHomeList(userId);
+        ShopHomeDTO shopHome = shopService.getShopHomeList(userId);
         if(shopHome != null){
             return R.ok(shopHome);
         }
@@ -80,7 +80,7 @@ public class AppShopController {
             @ApiImplicitParam(name = "userId",value = "用户ID",paramType = "form")
     })
     public R findByShopId(Long id,Long userId){
-        ShopInfoDto shopInfoDto = shopService.findShopInfoDtoByShopId(id,userId);
+        ShopInfoDTO shopInfoDto = shopService.findShopInfoDtoByShopId(id,userId);
         if(shopInfoDto != null){
             return R.ok(shopInfoDto);
         }
@@ -89,17 +89,17 @@ public class AppShopController {
 
     @PostMapping("getAppShopList")
     @ApiOperation("根据种类ID获取附近店家信息 @Mr.Gx")
-    public R getAppShopList(ShopDto shopDto){
-        if(shopDto == null)
+    public R getAppShopList(ShopDTO shopDTO){
+        if(shopDTO == null)
             return R.error("参数不能为空");
-        if(shopDto.getShopTypeId() == null)
+        if(shopDTO.getShopTypeId() == null)
             return R.error("种类ID不能为空");
-        if(shopDto.getPageNum() == null)
-            shopDto.setPageNum(BaseModel.PAGE_NUM);
-        if(shopDto.getPageSize() == null)
-            shopDto.setPageSize(BaseModel.PAGE_SIZE);
+        if(shopDTO.getPageNum() == null)
+            shopDTO.setPageNum(BaseModel.PAGE_NUM);
+        if(shopDTO.getPageSize() == null)
+            shopDTO.setPageSize(BaseModel.PAGE_SIZE);
 
-        return shopService.getAppShopList(shopDto);
+        return shopService.getAppShopList(shopDTO);
     }
 
     @PostMapping("getAppShopByTypeId")
@@ -119,7 +119,7 @@ public class AppShopController {
     @ApiOperation("根据店家ID获取该店家下的有效组队信息 @zy")
     public R getShopTeamListByShopId(Long shopId){
         PageHelper.startPage(0,10);
-        List<ShopTeamsDto> shopTeamsInfoList = teamService.getShopTeamListByShopId(shopId);
+        List<ShopTeamsDTO> shopTeamsInfoList = teamService.getShopTeamListByShopId(shopId);
         if(shopTeamsInfoList != null && shopTeamsInfoList.size() > 0){
             Page page = new Page();
             page = (Page)shopTeamsInfoList;

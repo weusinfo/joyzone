@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @ApiModel("店家组队用户参与信息DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserJoinTeamDto extends BaseModel {
+public class UserJoinTeamDTO extends BaseModel {
 
     @ApiModelProperty("店家组队ID")
     private Long teamOrInvitingId;

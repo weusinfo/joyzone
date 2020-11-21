@@ -67,7 +67,7 @@ public class CouponRuleDTO extends BaseModel{
     @ApiModelProperty("店家收藏状态 0：收藏 1：未收藏")
     private Integer shopCollectStatus;
 
-    private List<UserJoinCouponDto> userJoinList;
+    private List<UserJoinCouponDTO> userJoinList;
 
     public Long getCouponId() {
         return couponId;
@@ -157,11 +157,11 @@ public class CouponRuleDTO extends BaseModel{
         this.shopCollectStatus = shopCollectStatus;
     }
 
-    public List<UserJoinCouponDto> getUserJoinList() {
+    public List<UserJoinCouponDTO> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinCouponDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinCouponDTO> userJoinList) {
         this.userJoinList = userJoinList;
     }
 }

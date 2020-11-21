@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.ShopCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.ShopCommentModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="is_anonym" property="isAnonym" jdbcType="TINYINT" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="pic_urls" property="picUrls" jdbcType="LONGVARCHAR" />
+    <result column="admin_content" property="adminContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+</mapper>

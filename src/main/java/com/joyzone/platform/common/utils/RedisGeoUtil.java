@@ -168,7 +168,7 @@ public class RedisGeoUtil {
      * @param shopDto
      * @Mr.Gx
      */
-//    public R getAppShopList(ShopDto shopDto){
+//    public R getAppShopList(ShopDTO shopDTO){
 //        Double longitude = shopDto.getLng().doubleValue();
 //        Double latitude = shopDto.getLat().doubleValue();
 //        Point geoCoordinate=new Point(longitude,latitude);

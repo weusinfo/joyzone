@@ -12,9 +12,9 @@ import java.util.List;
 @Configuration
 @ApiModel("关注者列表与被关注者列表返回DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserFollowDto extends BaseModel{
+public class UserFollowDTO extends BaseModel{
 
-    public UserFollowDto(){
+    public UserFollowDTO(){
 
     }
 

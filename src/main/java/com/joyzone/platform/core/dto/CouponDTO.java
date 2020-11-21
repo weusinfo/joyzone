@@ -69,7 +69,7 @@ public class CouponDTO extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
-    private List<UserJoinCouponDto> userJoinList;
+    private List<UserJoinCouponDTO> userJoinList;
 
     public Long getCouponId() {
         return couponId;
@@ -159,11 +159,11 @@ public class CouponDTO extends BaseModel{
         this.personNum = personNum;
     }
 
-    public List<UserJoinCouponDto> getUserJoinList() {
+    public List<UserJoinCouponDTO> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinCouponDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinCouponDTO> userJoinList) {
         this.userJoinList = userJoinList;
     }
 

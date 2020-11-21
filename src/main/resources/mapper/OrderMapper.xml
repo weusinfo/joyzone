@@ -31,12 +31,12 @@
     <result column="orderStatus" property="orderStatus" jdbcType="INTEGER" />
     <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <collection property="userJoinList" javaType="ArrayList" column="{teamOrInvitingId=teamOrInvitingId,orderType=orderType}" select="com.joyzone.platform.core.mapper.OrderMapper.queryUserJoinTeamList"
-                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDTO">
 
     </collection>
   </resultMap>
 
-  <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDto">
+  <resultMap id="userJoinTeamMap" type="com.joyzone.platform.core.dto.UserJoinTeamDTO">
     <id column="teamOrInvitingId" property="teamOrInvitingId" jdbcType="BIGINT" />
     <result column="orderType" property="orderType" jdbcType="INTEGER" />
     <result column="userId" property="userId" jdbcType="BIGINT" />

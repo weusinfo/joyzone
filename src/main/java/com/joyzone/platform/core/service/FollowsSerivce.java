@@ -1,7 +1,7 @@
 package com.joyzone.platform.core.service;
 
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.UserFollowDto;
+import com.joyzone.platform.core.dto.UserFollowDTO;
 import com.joyzone.platform.core.mapper.FollowsMapper;
 import com.joyzone.platform.core.model.FollowsModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class FollowsSerivce extends BaseService<FollowsModel> {
      * @param userId
      * zhangyu
      */
-    public List<UserFollowDto> getUserFollowList(Long userId,Integer type){
+    public List<UserFollowDTO> getUserFollowList(Long userId, Integer type){
         return followsMapper.getUserFollowList(userId,type);
     }
 

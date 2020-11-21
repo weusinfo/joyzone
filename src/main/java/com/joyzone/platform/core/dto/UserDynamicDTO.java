@@ -11,9 +11,9 @@ import java.util.List;
 @Configuration
 @ApiModel("我的-动态/个人主页返回DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserDynamicDto extends BaseModel{
+public class UserDynamicDTO extends BaseModel{
 
-    public UserDynamicDto(){
+    public UserDynamicDTO(){
 
     }
 

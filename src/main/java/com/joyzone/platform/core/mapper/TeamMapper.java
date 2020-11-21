@@ -11,23 +11,23 @@ import java.util.Map;
 
 public interface TeamMapper extends Mapper<TeamModel> {
     /*List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId, @Param("sort") Integer sort);*/
-    List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId);
+    List<TeamDTO> getTeamList(TeamModel teamModel, @Param("userId") Long userId);
 
     List<ActivityDTO> getActivityList(@Param("userId") Long userId, @Param("type") Integer type);
 
     Map<String,Object> checkTeamIfSuccess(@Param("teamId") Long teamId);
 
-    List<TeamDto> getTeamList(TeamModel teamModel);
+    List<TeamDTO> getTeamList(TeamModel teamModel);
 
     List<AppTeamVO> getAppTeamList(@Param("userId") Long userId,
                                    @Param("pageNum") Integer pageNum,
                                    @Param("pageSize") Integer pageSize);
 
-    List<ShopTeamsDto> getShopTeamListByShopId(@Param("shopId") Long shopId);
+    List<ShopTeamsDTO> getShopTeamListByShopId(@Param("shopId") Long shopId);
 
     List<TeamModel> checkUserStartTeam(@Param("userId") Long userId,@Param("shopId") Long shopId);
 
-    TeamRuleDto getTeamRuleList(@Param("teamId")  Long teamId,@Param("userId") Long userId);
+    TeamRuleDTO getTeamRuleList(@Param("teamId")  Long teamId, @Param("userId") Long userId);
     
     Integer checkTeamOwner(@Param("teamId") Long teamId, @Param("userId") Long userId);
     

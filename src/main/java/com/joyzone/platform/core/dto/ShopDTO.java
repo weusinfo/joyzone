@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * date: 2019/4/29
  */
 @ApiModel("店家相关信息")
-public class ShopDto extends BaseModel {
+public class ShopDTO extends BaseModel {
 
     @ApiModelProperty("用户ID")
     private Long userId;

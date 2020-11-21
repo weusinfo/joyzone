@@ -13,7 +13,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <select id="getUserFollowList" resultType="com.joyzone.platform.core.dto.UserFollowDto">
+  <select id="getUserFollowList" resultType="com.joyzone.platform.core.dto.UserFollowDTO">
     SELECT
       u.id AS userId,
       u.head_pic AS userPic,

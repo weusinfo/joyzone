@@ -15,7 +15,7 @@
     <result column="pics" property="pics" jdbcType="VARCHAR" />
   </resultMap>
 
-  <resultMap id="userDynamic" type="com.joyzone.platform.core.dto.UserDynamicDto">
+  <resultMap id="userDynamic" type="com.joyzone.platform.core.dto.UserDynamicDTO">
     <id column="userId" property="userId" jdbcType="BIGINT"/>
     <result column="userPic" property="userPic" jdbcType="VARCHAR"/>
     <result column="userName" property="userName" jdbcType="VARCHAR"/>
@@ -31,11 +31,11 @@
     <result column="dynamicContent" property="dynamicContent" jdbcType="VARCHAR"/>
     <result column="createTime" property="createTime" jdbcType="DATE"/>
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
-                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     </collection>
   </resultMap>
   
-  <resultMap id="userDynamicCommentList" type="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+  <resultMap id="userDynamicCommentList" type="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
     <result column="pid" property="pid" jdbcType="BIGINT"/>
     <result column="commentId" property="commentId" jdbcType="BIGINT"/>
@@ -61,7 +61,7 @@
     <result column="followed" property="followed" jdbcType="INTEGER"/>
     <result column="pics" property="pics" jdbcType="VARCHAR"/>
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
-                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDto">
+                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     </collection>
   </resultMap>
 

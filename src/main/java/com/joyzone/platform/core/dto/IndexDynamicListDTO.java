@@ -3,12 +3,10 @@ package com.joyzone.platform.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.core.model.BaseModel;
-import com.joyzone.platform.core.vo.LocationVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -72,7 +70,7 @@ public class IndexDynamicListDTO extends BaseModel{
     private List<String> dynamicPics;
 
     @ApiModelProperty("评论详情列表")
-    private List<UserDynamicCommentListDto> commentDetailList;
+    private List<UserDynamicCommentListDTO> commentDetailList;
 
     public Long getDynamicId() {
         return dynamicId;
@@ -170,11 +168,11 @@ public class IndexDynamicListDTO extends BaseModel{
         this.followed = followed;
     }
 
-    public List<UserDynamicCommentListDto> getCommentDetailList() {
+    public List<UserDynamicCommentListDTO> getCommentDetailList() {
         return commentDetailList;
     }
 
-    public void setCommentDetailList(List<UserDynamicCommentListDto> commentDetailList) {
+    public void setCommentDetailList(List<UserDynamicCommentListDTO> commentDetailList) {
         this.commentDetailList = commentDetailList;
     }
 

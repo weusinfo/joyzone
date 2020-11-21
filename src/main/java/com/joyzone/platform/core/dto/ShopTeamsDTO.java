@@ -15,7 +15,7 @@ import java.util.List;
 @ApiModel("店家组队列表信息DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopTeamsDto extends BaseModel {
+public class ShopTeamsDTO extends BaseModel {
 
     @ApiModelProperty("店家ID")
     private Long shopId;
@@ -36,7 +36,7 @@ public class ShopTeamsDto extends BaseModel {
     private BigDecimal shopPrice;
 
     @ApiModelProperty("店家该组队人员信息")
-    private List<UserJoinTeamDto> teamUsers;
+    private List<UserJoinTeamDTO> teamUsers;
 
     public Long getShopId() {
         return shopId;
@@ -86,11 +86,11 @@ public class ShopTeamsDto extends BaseModel {
         this.shopPrice = shopPrice;
     }
 
-    public List<UserJoinTeamDto> getTeamUsers() {
+    public List<UserJoinTeamDTO> getTeamUsers() {
         return teamUsers;
     }
 
-    public void setTeamUsers(List<UserJoinTeamDto> teamUsers) {
+    public void setTeamUsers(List<UserJoinTeamDTO> teamUsers) {
         this.teamUsers = teamUsers;
     }
 

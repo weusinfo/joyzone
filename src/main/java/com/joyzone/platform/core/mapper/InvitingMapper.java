@@ -1,7 +1,7 @@
 package com.joyzone.platform.core.mapper;
 
 import com.joyzone.platform.core.dto.InvitingDto;
-import com.joyzone.platform.core.dto.UserDto;
+import com.joyzone.platform.core.dto.UserDTO;
 import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.vo.AppInvitingVO;
 import org.apache.ibatis.annotations.Param;
@@ -33,7 +33,7 @@ public interface InvitingMapper extends Mapper<InvitingModel> {
     
     String getGroupId(@Param("invitingId") Long invitingId);
 
-    List<UserDto> queryInvitingUserList(@Param("invitingId") Long invitingId);
+    List<UserDTO> queryInvitingUserList(@Param("invitingId") Long invitingId);
     
     int disableExpiredInviting();
     

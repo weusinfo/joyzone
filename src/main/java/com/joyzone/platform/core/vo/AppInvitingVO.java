@@ -3,10 +3,9 @@ package com.joyzone.platform.core.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.common.utils.DateUtils;
-import com.joyzone.platform.core.dto.UserDto;
+import com.joyzone.platform.core.dto.UserDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 
 import java.util.Date;
 import java.util.List;
@@ -64,7 +63,7 @@ public class AppInvitingVO {
     private Integer inviteOrNot;
 
     @ApiModelProperty("参与邀请的人员集合")
-    private List<UserDto> userDtoList;
+    private List<UserDTO> userDtoList;
 
     public String getUserName() {
         return userName;
@@ -178,11 +177,11 @@ public class AppInvitingVO {
         this.inviteOrNot = inviteOrNot;
     }
 
-    public List<UserDto> getUserDtoList() {
+    public List<UserDTO> getUserDtoList() {
         return userDtoList;
     }
 
-    public void setUserDtoList(List<UserDto> userDtoList) {
-        this.userDtoList = userDtoList;
+    public void setUserDtoList(List<UserDTO> userDTOList) {
+        this.userDtoList = userDTOList;
     }
 }

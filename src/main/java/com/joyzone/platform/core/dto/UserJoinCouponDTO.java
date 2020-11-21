@@ -9,16 +9,27 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by zy on 2019/4/20.
  */
-@ApiModel("用户DTO")
+@ApiModel("参加信息DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserDto extends BaseModel {
+public class UserJoinCouponDTO extends BaseModel {
+
+    @ApiModelProperty("体验券ID")
+    private Long couponId;
 
     @ApiModelProperty("用户ID")
     private Long userId;
 
     @ApiModelProperty("用户头像")
     private String userHeadImg;
+
+    public Long getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(Long couponId) {
+        this.couponId = couponId;
+    }
 
     public Long getUserId() {
         return userId;

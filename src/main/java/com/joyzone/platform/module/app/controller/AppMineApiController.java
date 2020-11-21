@@ -4,14 +4,9 @@ package com.joyzone.platform.module.app.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.TeamDto;
 import com.joyzone.platform.core.model.ShopCollectModel;
 import com.joyzone.platform.core.model.ShopModel;
-import com.joyzone.platform.core.model.TeamModel;
-import com.joyzone.platform.core.model.TeamUsersModel;
 import com.joyzone.platform.core.service.ShopCollectService;
-import com.joyzone.platform.core.service.TeamService;
-import com.joyzone.platform.core.service.TeamUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController

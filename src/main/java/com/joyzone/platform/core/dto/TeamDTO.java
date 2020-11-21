@@ -16,9 +16,9 @@ import java.util.List;
 @Configuration
 @ApiModel("前端店家组队列表交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class TeamDto extends BaseModel{
+public class TeamDTO extends BaseModel{
 
-    public TeamDto(){
+    public TeamDTO(){
 
     }
 
@@ -55,7 +55,7 @@ public class TeamDto extends BaseModel{
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
 
-    private List<UserJoinTeamDto> userJoinList;
+    private List<UserJoinTeamDTO> userJoinList;
 
     public Long getTeamId() {
         return teamId;
@@ -121,11 +121,11 @@ public class TeamDto extends BaseModel{
         this.personNum = personNum;
     }
 
-    public List<UserJoinTeamDto> getUserJoinList() {
+    public List<UserJoinTeamDTO> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinTeamDTO> userJoinList) {
         this.userJoinList = userJoinList;
     }
 }

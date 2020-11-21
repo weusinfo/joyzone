@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class OrderMineDTO extends BaseModel{
     @ApiModelProperty("0：店家组队订单 1：个人邀请订单")
     private Integer orderType;
 
-    private List<UserJoinTeamDto> userJoinList;
+    private List<UserJoinTeamDTO> userJoinList;
 
     public Long getTeamOrInvitingId() {
         return teamOrInvitingId;
@@ -144,11 +143,11 @@ public class OrderMineDTO extends BaseModel{
         this.orderType = orderType;
     }
 
-    public List<UserJoinTeamDto> getUserJoinList() {
+    public List<UserJoinTeamDTO> getUserJoinList() {
         return userJoinList;
     }
 
-    public void setUserJoinList(List<UserJoinTeamDto> userJoinList) {
+    public void setUserJoinList(List<UserJoinTeamDTO> userJoinList) {
         this.userJoinList = userJoinList;
     }
 

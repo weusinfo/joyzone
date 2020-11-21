@@ -12,9 +12,9 @@ import java.util.Date;
 @Configuration
 @ApiModel("我的-动态/个人主页返回DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class UserDynamicCommentListDto extends BaseModel{
+public class UserDynamicCommentListDTO extends BaseModel{
 
-    public UserDynamicCommentListDto(){
+    public UserDynamicCommentListDTO(){
 
     }
 

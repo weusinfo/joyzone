@@ -35,11 +35,11 @@
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
         <result column="agreeOrNot" property="agreeOrNot" jdbcType="INTEGER" />
         <collection property="userDtoList" javaType="ArrayList" column="{invitingId=invitingId}" select="com.joyzone.platform.core.mapper.InvitingMapper.queryInvitingUserList"
-                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDto">
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDTO">
 
         </collection>
     </resultMap>
-    <resultMap id="invitingUserDtoMap" type="com.joyzone.platform.core.dto.UserDto">
+    <resultMap id="invitingUserDtoMap" type="com.joyzone.platform.core.dto.UserDTO">
         <id column="userId" property="userId" jdbcType="BIGINT" />
         <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
     </resultMap>

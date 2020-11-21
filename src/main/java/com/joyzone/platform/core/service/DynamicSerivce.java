@@ -7,7 +7,7 @@ import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.DynamicDTO;
 import com.joyzone.platform.core.dto.IndexDynamicListDTO;
-import com.joyzone.platform.core.dto.UserDynamicDto;
+import com.joyzone.platform.core.dto.UserDynamicDTO;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.DynamicPictureMapper;
 import com.joyzone.platform.core.mapper.GiveThumbMapper;
@@ -76,7 +76,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param userId
      * zhangyu
      */
-    public List<UserDynamicDto> getUserDynamicList(Long userId){
+    public List<UserDynamicDTO> getUserDynamicList(Long userId){
         return dynamicMapper.getUserDynamicList(userId);
     }
 

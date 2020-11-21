@@ -14,7 +14,7 @@ import java.util.List;
 @ApiModel("商家首页DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopHomeDto extends BaseModel {
+public class ShopHomeDTO extends BaseModel {
 
     @ApiModelProperty("用户ID")
     private Long userId;
@@ -29,10 +29,10 @@ public class ShopHomeDto extends BaseModel {
     private List<ShopHomeTypeDTO> shopHomeTypeDTOList;    //暂时按UI图上的那8个店家种类来，前端先写死
 
     @ApiModelProperty("商家首页热门店家DTO集合")
-    private List<ShopHomeHotDTO> shopHomeHotDTOList;
+    private List<ShopHomeHotDTO> shopHomeHotDtoList;
 
     @ApiModelProperty("商家首页店家DTO集合")
-    private List<ShopHomeListDto> shopHomeListDtoList;
+    private List<ShopHomeListDTO> shopHomeListDtoList;
 
     public Long getUserId() {
         return userId;
@@ -66,19 +66,19 @@ public class ShopHomeDto extends BaseModel {
         this.shopHomeTypeDTOList = shopHomeTypeDTOList;
     }
 
-    public List<ShopHomeListDto> getShopHomeListDtoList() {
+    public List<ShopHomeListDTO> getShopHomeListDtoList() {
         return shopHomeListDtoList;
     }
 
-    public void setShopHomeListDtoList(List<ShopHomeListDto> shopHomeListDtoList) {
+    public void setShopHomeListDtoList(List<ShopHomeListDTO> shopHomeListDtoList) {
         this.shopHomeListDtoList = shopHomeListDtoList;
     }
 
     public List<ShopHomeHotDTO> getShopHomeHotDTOList() {
-        return shopHomeHotDTOList;
+        return shopHomeHotDtoList;
     }
 
     public void setShopHomeHotDTOList(List<ShopHomeHotDTO> shopHomeHotDTOList) {
-        this.shopHomeHotDTOList = shopHomeHotDTOList;
+        this.shopHomeHotDtoList = shopHomeHotDTOList;
     }
 }

@@ -1,9 +1,9 @@
 package com.joyzone.platform.core.mapper;
 
 import com.joyzone.platform.core.base.BaseMapper;
-import com.joyzone.platform.core.dto.ShopDto;
-import com.joyzone.platform.core.dto.ShopHomeDto;
-import com.joyzone.platform.core.dto.ShopInfoDto;
+import com.joyzone.platform.core.dto.ShopDTO;
+import com.joyzone.platform.core.dto.ShopHomeDTO;
+import com.joyzone.platform.core.dto.ShopInfoDTO;
 import com.joyzone.platform.core.model.ShopModel;
 import com.joyzone.platform.core.vo.AppShopVO;
 import org.apache.ibatis.annotations.Param;
@@ -19,11 +19,11 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 	
 	int batchDelete(Long[] ids);
 
-	List<AppShopVO> getAppShopList(ShopDto shopDto);
+	List<AppShopVO> getAppShopList(ShopDTO shopDTO);
 
 	ShopModel findById(@Param("id") Long id);
 
-	ShopInfoDto findShopInfoDtoByShopId(@Param("shopId") Long shopId,@Param("userId") Long userId);
+	ShopInfoDTO findShopInfoDtoByShopId(@Param("shopId") Long shopId, @Param("userId") Long userId);
 
 	List<ShopModel> findAll();
 
@@ -31,7 +31,7 @@ public interface ShopMapper extends BaseMapper<ShopModel> {
 
 	List<String> getShopPicList(@Param("size") Integer size);
 
-	ShopHomeDto getShopHomeList(@Param("userId") Long userId);
+	ShopHomeDTO getShopHomeList(@Param("userId") Long userId);
 
 	List<ShopModel> getAppShopByTypeId(@Param("typeId") Long typeId);
 

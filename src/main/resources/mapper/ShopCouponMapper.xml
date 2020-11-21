@@ -37,12 +37,12 @@
        <result column="shopTypeName" property="shopTypeName" jdbcType="VARCHAR" />
        <result column="personNum" property="personNum" jdbcType="INTEGER" />
        <collection property="userJoinList" javaType="ArrayList" column="{couponId=couponId}" select="com.joyzone.platform.core.mapper.ShopCouponMapper.queryUserJoinCouponList"
-                   fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinCouponDto">
+                   fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinCouponDTO">
 
        </collection>
    </resultMap>
 
-    <resultMap id="userJoinCouponMap" type="com.joyzone.platform.core.dto.UserJoinCouponDto">
+    <resultMap id="userJoinCouponMap" type="com.joyzone.platform.core.dto.UserJoinCouponDTO">
         <id column="couponId" property="couponId" jdbcType="BIGINT" />
         <result column="userId" property="userId" jdbcType="BIGINT" />
         <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
@@ -61,7 +61,7 @@
         <result column="personNum" property="personNum" jdbcType="INTEGER" />
         <result column="shopCollectStatus" property="shopCollectStatus" jdbcType="INTEGER" />
         <collection property="userJoinList" javaType="ArrayList" column="{couponId=couponId}" select="com.joyzone.platform.core.mapper.ShopCouponMapper.queryUserJoinCouponList"
-                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDto">
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserJoinTeamDTO">
 
         </collection>
     </resultMap>

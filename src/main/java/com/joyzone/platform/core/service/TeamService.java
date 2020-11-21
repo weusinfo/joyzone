@@ -35,7 +35,7 @@ public class TeamService extends BaseService<TeamModel> {
     /*public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
         return teamMapper.getTeamList(teamModel,userId,sort);
     }*/
-    private R pageToRet(List<TeamDto> list){
+    private R pageToRet(List<TeamDTO> list){
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
@@ -117,11 +117,11 @@ public class TeamService extends BaseService<TeamModel> {
         return R.pageToData(0L,list);
     }
 
-    public List<ShopTeamsDto> getShopTeamListByShopId(Long shopId){
+    public List<ShopTeamsDTO> getShopTeamListByShopId(Long shopId){
         return teamMapper.getShopTeamListByShopId(shopId);
     }
 
-    public TeamRuleDto getTeamRuleList(Long teamId,Long userId){
+    public TeamRuleDTO getTeamRuleList(Long teamId, Long userId){
         return teamMapper.getTeamRuleList(teamId,userId);
     }
 

@@ -1,6 +1,5 @@
 package com.joyzone.platform.core.dto;
 
-import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.common.utils.DateUtils;
@@ -10,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +21,7 @@ import java.util.List;
 @ApiModel("店家詳情頁相关信息")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopInfoDto extends BaseModel {
+public class ShopInfoDTO extends BaseModel {
 
     @ApiModelProperty("店家id")
     private Long shopId;
@@ -112,7 +110,7 @@ public class ShopInfoDto extends BaseModel {
     private Integer shopCollectStatus;
 
     @ApiModelProperty("商家有效正在组队信息集合")
-    private List<ShopTeamsDto> shopTeamsDtoList;
+    private List<ShopTeamsDTO> shopTeamsDtoList;
 
     @ApiModelProperty("店家轮播图片")
     private List<String> coverImgList;
@@ -277,12 +275,12 @@ public class ShopInfoDto extends BaseModel {
         this.shopCollectStatus = shopCollectStatus;
     }
 
-    public List<ShopTeamsDto> getShopTeamsDtoList() {
+    public List<ShopTeamsDTO> getShopTeamsDtoList() {
         return shopTeamsDtoList;
     }
 
-    public void setShopTeamsDtoList(List<ShopTeamsDto> shopTeamsDtoList) {
-        this.shopTeamsDtoList = shopTeamsDtoList;
+    public void setShopTeamsDtoList(List<ShopTeamsDTO> shopTeamsDTOList) {
+        this.shopTeamsDtoList = shopTeamsDTOList;
     }
 
     public List<String> getCoverImgList() {

@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.PublicUtil;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
-import com.joyzone.platform.core.dto.TeamRuleDto;
+import com.joyzone.platform.core.dto.TeamRuleDTO;
 import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.service.ChatService;
 import com.joyzone.platform.core.service.ShopTypeService;
@@ -185,7 +185,7 @@ public class AppTeamController {
             @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long", paramType = "query")
     })
     public R getTeamRuleInfo(Long teamId,Long userId){
-        TeamRuleDto teamRuleDto = teamService.getTeamRuleList(teamId,userId);
+        TeamRuleDTO teamRuleDto = teamService.getTeamRuleList(teamId,userId);
         if(teamRuleDto == null){
             return R.error("没有数据！");
         }

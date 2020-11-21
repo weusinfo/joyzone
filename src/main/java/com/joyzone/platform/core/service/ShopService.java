@@ -3,22 +3,16 @@ package com.joyzone.platform.core.service;
 import java.util.*;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.*;
-import com.joyzone.platform.core.dto.ShopDto;
-import com.joyzone.platform.core.dto.ShopHomeDto;
-import com.joyzone.platform.core.dto.ShopInfoDto;
-import com.joyzone.platform.core.model.BaseModel;
+import com.joyzone.platform.core.dto.ShopDTO;
+import com.joyzone.platform.core.dto.ShopHomeDTO;
+import com.joyzone.platform.core.dto.ShopInfoDTO;
 import com.joyzone.platform.core.model.DocumentModel;
-import com.joyzone.platform.core.model.ShopTypeModel;
-import com.joyzone.platform.core.vo.AppShopHomeVO;
 import com.joyzone.platform.core.vo.AppShopVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -28,7 +22,6 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.ShopMapper;
 import com.joyzone.platform.core.model.ShopModel;
 
-import cn.hutool.core.util.NumberUtil;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -149,18 +142,18 @@ public class ShopService extends BaseService<ShopModel> {
 		return shopMapper.findById(id);
 	}
 
-	public ShopInfoDto findShopInfoDtoByShopId(Long shopId,Long userId){
+	public ShopInfoDTO findShopInfoDtoByShopId(Long shopId, Long userId){
 		return shopMapper.findShopInfoDtoByShopId(shopId,userId);
 	}
 
 	/**
 	 * 获取用户附近的商家信息
-	 * @param shopDto
+	 * @param shopDTO
 	 * @Mr.Gx
 	 */
-	public R getAppShopList(ShopDto shopDto){
-		shopDto.setStatus(ShopModel.STATUS_SUCCESS); //已签约
-		List<AppShopVO> list = shopMapper.getAppShopList(shopDto);
+	public R getAppShopList(ShopDTO shopDTO){
+		shopDTO.setStatus(ShopModel.STATUS_SUCCESS); //已签约
+		List<AppShopVO> list = shopMapper.getAppShopList(shopDTO);
 		if(list!=null && list.size()>0){
 			Page page = new Page();
 			page = (Page)list;
@@ -169,7 +162,7 @@ public class ShopService extends BaseService<ShopModel> {
 		return R.pageToData(0L,list);
 	}
 
-	public ShopHomeDto getShopHomeList(Long userId){
+	public ShopHomeDTO getShopHomeList(Long userId){
 		return shopMapper.getShopHomeList(userId);
 	}
 
