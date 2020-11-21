@@ -86,7 +86,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="activityMap" type="com.joyzone.platform.core.dto.ActivityDto">
+    <resultMap id="activityMap" type="com.joyzone.platform.core.dto.ActivityDTO">
         <id column="teamId" property="teamId" jdbcType="BIGINT" />
         <result column="userId" property="userId" jdbcType="BIGINT" />
         <result column="userName" property="userName" jdbcType="VARCHAR" />
@@ -109,7 +109,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="activityDetailMap" type="com.joyzone.platform.core.dto.ActivityDetailDto">
+    <resultMap id="activityDetailMap" type="com.joyzone.platform.core.dto.ActivityDetailDTO">
         <id column="teamId" property="teamId" jdbcType="BIGINT" />
         <result column="userId" property="userId" jdbcType="BIGINT" />
         <result column="activityType" property="activityType" jdbcType="INTEGER" />
@@ -129,11 +129,11 @@
         </collection>
 
         <collection property="joinUserInfoList" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserInfos"
-                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityUserDto">
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityUserDTO">
         </collection>
     </resultMap>
     
-    <resultMap id="shopDetailDtoMap" type="com.joyzone.platform.core.dto.ShopDetailDto">
+    <resultMap id="shopDetailDtoMap" type="com.joyzone.platform.core.dto.ShopDetaiDTO">
         <id column="shopId" property="shopId" jdbcType="BIGINT" />
         <result column="shopName" property="shopName" jdbcType="VARCHAR" />
         <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
@@ -144,7 +144,7 @@
         </collection>
 
         <collection property="shopTeamList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopActivityList"
-                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityDto">
+                    fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityDTO">
         </collection>
     </resultMap>
 
@@ -398,7 +398,7 @@
       WHERE t.id = #{teamId}
     </select>
 
-    <select id="queryJoinUserInfos" resultType="com.joyzone.platform.core.dto.ActivityUserDto">
+    <select id="queryJoinUserInfos" resultType="com.joyzone.platform.core.dto.ActivityUserDTO">
       SELECT
         u.id AS userId,
         u.user_name AS userName,

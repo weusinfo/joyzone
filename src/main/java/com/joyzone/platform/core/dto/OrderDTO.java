@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 @ApiModel("订单信息DTO")
-public class OrderDto extends BaseModel {
+public class OrderDTO extends BaseModel {
 
     @ApiModelProperty("主键")
     private Long id;

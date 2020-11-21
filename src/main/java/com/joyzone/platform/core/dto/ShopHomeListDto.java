@@ -25,7 +25,7 @@ public class ShopHomeListDto extends BaseModel {
     private Integer sort;
 
     @ApiModelProperty("种类下店家集合")
-    private List<ShopHomeListCoverDto> shopHomeCoverList;
+    private List<ShopHomeListCoverDTO> shopHomeCoverList;
 
     public Long getShopTypeId() {
         return shopTypeId;
@@ -51,11 +51,11 @@ public class ShopHomeListDto extends BaseModel {
         this.sort = sort;
     }
 
-    public List<ShopHomeListCoverDto> getShopHomeCoverList() {
+    public List<ShopHomeListCoverDTO> getShopHomeCoverList() {
         return shopHomeCoverList;
     }
 
-    public void setShopHomeCoverList(List<ShopHomeListCoverDto> shopHomeCoverList) {
+    public void setShopHomeCoverList(List<ShopHomeListCoverDTO> shopHomeCoverList) {
         this.shopHomeCoverList = shopHomeCoverList;
     }
 }

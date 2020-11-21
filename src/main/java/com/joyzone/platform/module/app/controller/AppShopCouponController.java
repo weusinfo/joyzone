@@ -4,12 +4,10 @@ package com.joyzone.platform.module.app.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.CouponDto;
-import com.joyzone.platform.core.dto.CouponRuleDto;
-import com.joyzone.platform.core.dto.TeamRuleDto;
+import com.joyzone.platform.core.dto.CouponDTO;
+import com.joyzone.platform.core.dto.CouponRuleDTO;
 import com.joyzone.platform.core.model.CouponUserModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
-import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.CouponUserService;
 import com.joyzone.platform.core.service.GroupService;
@@ -57,10 +55,10 @@ public class AppShopCouponController {
     })
     public R getCouponList(ShopCouponModel shopCouponModel,Long userId, Integer sort){
         PageHelper.startPage(0,10);
-        List<CouponDto> couponDtoList = shopCouponService.getCouponList(shopCouponModel,userId,sort);
-        if(couponDtoList != null && couponDtoList.size() > 0){
+        List<CouponDTO> couponDTOList = shopCouponService.getCouponList(shopCouponModel,userId,sort);
+        if(couponDTOList != null && couponDTOList.size() > 0){
             Page page = new Page();
-            page = (Page)couponDtoList;
+            page = (Page) couponDTOList;
             return R.pageToData(page.getTotal(),page.getResult());
         }
         return R.pageToData(0L,new ArrayList<>());
@@ -142,7 +140,7 @@ public class AppShopCouponController {
             @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long", paramType = "query")
     })
     public R getCouponRuleInfo(Long couponId,Long userId){
-        CouponRuleDto couponRuleDto = couponService.getCouponRuleInfo(couponId,userId);
+        CouponRuleDTO couponRuleDto = couponService.getCouponRuleInfo(couponId,userId);
         if(couponRuleDto == null){
             return R.error("没有数据！");
         }

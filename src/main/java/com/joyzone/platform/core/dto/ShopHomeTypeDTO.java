@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @ApiModel("商家首页店家类型DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopHomeTypeDto extends BaseModel {
+public class ShopHomeTypeDTO extends BaseModel {
 
     @ApiModelProperty("店家类型ID")
     private Long shopTypeId;

@@ -19,7 +19,7 @@
     <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <resultMap id="teamOrderListMap" type="com.joyzone.platform.core.dto.OrderMineDto">
+  <resultMap id="teamOrderListMap" type="com.joyzone.platform.core.dto.OrderMineDTO">
     <id column="teamOrInvitingId" property="teamOrInvitingId" jdbcType="BIGINT" />
     <result column="shopId" property="shopId" jdbcType="BIGINT" />
     <result column="shopOrUserImg" property="shopOrUserImg" jdbcType="VARCHAR" />
@@ -47,7 +47,7 @@
     id,team_id,order_type,order_no,shop_kind,shop_id,person_num,create_time,update_time,pay_time,status
   </sql>
 
-  <select id="getOrderList" resultType="com.joyzone.platform.core.dto.OrderDto" parameterType="com.joyzone.platform.core.dto.OrderDto">
+  <select id="getOrderList" resultType="com.joyzone.platform.core.dto.OrderDTO" parameterType="com.joyzone.platform.core.dto.OrderDTO">
     select
       o.id,o.order_no as orderNo,o.order_type as orderType,o.person_num as personNum,o.price,
       o.pay_time as payTime,o.team_id as teamId,o.create_time as createTime,o.status,
@@ -69,7 +69,7 @@
     </if>
   </select>
 
-  <select id="findById" resultType="com.joyzone.platform.core.dto.OrderDto">
+  <select id="findById" resultType="com.joyzone.platform.core.dto.OrderDTO">
     select
     o.id,o.order_no as orderNo,o.order_type as orderType,o.person_num as personNum,o.price,
     o.pay_time as payTime,o.team_id as teamId,o.create_time as createTime,o.status,

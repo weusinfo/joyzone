@@ -4,9 +4,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.OrderDto;
-import com.joyzone.platform.core.dto.OrderMineDto;
-import com.joyzone.platform.core.dto.TeamDto;
+import com.joyzone.platform.core.dto.OrderDTO;
+import com.joyzone.platform.core.dto.OrderMineDTO;
 import com.joyzone.platform.core.mapper.OrderMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.BaseModel;
@@ -33,13 +32,13 @@ public class OrderService extends BaseService<OrderModel> {
      * 后台获取订单列表
      * Mr.Gx
      */
-    public R getOrderList(OrderDto orderDto){
+    public R getOrderList(OrderDTO orderDto){
         if(orderDto.getPageNum() == null)
             orderDto.setPageNum(BaseModel.PAGE_NUM);
         if(orderDto.getPageSize() == null)
             orderDto.setPageNum(BaseModel.PAGE_SIZE);
 
-        List<OrderDto> list = selectOrderList(orderDto);
+        List<OrderDTO> list = selectOrderList(orderDto);
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
@@ -80,11 +79,11 @@ public class OrderService extends BaseService<OrderModel> {
         return R.pageToData(0L,new ArrayList<>());
     }
 
-    public  List<OrderDto> selectOrderList(OrderDto orderDto){
+    public  List<OrderDTO> selectOrderList(OrderDTO orderDto){
         return orderMapper.getOrderList(orderDto);
     }
 
-    private R pageToRet(List<OrderMineDto> list){
+    private R pageToRet(List<OrderMineDTO> list){
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;

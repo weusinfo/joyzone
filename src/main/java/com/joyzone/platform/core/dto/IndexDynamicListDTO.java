@@ -15,9 +15,9 @@ import java.util.List;
 @Configuration
 @ApiModel("动态模块动态列表返回DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class IndexDynamicListDto extends BaseModel{
+public class IndexDynamicListDTO extends BaseModel{
 
-    public IndexDynamicListDto(){
+    public IndexDynamicListDTO(){
 
     }
 

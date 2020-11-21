@@ -23,13 +23,13 @@ public class ShopHomeDto extends BaseModel {
     private String userName;
 
     @ApiModelProperty("商家首页banner图DTO集合")
-    private List<ShopHomeBannerDto> shopHomeBannerDtoList;
+    private List<ShopHomeBannerDTO> shopHomeBannerDTOList;
 
     @ApiModelProperty("商家首页店家类型DTO集合")
-    private List<ShopHomeTypeDto> shopHomeTypeDtoList;    //暂时按UI图上的那8个店家种类来，前端先写死
+    private List<ShopHomeTypeDTO> shopHomeTypeDTOList;    //暂时按UI图上的那8个店家种类来，前端先写死
 
     @ApiModelProperty("商家首页热门店家DTO集合")
-    private List<ShopHomeHotDto> shopHomeHotDtoList;
+    private List<ShopHomeHotDTO> shopHomeHotDTOList;
 
     @ApiModelProperty("商家首页店家DTO集合")
     private List<ShopHomeListDto> shopHomeListDtoList;
@@ -50,20 +50,20 @@ public class ShopHomeDto extends BaseModel {
         this.userName = userName;
     }
 
-    public List<ShopHomeBannerDto> getShopHomeBannerDtoList() {
-        return shopHomeBannerDtoList;
+    public List<ShopHomeBannerDTO> getShopHomeBannerDTOList() {
+        return shopHomeBannerDTOList;
     }
 
-    public void setShopHomeBannerDtoList(List<ShopHomeBannerDto> shopHomeBannerDtoList) {
-        this.shopHomeBannerDtoList = shopHomeBannerDtoList;
+    public void setShopHomeBannerDTOList(List<ShopHomeBannerDTO> shopHomeBannerDTOList) {
+        this.shopHomeBannerDTOList = shopHomeBannerDTOList;
     }
 
-    public List<ShopHomeTypeDto> getShopHomeTypeDtoList() {
-        return shopHomeTypeDtoList;
+    public List<ShopHomeTypeDTO> getShopHomeTypeDtoList() {
+        return shopHomeTypeDTOList;
     }
 
-    public void setShopHomeTypeDtoList(List<ShopHomeTypeDto> shopHomeTypeDtoList) {
-        this.shopHomeTypeDtoList = shopHomeTypeDtoList;
+    public void setShopHomeTypeDtoList(List<ShopHomeTypeDTO> shopHomeTypeDTOList) {
+        this.shopHomeTypeDTOList = shopHomeTypeDTOList;
     }
 
     public List<ShopHomeListDto> getShopHomeListDtoList() {
@@ -74,11 +74,11 @@ public class ShopHomeDto extends BaseModel {
         this.shopHomeListDtoList = shopHomeListDtoList;
     }
 
-    public List<ShopHomeHotDto> getShopHomeHotDtoList() {
-        return shopHomeHotDtoList;
+    public List<ShopHomeHotDTO> getShopHomeHotDTOList() {
+        return shopHomeHotDTOList;
     }
 
-    public void setShopHomeHotDtoList(List<ShopHomeHotDto> shopHomeHotDtoList) {
-        this.shopHomeHotDtoList = shopHomeHotDtoList;
+    public void setShopHomeHotDTOList(List<ShopHomeHotDTO> shopHomeHotDTOList) {
+        this.shopHomeHotDTOList = shopHomeHotDTOList;
     }
 }

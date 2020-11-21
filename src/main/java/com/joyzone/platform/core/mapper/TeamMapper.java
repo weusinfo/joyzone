@@ -13,7 +13,7 @@ public interface TeamMapper extends Mapper<TeamModel> {
     /*List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId, @Param("sort") Integer sort);*/
     List<TeamDto> getTeamList(TeamModel teamModel,@Param("userId") Long userId);
 
-    List<ActivityDto> getActivityList(@Param("userId") Long userId, @Param("type") Integer type);
+    List<ActivityDTO> getActivityList(@Param("userId") Long userId, @Param("type") Integer type);
 
     Map<String,Object> checkTeamIfSuccess(@Param("teamId") Long teamId);
 
@@ -37,15 +37,15 @@ public interface TeamMapper extends Mapper<TeamModel> {
 
     List<String> queryJoinUserImgs(@Param("teamId") Long teamId);
 
-    ActivityDetailDto getActivityDetail(@Param("teamId") Long teamId);
+    ActivityDetailDTO getActivityDetail(@Param("teamId") Long teamId);
 
-    List<ActivityUserDto> queryJoinUserInfos(@Param("teamId") Long teamId);
+    List<ActivityUserDTO> queryJoinUserInfos(@Param("teamId") Long teamId);
 
-    List<ActivityDto> getOrderList(@Param("userId") Long userId, @Param("type") Integer type);
+    List<ActivityDTO> getOrderList(@Param("userId") Long userId, @Param("type") Integer type);
 
-    ShopDetailDto getShopTabOne(@Param("shopId") Long shopId,@Param("userId") Long userId);
+    ShopDetaiDTO getShopTabOne(@Param("shopId") Long shopId, @Param("userId") Long userId);
 
     List<String> queryShopPicList(@Param("shopId") Long shopId);
 
-    List<ActivityDto> getShopActivityList(@Param("shopId") Long shopId);
+    List<ActivityDTO> getShopActivityList(@Param("shopId") Long shopId);
 }

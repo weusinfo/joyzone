@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class DynamicDto implements Serializable {
+public class DynamicDTO implements Serializable {
 
     /**
      * 发动态者id
