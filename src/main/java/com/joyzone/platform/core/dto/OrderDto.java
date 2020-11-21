@@ -17,6 +17,7 @@ public class OrderDto extends BaseModel {
     @ApiModelProperty("主键")
     private Long id;
 
+
     @Excel(name="订单编号")
     @ApiModelProperty("订单编号")
     private String orderNo;
