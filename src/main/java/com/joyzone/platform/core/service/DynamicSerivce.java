@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.LocationUtils;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.DynamicDto;
-import com.joyzone.platform.core.dto.IndexDynamicListDto;
+import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.IndexDynamicListDTO;
 import com.joyzone.platform.core.dto.UserDynamicDto;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.DynamicPictureMapper;
@@ -48,7 +48,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param dynamicDTO
      * zhangyu
      */
-    public int saveDynamic(DynamicDto dynamicDTO){
+    public int saveDynamic(DynamicDTO dynamicDTO){
 
         DynamicModel dynamicModel = new DynamicModel(dynamicDTO);
 
@@ -80,7 +80,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         return dynamicMapper.getUserDynamicList(userId);
     }
 
-    public List<IndexDynamicListDto> getIndexDynamicList(Long userId,Integer type,Integer pageNum,Integer pageSize){
+    public List<IndexDynamicListDTO> getIndexDynamicList(Long userId, Integer type, Integer pageNum, Integer pageSize){
         // 获取当前用户的坐标
         LocationVO userLocation = this.selectByUserLocation(userId);
         double lat = 0.0,lnt = 0.0;
@@ -89,7 +89,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             lnt = userLocation.getLnt();
         }
         // 获取
-        List<IndexDynamicListDto> list = dynamicMapper.getIndexDynamicList(userId,pageNum,pageSize);
+        List<IndexDynamicListDTO> list = dynamicMapper.getIndexDynamicList(userId,pageNum,pageSize);
         double lat1 = lat, lnt1 = lnt;
         if (null != list && !list.isEmpty()){
             list.stream().forEach(m -> {
@@ -110,8 +110,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             });
         }
         // 根据距离进行排序
-        Collections.sort(list, new Comparator<IndexDynamicListDto>(){
-            public int compare(IndexDynamicListDto arg0, IndexDynamicListDto arg1) {
+        Collections.sort(list, new Comparator<IndexDynamicListDTO>(){
+            public int compare(IndexDynamicListDTO arg0, IndexDynamicListDTO arg1) {
                 BigDecimal hits0 = BigDecimal.valueOf(arg0.getDistance());
                 BigDecimal hits1 = BigDecimal.valueOf(arg1.getDistance()) ;
                 if (hits1.compareTo(hits0) > 0) {

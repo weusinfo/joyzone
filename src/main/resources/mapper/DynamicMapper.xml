@@ -46,7 +46,7 @@
     <result column="content" property="content" jdbcType="VARCHAR"/>
   </resultMap>
   
-  <resultMap id="indexDynamicListMap" type="com.joyzone.platform.core.dto.IndexDynamicListDto">
+  <resultMap id="indexDynamicListMap" type="com.joyzone.platform.core.dto.IndexDynamicListDTO">
     <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
     <result column="userId" property="userId" jdbcType="BIGINT"/>
     <result column="userPic" property="userPic" jdbcType="VARCHAR"/>

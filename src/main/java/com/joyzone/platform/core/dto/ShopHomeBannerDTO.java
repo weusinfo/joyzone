@@ -9,16 +9,16 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by zy on 2019/5/10.
  */
-@ApiModel("商家首页店家类型DTO")
+@ApiModel("商家首页banner图DTO")
 @Configuration
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopHomeListCoverDto extends BaseModel {
+public class ShopHomeBannerDTO extends BaseModel {
 
     @ApiModelProperty("店家ID")
     private Long shopId;
 
     @ApiModelProperty("店家封面")
-    private String shopCover;
+    private String shopCoverImg;
 
     public Long getShopId() {
         return shopId;
@@ -28,12 +28,12 @@ public class ShopHomeListCoverDto extends BaseModel {
         this.shopId = shopId;
     }
 
-    public String getShopCover() {
-        return shopCover;
+    public String getShopCoverImg() {
+        return shopCoverImg;
     }
 
-    public void setShopCover(String shopCover) {
-        this.shopCover = shopCover;
+    public void setShopCoverImg(String shopCoverImg) {
+        this.shopCoverImg = shopCoverImg;
     }
 
 

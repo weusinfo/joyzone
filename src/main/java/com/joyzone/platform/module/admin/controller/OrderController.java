@@ -5,7 +5,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.joyzone.platform.common.utils.Constants;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.OrderDto;
+import com.joyzone.platform.core.dto.OrderDTO;
 import com.joyzone.platform.core.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class OrderController {
      */
     @GetMapping("getOrderList")
     @ApiOperation("后台订单列表 @Mr.Gx")
-    public R getOrderList(OrderDto orderDto){
+    public R getOrderList(OrderDTO orderDto){
         return orderService.getOrderList(orderDto);
     }
 
@@ -54,14 +54,14 @@ public class OrderController {
 
     @GetMapping("/exportOrderXls")
     @ApiOperation("订单清单导出 @Mr.Gx")
-    public void exportShopCouponXls(OrderDto orderDto, HttpServletResponse response) throws Exception{
+    public void exportShopCouponXls(OrderDTO orderDto, HttpServletResponse response) throws Exception{
         response.setHeader("content-Type", "application/vnd.ms-excel");
         response.setHeader("Content-Disposition",
                 "attachment;filename=" + URLEncoder.encode(Constants.JOY_ORDER, "UTF-8") + ".xls");
         response.setCharacterEncoding("UTF-8");
-        List<OrderDto> list = orderService.selectOrderList(orderDto);;
+        List<OrderDTO> list = orderService.selectOrderList(orderDto);;
         ExportParams params = new ExportParams(Constants.JOY_ORDER, Constants.JOY_ORDER);
-        Workbook workbook = ExcelExportUtil.exportExcel(params, OrderDto.class, list);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, OrderDTO.class, list);
         workbook.write(response.getOutputStream());
     }
 

@@ -1,19 +1,15 @@
 package com.joyzone.platform.core.service;
 
-import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.CouponDto;
-import com.joyzone.platform.core.dto.CouponRuleDto;
-import com.joyzone.platform.core.dto.InvitingDto;
+import com.joyzone.platform.core.dto.CouponDTO;
+import com.joyzone.platform.core.dto.CouponRuleDTO;
 import com.joyzone.platform.core.mapper.ShopCouponMapper;
-import com.joyzone.platform.core.model.InvitingModel;
 import com.joyzone.platform.core.model.ShopCouponModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +51,7 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.getCouponShopList(shopCouponModel);
     }
 
-    public  List<CouponDto> getCouponList(ShopCouponModel shopCouponModel, Long userId,Integer sort){
+    public  List<CouponDTO> getCouponList(ShopCouponModel shopCouponModel, Long userId, Integer sort){
         return shopCouponMapper.getCouponList(shopCouponModel,userId,sort);
     }
 
@@ -67,7 +63,7 @@ public class ShopCouponService extends BaseService<ShopCouponModel> {
         return shopCouponMapper.delCoupons(ids);
     }
 
-    public CouponRuleDto getCouponRuleInfo(Long couponId,Long userId){
+    public CouponRuleDTO getCouponRuleInfo(Long couponId, Long userId){
         return shopCouponMapper.getCouponRuleInfo(couponId,userId);
     }
 

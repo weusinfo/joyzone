@@ -24,7 +24,7 @@
     <result column="chat_group_id" property="chatGroupId" jdbcType="VARCHAR"/>
   </resultMap>
 
-   <resultMap id="couponShopList" type="com.joyzone.platform.core.dto.CouponDto">
+   <resultMap id="couponShopList" type="com.joyzone.platform.core.dto.CouponDTO">
        <id column="couponId" property="couponId" jdbcType="BIGINT" />
        <result column="couponImg" property="couponImg" jdbcType="VARCHAR" />
        <result column="shopId" property="shopId" jdbcType="BIGINT" />
@@ -48,7 +48,7 @@
         <result column="userHeadImg" property="userHeadImg" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap id="couponRuleMap" type="com.joyzone.platform.core.dto.CouponRuleDto">
+    <resultMap id="couponRuleMap" type="com.joyzone.platform.core.dto.CouponRuleDTO">
         <id column="couponId" property="couponId" jdbcType="BIGINT" />
         <result column="shopId" property="shopId" jdbcType="BIGINT" />
         <result column="shopImg" property="shopImg" jdbcType="VARCHAR" />

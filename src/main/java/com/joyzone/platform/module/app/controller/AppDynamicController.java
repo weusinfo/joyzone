@@ -2,8 +2,8 @@ package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
-import com.joyzone.platform.core.dto.DynamicDto;
-import com.joyzone.platform.core.dto.IndexDynamicListDto;
+import com.joyzone.platform.core.dto.DynamicDTO;
+import com.joyzone.platform.core.dto.IndexDynamicListDTO;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.service.DynamicCommentSerivce;
@@ -42,7 +42,7 @@ public class AppDynamicController {
 
     @ApiOperation("发布动态")
     @PostMapping("saveDynamic")
-    public R saveDynamic(DynamicDto dynamicDTO){
+    public R saveDynamic(DynamicDTO dynamicDTO){
         if(dynamicDTO == null
                 || dynamicDTO.getUserId() == null
                     || dynamicDTO.getKind() == null
@@ -77,7 +77,7 @@ public class AppDynamicController {
                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
 
-        List<IndexDynamicListDto> list = dynamicSerivce.getIndexDynamicList(userId,type,pageNum,pageSize);
+        List<IndexDynamicListDTO> list = dynamicSerivce.getIndexDynamicList(userId,type,pageNum,pageSize);
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;

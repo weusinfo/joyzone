@@ -6,15 +6,12 @@ import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.*;
-import com.joyzone.platform.core.mapper.ShopCouponMapper;
 import com.joyzone.platform.core.mapper.TeamMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.*;
-import com.joyzone.platform.core.vo.AppInvitingVO;
 import com.joyzone.platform.core.vo.AppTeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -191,7 +188,7 @@ public class TeamService extends BaseService<TeamModel> {
 
     public  R getActivityList(Long userId,Integer type,Integer pageNum,Integer pageSize){
         PageHelper.startPage(pageNum, pageSize);
-        List<ActivityDto> list = teamMapper.getActivityList(userId,type);
+        List<ActivityDTO> list = teamMapper.getActivityList(userId,type);
 
         if(list != null && list.size() > 0){
             Page page = new Page();
@@ -203,10 +200,10 @@ public class TeamService extends BaseService<TeamModel> {
 
     public R getActivityDetail(Long userId,Long teamId){
         List userIdList = new ArrayList();
-        ActivityDetailDto detailDto = teamMapper.getActivityDetail(teamId);
+        ActivityDetailDTO detailDto = teamMapper.getActivityDetail(teamId);
         Long owner = detailDto.getUserId();
         int status = detailDto.getStatus();
-        List<ActivityUserDto> userInfoList = detailDto.getJoinUserInfoList();
+        List<ActivityUserDTO> userInfoList = detailDto.getJoinUserInfoList();
         for(int i=0;i<userInfoList.size();i++){
             userIdList.add(userInfoList.get(i).getUserId());
         }
@@ -301,7 +298,7 @@ public class TeamService extends BaseService<TeamModel> {
 
     public R getOrderList(Long userId,Integer type,Integer pageNum,Integer pageSize){
         PageHelper.startPage(pageNum, pageSize);
-        List<ActivityDto> list = teamMapper.getOrderList(userId,type);
+        List<ActivityDTO> list = teamMapper.getOrderList(userId,type);
         if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
@@ -311,8 +308,8 @@ public class TeamService extends BaseService<TeamModel> {
     }
 
     public R getShopTabOne(Long shopId,Long userId,Integer type){
-        ShopDetailDto shopDetailDto = teamMapper.getShopTabOne(shopId,userId);
-        return R.ok(shopDetailDto);
+        ShopDetaiDTO shopDetaiDTO = teamMapper.getShopTabOne(shopId,userId);
+        return R.ok(shopDetaiDTO);
     }
 
 }

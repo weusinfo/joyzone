@@ -17,9 +17,9 @@ import java.util.List;
 @Configuration
 @ApiModel("前端订单报名成功列表交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class OrderMineDto extends BaseModel{
+public class OrderMineDTO extends BaseModel{
 
-    public OrderMineDto(){
+    public OrderMineDTO(){
 
     }
 

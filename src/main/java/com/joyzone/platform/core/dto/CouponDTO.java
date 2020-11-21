@@ -9,23 +9,27 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 
-import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
 
 @Configuration
-@ApiModel("前端店家组队列表交互DTO")
+@ApiModel("前端体验券交互DTO")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class CouponRuleDto extends BaseModel{
+public class CouponDTO extends BaseModel{
 
-    public CouponRuleDto(){
+    public CouponDTO(){
 
     }
 
     //体验券ID
-    @ApiModelProperty("体验券ID")
+    @ApiModelProperty("体验券主键")
     private Long couponId;
+
+    //体验券图片：上面标明体验券价格，后台新增体验券时添加
+    @ApiModelProperty("体验券图片")
+    private String couponImg;
 
     //店家ID
     @ApiModelProperty("店家ID")
@@ -39,33 +43,31 @@ public class CouponRuleDto extends BaseModel{
     @ApiModelProperty("店家名称")
     private String shopName;
 
+    //体验券名称，或体验活动名称
+    @ApiModelProperty("体验券或体验活动名称")
+    private String couponName;
+
     //店家地址
     @ApiModelProperty("店家地址")
     private String shopAddress;
-
-    //店家价格
-    @ApiModelProperty("店家价格")
-    private BigDecimal shopPrice;
-
-    //店家电话
-    @ApiModelProperty("店家电话")
-    private String shopPhone;
-
-    //活动内容
-    @ApiModelProperty("活动内容")
-    private String couponContent;
 
     //体验活动开始时间
     @ApiModelProperty("体验券开始时间")
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date startTime;
 
+    //体验活动结束时间
+    @ApiModelProperty("体验券结束时间")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+    private Date endTime;
+
+    //店家类型名称
+    @ApiModelProperty("店家类型名称")
+    private String shopTypeName;
+
     //允许的最大人数
     @ApiModelProperty("允许最大人数")
     private Integer personNum;
-
-    @ApiModelProperty("店家收藏状态 0：收藏 1：未收藏")
-    private Integer shopCollectStatus;
 
     private List<UserJoinCouponDto> userJoinList;
 
@@ -75,6 +77,14 @@ public class CouponRuleDto extends BaseModel{
 
     public void setCouponId(Long couponId) {
         this.couponId = couponId;
+    }
+
+    public String getCouponImg() {
+        return couponImg;
+    }
+
+    public void setCouponImg(String couponImg) {
+        this.couponImg = couponImg;
     }
 
     public Long getShopId() {
@@ -101,36 +111,20 @@ public class CouponRuleDto extends BaseModel{
         this.shopName = shopName;
     }
 
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+
     public String getShopAddress() {
         return shopAddress;
     }
 
     public void setShopAddress(String shopAddress) {
         this.shopAddress = shopAddress;
-    }
-
-    public BigDecimal getShopPrice() {
-        return shopPrice;
-    }
-
-    public void setShopPrice(BigDecimal shopPrice) {
-        this.shopPrice = shopPrice;
-    }
-
-    public String getShopPhone() {
-        return shopPhone;
-    }
-
-    public void setShopPhone(String shopPhone) {
-        this.shopPhone = shopPhone;
-    }
-
-    public String getCouponContent() {
-        return couponContent;
-    }
-
-    public void setCouponContent(String couponContent) {
-        this.couponContent = couponContent;
     }
 
     public Date getStartTime() {
@@ -141,20 +135,28 @@ public class CouponRuleDto extends BaseModel{
         this.startTime = startTime;
     }
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getShopTypeName() {
+        return shopTypeName;
+    }
+
+    public void setShopTypeName(String shopTypeName) {
+        this.shopTypeName = shopTypeName;
+    }
+
     public Integer getPersonNum() {
         return personNum;
     }
 
     public void setPersonNum(Integer personNum) {
         this.personNum = personNum;
-    }
-
-    public Integer getShopCollectStatus() {
-        return shopCollectStatus;
-    }
-
-    public void setShopCollectStatus(Integer shopCollectStatus) {
-        this.shopCollectStatus = shopCollectStatus;
     }
 
     public List<UserJoinCouponDto> getUserJoinList() {
@@ -164,4 +166,5 @@ public class CouponRuleDto extends BaseModel{
     public void setUserJoinList(List<UserJoinCouponDto> userJoinList) {
         this.userJoinList = userJoinList;
     }
+
 }

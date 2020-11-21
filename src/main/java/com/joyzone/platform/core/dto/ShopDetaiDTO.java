@@ -11,9 +11,9 @@ import java.util.List;
 @Configuration
 @ApiModel("前端商家聚会tab页面详情交互DTO202011")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-public class ShopDetailDto extends BaseModel{
+public class ShopDetaiDTO extends BaseModel{
 
-    public ShopDetailDto(){
+    public ShopDetaiDTO(){
 
     }
 
@@ -36,7 +36,7 @@ public class ShopDetailDto extends BaseModel{
     private BigDecimal price;
 
     @ApiModelProperty("商家正在聚会列表")
-    private List<ActivityDto> shopTeamList;
+    private List<ActivityDTO> shopTeamList;
 
     public Long getShopId() {
         return shopId;
@@ -86,11 +86,11 @@ public class ShopDetailDto extends BaseModel{
         this.price = price;
     }
 
-    public List<ActivityDto> getShopTeamList() {
+    public List<ActivityDTO> getShopTeamList() {
         return shopTeamList;
     }
 
-    public void setShopTeamList(List<ActivityDto> shopTeamList) {
+    public void setShopTeamList(List<ActivityDTO> shopTeamList) {
         this.shopTeamList = shopTeamList;
     }
 }

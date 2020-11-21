@@ -1,6 +1,6 @@
 package com.joyzone.platform.core.model;
 
-import com.joyzone.platform.core.dto.DynamicDto;
+import com.joyzone.platform.core.dto.DynamicDTO;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -53,7 +53,7 @@ public class DynamicModel {
 
     public DynamicModel() { }
 
-    public DynamicModel(DynamicDto dynamicDTO) {
+    public DynamicModel(DynamicDTO dynamicDTO) {
         this.userId = dynamicDTO.getUserId();
         this.content = dynamicDTO.getContent();
         this.kind = dynamicDTO.getKind();
