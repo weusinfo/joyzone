@@ -64,7 +64,7 @@ public class SpringQrtzScheduler {
         return trigger;
     }
 	
-	@Bean
+	//@Bean
 	public JobDetail jobDeil() {
 		JobDetail jobDetail = new JobDetailImpl("GroupCleanJob", GroupCleanJob.class);
 		return jobDetail;

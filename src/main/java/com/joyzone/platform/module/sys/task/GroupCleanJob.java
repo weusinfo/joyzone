@@ -13,10 +13,10 @@ import com.joyzone.platform.core.service.GroupTaskService;
  * @author louishe
  *
  */
-@Component
+//@Component
 public class GroupCleanJob implements Job{
 
-	@Autowired
+	//@Autowired
 	private GroupTaskService groupTaskService;
 	
 	/**
