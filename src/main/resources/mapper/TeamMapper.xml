@@ -304,11 +304,11 @@
 
     <select id="checkTeamSaveSuccess" resultMap="BaseResultMap">
         SELECT
-        t.*
+        t.id
         FROM team t
         WHERE t.owner = #{userId}
         AND t.chat_group_id = #{chatGroupId}
-        AND t.status = 0
+        AND t.status = 0 limit 1
     </select>
 
     <select id="getTeamRuleList" resultMap="teamRuleMap">

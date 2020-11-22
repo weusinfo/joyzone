@@ -15,6 +15,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,8 @@ import java.util.Map;
 @RequestMapping("/app_team")
 @Api(tags = "app首页店家组队列表相关接口",description = "AppTeamController")
 public class AppTeamController {
+	
+	private Logger LOGGER = LoggerFactory.getLogger(AppTeamController.class);
 
     @Autowired
     private TeamService teamService;
@@ -233,12 +238,17 @@ public class AppTeamController {
                 userModel.getBirthday() == null || userModel.getHeadPic() == null || userModel.getCoverPic() == null){
             return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像/个人封面");
         }
-        int ret = teamService.saveActivity(teamModel);
-        if(ret == 999){
-            return R.error("用户已在该店内发起了有效组队！");
-        }
-        if(ret == 111){
-            return R.error("用户组队后保存team_user失败！");
+        int ret = 0;
+        try {
+        	ret = teamService.saveActivity(teamModel);
+            if(ret == 999){
+                return R.error("用户已在该店内发起了有效组队！");
+            }
+            if(ret == 111){
+                return R.error("用户组队后保存team_user失败！");
+            }
+        }catch(Exception e) {
+        	LOGGER.error("");
         }
         Map<String,String> map = Maps.newHashMap();
         map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));

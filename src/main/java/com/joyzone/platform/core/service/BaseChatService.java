@@ -1,6 +1,5 @@
 package com.joyzone.platform.core.service;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.Constants;
@@ -93,7 +91,7 @@ public class BaseChatService {
 			Set<Object> tokens = redisService.sGet(Constants.EASEMOB_TOKEN);
 			if(PublicUtil.isEmpty(tokens)) {			
 				String accessUrl = easemob.getTokenUrl();
-				Map<String, String> params = new HashMap<String, String>();
+				Map<String, String> params = Maps.newHashMap();
 				params.put(Constants.EASEMOB_GRANT_TYPE, easemob.getGrantType());
 				params.put(Constants.EASEMOB_CLIENT_ID, easemob.getClientId());
 				params.put(Constants.EASEMOB_CLIENT_SECRET, easemob.getClientSecret());
@@ -107,7 +105,7 @@ public class BaseChatService {
 					redisService.sSetAndTime(Constants.EASEMOB_TOKEN, token.getExpiresIn() / 2,result);
 					return token;
 				}
-				LOGGER.error("Try to get token but failed， return null");
+				LOGGER.error("获取token失败...");
 				return null;
 			}else {
 				Iterator<Object> ite = tokens.iterator();
