@@ -41,6 +41,9 @@ public class UserSerivce extends BaseService<UserModel> {
 
     @Resource
     private UserMapper userMapper;
+    
+    @Autowired
+    private CacheService cacheService;
 
     /**
      * 后台用户管理清单
@@ -68,7 +71,9 @@ public class UserSerivce extends BaseService<UserModel> {
         }
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
-        return userMapper.saveUser(userModel);
+        int i =userMapper.saveUser(userModel);
+        cacheService.apdUser(userModel);
+        return i;
     }
 
     /**
@@ -94,7 +99,9 @@ public class UserSerivce extends BaseService<UserModel> {
      * Mr.Gx
      */
     public int delUsers(Long[] ids){
-        return userMapper.delUsers(ids);
+        int i = userMapper.delUsers(ids);
+        cacheService.delUser(ids);
+        return i;
     }
 
     /**
@@ -130,6 +137,16 @@ public class UserSerivce extends BaseService<UserModel> {
     			updateChatMD5(user.getId(), md5);
     		}
     	}
+    }
+    
+    @Override
+    public UserModel selectByKey(Object userId) {
+    	UserModel userModel = cacheService.getUserById(userId.toString());
+    	if(userModel == null) {
+    		userModel = super.selectByKey(userId);
+    		cacheService.apdUser(userModel);
+    	}
+    	return userModel;
     }
 
 }

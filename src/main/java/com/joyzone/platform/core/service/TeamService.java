@@ -66,8 +66,8 @@ public class TeamService extends BaseService<TeamModel> {
     public int saveTeam(TeamModel teamModel){
         Date date = new Date();
         if(teamModel.getId() == null){//添加
-            List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
-            if(teamModelList != null && teamModelList.size() > 0){
+            Integer count = teamMapper.countUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
+            if(count != null && count > 0){
                 return 999;
             }
             teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
@@ -80,10 +80,12 @@ public class TeamService extends BaseService<TeamModel> {
            chatService.joinTeamGroup(groupId, teamModel.getOwner());
            int flag =  teamMapper.insertSelective(teamModel);
            ThreadLocalMap.put("chatGroupId", groupId);
-            List<TeamModel> teamList = teamMapper.checkUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
-            if(teamList == null || teamList.size() == 0){
-                return 0;
-            }
+           count = teamMapper.countUserStartTeam(teamModel.getOwner(),teamModel.getShopId());
+           if(count == null || count == 0){
+        	   return 0;
+           }
+           List<TeamModel> teamList = Lists.newArrayList();
+           teamList.add(teamModel);
            int res = saveTeamUsers(teamModel,teamList);
            if(res == 0){
                 return 111;
@@ -149,8 +151,8 @@ public class TeamService extends BaseService<TeamModel> {
         Date date = new Date();
         if(teamModel.getId() == null){//添加
             if(teamModel.getShopId() != null) {
-                List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(), teamModel.getShopId());
-                if (teamModelList != null && teamModelList.size() > 0) {
+                Integer count = teamMapper.countUserStartTeam(teamModel.getOwner(), teamModel.getShopId());
+                if (count != null && count > 0) {
                     return 999;
                 }
             } 
