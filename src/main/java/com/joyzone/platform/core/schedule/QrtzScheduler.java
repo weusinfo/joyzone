@@ -55,7 +55,7 @@
 //        return scheduler;
 //    }
 //
-//    @Bean
+///    @Bean
 //    public JobDetail jobDetail() {
 //        return newJob().ofType(GroupCleanJob.class).storeDurably().withIdentity(JobKey.jobKey("Qrtz_Job_Detail")).withDescription("Invoke Group Clean Job service...").build();
 //    }
