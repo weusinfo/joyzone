@@ -144,7 +144,7 @@ public class AppLoginApiController {
         String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
         userSerivce.updateChatMD5(userModel.getId(), chatPwd);
         chatService.registerUser(userModel.getId().toString(), chatPwd);
-        userModel = userSerivce.getUserByPhone(phone);
+        userModel.setChatIdMd5(chatPwd);
         map.put("message","注册成功！");
         map.put("userId",userModel.getId());
         map.put("user",userModel);

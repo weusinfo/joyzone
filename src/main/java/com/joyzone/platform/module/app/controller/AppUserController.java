@@ -42,7 +42,7 @@ public class AppUserController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
     public R getUserInfo(@RequestParam("userId") Long userId){
-        return R.ok(userSerivce.getUserInfo(userId));
+        return R.ok(userSerivce.selectByKey(userId));
     }
 
     @ApiOperation("添加或修改用户信息")
