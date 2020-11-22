@@ -1,10 +1,19 @@
 package com.joyzone.platform.core.model;
 
+import com.alibaba.fastjson.JSONObject;
+import com.joyzone.platform.common.utils.ShopCommentUtil;
+import com.joyzone.platform.core.dto.ShopCommentDTO;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
-@Table(name = "shop_comment")
+@Table(name = ShopCommentModel.TABLE_NAME)
 public class ShopCommentModel {
+
+    protected static final String TABLE_NAME = "shop_comment";
+
     /**
      * 主键
      */
@@ -38,7 +47,7 @@ public class ShopCommentModel {
     private Byte type;
 
     @Column(name = "is_anonym")
-    private Byte isAnonym;
+    private Boolean isAnonym;
 
     /**
      * 评论内容
@@ -56,6 +65,23 @@ public class ShopCommentModel {
      */
     @Column(name = "admin_content")
     private String adminContent;
+
+    public ShopCommentModel() {
+
+    }
+
+    public ShopCommentModel(ShopCommentDTO shopCommentDTO) {
+        this.userId = shopCommentDTO.getUserId();
+        this.shopId = shopCommentDTO.getShopId();
+        this.createTime = new Date();
+        Byte type = shopCommentDTO.getType();
+        this.type = type;
+        this.adminContent = ShopCommentUtil.adminContent(type);
+        this.isAnonym = shopCommentDTO.getIsAnonym();
+        this.content = shopCommentDTO.getContent();
+        List<String> pics = shopCommentDTO.getPicUrls() != null ? shopCommentDTO.getPicUrls() : new ArrayList<>();
+        this.picUrls = JSONObject.toJSONString(pics);
+    }
 
     /**
      * 获取主键
@@ -164,14 +190,14 @@ public class ShopCommentModel {
     /**
      * @return is_anonym
      */
-    public Byte getIsAnonym() {
+    public Boolean getIsAnonym() {
         return isAnonym;
     }
 
     /**
      * @param isAnonym
      */
-    public void setIsAnonym(Byte isAnonym) {
+    public void setIsAnonym(Boolean isAnonym) {
         this.isAnonym = isAnonym;
     }
 

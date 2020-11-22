@@ -1,0 +1,81 @@
+package com.joyzone.platform.core.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.joyzone.platform.common.utils.DateUtils;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
+import java.util.List;
+
+@ApiModel("App评论")
+public class ShopCommentDTO {
+
+
+    @ApiModelProperty("评论者id")
+    private Long userId;
+
+    @ApiModelProperty("商家id")
+    private Long shopId;
+
+    @ApiModelProperty("类型")
+    private Byte type;
+
+    @ApiModelProperty("是否匿名")
+    private boolean isAnonym;
+
+    @ApiModelProperty("评论内容")
+    private String content;
+
+    @ApiModelProperty("评论相片地址")
+    private List<String> picUrls;
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public boolean getIsAnonym() {
+        return isAnonym;
+    }
+
+    public void setIsAnonym(boolean isAnonym) {
+        this.isAnonym = isAnonym;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<String> getPicUrls() {
+        return picUrls;
+    }
+
+    public void setPicUrls(List<String> picUrls) {
+        this.picUrls = picUrls;
+    }
+}
