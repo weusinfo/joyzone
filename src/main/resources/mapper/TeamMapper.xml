@@ -481,4 +481,8 @@
         WHERE t.status = 0 and s.id = #{shopId}
         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
     </select>
+    
+    <update id="updateChatGroupId">
+    	update team set chat_group_id = #{chatGroupId} where id = #{id}
+    </update>
 </mapper>

@@ -11,6 +11,8 @@ import com.joyzone.platform.core.mapper.TeamMapper;
 import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.vo.AppTeamVO;
+
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,7 +147,6 @@ public class TeamService extends BaseService<TeamModel> {
      */
     public int saveActivity(TeamModel teamModel){
         Date date = new Date();
-        String groupId = "";
         if(teamModel.getId() == null){//添加
             if(teamModel.getShopId() != null) {
                 List<TeamModel> teamModelList = teamMapper.checkUserStartTeam(teamModel.getOwner(), teamModel.getShopId());
@@ -156,7 +157,6 @@ public class TeamService extends BaseService<TeamModel> {
             teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
             teamModel.setStatus(0); //组队中
             teamModel.setCreateTime(date);
-            teamModel.setChatGroupId(groupId);
             //chatService.joinTeamGroup(groupId, teamModel.getOwner());
             if(teamModel.getInvitedId() != null){
                 teamModel.setTag(0); //特约聚会
@@ -167,26 +167,21 @@ public class TeamService extends BaseService<TeamModel> {
                     teamModel.setTag(2); //普通聚会
                 }
             }
-            int flag =  teamMapper.insertSelective(teamModel);
-            
-            List<TeamModel> teamList = teamMapper.checkTeamSaveSuccess(teamModel.getOwner(),teamModel.getChatGroupId());
-            if(teamList == null || teamList.size() == 0){
-                return 0;
+            teamMapper.insertSelective(teamModel);
+            List<TeamModel> teamList = Lists.newArrayList();
+            teamList.add(teamModel);
+            saveTeamUsers(teamModel,teamList);
+            String groupId = chatService.createTeamGroup(teamModel.getOwner(), teamModel.getActivityName(), "个人建群");
+            if(groupId == null) {
+            	throw new JZException("群组创建失败...");
             }
-            int res = saveTeamUsers(teamModel,teamList);
-            if(res == 0){
-                return 111;
-            }
-            return flag;
+            ThreadLocalMap.put("chatGroupId", groupId);
+            teamModel.setChatGroupId(groupId);
+            teamMapper.updateChatGroupId(groupId, teamModel.getId());//更新塞回聊天群ID
         }
         //更新
         teamModel.setUpdateTime(date);
         int i = teamMapper.updateByPrimaryKeySelective(teamModel);
-        groupId = chatService.createTeamGroup(teamModel.getOwner(), teamModel.getActivityName(), "个人建群");
-        if(groupId == null) {
-        	throw new JZException("群组创建失败...");
-        }
-        ThreadLocalMap.put("chatGroupId", groupId);
          return i;
     }
 
@@ -314,6 +309,10 @@ public class TeamService extends BaseService<TeamModel> {
     public R getShopTabOne(Long shopId,Long userId,Integer type){
         ShopDetaiDTO shopDetaiDTO = teamMapper.getShopTabOne(shopId,userId);
         return R.ok(shopDetaiDTO);
+    }
+    
+    public int updateChatGroupId(String chatGroupId, Long id) {
+    	return teamMapper.updateChatGroupId(chatGroupId, id);
     }
 
 }

@@ -244,11 +244,8 @@ public class AppTeamController {
             if(ret == 999){
                 return R.error("用户已在该店内发起了有效组队！");
             }
-            if(ret == 111){
-                return R.error("用户组队后保存team_user失败！");
-            }
         }catch(Exception e) {
-        	LOGGER.error("");
+        	return R.error("发生了系统错误,发起失败,请重试");
         }
         Map<String,String> map = Maps.newHashMap();
         map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));
