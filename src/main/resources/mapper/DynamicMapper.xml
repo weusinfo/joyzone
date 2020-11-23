@@ -65,6 +65,10 @@
     </collection>
   </resultMap>
 
+  <sql id="Base_Column_List">
+    id, user_id, content, kind, thumbs, create_time, update_time, pics
+  </sql>
+
   <select id="getUserDynamicList" resultMap="userDynamic">
     SELECT
       u.id AS userId,
@@ -102,21 +106,27 @@
 
   <select id="getIndexDynamicList" resultMap="indexDynamicListMap">
     SELECT
-      d.id AS dynamicId,
+      t.id AS dynamicId,
+      t.content AS dynamicContent,
+      t.thumbs AS thumbCount,
+      t.pics AS pics,
       u.id AS userId,
       u.head_pic AS userPic,
       u.user_name AS userName,
       u.sex AS userSex,
       TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
-      d.content AS dynamicContent,
-      d.thumbs AS thumbCount,
-      d.pics AS pics,
-      (SELECT COUNT(*) FROM follows f WHERE f.target_id = d.user_id) AS followCount,
-      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = d.id) AS commentCount,
-      (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = d.id AND gt.status = 0) AS thumbed,
-      (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = d.user_id AND f.status = 0) AS followed
-    FROM DYNAMIC d
-    LEFT JOIN `user` u ON u.id = d.user_id
-    ORDER BY d.create_time DESC
+      (SELECT COUNT(*) FROM follows f WHERE f.target_id = t.user_id) AS followCount,
+      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
+      (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
+      (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
+    FROM (
+           SELECT
+                 <include refid="Base_Column_List"></include>
+           FROM
+                DYNAMIC
+           ORDER BY create_time DESC
+         ) t
+    LEFT JOIN `user` u ON u.id = t.user_id
+    GROUP BY t.user_id
   </select>
 </mapper>
