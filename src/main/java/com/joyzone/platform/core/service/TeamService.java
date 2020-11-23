@@ -2,6 +2,7 @@ package com.joyzone.platform.core.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
@@ -12,7 +13,6 @@ import com.joyzone.platform.core.mapper.TeamUsersMapper;
 import com.joyzone.platform.core.model.*;
 import com.joyzone.platform.core.vo.AppTeamVO;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
