@@ -345,8 +345,10 @@
     select chat_group_id from team where id = #{teamId} limit 1
     </select>
 
-    <select id="getActivityList" resultMap="activityMap">
-        SELECT
+    <select id="getActivityList" resultType="com.joyzone.platform.core.dto.ActivityDTO">
+        SELECT t1.* FROM
+        (
+          SELECT
             t.id AS teamId,
             t.owner AS userId,
             u.user_name AS userName,
@@ -363,10 +365,68 @@
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label
-        FROM team t
-        LEFT JOIN `user` u ON u.id = t.owner
-        WHERE t.status = 0
-        AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+          FROM team t
+          LEFT JOIN  `user` u ON u.id = t.owner
+          WHERE t.status = 0 AND t.tag = 2
+          AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+        ) t1
+
+        UNION
+
+        SELECT t2.* FROM
+        (
+          SELECT
+            t.id AS teamId,
+            t.owner AS userId,
+            u.user_name AS userName,
+            u.cover_pic AS userCover,
+            u.sex AS userSex,
+            TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+            t.activity_name AS activityName,
+            t.start_time AS startTime,
+            t.activity_address AS activityAddress,
+            1 AS distance,
+            t.activity_type AS activityType,
+            (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+            t.pay_way AS payWay,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            t.number AS totalUserNum,
+            t.tag AS label
+          FROM team t
+          LEFT JOIN `user` u ON u.id = t.owner
+          WHERE t.invited_id = #{userId} AND t.tag = 0 AND t.status = 0
+          AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+        ) t2
+
+        UNION
+
+        SELECT t3.* FROM
+        (
+          SELECT
+            DISTINCT t.id AS teamId,
+            t.owner AS userId,
+            u.user_name AS userName,
+            u.cover_pic AS userCover,
+            u.sex AS userSex,
+            TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+            t.activity_name AS activityName,
+            t.start_time AS startTime,
+            t.activity_address AS activityAddress,
+            1 AS distance,
+            t.activity_type AS activityType,
+            (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+            t.pay_way AS payWay,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            t.number AS totalUserNum,
+            t.tag AS label
+          FROM team t
+          LEFT JOIN follows f1 ON f1.target_id = t.owner
+          LEFT JOIN follows f2 ON f2.user_id = t.owner
+          LEFT JOIN `user` u ON u.id = t.owner
+          WHERE t.tag = 1 AND t.status = 0 AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+          AND ((f1.status = 0 AND f1.user_id = #{userId}) OR (f2.status = 0 AND f2.target_id = #{userId}))
+        ) t3
+        ORDER BY label
     </select>
 
     <select id="queryJoinUserImgs" resultType="java.lang.String">

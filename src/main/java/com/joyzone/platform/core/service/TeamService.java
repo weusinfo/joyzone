@@ -187,16 +187,16 @@ public class TeamService extends BaseService<TeamModel> {
          return i;
     }
 
-    public  R getActivityList(Long userId,Integer type,Integer pageNum,Integer pageSize){
-        PageHelper.startPage(pageNum, pageSize);
+    public  R getActivityList(Long userId,Integer type){
+        //PageHelper.startPage(pageNum, pageSize);
         List<ActivityDTO> list = teamMapper.getActivityList(userId,type);
 
-        if(list != null && list.size() > 0){
+        /*if(list != null && list.size() > 0){
             Page page = new Page();
             page = (Page)list;
             return R.pageToData(page.getTotal(),page.getResult());
-        }
-        return R.pageToData(0L,new ArrayList<>());
+        }*/
+        return R.ok(list); //R.pageToData(0L,new ArrayList<>());
     }
 
     public R getActivityDetail(Long userId,Long teamId){
