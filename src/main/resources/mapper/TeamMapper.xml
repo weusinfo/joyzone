@@ -247,15 +247,15 @@
         )
     </select>
 
-    <!--<select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">-->
-        <!--SELECT-->
-        <!--tu.team_id AS teamOrInvitingId,-->
-        <!--u.id AS userId,-->
-        <!--u.head_pic AS userHeadImg-->
-        <!--FROM team_users tu-->
-        <!--LEFT JOIN `user` u ON u.id = tu.user_id-->
-        <!--WHERE tu.team_id = #{teamId} AND tu.status = 0-->
-    <!--</select>-->
+    <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
+        SELECT
+        tu.team_id AS teamOrInvitingId,
+        u.id AS userId,
+        u.head_pic AS userHeadImg
+        FROM team_users tu
+        LEFT JOIN `user` u ON u.id = tu.user_id
+        WHERE tu.team_id = #{teamId} AND tu.status = 0
+    </select>
 
     <select id="checkTeamIfSuccess" resultType="java.util.HashMap">
         SELECT
@@ -293,14 +293,14 @@
         AND t.shop_id = #{shopId}
     </select>
 
-    <!--<select id="checkUserStartTeam" resultMap="BaseResultMap">-->
-        <!--SELECT-->
-        <!--t.*-->
-        <!--FROM team t-->
-        <!--WHERE t.owner = #{userId}-->
-        <!--AND t.shop_id = #{shopId}-->
-        <!--AND t.status = 0-->
-    <!--</select>-->
+    <select id="checkUserStartTeam" resultMap="BaseResultMap">
+        SELECT
+        t.*
+        FROM team t
+        WHERE t.owner = #{userId}
+        AND t.shop_id = #{shopId}
+        AND t.status = 0
+    </select>
 
     <select id="checkTeamSaveSuccess" resultMap="BaseResultMap">
         SELECT
