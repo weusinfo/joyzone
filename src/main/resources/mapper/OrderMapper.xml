@@ -79,55 +79,56 @@
     where o.id = #{id}
   </select>
 
-  <select id="getTeamOrderListOld" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
-    SELECT
-    t.id AS teamOrCouponId,
-    0 AS orderType,
-    t.shop_id AS shopId,
-    s.cover_img AS shopImg,
-    s.name AS shopName,
-    s.address AS shopAddress,
-    t.start_time AS startTime,
-    t.number AS personNum
-    FROM team_users tu
-    LEFT JOIN team t ON t.id = tu.team_id
-    LEFT JOIN shop s ON s.id = t.shop_id
-    WHERE tu.user_id = #{userId}
-    AND t.status = 0
-    AND tu.status = 0
-    AND t.start_time > NOW()
-    <if test="type == 0">
-      AND t.result = 0
-    </if>
-    <if test="type == 1">
-      AND t.result = 1
-    </if>
+  <!--<select id="getTeamOrderListOld" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">-->
+    <!--SELECT-->
+    <!--t.id AS teamOrCouponId,-->
+    <!--0 AS orderType,-->
+    <!--t.shop_id AS shopId,-->
+    <!--s.cover_img AS shopImg,-->
+    <!--s.name AS shopName,-->
+    <!--s.address AS shopAddress,-->
+    <!--t.start_time AS startTime,-->
+    <!--t.number AS personNum-->
+    <!--FROM team_users tu-->
+    <!--LEFT JOIN team t ON t.id = tu.team_id-->
+    <!--LEFT JOIN shop s ON s.id = t.shop_id-->
+    <!--WHERE tu.user_id = #{userId}-->
+    <!--AND t.status = 0-->
+    <!--AND tu.status = 0-->
+    <!--AND t.start_time > NOW()-->
+    <!--<if test="type == 0">-->
+      <!--AND t.result = 0-->
+    <!--</if>-->
+    <!--<if test="type == 1">-->
+      <!--AND t.result = 1-->
+    <!--</if>-->
 
-    UNION
+    <!--UNION-->
 
-    SELECT
-    sc.id AS teamOrCouponId,
-    1 AS orderType,
-    sc.shop_id AS shopId,
-    s.cover_img AS shopImg,
-    s.name AS shopName,
-    s.address AS shopAddress,
-    sc.start_time AS startTime,
-    sc.number AS personNum
-    FROM coupon_user cu
-    LEFT JOIN shop_coupon sc ON sc.id = cu.coupon_id
-    LEFT JOIN shop s ON s.id = sc.shop_id
-    WHERE cu.user_id = #{userId}
-    AND cu.status = 0
-    AND sc.status = 1
-    AND sc.start_time > NOW()
-    <if test="type == 0">
-      AND sc.result = 0
-    </if>
-    <if test="type == 1">
-      AND sc.result = 1
-    </if>
-  </select>
+    <!--SELECT-->
+    <!--sc.id AS teamOrCouponId,-->
+    <!--1 AS orderType,-->
+    <!--sc.shop_id AS shopId,-->
+    <!--s.cover_img AS shopImg,-->
+    <!--s.name AS shopName,-->
+    <!--s.address AS shopAddress,-->
+    <!--sc.start_time AS startTime,-->
+    <!--sc.number AS personNum-->
+    <!--FROM coupon_user cu-->
+    <!--LEFT JOIN shop_coupon sc ON sc.id = cu.coupon_id-->
+    <!--LEFT JOIN shop s ON s.id = sc.shop_id-->
+    <!--WHERE cu.user_id = #{userId}-->
+    <!--AND cu.status = 0-->
+    <!--AND sc.status = 1-->
+    <!--AND sc.start_time > NOW()-->
+    <!--<if test="type == 0">-->
+      <!--AND sc.result = 0-->
+    <!--</if>-->
+    <!--<if test="type == 1">-->
+      <!--AND sc.result = 1-->
+    <!--</if>-->
+  <!--</select>-->
+
   <select id="getTeamOrderList" resultMap="teamOrderListMap" parameterType="com.joyzone.platform.core.model.OrderModel">
     <if test="type == 0">
       (SELECT
@@ -225,28 +226,28 @@
     </if>
   </select>
 
-  <select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">
-    <if test="orderType == 0">
-      SELECT
-      tu.team_id AS teamOrInvitingId,
-      0 AS orderType,
-      u.id AS userId,
-      u.head_pic AS userHeadImg
-      FROM team_users tu
-      LEFT JOIN user u ON u.id = tu.user_id
-      WHERE tu.team_id = #{teamOrInvitingId} AND tu.status = 0
-    </if>
-    <if test="orderType == 1">
-      SELECT
-      iu.inviting_id AS teamOrInvitingId,
-      1 AS orderType,
-      u.id AS userId,
-      u.head_pic AS userHeadImg
-      FROM inviting_user iu
-      LEFT JOIN `user` u ON u.id = iu.user_id
-      WHERE iu.inviting_id = #{teamOrInvitingId} AND iu.status = 0
-    </if>
-  </select>
+  <!--<select id="queryUserJoinTeamList" resultMap="userJoinTeamMap">-->
+    <!--<if test="orderType == 0">-->
+      <!--SELECT-->
+      <!--tu.team_id AS teamOrInvitingId,-->
+      <!--0 AS orderType,-->
+      <!--u.id AS userId,-->
+      <!--u.head_pic AS userHeadImg-->
+      <!--FROM team_users tu-->
+      <!--LEFT JOIN user u ON u.id = tu.user_id-->
+      <!--WHERE tu.team_id = #{teamOrInvitingId} AND tu.status = 0-->
+    <!--</if>-->
+    <!--<if test="orderType == 1">-->
+      <!--SELECT-->
+      <!--iu.inviting_id AS teamOrInvitingId,-->
+      <!--1 AS orderType,-->
+      <!--u.id AS userId,-->
+      <!--u.head_pic AS userHeadImg-->
+      <!--FROM inviting_user iu-->
+      <!--LEFT JOIN `user` u ON u.id = iu.user_id-->
+      <!--WHERE iu.inviting_id = #{teamOrInvitingId} AND iu.status = 0-->
+    <!--</if>-->
+  <!--</select>-->
 
   <delete id="delOrders">
     delete from orders where id in

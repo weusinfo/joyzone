@@ -29,11 +29,11 @@
     <resultMap id="ShopHomeDtoMap" type="com.joyzone.platform.core.dto.ShopHomeDTO">
         <id column="userId" property="userId" jdbcType="BIGINT" />
         <result column="userName" property="userName" jdbcType="VARCHAR" />
-        <collection property="shopHomeBannerDtoList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeBannerDtoList"
+        <collection property="shopHomeBannerDTOList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeBannerDtoList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeBannerDTO">
 
         </collection>
-        <collection property="shopHomeTypeDtoList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeTypeDtoList"
+        <collection property="shopHomeTypeDTOList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.ShopMapper.queryShopHomeTypeDtoList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ShopHomeTypeDTO">
 
         </collection>
@@ -247,51 +247,51 @@
          WHERE id = #{userId}
     </select>
 
-    <select id="queryShopHomeBannerDtoList" resultMap="shopHomeBannerDtoMap">
-        SELECT
-          id AS shopId,
-          cover_img AS shopCoverImg
-        FROM shop
-        WHERE STATUS = 1 LIMIT 6
-    </select>
+    <!--<select id="queryShopHomeBannerDtoList" resultMap="shopHomeBannerDtoMap">-->
+        <!--SELECT-->
+          <!--id AS shopId,-->
+          <!--cover_img AS shopCoverImg-->
+        <!--FROM shop-->
+        <!--WHERE STATUS = 1 LIMIT 6-->
+    <!--</select>-->
 
-    <select id="queryShopHomeTypeDtoList" resultMap="shopHomeTypeDtoMap">
-        SELECT
-            id AS shopTypeId,
-            name AS shopTypeName,
-            type_image as typeImage,
-            (id-1) AS sort
-        FROM shop_type
-        WHERE status = 1 AND type = 0
-        ORDER BY sort
-        LIMIT 8
-    </select>
+    <!--<select id="queryShopHomeTypeDtoList" resultMap="shopHomeTypeDtoMap">-->
+        <!--SELECT-->
+            <!--id AS shopTypeId,-->
+            <!--name AS shopTypeName,-->
+            <!--type_image as typeImage,-->
+            <!--(id-1) AS sort-->
+        <!--FROM shop_type-->
+        <!--WHERE status = 1 AND type = 0-->
+        <!--ORDER BY sort-->
+        <!--LIMIT 8-->
+    <!--</select>-->
 
-    <select id="queryShopHomeHotDtoList" resultMap="shopHomeHotDtoMap">
-        SELECT
-         id AS shopId,
-         cover_img AS shopCover
-         FROM shop WHERE id IN (24,29,38,42)
-    </select>
+    <!--<select id="queryShopHomeHotDtoList" resultMap="shopHomeHotDtoMap">-->
+        <!--SELECT-->
+         <!--id AS shopId,-->
+         <!--cover_img AS shopCover-->
+         <!--FROM shop WHERE id IN (24,29,38,42)-->
+    <!--</select>-->
 
-    <select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">
-          SELECT
-              st.id AS shopTypeId,
-              st.name AS shopTypeName,
-              (st.id-1) AS sort
-         FROM shop s
-         LEFT JOIN shop_type st ON st.id = s.`shop_type_id`
-         WHERE st.type = 0
-         GROUP BY st.id
-    </select>
+    <!--<select id="queryShopHomeListDtoList" resultMap="shopHomeListDtoMap">-->
+          <!--SELECT-->
+              <!--st.id AS shopTypeId,-->
+              <!--st.name AS shopTypeName,-->
+              <!--(st.id-1) AS sort-->
+         <!--FROM shop s-->
+         <!--LEFT JOIN shop_type st ON st.id = s.`shop_type_id`-->
+         <!--WHERE st.type = 0-->
+         <!--GROUP BY st.id-->
+    <!--</select>-->
 
-    <select id="queryShopHomeCoverList" resultMap="shopHomeCoverMap">
-         SELECT
-         id AS shopId,
-         cover_img AS shopCover
-         FROM shop
-         WHERE shop_type_id = #{shopTypeId}
-    </select>
+    <!--<select id="queryShopHomeCoverList" resultMap="shopHomeCoverMap">-->
+         <!--SELECT-->
+         <!--id AS shopId,-->
+         <!--cover_img AS shopCover-->
+         <!--FROM shop-->
+         <!--WHERE shop_type_id = #{shopTypeId}-->
+    <!--</select>-->
 
     <select id="getAppShopByTypeId" resultType="com.joyzone.platform.core.model.ShopModel">
          SELECT
