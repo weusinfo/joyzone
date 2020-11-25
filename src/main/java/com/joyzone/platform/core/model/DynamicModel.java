@@ -1,7 +1,9 @@
 package com.joyzone.platform.core.model;
 
+import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.dto.DynamicDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -55,13 +57,15 @@ public class DynamicModel {
 
     public DynamicModel(DynamicDTO dynamicDTO) {
         this.userId = dynamicDTO.getUserId();
-        this.content = dynamicDTO.getContent();
+        // 获取实例
+        SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
+        this.content =  wordUtils.filterInfo(dynamicDTO.getContent());
         this.kind = dynamicDTO.getKind();
         this.thumbs = 0;
         Date date = new Date();
         this.createTime = date;
         this.updateTime = date;
-        this.pics = null != dynamicDTO.getDynamicPics() ? dynamicDTO.getDynamicPics().toString() : null;
+        this.pics = null != dynamicDTO.getDynamicPics() ? dynamicDTO.getDynamicPics().toString() : new ArrayList().toString();
     }
 
     /**

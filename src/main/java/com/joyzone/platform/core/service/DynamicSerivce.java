@@ -2,12 +2,13 @@ package com.joyzone.platform.core.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.LocationUtils;
+import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
-import com.joyzone.platform.core.dto.DynamicDTO;
-import com.joyzone.platform.core.dto.IndexDynamicListDTO;
-import com.joyzone.platform.core.dto.UserDynamicDTO;
+import com.joyzone.platform.core.dto.*;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.DynamicPictureMapper;
 import com.joyzone.platform.core.mapper.GiveThumbMapper;
@@ -76,8 +77,22 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param userId
      * zhangyu
      */
-    public List<UserDynamicDTO> getUserDynamicList(Long userId){
-        return dynamicMapper.getUserDynamicList(userId);
+    public UserDynamicDTO getUserDynamicList(Long userId,Integer pageNum,Integer pageSize){
+        UserDynamicDTO userDynamic = dynamicMapper.selectByUserDynamic(userId);
+        if (null != userDynamic){
+            List<UserDynamicListDto> list = dynamicMapper.queryUserDynamicList(userId,pageNum,pageSize);
+            if  (!list.isEmpty()){
+                list.stream().forEach(m -> {
+                    String pics = m.getPics();
+                    if  (StringUtils.isNotBlank(pics)){
+                        m.setDynamicPics(JSONObject.parseArray(pics,String.class));
+                        m.setPics(null);
+                    }
+                });
+                userDynamic.setUserDynamicList(list);
+            }
+        }
+        return userDynamic;
     }
 
     public List<IndexDynamicListDTO> getIndexDynamicList(Long userId, Integer type, Integer pageNum, Integer pageSize){

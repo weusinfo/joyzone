@@ -249,7 +249,10 @@ public class AppTeamController {
         }
         Map<String,String> map = Maps.newHashMap();
         map.put("chatGroupId", (String)ThreadLocalMap.get("chatGroupId"));
-        return ret > 0 ? R.ok(map) : R.error("操作失败");
+        if(null != map && !map.isEmpty()){
+            return R.ok(map);
+        }
+        return R.error("操作失败");
     }
 
     @PostMapping("/getActivityList")

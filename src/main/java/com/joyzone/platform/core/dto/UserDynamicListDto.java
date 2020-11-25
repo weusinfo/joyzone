@@ -29,6 +29,12 @@ public class UserDynamicListDto extends BaseModel{
     private Date createTime;
 
     @ApiModelProperty("评论详情列表")
+    private String pics;
+
+    @ApiModelProperty("评论详情列表")
+    private List<String> dynamicPics;
+
+    @ApiModelProperty("评论详情列表")
     private List<UserDynamicCommentListDTO> commentDetailList;
 
     public Long getDynamicId() {
@@ -61,5 +67,21 @@ public class UserDynamicListDto extends BaseModel{
 
     public void setCommentDetailList(List<UserDynamicCommentListDTO> commentDetailList) {
         this.commentDetailList = commentDetailList;
+    }
+
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
+
+    public List<String> getDynamicPics() {
+        return dynamicPics;
+    }
+
+    public void setDynamicPics(List<String> dynamicPics) {
+        this.dynamicPics = dynamicPics;
     }
 }

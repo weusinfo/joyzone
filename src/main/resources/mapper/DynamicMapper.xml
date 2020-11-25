@@ -21,15 +21,13 @@
     <result column="userName" property="userName" jdbcType="VARCHAR"/>
     <result column="userSex" property="userSex" jdbcType="INTEGER"/>
     <result column="userAge" property="userAge" jdbcType="INTEGER"/>
-    <collection property="userDynamicList" javaType="ArrayList" column="{userId=userId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicList"
-                fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicListDto">
-    </collection>
   </resultMap>
   
   <resultMap id="userDynamicList" type="com.joyzone.platform.core.dto.UserDynamicListDto">
     <id column="dynamicId" property="dynamicId" jdbcType="BIGINT"/>
     <result column="dynamicContent" property="dynamicContent" jdbcType="VARCHAR"/>
     <result column="createTime" property="createTime" jdbcType="DATE"/>
+    <result column="pics" property="pics" jdbcType="VARCHAR"/>
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     </collection>
@@ -69,7 +67,7 @@
     id, user_id, content, kind, thumbs, create_time, update_time, pics
   </sql>
 
-  <select id="getUserDynamicList" resultMap="userDynamic">
+  <select id="selectByUserDynamic" resultMap="userDynamic">
     SELECT
       u.id AS userId,
       u.head_pic AS userPic,
@@ -84,7 +82,8 @@
     SELECT
       d.id AS dynamicId,
       d.content AS dynamicContent,
-      d.create_time AS createTime
+      d.create_time AS createTime,
+      d.pics
     FROM DYNAMIC d
     WHERE d.user_id = #{userId}
   </select>

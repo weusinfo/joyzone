@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.DynamicDTO;
 import com.joyzone.platform.core.dto.IndexDynamicListDTO;
+import com.joyzone.platform.core.dto.UserDynamicDTO;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.service.DynamicCommentSerivce;
@@ -45,8 +46,8 @@ public class AppDynamicController {
     public R saveDynamic(DynamicDTO dynamicDTO){
         if(dynamicDTO == null
                 || dynamicDTO.getUserId() == null
-                    || dynamicDTO.getKind() == null
-                        || dynamicDTO.getDynamicPics() == null)
+                    || dynamicDTO.getKind() == null)
+
             return R.error("参数不能为空");
 
         return  dynamicSerivce.saveDynamic(dynamicDTO) > 0 ? R.ok() : R.error("发布失败");
@@ -64,11 +65,11 @@ public class AppDynamicController {
 
     @ApiOperation("根据用户id获取用户动态列表")
     @PostMapping("getUserDynamicList")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
-    })
-    public R getUserDynamicList(@RequestParam("userId") Long userId){
-        return R.ok(dynamicSerivce.getUserDynamicList(userId));
+    public R getUserDynamicList(@RequestParam("userId") Long userId,
+                                @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                                @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+
+        return R.ok(dynamicSerivce.getUserDynamicList(userId,pageNum,pageSize));
     }
 
     @ApiOperation("获取动态首页动态列表")

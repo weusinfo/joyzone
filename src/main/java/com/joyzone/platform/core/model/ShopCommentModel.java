@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.model;
 
 import com.alibaba.fastjson.JSONObject;
+import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.common.utils.ShopCommentUtil;
 import com.joyzone.platform.core.dto.ShopCommentDTO;
 
@@ -78,7 +79,9 @@ public class ShopCommentModel {
         this.type = type;
         this.adminContent = ShopCommentUtil.adminContent(type);
         this.isAnonym = shopCommentDTO.getIsAnonym();
-        this.content = shopCommentDTO.getContent();
+        // 获取实例
+        SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
+        this.content = wordUtils.filterInfo(shopCommentDTO.getContent());
         List<String> pics = shopCommentDTO.getPicUrls() != null ? shopCommentDTO.getPicUrls() : new ArrayList<>();
         this.picUrls = JSONObject.toJSONString(pics);
     }

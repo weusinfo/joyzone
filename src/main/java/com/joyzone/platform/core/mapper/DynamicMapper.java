@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface DynamicMapper extends Mapper<DynamicModel> {
 
-    List<UserDynamicDTO> getUserDynamicList(@Param("userId") Long userId);
+    UserDynamicDTO selectByUserDynamic(@Param("userId") Long userId);
 
-    List<UserDynamicListDto> queryUserDynamicList(@Param("userId") Long userId);
+    List<UserDynamicListDto> queryUserDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     List<UserDynamicCommentListDTO> queryUserDynamicCommentList(@Param("dynamicId") Long dynamicId);
 
