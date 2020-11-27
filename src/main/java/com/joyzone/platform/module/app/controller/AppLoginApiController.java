@@ -137,14 +137,12 @@ public class AppLoginApiController {
         userModel.setType(0);  //0:用户
         userModel.setStatus(0);   //用户状态: 0 激活 ， 1 封号， 2禁入
         userModel.setCreateTime(new Date());
-        int ret = userSerivce.saveUser(userModel);
-        if(ret == 0){
-            return R.error("用户注册失败！");
+        try {
+        	userSerivce.register(userModel);
+        }catch(Exception e) {
+        	LOGGER.error("注册发生错误。。。，", e.getMessage());
+        	return R.error("用户注册失败！");
         }
-        String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
-        userSerivce.updateChatMD5(userModel.getId(), chatPwd);
-        chatService.registerUser(userModel.getId().toString(), chatPwd);
-        userModel.setChatIdMd5(chatPwd);
         map.put("message","注册成功！");
         map.put("userId",userModel.getId());
         map.put("user",userModel);

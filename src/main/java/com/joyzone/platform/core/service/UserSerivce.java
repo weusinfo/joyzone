@@ -1,6 +1,7 @@
 package com.joyzone.platform.core.service;
 
 import com.alibaba.fastjson.JSON;
+import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
@@ -74,6 +75,19 @@ public class UserSerivce extends BaseService<UserModel> {
         int i =userMapper.saveUser(userModel);
         cacheService.apdUser(userModel);
         return i;
+    }
+    
+    /*
+     * 注册合并，避免数据库插入和环信注册中有一方失败。
+     */
+    public void register(UserModel userModel) {
+    	 String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
+         userModel.setChatIdMd5(chatPwd);
+         this.saveUser(userModel);
+         Object obj = chatService.registerUser(userModel.getId().toString(), chatPwd);
+         if(obj ==null) {
+        	 throw new JZException("注册环信ID失败.");
+         }
     }
 
     /**
