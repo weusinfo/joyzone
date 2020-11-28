@@ -125,4 +125,10 @@ public class AppDynamicController {
         return R.ok(followsSerivce.getUserFollowList(userId,type));
     }
 
+    @ApiOperation("删除动态信息")
+    @PostMapping("/delete")
+    public R deleteDynamic(@RequestParam("dynamicId") Long dynamicId){
+        return R.ok(dynamicSerivce.deleteDynamic(dynamicId));
+    }
+
 }

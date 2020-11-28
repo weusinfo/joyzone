@@ -128,4 +128,13 @@
     LEFT JOIN `user` u ON u.id = t.user_id
     GROUP BY t.user_id
   </select>
+
+  <delete id="deleteDynamic">
+      DELETE
+        d,dc,gt
+      FROM dynamic d
+      LEFT JOIN dynamic_comment dc on dc.dynamic_id = d.id
+      LEFT JOIN give_thumb gt on gt.dynamic_id = d.id
+      WHERE d.id = #{dynamicId}
+  </delete>
 </mapper>

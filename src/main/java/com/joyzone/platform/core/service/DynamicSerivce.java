@@ -190,4 +190,17 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         return dynamicMapper.updateByPrimaryKey(dynamicModel);
     }
 
+    /**
+     * 删除动态相关信息
+     * @param dynamicId
+     * @return
+     */
+    public R deleteDynamic(Long dynamicId){
+        try {
+            dynamicMapper.deleteDynamic(dynamicId);
+            return R.ok();
+        }catch (Exception e){
+            return R.error("操作失败");
+        }
+    }
 }
