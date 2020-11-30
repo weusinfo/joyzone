@@ -139,6 +139,7 @@
         <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR" />
         <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
         <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="userId" property="userId" jdbcType="BIGINT" />
         <collection property="shopPicList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryShopPicList"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -366,7 +367,7 @@
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
-            t.status as teamStatus
+            -1 as teamStatus
           FROM team t
           LEFT JOIN  `user` u ON u.id = t.owner
           WHERE t.status = 0 AND t.tag = 2
@@ -394,7 +395,7 @@
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
-            t.status as teamStatus
+            -1 as teamStatus
           FROM team t
           LEFT JOIN `user` u ON u.id = t.owner
           WHERE t.invited_id = #{userId} AND t.tag = 0 AND t.status = 0
@@ -422,7 +423,7 @@
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
-            t.status as teamStatus
+            -1 as teamStatus
           FROM team t
           LEFT JOIN follows f1 ON f1.target_id = t.owner
           LEFT JOIN follows f2 ON f2.user_id = t.owner
@@ -452,7 +453,7 @@
                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
-                   t.status as teamStatus
+                   -1 as teamStatus
                FROM team t
                LEFT JOIN `user` u ON u.id = t.owner
                WHERE t.invited_id = #{userId} AND t.tag = 0 AND t.status = 0
@@ -480,7 +481,7 @@
                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
-                   t.status as teamStatus
+                   -1 as teamStatus
                FROM team t
                LEFT JOIN follows f1 ON f1.target_id = t.owner
                LEFT JOIN follows f2 ON f2.user_id = t.owner
@@ -510,7 +511,7 @@
                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
-                   t.status AS teamStatus
+                   -1 AS teamStatus
                FROM team t
                LEFT JOIN  `user` u ON u.id = t.owner
                WHERE t.status = 0 AND t.tag = 2
@@ -537,7 +538,7 @@
                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
-                   t.status AS teamStatus
+                   -1 AS teamStatus
                FROM team t
                LEFT JOIN  `user` u ON u.id = t.owner
                WHERE t.status = 0 AND t.tag = 2
@@ -564,7 +565,7 @@
                     (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
                     t.number AS totalUserNum,
                     t.tag AS label,
-                    t.status AS teamStatus
+                    -1 AS teamStatus
                 FROM team t
                 LEFT JOIN  `user` u ON u.id = t.owner
                 WHERE t.status = 0 AND t.tag = 2
@@ -663,7 +664,8 @@
     </select>
 
     <select id="getShopActivityList" resultMap="activityMap">
-        SELECT
+      SELECT t1.* FROM
+        (SELECT
             t.id AS teamId,
             t.owner AS userId,
             u.user_name AS userName,
@@ -679,12 +681,75 @@
             t.pay_way AS payWay,
             (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
             t.number AS totalUserNum,
-            t.tag AS label
-        FROM team t
-        LEFT JOIN `user` u ON u.id = t.owner
-        LEFT JOIN shop s on s.id = t.shop_id
-        WHERE t.status = 0 and s.id = #{shopId}
-        AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+            t.tag AS label,
+            -1 as teamStatus
+         FROM team t
+         LEFT JOIN `user` u ON u.id = t.owner
+         LEFT JOIN shop s ON s.id = t.shop_id
+         WHERE t.status = 0 AND t.tag = 2 AND s.id = #{shopId}
+         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+        ) t1
+
+        UNION
+
+      SELECT t2.* FROM
+        (SELECT
+          t.id AS teamId,
+          t.owner AS userId,
+          u.user_name AS userName,
+          u.cover_pic AS userCover,
+          u.sex AS userSex,
+          TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+          t.activity_name AS activityName,
+          t.start_time AS startTime,
+          t.activity_address AS activityAddress,
+          1 AS distance,
+          t.activity_type AS activityType,
+          (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+          t.pay_way AS payWay,
+          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+          t.number AS totalUserNum,
+          t.tag AS label,
+          -1 as teamStatus
+         FROM team t
+         LEFT JOIN `user` u ON u.id = t.owner
+         LEFT JOIN shop s ON s.id = t.shop_id
+         WHERE t.status = 0 AND t.tag = 0 AND s.id = #{shopId}
+         AND t.invited_id = 45
+         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+        ) t2
+
+        UNION
+
+      SELECT t3.* FROM
+        (SELECT
+          t.id AS teamId,
+          t.owner AS userId,
+          u.user_name AS userName,
+          u.cover_pic AS userCover,
+          u.sex AS userSex,
+          TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+          t.activity_name AS activityName,
+          t.start_time AS startTime,
+          t.activity_address AS activityAddress,
+          1 AS distance,
+          t.activity_type AS activityType,
+          (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
+          t.pay_way AS payWay,
+          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+          t.number AS totalUserNum,
+          t.tag AS label,
+          -1 as teamStatus
+         FROM team t
+         LEFT JOIN `user` u ON u.id = t.owner
+         LEFT JOIN shop s ON s.id = t.shop_id
+         LEFT JOIN follows f1 ON f1.target_id = t.owner
+         LEFT JOIN follows f2 ON f2.user_id = t.owner
+         WHERE t.status = 0 AND t.tag = 1 AND s.id = #{shopId}
+         AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
+         AND ((f1.status = 0 AND f1.user_id = 45) OR (f2.status = 0 AND f2.target_id = 45))
+        ) t3
+      ORDER BY label
     </select>
     
     <update id="updateChatGroupId">

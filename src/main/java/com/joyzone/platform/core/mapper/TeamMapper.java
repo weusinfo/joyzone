@@ -47,7 +47,7 @@ public interface TeamMapper extends Mapper<TeamModel> {
 
     List<String> queryShopPicList(@Param("shopId") Long shopId);
 
-    List<ActivityDTO> getShopActivityList(@Param("shopId") Long shopId);
+    List<ActivityDTO> getShopActivityList(@Param("shopId") Long shopId,@Param("userId") Long userId);
     
     int updateChatGroupId(@Param("chatGroupId") String chatGroupId, @Param("id") Long id);
 }

@@ -35,6 +35,9 @@ public class ShopDetaiDTO extends BaseModel{
     @ApiModelProperty("商家价格")
     private BigDecimal price;
 
+    @ApiModelProperty("访问商家的用户id")
+    private Long userId;
+
     @ApiModelProperty("商家正在聚会列表")
     private List<ActivityDTO> shopTeamList;
 
@@ -84,6 +87,14 @@ public class ShopDetaiDTO extends BaseModel{
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<ActivityDTO> getShopTeamList() {

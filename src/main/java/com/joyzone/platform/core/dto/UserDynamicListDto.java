@@ -34,6 +34,9 @@ public class UserDynamicListDto extends BaseModel{
     @ApiModelProperty("评论详情列表")
     private List<String> dynamicPics;
 
+    @ApiModelProperty("点赞数量")
+    private int thumbCount;
+
     @ApiModelProperty("评论详情列表")
     private List<UserDynamicCommentListDTO> commentDetailList;
 
@@ -75,6 +78,14 @@ public class UserDynamicListDto extends BaseModel{
 
     public void setPics(String pics) {
         this.pics = pics;
+    }
+
+    public int getThumbCount() {
+        return thumbCount;
+    }
+
+    public void setThumbCount(int thumbCount) {
+        this.thumbCount = thumbCount;
     }
 
     public List<String> getDynamicPics() {
