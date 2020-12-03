@@ -18,7 +18,7 @@
   </resultMap>
 
   <select id="findByShopType" resultType="java.util.Map" >
-      select id,name as text from shop_type where status = 1 and type = #{type}
+      select id,name as text,type_image AS typeImg from shop_type where status = 1 and type = #{type}
   </select>
 
   <select id="findByPid" resultType="java.util.Map" >
