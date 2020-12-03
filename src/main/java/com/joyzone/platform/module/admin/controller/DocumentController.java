@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +14,9 @@ import com.joyzone.platform.common.utils.R;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -53,4 +57,22 @@ public class DocumentController {
 		return R.error("上传失败");
 	}
 
+	@ApiOperation("添加动态图片")
+	@PostMapping(path="/uploadDynamicDoc", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public R uploadDynamicDoc(@RequestParam("files") MultipartFile[] files) {
+		try {
+			List<DocumentModel> list = new ArrayList<>();
+			if(null != files && files.length > 0){
+				for (MultipartFile file : files){
+					String filePath = fileUtil.uploadPersonalImg(file);
+					DocumentModel documentModel = new DocumentModel(filePath);
+					list.add(documentModel);
+				}
+			}
+			return R.ok(list);
+		} catch (Exception e) {
+			//ignore
+		}
+		return R.error("上传失败");
+	}
 }
