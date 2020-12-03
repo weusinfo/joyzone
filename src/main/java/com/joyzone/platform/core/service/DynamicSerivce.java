@@ -203,4 +203,20 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             return R.error("操作失败");
         }
     }
+
+    public IndexDynamicListDTO selectByDynamicId(Long userId,Long dynamicId){
+        try {
+            IndexDynamicListDTO dynamic = dynamicMapper.selectByDynamicId(userId,dynamicId);
+            if (null != dynamic){
+                String pics = dynamic.getPics();
+                if  (StringUtils.isNotBlank(pics)){
+                    dynamic.setDynamicPics(JSONObject.parseArray(pics,String.class));
+                    dynamic.setPics(null);
+                }
+            }
+            return dynamic;
+        }catch (Exception e){
+            return null;
+        }
+    }
 }

@@ -131,4 +131,10 @@ public class AppDynamicController {
         return R.ok(dynamicSerivce.deleteDynamic(dynamicId));
     }
 
+    @ApiOperation("根据获取动态详情")
+    @PostMapping("selectByDynamicId")
+    public R selectByDynamicId(@RequestParam("userId") Long userId,@RequestParam("dynamicId") Long dynamicId){
+
+        return R.ok(dynamicSerivce.selectByDynamicId(userId,dynamicId));
+    }
 }
