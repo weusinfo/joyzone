@@ -22,7 +22,7 @@
   </select>
 
   <select id="findByPid" resultType="java.util.Map" >
-      select id,name as text from shop_type where status = 1 and pid = #{pid}
+      select id,name as text,type_image AS typeImg from shop_type where status = 1 and pid = #{pid}
   </select>
 
   <select id="selectByPageSize" resultMap="BaseResultMap">

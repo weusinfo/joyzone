@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DynamicMapper extends Mapper<DynamicModel> {
 
@@ -21,6 +22,8 @@ public interface DynamicMapper extends Mapper<DynamicModel> {
     List<IndexDynamicListDTO> getIndexDynamicList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     int deleteDynamic(@Param("dynamicId") Long dynamicId);
+
+    Map<String,Object> getReviewerInfo(@Param("id") Long id, @Param("type") Integer type);
 
     IndexDynamicListDTO selectByDynamicId(@Param("userId") Long userId,@Param("dynamicId") Long dynamicId);
 }

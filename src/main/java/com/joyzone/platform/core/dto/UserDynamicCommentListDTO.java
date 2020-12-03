@@ -24,6 +24,15 @@ public class UserDynamicCommentListDTO extends BaseModel{
     @ApiModelProperty("父级评论id")
     private Long pid;
 
+    @ApiModelProperty("父级评论者id")
+    private Long pUserId;
+
+    @ApiModelProperty("父级评论者昵称")
+    private String pUserName;
+
+    @ApiModelProperty("父级评论者头像")
+    private String pUserPic;
+
     @ApiModelProperty("评论id")
     private Long commentId;
 
@@ -104,5 +113,29 @@ public class UserDynamicCommentListDTO extends BaseModel{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getpUserId() {
+        return pUserId;
+    }
+
+    public void setpUserId(Long pUserId) {
+        this.pUserId = pUserId;
+    }
+
+    public String getpUserName() {
+        return pUserName;
+    }
+
+    public void setpUserName(String pUserName) {
+        this.pUserName = pUserName;
+    }
+
+    public String getpUserPic() {
+        return pUserPic;
+    }
+
+    public void setpUserPic(String pUserPic) {
+        this.pUserPic = pUserPic;
     }
 }

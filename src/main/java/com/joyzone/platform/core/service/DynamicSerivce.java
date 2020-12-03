@@ -83,6 +83,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             List<UserDynamicListDto> list = dynamicMapper.queryUserDynamicList(userId,pageNum,pageSize);
             if  (!list.isEmpty()){
                 list.stream().forEach(m -> {
+                    List<UserDynamicCommentListDTO> commentList = m.getCommentDetailList();
+                    setReviewerInfo(commentList);
                     String pics = m.getPics();
                     if  (StringUtils.isNotBlank(pics)){
                         m.setDynamicPics(JSONObject.parseArray(pics,String.class));
@@ -108,6 +110,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         double lat1 = lat, lnt1 = lnt;
         if (null != list && !list.isEmpty()){
             list.stream().forEach(m -> {
+                List<UserDynamicCommentListDTO> commentList = m.getCommentDetailList();
+                setReviewerInfo(commentList);
                 LocationVO locatio = this.selectByUserLocation(m.getUserId());
                 double lat2 = 0.0,lnt2 = 0.0;
                 if (null != locatio){
@@ -139,6 +143,21 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             }
         });
         return list;
+    }
+    private void setReviewerInfo(List<UserDynamicCommentListDTO> commentList){
+        commentList.stream().forEach(n -> {
+            if(n.getPid() != null){
+                Map<String,Object> reviewerInfo = dynamicMapper.getReviewerInfo(n.getPid(),0);
+                n.setpUserId((Long)reviewerInfo.get("pUserId"));
+                n.setpUserName((String)reviewerInfo.get("pUserName"));
+                n.setpUserPic((String)reviewerInfo.get("pUserPic"));
+            } else {
+                Map<String,Object> reviewerInfo = dynamicMapper.getReviewerInfo(n.getDynamicId(),1);
+                n.setpUserId((Long)reviewerInfo.get("pUserId"));
+                n.setpUserName((String)reviewerInfo.get("pUserName"));
+                n.setpUserPic((String)reviewerInfo.get("pUserPic"));
+            }
+        });
     }
 
     /**

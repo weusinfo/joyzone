@@ -104,7 +104,7 @@ public class AppShopController {
 
     @PostMapping("getAppShopByTypeId")
     @ApiOperation("根据店家种类ID获取该种类下所有店家信息 @zy")
-    public R getAppShopByTypeId(Long typeId){
+    public R getAppShopByTypeId(@RequestParam("typeId") Long typeId){
         PageHelper.startPage(0,10);
         List<ShopModel> shopInfoList = shopService.getAppShopByTypeId(typeId);
         if(shopInfoList != null && shopInfoList.size() > 0){

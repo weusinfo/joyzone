@@ -159,4 +159,25 @@
     LEFT JOIN `user` u ON u.id = t.user_id
     WHERE t.id = #{dynamicId}
   </select>
+
+  <select id="getReviewerInfo" resultType="java.util.HashMap">
+    <if test="type == 0">
+      SELECT
+      dc.user_id AS pUserId,
+      u.head_pic AS pUserPic,
+      u.user_name AS pUserName
+      FROM dynamic_comment dc
+      LEFT JOIN USER u ON u.id = dc.user_id
+      WHERE dc.id = #{id}
+    </if>
+    <if test="type == 1">
+      SELECT
+      d.user_id AS pUserId,
+      u.head_pic AS pUserPic,
+      u.user_name AS pUserName
+      FROM DYNAMIC d
+      LEFT JOIN USER u ON u.id = d.user_id
+      WHERE d.id = #{id}
+    </if>
+  </select>
 </mapper>
