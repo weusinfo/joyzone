@@ -146,13 +146,13 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     }
     private void setReviewerInfo(List<UserDynamicCommentListDTO> commentList){
         commentList.stream().forEach(n -> {
-            if(n.getPid() != null){
-                Map<String,Object> reviewerInfo = dynamicMapper.getReviewerInfo(n.getPid(),0);
-                n.setpUserId((Long)reviewerInfo.get("pUserId"));
-                n.setpUserName((String)reviewerInfo.get("pUserName"));
-                n.setpUserPic((String)reviewerInfo.get("pUserPic"));
+            Map<String,Object> reviewerInfo = null;
+            if (n.getPid() != null){
+                reviewerInfo = dynamicMapper.getReviewerInfo(n.getPid(),0);
             } else {
-                Map<String,Object> reviewerInfo = dynamicMapper.getReviewerInfo(n.getDynamicId(),1);
+                reviewerInfo = dynamicMapper.getReviewerInfo(n.getDynamicId(),1);
+            }
+            if (null != reviewerInfo && !reviewerInfo.isEmpty()){
                 n.setpUserId((Long)reviewerInfo.get("pUserId"));
                 n.setpUserName((String)reviewerInfo.get("pUserName"));
                 n.setpUserPic((String)reviewerInfo.get("pUserPic"));
