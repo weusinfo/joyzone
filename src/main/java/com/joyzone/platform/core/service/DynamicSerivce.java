@@ -52,7 +52,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     public int saveDynamic(DynamicDTO dynamicDTO){
 
         DynamicModel dynamicModel = new DynamicModel(dynamicDTO);
-        dynamicModel.setPics(this.getPics(dynamicDTO.getPicturlUrls()));
+        dynamicModel.setPics(dynamicDTO.getPicturlUrls());
         dynamicModel.setThumbs(0);
         dynamicModel.setCreateTime(new Date());
         dynamicModel.setUpdateTime(new Date());
@@ -100,7 +100,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
                     setReviewerInfo(commentList);
                     String pics = m.getPics();
                     if  (StringUtils.isNotBlank(pics)){
-                        m.setDynamicPics(JSONObject.parseArray(pics,String.class));
+                    	String[] rtnPics = pics.split(",");
+                        m.setDynamicPics(Arrays.asList(rtnPics));
                         m.setPics(null);
                     }
                 });
@@ -134,7 +135,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
                 // 计算距离
                 m.setDistance(LocationUtils.getDistance(lat1,lnt1,lat2,lnt2));
                 if(StringUtils.isNotBlank(m.getPics())){
-                    m.setDynamicPics(JSONObject.parseArray(m.getPics(),String.class));
+                	String[] rtnPics = m.getPics().split(",");
+                    m.setDynamicPics(Arrays.asList(rtnPics));
                 } else {
                     m.setDynamicPics(new ArrayList<>());
                 }
