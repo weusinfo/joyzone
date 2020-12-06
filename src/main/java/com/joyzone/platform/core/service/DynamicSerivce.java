@@ -52,7 +52,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     public int saveDynamic(DynamicDTO dynamicDTO){
 
         DynamicModel dynamicModel = new DynamicModel(dynamicDTO);
-
+        dynamicModel.setPics(this.getPics(dynamicDTO.getPicturlUrls()));
         dynamicModel.setThumbs(0);
         dynamicModel.setCreateTime(new Date());
         dynamicModel.setUpdateTime(new Date());
@@ -61,6 +61,19 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             //res = insertDynamicPicture(dynamicModel);
         }
         return res;
+    }
+
+    /**
+     *
+     * @param picturlUrls
+     * @return
+     */
+    private String getPics(String picturlUrls){
+        if (StringUtils.isBlank(picturlUrls)){
+            return new ArrayList<>().toString();
+        }
+        String[] pics = picturlUrls.split(",");
+        return JSONObject.toJSONString(pics);
     }
 
     private int insertDynamicPicture(DynamicModel dynamicModel){

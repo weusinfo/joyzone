@@ -1,7 +1,9 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.joyzone.platform.common.utils.DateUtils;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +28,7 @@ public class UserDynamicListDto extends BaseModel{
     private String dynamicContent;
 
     @ApiModelProperty("发动态时间")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "GMT+8")
     private Date createTime;
 
     @ApiModelProperty("评论详情列表")

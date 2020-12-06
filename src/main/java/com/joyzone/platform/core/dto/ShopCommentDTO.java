@@ -28,7 +28,7 @@ public class ShopCommentDTO {
     private String content;
 
     @ApiModelProperty("评论相片地址")
-    private List<String> picUrls;
+    private String picUrls;
 
 
     public Long getUserId() {
@@ -71,11 +71,11 @@ public class ShopCommentDTO {
         this.content = content;
     }
 
-    public List<String> getPicUrls() {
+    public String getPicUrls() {
         return picUrls;
     }
 
-    public void setPicUrls(List<String> picUrls) {
+    public void setPicUrls(String picUrls) {
         this.picUrls = picUrls;
     }
 }

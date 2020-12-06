@@ -11,6 +11,7 @@ import com.joyzone.platform.core.vo.ShopCommentVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,12 +60,21 @@ public class ShopCommentService extends BaseService<ShopCommentModel> {
             return r;
         }
         ShopCommentModel model = new ShopCommentModel(shopCommentDTO);
+        model.setPicUrls(this.getPics(shopCommentDTO.getPicUrls()));
         try {
             shopCommentMapper.insert(model);
             return R.ok();
         }catch (Exception e){
             return R.error();
         }
+    }
+
+    private String getPics(String picturlUrls){
+        if (StringUtils.isBlank(picturlUrls)){
+            return new ArrayList<>().toString();
+        }
+        String[] pics = picturlUrls.split(",");
+        return JSONObject.toJSONString(pics);
     }
 
     private R checkParam(ShopCommentDTO shopCommentDTO){

@@ -82,8 +82,6 @@ public class ShopCommentModel {
         // 获取实例
         SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
         this.content = wordUtils.filterInfo(shopCommentDTO.getContent());
-        List<String> pics = shopCommentDTO.getPicUrls() != null ? shopCommentDTO.getPicUrls() : new ArrayList<>();
-        this.picUrls = JSONObject.toJSONString(pics);
     }
 
     /**
