@@ -218,8 +218,6 @@ public class AppTeamController {
             return R.error("系统参数不能为空");
         if(teamModel.getOwner() == null)
             return R.error("发起者id不能为空");
-        if(teamModel.getActivityType() == null)
-            return R.error("活动类型不能为空");
         if(teamModel.getActivityName() == null)
             return R.error("聚会标题不能为空");
         if(teamModel.getStartTime() == null)

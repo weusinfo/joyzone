@@ -42,6 +42,8 @@ public class TeamService extends BaseService<TeamModel> {
     
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private ShopService shopService;
 
     /*public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
         return teamMapper.getTeamList(teamModel,userId,sort);
@@ -159,6 +161,8 @@ public class TeamService extends BaseService<TeamModel> {
                 if (count != null && count > 0) {
                     return 999;
                 }
+                ShopModel shop = shopService.selectByKey(teamModel.getShopId());
+                teamModel.setActivityType(shop.getShopTypeId().intValue());
             } 
             teamModel.setType(ShopTypeModel.SHOP_TYPE_ZD);  //组队店家
             teamModel.setStatus(0); //组队中
