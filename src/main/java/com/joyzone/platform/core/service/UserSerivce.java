@@ -65,6 +65,7 @@ public class UserSerivce extends BaseService<UserModel> {
         if(userModel.getId() != null){
             userModel.setUpdateTime(date);
             int i = userMapper.updateByPrimaryKeySelective(userModel);
+            cacheService.delUser(userModel.getId());
             if(i > 0) {
             	chatService.updateUser(""+userModel.getId(), userModel.getUserName());
             }
