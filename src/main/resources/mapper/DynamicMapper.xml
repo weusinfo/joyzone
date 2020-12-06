@@ -120,15 +120,9 @@
       (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
       (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
       (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
-    FROM (
-           SELECT
-                 <include refid="Base_Column_List"></include>
-           FROM
-                DYNAMIC
-           ORDER BY create_time DESC
-         ) t
+    FROM DYNAMIC t
     LEFT JOIN `user` u ON u.id = t.user_id
-    GROUP BY t.user_id
+    ORDER BY t.id DESC
   </select>
 
   <delete id="deleteDynamic">
