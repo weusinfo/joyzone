@@ -52,4 +52,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     int updateChatGroupId(@Param("chatGroupId") String chatGroupId, @Param("id") Long id);
     
     int failInviting(@Param("invitingId") String invitingId);
+    
+    int save(TeamModel teamModel);
 }

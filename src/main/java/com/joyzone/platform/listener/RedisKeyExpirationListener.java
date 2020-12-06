@@ -1,5 +1,7 @@
 package com.joyzone.platform.listener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
@@ -19,6 +21,8 @@ import io.micrometer.core.instrument.util.StringUtils;
 @Component
 public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener{
 	
+	private Logger LOGGER = LoggerFactory.getLogger(RedisKeyExpirationListener.class);
+	
 	@Autowired
 	private TeamService teamService;
 	
@@ -32,6 +36,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
 		if(StringUtils.isNotEmpty(expiredKey) && expiredKey.startsWith(Constants.KEY_EXPIRATION_PREFIX)) {
 			String invitingId = expiredKey.substring(8);
 			teamService.failInviting(invitingId);
+			LOGGER.warn("组队"+invitingId+"已经过期，系统设置为组队失败！");
 		}
 	}
 

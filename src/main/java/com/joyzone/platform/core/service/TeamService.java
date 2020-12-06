@@ -175,7 +175,7 @@ public class TeamService extends BaseService<TeamModel> {
                     teamModel.setTag(2); //普通聚会
                 }
             }
-            teamMapper.insertSelective(teamModel);
+            teamMapper.save(teamModel);
             List<TeamModel> teamList = Lists.newArrayList();
             teamList.add(teamModel);
             saveTeamUsers(teamModel,teamList);

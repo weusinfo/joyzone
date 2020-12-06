@@ -14,5 +14,7 @@ public class RedisListenerConfig {
 		container.setConnectionFactory(factory);
 		return container;
 	}
+	
+	
 
 }

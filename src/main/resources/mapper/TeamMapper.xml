@@ -765,4 +765,15 @@
     <update id="failInviting">
     	update team set status = 2 where id = #{invitingId}
     </update>
+    
+    <insert id="save" parameterType="com.joyzone.platform.core.model.TeamModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    	insert into team(shop_id, shop_name, owner,start_time,type,status,result,pay_way,sex_want,create_time,update_time,chat_group_id,
+    	activity_type,activity_name,activity_address,number,number_boy,number_girl,to_way,invited_id,tag)
+    	values(#{shopId,jdbcType=BIGINT},#{shopName,jdbcType=VARCHAR},#{owner,jdbcType=BIGINT},
+  #{startTime,jdbcType=TIMESTAMP},#{type,jdbcType=INTEGER},
+  #{status,jdbcType=INTEGER},#{result,jdbcType=INTEGER},#{payWay,jdbcType=INTEGER},
+  #{sexWant,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+  #{chatGroupId,jdbcType=VARCHAR},#{activityType,jdbcType=INTEGER},#{activityName,jdbcType=VARCHAR},#{activityAddress,jdbcType=VARCHAR},
+  #{number,jdbcType=INTEGER},#{numberBoy,jdbcType=INTEGER},#{numberGirl,jdbcType=INTEGER},#{toWay,jdbcType=INTEGER},#{invitedId,jdbcType=BIGINT},#{tag,jdbcType=INTEGER})
+    </insert>
 </mapper>
