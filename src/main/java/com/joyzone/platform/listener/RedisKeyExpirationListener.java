@@ -30,7 +30,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
 	public void onMessage(Message message, byte[] pattern) {
 		String expiredKey = message.toString();
 		if(StringUtils.isNotEmpty(expiredKey) && expiredKey.startsWith(Constants.KEY_EXPIRATION_PREFIX)) {
-			String invitingId = expiredKey.substring(7);
+			String invitingId = expiredKey.substring(8);
 			teamService.failInviting(invitingId);
 		}
 	}
