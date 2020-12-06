@@ -245,6 +245,7 @@ public class AppTeamController {
                 return R.error("用户已在该店内发起了有效组队！");
             }
         }catch(Exception e) {
+        	chatService.deleteTeamGroup(teamModel.getChatGroupId());
         	return R.error("发生了系统错误,发起失败,请重试");
         }
         Map<String,String> map = Maps.newHashMap();

@@ -173,15 +173,15 @@ public class TeamService extends BaseService<TeamModel> {
                     teamModel.setTag(2); //普通聚会
                 }
             }
-            teamMapper.save(teamModel);
-            saveTeamUsers(teamModel);
             String groupId = chatService.createTeamGroup(teamModel.getOwner(), teamModel.getActivityName(), "个人建群");
             if(groupId == null) {
             	throw new JZException("群组创建失败...");
             }
-            ThreadLocalMap.put("chatGroupId", groupId);
             teamModel.setChatGroupId(groupId);
-            teamMapper.updateChatGroupId(groupId, teamModel.getId());//更新塞回聊天群ID
+            teamMapper.save(teamModel);
+            saveTeamUsers(teamModel);           
+            ThreadLocalMap.put("chatGroupId", groupId);
+            //teamMapper.updateChatGroupId(groupId, teamModel.getId());//更新塞回聊天群ID
             redisUtil.set(Constants.KEY_EXPIRATION_PREFIX+teamModel.getId(), null, DateUtils.getExpireTime(teamModel.getStartTime()));
         }
         //更新
