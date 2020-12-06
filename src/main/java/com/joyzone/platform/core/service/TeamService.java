@@ -90,9 +90,7 @@ public class TeamService extends BaseService<TeamModel> {
            if(count == null || count == 0){
         	   return 0;
            }
-           List<TeamModel> teamList = Lists.newArrayList();
-           teamList.add(teamModel);
-           int res = saveTeamUsers(teamModel,teamList);
+           int res = saveTeamUsers(teamModel);
            if(res == 0){
                 return 111;
            }
@@ -102,9 +100,9 @@ public class TeamService extends BaseService<TeamModel> {
         teamModel.setUpdateTime(date);
         return teamMapper.updateByPrimaryKeySelective(teamModel);
     }
-    public int saveTeamUsers(TeamModel teamModel,List<TeamModel> teamList){
+    public int saveTeamUsers(TeamModel teamModel){
         TeamUsersModel teamUsersModel = new TeamUsersModel();
-        teamUsersModel.setTeamId(teamList.get(0).getId());
+        teamUsersModel.setTeamId(teamModel.getId());
         teamUsersModel.setUserId(teamModel.getOwner());
         teamUsersModel.setStatus(0);
         teamUsersModel.setCreateTime(new Date());
@@ -176,9 +174,7 @@ public class TeamService extends BaseService<TeamModel> {
                 }
             }
             teamMapper.save(teamModel);
-            List<TeamModel> teamList = Lists.newArrayList();
-            teamList.add(teamModel);
-            saveTeamUsers(teamModel,teamList);
+            saveTeamUsers(teamModel);
             String groupId = chatService.createTeamGroup(teamModel.getOwner(), teamModel.getActivityName(), "个人建群");
             if(groupId == null) {
             	throw new JZException("群组创建失败...");
