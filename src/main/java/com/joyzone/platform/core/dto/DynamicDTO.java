@@ -26,7 +26,7 @@ public class DynamicDTO implements Serializable {
     private Integer kind;
 
 
-    private List<String> dynamicPics;
+    private List<String> picturlUrls;
 
 
     /**
@@ -83,11 +83,11 @@ public class DynamicDTO implements Serializable {
         this.kind = kind;
     }
 
-    public List<String> getDynamicPics() {
-        return dynamicPics;
+    public List<String> getPicturlUrls() {
+        return picturlUrls;
     }
 
-    public void setDynamicPics(List<String> dynamicPics) {
-        this.dynamicPics = dynamicPics;
+    public void setPicturlUrls(List<String> picturlUrls) {
+        this.picturlUrls = picturlUrls;
     }
 }

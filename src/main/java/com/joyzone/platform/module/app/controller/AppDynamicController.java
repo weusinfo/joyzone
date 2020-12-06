@@ -4,16 +4,18 @@ import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.DynamicDTO;
 import com.joyzone.platform.core.dto.IndexDynamicListDTO;
-import com.joyzone.platform.core.dto.UserDynamicDTO;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
+import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.DynamicCommentSerivce;
 import com.joyzone.platform.core.service.DynamicSerivce;
 import com.joyzone.platform.core.service.FollowsSerivce;
+import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,8 @@ public class AppDynamicController {
     private DynamicCommentSerivce dynamicCommentSerivce;
     @Autowired
     private FollowsSerivce followsSerivce;
+    @Autowired
+    private UserSerivce userSerivce;
 
     @ApiOperation("发布动态")
     @PostMapping("saveDynamic")
@@ -49,6 +53,16 @@ public class AppDynamicController {
                     || dynamicDTO.getKind() == null)
 
             return R.error("参数不能为空");
+
+
+        UserModel user = userSerivce.selectByKey(dynamicDTO.getUserId());
+        if( null == user  || user.getSex() == null
+                || StringUtils.isBlank(user.getUserName())
+                    || user.getBirthday() == null
+                        || StringUtils.isBlank(user.getHeadPic())){
+
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
+        }
 
         return  dynamicSerivce.saveDynamic(dynamicDTO) > 0 ? R.ok() : R.error("发布失败");
     }

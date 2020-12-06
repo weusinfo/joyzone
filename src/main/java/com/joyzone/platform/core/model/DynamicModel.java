@@ -1,5 +1,6 @@
 package com.joyzone.platform.core.model;
 
+import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.dto.DynamicDTO;
 
@@ -65,7 +66,7 @@ public class DynamicModel {
         Date date = new Date();
         this.createTime = date;
         this.updateTime = date;
-        this.pics = null != dynamicDTO.getDynamicPics() ? dynamicDTO.getDynamicPics().toString() : new ArrayList().toString();
+        this.pics = null != dynamicDTO.getPicturlUrls() ? JSONObject.toJSONString(dynamicDTO.getPicturlUrls()) : new ArrayList().toString();
     }
 
     /**
