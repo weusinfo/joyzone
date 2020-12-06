@@ -66,7 +66,7 @@ public class DynamicModel {
         Date date = new Date();
         this.createTime = date;
         this.updateTime = date;
-        this.pics = null != dynamicDTO.getPicturlUrls() ? JSONObject.toJSONString(dynamicDTO.getPicturlUrls()) : new ArrayList().toString();
+        this.pics = null != dynamicDTO.getPicturlUrls() ? dynamicDTO.getPicturlUrls().toString() : new ArrayList().toString();
     }
 
     /**
