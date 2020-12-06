@@ -8,6 +8,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -174,5 +175,17 @@ public class DateUtils {
     public static String getCurrentDate2(Date date) {
 
         return dateToStr(new Date(), "yyyyMMdd");
+    }
+    
+    /**
+     * 获取现在组队创建时间到组队开始时间的时间差，用于存放redis,设置过期时间
+     * @param expireDate
+     * @return
+     */
+    public static long getExpireTime(Date expireDate) {
+    	Date date = new Date();
+    	long expireTime = (expireDate.getTime() - date.getTime()) / 1000;
+    	return expireTime;
+    	
     }
 }

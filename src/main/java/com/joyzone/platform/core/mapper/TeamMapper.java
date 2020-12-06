@@ -50,4 +50,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     List<ActivityDTO> getShopActivityList(@Param("shopId") Long shopId,@Param("userId") Long userId);
     
     int updateChatGroupId(@Param("chatGroupId") String chatGroupId, @Param("id") Long id);
+    
+    int failInviting(@Param("invitingId") String invitingId);
 }

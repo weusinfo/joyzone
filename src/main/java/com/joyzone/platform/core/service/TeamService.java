@@ -4,7 +4,10 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.joyzone.platform.common.exception.JZException;
+import com.joyzone.platform.common.utils.Constants;
+import com.joyzone.platform.common.utils.DateUtils;
 import com.joyzone.platform.common.utils.R;
+import com.joyzone.platform.common.utils.RedisUtil;
 import com.joyzone.platform.common.utils.ThreadLocalMap;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.*;
@@ -36,6 +39,9 @@ public class TeamService extends BaseService<TeamModel> {
     ChatService chatService;
     @Autowired
     private TeamUsersService teamUsersService;
+    
+    @Autowired
+    private RedisUtil redisUtil;
 
     /*public  List<TeamDto> getTeamList(TeamModel teamModel,Long userId, Integer sort){
         return teamMapper.getTeamList(teamModel,userId,sort);
@@ -180,6 +186,7 @@ public class TeamService extends BaseService<TeamModel> {
             ThreadLocalMap.put("chatGroupId", groupId);
             teamModel.setChatGroupId(groupId);
             teamMapper.updateChatGroupId(groupId, teamModel.getId());//更新塞回聊天群ID
+            redisUtil.set(Constants.KEY_EXPIRATION_PREFIX+teamModel.getId(), null, DateUtils.getExpireTime(teamModel.getStartTime()));
         }
         //更新
         teamModel.setUpdateTime(date);
@@ -315,6 +322,10 @@ public class TeamService extends BaseService<TeamModel> {
     
     public int updateChatGroupId(String chatGroupId, Long id) {
     	return teamMapper.updateChatGroupId(chatGroupId, id);
+    }
+    
+    public int failInviting(String invitingId) {
+    	return teamMapper.failInviting(invitingId);
     }
 
 }
