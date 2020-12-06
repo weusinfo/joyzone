@@ -144,7 +144,7 @@
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
 
-        <collection property="shopTeamList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopActivityList"
+        <collection property="shopTeamList" javaType="ArrayList" column="{shopId=shopId,userId=userId}" select="com.joyzone.platform.core.mapper.TeamMapper.getShopActivityList"
                     fetchType="lazy" ofType="com.joyzone.platform.core.dto.ActivityDTO">
         </collection>
     </resultMap>
@@ -653,7 +653,8 @@
           s.name AS shopName,
           s.address AS shopAddress,
           s.phone AS shopPhone,
-          s.price AS price
+          s.price AS price,
+          ${userId} as userId
       FROM shop s
       WHERE s.id = #{shopId}
     </select>
@@ -715,7 +716,7 @@
          LEFT JOIN `user` u ON u.id = t.owner
          LEFT JOIN shop s ON s.id = t.shop_id
          WHERE t.status = 0 AND t.tag = 0 AND s.id = #{shopId}
-         AND t.invited_id = 45
+         AND t.invited_id = #{userId}
          AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
         ) t2
 
@@ -747,7 +748,7 @@
          LEFT JOIN follows f2 ON f2.user_id = t.owner
          WHERE t.status = 0 AND t.tag = 1 AND s.id = #{shopId}
          AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
-         AND ((f1.status = 0 AND f1.user_id = 45) OR (f2.status = 0 AND f2.target_id = 45))
+         AND ((f1.status = 0 AND f1.user_id = #{userId}) OR (f2.status = 0 AND f2.target_id = #{userId}))
         ) t3
       ORDER BY label
     </select>
