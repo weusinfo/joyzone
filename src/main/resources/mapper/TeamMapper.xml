@@ -760,4 +760,8 @@
         SELECT COUNT(*) AS num FROM team t
         WHERE t.owner = #{userId} AND t.shop_id = #{shopId} AND t.status = 0
     </select>
+    
+    <update id="failInviting">
+    	update team set status = 2 where id = #{invitingId}
+    </update>
 </mapper>

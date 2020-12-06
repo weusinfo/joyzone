@@ -39,4 +39,6 @@ public interface Constants {
 	String CACHE_KEY_CODE = CACHE_KEY + "CODE";
 	
 	Integer CACHE_CODE_EXPIRES = 5 * 60 * 1000;
+	
+	String KEY_EXPIRATION_PREFIX = "INVITNG_";
 }
