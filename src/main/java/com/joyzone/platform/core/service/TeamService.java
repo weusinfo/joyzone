@@ -315,7 +315,7 @@ public class TeamService extends BaseService<TeamModel> {
         return R.pageToData(0L,new ArrayList<>());
     }
 
-    public R getShopTabOne(Long shopId,Long userId,Integer type){
+    public R getShopTabOne(Long shopId,Long userId){
         ShopDetaiDTO shopDetaiDTO = teamMapper.getShopTabOne(shopId,userId);
         return R.ok(shopDetaiDTO);
     }

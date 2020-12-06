@@ -316,11 +316,10 @@ public class AppTeamController {
     @ApiOperation("新版202011：前端获取商家详情聚会tab页面 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "shopId", value = "商家ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0：聚会tab  1：商家信息tab  2：评价tab", required = true, dataType = "Integer", paramType = "query")
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
-    public R getShopTabOne(@RequestParam("shopId") Long shopId,@RequestParam("userId") Long userId,@RequestParam("type") Integer type){
-        return teamService.getShopTabOne(shopId,userId,type);
+    public R getShopTabOne(@RequestParam("shopId") Long shopId,@RequestParam("userId") Long userId){
+        return teamService.getShopTabOne(shopId,userId);
     }
 
 
