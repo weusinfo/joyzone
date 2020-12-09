@@ -398,7 +398,7 @@
             -1 as teamStatus
           FROM team t
           LEFT JOIN `user` u ON u.id = t.owner
-          WHERE t.invited_id = #{userId} AND t.tag = 0 AND t.status = 0
+          WHERE (t.invited_id = #{userId} OR t.owner = #{userId}) AND t.tag = 0 AND t.status = 0
           AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
         ) t2
 
@@ -456,7 +456,7 @@
                    -1 as teamStatus
                FROM team t
                LEFT JOIN `user` u ON u.id = t.owner
-               WHERE t.invited_id = #{userId} AND t.tag = 0 AND t.status = 0
+               WHERE (t.invited_id = #{userId} OR t.owner = #{userId}) AND t.tag = 0 AND t.status = 0
                AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
            ) t2
 
@@ -716,7 +716,7 @@
          LEFT JOIN `user` u ON u.id = t.owner
          LEFT JOIN shop s ON s.id = t.shop_id
          WHERE t.status = 0 AND t.tag = 0 AND s.id = #{shopId}
-         AND t.invited_id = #{userId}
+         AND (t.invited_id = #{userId} OR t.owner = #{userId})
          AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
         ) t2
 

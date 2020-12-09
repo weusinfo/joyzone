@@ -244,9 +244,12 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             if (null != dynamic){
                 String pics = dynamic.getPics();
                 if  (StringUtils.isNotBlank(pics)){
-                    dynamic.setDynamicPics(JSONObject.parseArray(pics,String.class));
+                    //dynamic.setDynamicPics(JSONObject.parseArray(pics,String.class));
+                    dynamic.setDynamicPics(Arrays.asList(pics.split(",")));
                     dynamic.setPics(null);
                 }
+                List<UserDynamicCommentListDTO> commentDetailList = dynamic.getCommentDetailList();
+                setReviewerInfo(commentDetailList);
             }
             return dynamic;
         }catch (Exception e){
