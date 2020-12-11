@@ -58,6 +58,7 @@
     <result column="thumbCount" property="thumbCount" jdbcType="INTEGER"/>
     <result column="thumbed" property="thumbed" jdbcType="INTEGER"/>
     <result column="followed" property="followed" jdbcType="INTEGER"/>
+    <result column="createTime" property="createTime" jdbcType="DATE"/>
     <result column="pics" property="pics" jdbcType="VARCHAR"/>
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
@@ -111,6 +112,7 @@
       t.content AS dynamicContent,
       t.thumbs AS thumbCount,
       t.pics AS pics,
+      t.create_time AS createTime,
       u.id AS userId,
       u.head_pic AS userPic,
       u.user_name AS userName,
@@ -140,6 +142,7 @@
     t.content AS dynamicContent,
     t.thumbs AS thumbCount,
     t.pics AS pics,
+    t.create_time AS createTime,
     u.id AS userId,
     u.head_pic AS userPic,
     u.user_name AS userName,

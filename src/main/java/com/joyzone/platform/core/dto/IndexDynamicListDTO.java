@@ -1,12 +1,14 @@
 package com.joyzone.platform.core.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joyzone.platform.core.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -68,6 +70,10 @@ public class IndexDynamicListDTO extends BaseModel{
 
     @ApiModelProperty("图片地址")
     private List<String> dynamicPics;
+
+    @ApiModelProperty("评论时间")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone="GMT+8")
+    private Date createTime;
 
     @ApiModelProperty("评论详情列表")
     private List<UserDynamicCommentListDTO> commentDetailList;
@@ -214,5 +220,14 @@ public class IndexDynamicListDTO extends BaseModel{
 
     public void setDynamicPics(List<String> dynamicPics) {
         this.dynamicPics = dynamicPics;
+    }
+
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
