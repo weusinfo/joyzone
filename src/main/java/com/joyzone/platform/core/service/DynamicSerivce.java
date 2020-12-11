@@ -57,32 +57,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         dynamicModel.setCreateTime(new Date());
         dynamicModel.setUpdateTime(new Date());
         int res = dynamicMapper.insert(dynamicModel);
-        if (res > 0) {
-            //res = insertDynamicPicture(dynamicModel);
-        }
         return res;
-    }
-
-    /**
-     *
-     * @param picturlUrls
-     * @return
-     */
-    private String getPics(String picturlUrls){
-        if (StringUtils.isBlank(picturlUrls)){
-            return new ArrayList<>().toString();
-        }
-        String[] pics = picturlUrls.split(",");
-        return JSONObject.toJSONString(pics);
-    }
-
-    private int insertDynamicPicture(DynamicModel dynamicModel){
-        DynamicPictureModel pictureModel = new DynamicPictureModel();
-        pictureModel.setDynamicId(dynamicModel.getId());
-        pictureModel.setPictureUrl(dynamicModel.getDynamicPics());
-        pictureModel.setCreateTime(new Date());
-        pictureModel.setUpdateTime(new Date());
-        return dynamicPictureMapper.insert(pictureModel);
     }
 
     /**
@@ -244,7 +219,6 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             if (null != dynamic){
                 String pics = dynamic.getPics();
                 if  (StringUtils.isNotBlank(pics)){
-                    //dynamic.setDynamicPics(JSONObject.parseArray(pics,String.class));
                     dynamic.setDynamicPics(Arrays.asList(pics.split(",")));
                     dynamic.setPics(null);
                 }
