@@ -140,6 +140,8 @@
         <result column="shopPhone" property="shopPhone" jdbcType="VARCHAR" />
         <result column="price" property="price" jdbcType="DECIMAL" />
         <result column="userId" property="userId" jdbcType="BIGINT" />
+        <result column="lng" property="lng" jdbcType="DECIMAL"/>
+        <result column="lat" property="lat" jdbcType="DECIMAL"/>
         <collection property="shopPicList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryShopPicList"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -654,6 +656,8 @@
           s.address AS shopAddress,
           s.phone AS shopPhone,
           s.price AS price,
+          s.lng AS lng,
+          s.lat AS lat,
           ${userId} as userId
       FROM shop s
       WHERE s.id = #{shopId}

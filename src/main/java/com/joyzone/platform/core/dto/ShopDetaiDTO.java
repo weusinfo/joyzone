@@ -41,6 +41,12 @@ public class ShopDetaiDTO extends BaseModel{
     @ApiModelProperty("商家正在聚会列表")
     private List<ActivityDTO> shopTeamList;
 
+    @ApiModelProperty("经度")
+    private BigDecimal lng;
+
+    @ApiModelProperty("纬度")
+    private BigDecimal lat;
+
     public Long getShopId() {
         return shopId;
     }
@@ -103,5 +109,21 @@ public class ShopDetaiDTO extends BaseModel{
 
     public void setShopTeamList(List<ActivityDTO> shopTeamList) {
         this.shopTeamList = shopTeamList;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
     }
 }
