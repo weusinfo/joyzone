@@ -170,6 +170,7 @@ public class TeamService extends BaseService<TeamModel> {
             //chatService.joinTeamGroup(groupId, teamModel.getOwner());
             if(teamModel.getInvitedId() != null){
                 teamModel.setTag(0); //特约聚会
+                teamModel.setNumber(2); //一对一聚会只有两人
             } else {
                 if(teamModel.getToWay() != 0){
                     teamModel.setTag(1); //好友聚会
@@ -211,9 +212,15 @@ public class TeamService extends BaseService<TeamModel> {
         ActivityDetailDTO detailDto = teamMapper.getActivityDetail(teamId);
         Long owner = detailDto.getUserId();
         int status = detailDto.getStatus();
+        int tag = detailDto.getTag();
         List<ActivityUserDTO> userInfoList = detailDto.getJoinUserInfoList();
         for(int i=0;i<userInfoList.size();i++){
             userIdList.add(userInfoList.get(i).getUserId());
+        }
+        if(tag == 0){ //特约聚会时，将邀约对象的信息返回
+            Map inviteUserInfo = teamMapper.getInviteUserInfo(detailDto.getTeamId());
+            detailDto.setInviteUserId(Long.valueOf(inviteUserInfo.get("inviteUserId").toString()));
+            detailDto.setInviteUserName(inviteUserInfo.get("inviteUserName").toString());
         }
         if(status == 0){
             if(userId == owner){
@@ -294,7 +301,7 @@ public class TeamService extends BaseService<TeamModel> {
             //groupService.cancelGroup(teamModel.getId(), userId);
             // team_users表的变更
             TeamUsersModel bean = teamUsersMapper.checkUserInTeam(new TeamUsersModel(),userId,teamModel.getId());
-            bean.setStatus(1);
+            //bean.setStatus(1); //已解散，所以不设为1也不要紧，主要是聚会详情里最少需要一个人的信息而已
             bean.setUpdateTime(new Date());
             int ret = teamUsersService.update(bean);
             if(ret == 1){

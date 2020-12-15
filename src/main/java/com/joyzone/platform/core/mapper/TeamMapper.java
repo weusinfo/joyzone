@@ -54,4 +54,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     int failInviting(@Param("invitingId") String invitingId);
     
     int save(TeamModel teamModel);
+
+    Map getInviteUserInfo(@Param("teamId") Long teamId);
 }

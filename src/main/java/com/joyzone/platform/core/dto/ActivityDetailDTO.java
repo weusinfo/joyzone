@@ -70,6 +70,15 @@ public class ActivityDetailDTO extends BaseModel{
     @ApiModelProperty("订单状态 0：进行中 1：成功 2：失败 3：已解散")
     private Integer status;
 
+    @ApiModelProperty("订单类型 0:特约 1：好友 2：普通")
+    private Integer tag;
+
+    @ApiModelProperty("特约对象的id")
+    private Long inviteUserId;
+
+    @ApiModelProperty("特约对象的昵称")
+    private String inviteUserName;
+
     @ApiModelProperty("参与者信息列表")
     private List<ActivityUserDTO> joinUserInfoList;
 
@@ -199,6 +208,30 @@ public class ActivityDetailDTO extends BaseModel{
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getTag() {
+        return tag;
+    }
+
+    public void setTag(Integer tag) {
+        this.tag = tag;
+    }
+
+    public Long getInviteUserId() {
+        return inviteUserId;
+    }
+
+    public void setInviteUserId(Long inviteUserId) {
+        this.inviteUserId = inviteUserId;
+    }
+
+    public String getInviteUserName() {
+        return inviteUserName;
+    }
+
+    public void setInviteUserName(String inviteUserName) {
+        this.inviteUserName = inviteUserName;
     }
 
     public List<ActivityUserDTO> getJoinUserInfoList() {

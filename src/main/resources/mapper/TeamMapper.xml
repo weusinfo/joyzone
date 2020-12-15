@@ -124,6 +124,7 @@
         <result column="joinUserNum" property="joinUserNum" jdbcType="INTEGER" />
         <result column="totalUserNum" property="totalUserNum" jdbcType="INTEGER" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="tag" property="tag" jdbcType="INTEGER" />
         <collection property="joinUserImgs" javaType="ArrayList" column="{teamId=teamId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryJoinUserImgs"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -599,7 +600,8 @@
         t.number_girl AS girlNumber,
         (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
         t.number AS totalUserNum,
-        t.status
+        t.status,
+        t.tag
       FROM team t
       LEFT JOIN shop s ON s.id = t.shop_id
       WHERE t.id = #{teamId}
@@ -780,4 +782,13 @@
   #{chatGroupId,jdbcType=VARCHAR},#{activityType,jdbcType=INTEGER},#{activityName,jdbcType=VARCHAR},#{activityAddress,jdbcType=VARCHAR},
   #{number,jdbcType=INTEGER},#{numberBoy,jdbcType=INTEGER},#{numberGirl,jdbcType=INTEGER},#{toWay,jdbcType=INTEGER},#{invitedId,jdbcType=BIGINT},#{tag,jdbcType=INTEGER})
     </insert>
+
+    <select id="getInviteUserInfo" resultType="java.util.HashMap">
+        SELECT
+          u.id AS inviteUserId,
+          u.user_name AS inviteUserName
+        FROM USER u
+        LEFT JOIN team t ON t.invited_id = u.id
+        WHERE t.id = #{teamId}
+    </select>
 </mapper>
