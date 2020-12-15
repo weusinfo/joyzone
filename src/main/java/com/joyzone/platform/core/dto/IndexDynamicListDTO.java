@@ -68,6 +68,8 @@ public class IndexDynamicListDTO extends BaseModel{
 
     private String pics;
 
+    private Integer kind;
+
     @ApiModelProperty("图片地址")
     private List<String> dynamicPics;
 
@@ -229,5 +231,13 @@ public class IndexDynamicListDTO extends BaseModel{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getKind() {
+        return kind;
+    }
+
+    public void setKind(Integer kind) {
+        this.kind = kind;
     }
 }

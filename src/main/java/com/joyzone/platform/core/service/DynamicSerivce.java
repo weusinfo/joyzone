@@ -86,7 +86,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         return userDynamic;
     }
 
-    public List<IndexDynamicListDTO> getIndexDynamicList(Long userId, Integer type, Integer pageNum, Integer pageSize){
+    public R getIndexDynamicList(Long userId, Integer type, Integer pageNum, Integer pageSize){
         // 获取当前用户的坐标
         LocationVO userLocation = this.selectByUserLocation(userId);
         double lat = 0.0,lnt = 0.0;
@@ -94,32 +94,44 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             lat = userLocation.getLat();
             lnt = userLocation.getLnt();
         }
+
+        List<IndexDynamicListDTO> dynamics = new ArrayList<>();
         // 获取
-        List<IndexDynamicListDTO> list = dynamicMapper.getIndexDynamicList(userId,pageNum,pageSize);
-        double lat1 = lat, lnt1 = lnt;
+        List<IndexDynamicListDTO> list = null;
+        if(0 == type.intValue()){ // 动态列表
+            list = dynamicMapper.getIndexDynamicList(userId,pageNum,pageSize);
+        }
+        if(1 == type.intValue()){ // 我关注的人和关注我的人动态列表
+            list = dynamicMapper.getIndexFollowDynamicList(userId,pageNum,pageSize);
+        }
         if (null != list && !list.isEmpty()){
-            list.stream().forEach(m -> {
-                List<UserDynamicCommentListDTO> commentList = m.getCommentDetailList();
+            for (IndexDynamicListDTO dto : list){
+                // 如果用户动态设置了私密，并当前用户没有关注则不显示
+                if (0 == type.intValue() && 1 == dto.getKind() && 0 == dto.getFollowed()){
+                    continue;
+                }
+                List<UserDynamicCommentListDTO> commentList = dto.getCommentDetailList();
                 setReviewerInfo(commentList);
-                LocationVO locatio = this.selectByUserLocation(m.getUserId());
+                LocationVO locatio = this.selectByUserLocation(dto.getUserId());
                 double lat2 = 0.0,lnt2 = 0.0;
                 if (null != locatio){
                     lat2 = locatio.getLat();
                     lnt2 = locatio.getLnt();
                 }
                 // 计算距离
-                m.setDistance(LocationUtils.getDistance(lat1,lnt1,lat2,lnt2));
-                if(StringUtils.isNotBlank(m.getPics())){
-                	String[] rtnPics = m.getPics().split(",");
-                    m.setDynamicPics(Arrays.asList(rtnPics));
+                dto.setDistance(LocationUtils.getDistance(lat,lnt,lat2,lnt2));
+                if(StringUtils.isNotBlank(dto.getPics())){
+                    String[] rtnPics = dto.getPics().split(",");
+                    dto.setDynamicPics(Arrays.asList(rtnPics));
                 } else {
-                    m.setDynamicPics(new ArrayList<>());
+                    dto.setDynamicPics(new ArrayList<>());
                 }
-                m.setPics(null);
-            });
+                dto.setPics(null);
+                dynamics.add(dto);
+            }
         }
         // 根据距离进行排序
-        Collections.sort(list, new Comparator<IndexDynamicListDTO>(){
+        Collections.sort(dynamics, new Comparator<IndexDynamicListDTO>(){
             public int compare(IndexDynamicListDTO arg0, IndexDynamicListDTO arg1) {
                 BigDecimal hits0 = BigDecimal.valueOf(arg0.getDistance());
                 BigDecimal hits1 = BigDecimal.valueOf(arg1.getDistance()) ;
@@ -132,7 +144,12 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
                 }
             }
         });
-        return list;
+        if (dynamics.size() > 0){
+            Page page = new Page();
+            page = (Page)list;
+            return R.pageToData(page.getTotal(),dynamics);
+        }
+        return R.pageToData(0L,new ArrayList<>());
     }
     private void setReviewerInfo(List<UserDynamicCommentListDTO> commentList){
         commentList.stream().forEach(n -> {

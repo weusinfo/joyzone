@@ -1,10 +1,8 @@
 package com.joyzone.platform.module.app.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.DynamicDTO;
-import com.joyzone.platform.core.dto.IndexDynamicListDTO;
 import com.joyzone.platform.core.model.DynamicCommentModel;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.model.UserModel;
@@ -93,13 +91,7 @@ public class AppDynamicController {
                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
 
-        List<IndexDynamicListDTO> list = dynamicSerivce.getIndexDynamicList(userId,type,pageNum,pageSize);
-        if(list != null && list.size() > 0){
-            Page page = new Page();
-            page = (Page)list;
-            return R.pageToData(page.getTotal(),page.getResult());
-        }
-        return R.pageToData(0L,new ArrayList<>());
+        return dynamicSerivce.getIndexDynamicList(userId,type,pageNum,pageSize);
     }
 
     @ApiOperation("点赞(动态)/取消点赞")

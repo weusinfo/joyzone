@@ -19,7 +19,9 @@ public interface DynamicMapper extends Mapper<DynamicModel> {
 
     List<UserDynamicCommentListDTO> queryUserDynamicCommentList(@Param("dynamicId") Long dynamicId);
 
-    List<IndexDynamicListDTO> getIndexDynamicList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<IndexDynamicListDTO> getIndexDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    List<IndexDynamicListDTO> getIndexFollowDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     int deleteDynamic(@Param("dynamicId") Long dynamicId);
 

@@ -60,6 +60,8 @@
     <result column="followed" property="followed" jdbcType="INTEGER"/>
     <result column="createTime" property="createTime" jdbcType="DATE"/>
     <result column="pics" property="pics" jdbcType="VARCHAR"/>
+    <result column="kind" property="kind" jdbcType="INTEGER" />
+
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     </collection>
@@ -106,26 +108,60 @@
     WHERE dc.dynamic_id = #{dynamicId}
   </select>
 
-  <select id="getIndexDynamicList" resultMap="indexDynamicListMap">
-    SELECT
-      t.id AS dynamicId,
-      t.content AS dynamicContent,
-      t.thumbs AS thumbCount,
-      t.pics AS pics,
-      t.create_time AS createTime,
-      u.id AS userId,
-      u.head_pic AS userPic,
-      u.user_name AS userName,
-      u.sex AS userSex,
-      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
-      (SELECT COUNT(*) FROM follows f WHERE f.target_id = t.user_id) AS followCount,
-      (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
-      (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
-      (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
-    FROM DYNAMIC t
-    LEFT JOIN `user` u ON u.id = t.user_id
-    ORDER BY t.id DESC
-  </select>
+    <select id="getIndexDynamicList" resultMap="indexDynamicListMap">
+        SELECT
+          t.id AS dynamicId,
+          t.content AS dynamicContent,
+          t.thumbs AS thumbCount,
+          t.pics AS pics,
+          t.create_time AS createTime,
+          t.kind,
+          u.id AS userId,
+          u.head_pic AS userPic,
+          u.user_name AS userName,
+          u.sex AS userSex,
+          TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+          (SELECT COUNT(id) FROM follows f WHERE f.target_id = t.user_id) AS followCount,
+          (SELECT COUNT(id) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
+          (SELECT COUNT(id) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
+          (SELECT COUNT(id) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
+        FROM DYNAMIC t
+        LEFT JOIN `user` u ON u.id = t.user_id
+        ORDER BY t.id DESC
+    </select>
+
+
+    <select id="getIndexFollowDynamicList" resultMap="indexDynamicListMap">
+        SELECT
+          t1.*,
+          u.id AS userId,
+          u.head_pic AS userPic,
+          u.user_name AS userName,
+          u.sex AS userSex,
+          TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+          (SELECT COUNT(id) FROM follows f WHERE f.target_id = t1.user_id) AS followCount,
+          (SELECT COUNT(id) FROM dynamic_comment dc WHERE dc.dynamic_id = t1.dynamicId) AS commentCount,
+          (SELECT COUNT(id) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t1.dynamicId AND gt.status = 0) AS thumbed,
+          (SELECT COUNT(id) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t1.user_id AND f.status = 0) AS followed
+        FROM (
+               SELECT
+                 t.id AS dynamicId,
+                 t.content AS dynamicContent,
+                 t.thumbs AS thumbCount,
+                 t.pics AS pics,
+                 t.kind,
+                 t.create_time AS createTime,
+                 t.user_id as user_id
+               FROM dynamic t,
+                  (
+                      SELECT user_id as user_id FROM follows WHERE target_id = #{userId}
+                      UNION
+                      SELECT target_id as user_id FROM follows WHERE user_id = #{userId}
+                  ) f WHERE t.user_id = f.user_id
+             ) t1 LEFT JOIN `user` u ON u.id = t1.user_id
+        ORDER BY t1.dynamicId DESC
+    </select>
+
 
   <delete id="deleteDynamic">
       DELETE
@@ -148,10 +184,10 @@
     u.user_name AS userName,
     u.sex AS userSex,
     TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
-    (SELECT COUNT(*) FROM follows f WHERE f.target_id = t.user_id) AS followCount,
-    (SELECT COUNT(*) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
-    (SELECT COUNT(*) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
-    (SELECT COUNT(*) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
+    (SELECT COUNT(id) FROM follows f WHERE f.target_id = t.user_id) AS followCount,
+    (SELECT COUNT(id) FROM dynamic_comment dc WHERE dc.dynamic_id = t.id) AS commentCount,
+    (SELECT COUNT(id) FROM give_thumb gt WHERE gt.user_id = #{userId} AND gt.dynamic_id = t.id AND gt.status = 0) AS thumbed,
+    (SELECT COUNT(id) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
     FROM  DYNAMIC t
     LEFT JOIN `user` u ON u.id = t.user_id
     WHERE t.id = #{dynamicId}
