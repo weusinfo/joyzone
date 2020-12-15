@@ -34,7 +34,7 @@ public class CacheService {
 	 * 删除一个或多个用户
 	 * @param ids
 	 */
-	public void delUser(Long... ids) {
+	public void delUser(String... ids) {
 		if(ids != null && ids.length > 0) {
 			redisService.hdel(KEY_USER, ids);
 		}

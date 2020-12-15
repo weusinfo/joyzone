@@ -13,6 +13,7 @@ import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
 import tk.mybatis.mapper.entity.Example;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.scheduling.annotation.Async;
@@ -65,7 +66,7 @@ public class UserSerivce extends BaseService<UserModel> {
         if(userModel.getId() != null){
             userModel.setUpdateTime(date);
             int i = userMapper.updateByPrimaryKeySelective(userModel);
-            cacheService.delUser(userModel.getId());
+            cacheService.delUser(userModel.getId()+"");
             if(i > 0) {
             	chatService.updateUser(""+userModel.getId(), userModel.getUserName());
             }
@@ -115,7 +116,11 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public int delUsers(Long[] ids){
         int i = userMapper.delUsers(ids);
-        cacheService.delUser(ids);
+        String[] idArr = new String[ids.length];
+        for(int j = 0; j<ids.length;j++) {
+        	idArr[j] = ids[j] + "";
+        }
+        cacheService.delUser(idArr);
         return i;
     }
 
