@@ -1,6 +1,7 @@
 package com.joyzone.platform.module.app.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.dto.DynamicDTO;
 import com.joyzone.platform.core.dto.IndexDynamicListDTO;
@@ -135,7 +136,9 @@ public class AppDynamicController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0：我关注的人 1：关注我的人", required = true, dataType = "Integer", paramType = "query")
     })
-    public R getUserFollowList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type){
+    public R getUserFollowList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type,
+    		@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+    	PageHelper.startPage(pageNum, pageSize);
         return R.ok(followsSerivce.getUserFollowList(userId,type));
     }
 
