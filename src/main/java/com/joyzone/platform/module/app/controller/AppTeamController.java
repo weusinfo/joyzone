@@ -233,8 +233,8 @@ public class AppTeamController {
 
         UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
         if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
-                userModel.getBirthday() == null || userModel.getHeadPic() == null || userModel.getCoverPic() == null){
-            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像/个人封面");
+                userModel.getBirthday() == null || userModel.getHeadPic() == null){
+            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
         }
         int ret = 0;
         try {
