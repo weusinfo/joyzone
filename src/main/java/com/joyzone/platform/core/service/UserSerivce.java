@@ -13,7 +13,6 @@ import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
 import tk.mybatis.mapper.entity.Example;
 
-import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.scheduling.annotation.Async;
