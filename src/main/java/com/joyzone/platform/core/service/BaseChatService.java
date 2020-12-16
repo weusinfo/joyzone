@@ -42,7 +42,6 @@ public class BaseChatService {
 	 * @param password
 	 * @return
 	 */
-	@Async
 	public EasemobUser registerUser(String userName, String password) {
 		String userOpeUrl = easemob.getOpeUsersUrl();
 		Map<String,String> headers = getAuthHeaders();
@@ -67,7 +66,7 @@ public class BaseChatService {
 	 * @param userName
 	 * @param nickName
 	 */
-	@Async
+	@Async("asyncExecutor")
 	public void updateUser(String userName, String nickName) {
 		String userOpeUrl = easemob.getOpeUsersUrl() + "/" + userName;
 		Map<String,String> headers = getAuthHeaders();

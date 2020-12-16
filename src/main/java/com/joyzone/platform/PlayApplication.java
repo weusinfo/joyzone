@@ -11,7 +11,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class},scanBasePackages="com.joyzone.platform")
 @MapperScan(basePackages={"com.joyzone.platform.core.mapper"})
 @EnableTransactionManagement
-@EnableAsync
 @EnableScheduling
 public class PlayApplication {
 	

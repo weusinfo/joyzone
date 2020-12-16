@@ -56,7 +56,7 @@ public class ChatService extends BaseChatService{
 		return null;
 	}
 	
-	@Async
+	@Async("asyncExecutor")
 	public void joinTeamGroup(String groupId, Long userId) {
 		String joinGroupUrl = easemob.getJoinGroupUrl();
 		joinGroupUrl = joinGroupUrl.replace("{groupId}", groupId);
