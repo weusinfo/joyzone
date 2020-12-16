@@ -10,8 +10,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +32,7 @@ public class AppUserController {
 
     @ApiOperation("根据ID保存用户的经纬度信息")
     @PostMapping("saveUserLngAndLat")
-    public R saveUserLngAndLat(@RequestParam("userId") Long userId,@RequestParam("lng") Double lng,@RequestParam("lat") Double lat){
+    public R saveUserLngAndLat(@RequestParam("userId") Long userId, @RequestParam("lng") double lng, @RequestParam("lat") double lat){
         userSerivce.saveUserLngAndLat(userId,lng,lat);
         return R.ok("操作成功");
     }

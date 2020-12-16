@@ -1,5 +1,7 @@
 package com.joyzone.platform.core.vo;
 
+import java.math.BigDecimal;
+
 public class LocationVO {
 
     /*

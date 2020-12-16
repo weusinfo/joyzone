@@ -13,6 +13,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="pics" property="pics" jdbcType="VARCHAR" />
+    <result column="lng" property="lng" jdbcType="DECIMAL"/>
+    <result column="lat" property="lat" jdbcType="DECIMAL"/>
   </resultMap>
 
   <resultMap id="userDynamic" type="com.joyzone.platform.core.dto.UserDynamicDTO">
@@ -61,6 +63,8 @@
     <result column="createTime" property="createTime" jdbcType="DATE"/>
     <result column="pics" property="pics" jdbcType="VARCHAR"/>
     <result column="kind" property="kind" jdbcType="INTEGER" />
+    <result column="lng" property="lnt" jdbcType="DECIMAL"/>
+    <result column="lat" property="lat" jdbcType="DECIMAL"/>
 
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
@@ -116,6 +120,8 @@
           t.pics AS pics,
           t.create_time AS createTime,
           t.kind,
+          t.lat,
+          t.lng,
           u.id AS userId,
           u.head_pic AS userPic,
           u.user_name AS userName,
@@ -150,6 +156,8 @@
                  t.thumbs AS thumbCount,
                  t.pics AS pics,
                  t.kind,
+                 t.lat,
+                 t.lng,
                  t.create_time AS createTime,
                  t.user_id as user_id
                FROM dynamic t,

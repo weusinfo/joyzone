@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.dto.DynamicDTO;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.*;
@@ -53,6 +54,15 @@ public class DynamicModel {
 
     @Transient
     private String dynamicPics;
+
+    /**
+     * 经度
+     */
+    private BigDecimal lng;
+    /**
+     * 纬度
+     */
+    private BigDecimal lat;
 
     public DynamicModel() { }
 
@@ -208,5 +218,21 @@ public class DynamicModel {
 
     public void setPics(String pics) {
         this.pics = pics;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
     }
 }

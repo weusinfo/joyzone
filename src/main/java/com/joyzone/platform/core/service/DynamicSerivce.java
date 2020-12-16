@@ -3,17 +3,14 @@ package com.joyzone.platform.core.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.joyzone.platform.common.utils.LocationUtils;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.*;
 import com.joyzone.platform.core.mapper.DynamicMapper;
-import com.joyzone.platform.core.mapper.DynamicPictureMapper;
 import com.joyzone.platform.core.mapper.GiveThumbMapper;
 import com.joyzone.platform.core.model.DynamicModel;
-import com.joyzone.platform.core.model.DynamicPictureModel;
 import com.joyzone.platform.core.model.GiveThumbModel;
 import com.joyzone.platform.core.vo.LocationVO;
 import org.apache.commons.lang3.StringUtils;
@@ -40,8 +37,6 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     @Resource
     private DynamicMapper dynamicMapper;
     @Resource
-    private DynamicPictureMapper dynamicPictureMapper;
-    @Resource
     private GiveThumbMapper thumbMapper;
 
     /**
@@ -54,8 +49,18 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         DynamicModel dynamicModel = new DynamicModel(dynamicDTO);
         dynamicModel.setPics(dynamicDTO.getPicturlUrls());
         dynamicModel.setThumbs(0);
-        dynamicModel.setCreateTime(new Date());
-        dynamicModel.setUpdateTime(new Date());
+        Date date = new Date();
+        dynamicModel.setCreateTime(date);
+        dynamicModel.setUpdateTime(date);
+        // 获取当前用户坐标
+        LocationVO userLocation = this.selectByUserLocation(dynamicModel.getUserId());
+        double lat = 0.0,lnt = 0.0;
+        if (null != userLocation){
+            lat = userLocation.getLat();
+            lnt = userLocation.getLnt();
+        }
+        dynamicModel.setLng(new BigDecimal(lnt));
+        dynamicModel.setLat(new BigDecimal(lat));
         int res = dynamicMapper.insert(dynamicModel);
         return res;
     }
@@ -112,14 +117,12 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
                 }
                 List<UserDynamicCommentListDTO> commentList = dto.getCommentDetailList();
                 setReviewerInfo(commentList);
-                LocationVO locatio = this.selectByUserLocation(dto.getUserId());
-                double lat2 = 0.0,lnt2 = 0.0;
-                if (null != locatio){
-                    lat2 = locatio.getLat();
-                    lnt2 = locatio.getLnt();
+                double lat2 = dto.getLat();
+                double lnt2 = dto.getLnt();
+                if(new BigDecimal(lnt).compareTo(new BigDecimal(lnt2)) != 0){
+                    // 计算距离
+                    dto.setDistance(LocationUtils.getDistance(lat,lnt,lat2,lnt2));
                 }
-                // 计算距离
-                dto.setDistance(LocationUtils.getDistance(lat,lnt,lat2,lnt2));
                 if(StringUtils.isNotBlank(dto.getPics())){
                     String[] rtnPics = dto.getPics().split(",");
                     dto.setDynamicPics(Arrays.asList(rtnPics));
@@ -179,7 +182,7 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         // 获取当前用户的经纬度
         Object obj = this.redisService.hget(RedisColumn.USER_LOCATION,userId.toString());
         if (null != obj){
-           return JSON.parseObject(obj.toString(),LocationVO.class);
+           return JSONObject.parseObject(obj.toString(),LocationVO.class);
         }
         return null;
     }

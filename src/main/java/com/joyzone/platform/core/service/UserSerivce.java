@@ -1,9 +1,8 @@
 package com.joyzone.platform.core.service;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.RedisColumn;
-import com.joyzone.platform.common.utils.RedisGeoUtil;
 import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.Date;
 import java.util.List;
 
@@ -103,7 +101,7 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public void saveUserLngAndLat(Long userId,Double lng,Double lat){
         // RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(), RedisColumn.USER_LOCATION,new Point(lng,lat),userId.toString());
-        redisService.hset(RedisColumn.USER_LOCATION , userId.toString() ,JSON.toJSON(new LocationVO(lng,lat)));
+        redisService.hset(RedisColumn.USER_LOCATION , userId.toString() ,JSONObject.toJSONString(new LocationVO(lng,lat)));
     }
 
     /**
