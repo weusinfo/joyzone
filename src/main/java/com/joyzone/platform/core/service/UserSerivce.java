@@ -87,7 +87,9 @@ public class UserSerivce extends BaseService<UserModel> {
          userModel.setChatIdMd5(chatPwd);
          updateChatMD5(userModel.getId(), chatPwd);
          Object obj = chatService.registerUser(userModel.getId().toString(), chatPwd);
+         cacheService.apdUser(userModel);
          if(obj ==null) {
+        	 cacheService.delUser(userModel.getId().toString());
         	 throw new JZException("注册环信ID失败.");
          }
     }
