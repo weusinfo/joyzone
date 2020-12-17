@@ -82,9 +82,10 @@ public class UserSerivce extends BaseService<UserModel> {
      * 注册合并，避免数据库插入和环信注册中有一方失败。
      */
     public void register(UserModel userModel) {
+    	 this.saveUser(userModel);
     	 String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
          userModel.setChatIdMd5(chatPwd);
-         this.saveUser(userModel);
+         updateChatMD5(userModel.getId(), chatPwd);
          Object obj = chatService.registerUser(userModel.getId().toString(), chatPwd);
          if(obj ==null) {
         	 throw new JZException("注册环信ID失败.");

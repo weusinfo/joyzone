@@ -801,5 +801,19 @@ public class RedisService {
 	public Set<Object> members(String key) {
 		return redisTemplate.boundSetOps(key).members();
 	}
+	
+	/**
+	 * redis 分页获取数据
+	 * @param key
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public List getByPage(String key, int pageNo, int pageSize){
+		long total = redisTemplate.boundListOps(key).size();
+		int start = (pageNo - 1) * pageSize;
+		int end = pageNo * pageSize;
+		return redisTemplate.boundListOps(key).range(start, end);
+	}
 
 }
