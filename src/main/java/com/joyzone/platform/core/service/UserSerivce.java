@@ -12,6 +12,8 @@ import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
 import tk.mybatis.mapper.entity.Example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,8 @@ import java.util.List;
 @Service
 @Transactional
 public class UserSerivce extends BaseService<UserModel> {
+	
+	private Logger logger = LoggerFactory.getLogger(UserSerivce.class);
 
     @Autowired
     private RedisService redisService;
@@ -159,7 +163,12 @@ public class UserSerivce extends BaseService<UserModel> {
     	UserModel userModel = cacheService.getUserById(userId.toString());
     	if(userModel == null) {
     		userModel = super.selectByKey(userId);
-    		cacheService.apdUser(userModel);
+    		if(userModel != null) {
+    			cacheService.apdUser(userModel);
+    		}else {
+    			logger.error("=================这个"+userId+"没有查询到用户。。。");
+    		}
+    		
     	}
     	return userModel;
     }
