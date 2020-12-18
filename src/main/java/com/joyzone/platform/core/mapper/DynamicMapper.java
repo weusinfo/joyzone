@@ -23,7 +23,7 @@ public interface DynamicMapper extends Mapper<DynamicModel> {
 
     List<IndexDynamicListDTO> getIndexFollowDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
-    int deleteDynamic(@Param("dynamicId") Long dynamicId);
+    int deleteDynamic(@Param("dynamicId") Long dynamicId, @Param("userId") Long userId);
 
     Map<String,Object> getReviewerInfo(@Param("id") Long id, @Param("type") Integer type);
 
