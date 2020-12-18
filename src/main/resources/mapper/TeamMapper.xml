@@ -367,7 +367,7 @@
             t.activity_type AS activityType,
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
-            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
             -1 as teamStatus
@@ -395,7 +395,7 @@
             t.activity_type AS activityType,
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
-            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
             -1 as teamStatus
@@ -423,7 +423,7 @@
             t.activity_type AS activityType,
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
-            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
             -1 as teamStatus
@@ -453,7 +453,7 @@
                    t.activity_type AS activityType,
                    (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
                    t.pay_way AS payWay,
-                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
                    -1 as teamStatus
@@ -481,7 +481,7 @@
                    t.activity_type AS activityType,
                    (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
                    t.pay_way AS payWay,
-                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
                    -1 as teamStatus
@@ -511,7 +511,7 @@
                    t.activity_type AS activityType,
                    (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
                    t.pay_way AS payWay,
-                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
                    -1 AS teamStatus
@@ -538,7 +538,7 @@
                    t.activity_type AS activityType,
                    (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
                    t.pay_way AS payWay,
-                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+                   (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
                    t.number AS totalUserNum,
                    t.tag AS label,
                    -1 AS teamStatus
@@ -565,7 +565,7 @@
                     t.activity_type AS activityType,
                     (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
                     t.pay_way AS payWay,
-                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+                    (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
                     t.number AS totalUserNum,
                     t.tag AS label,
                     -1 AS teamStatus
@@ -598,7 +598,7 @@
         t.pay_way AS payWay,
         t.number_boy AS boyNumber,
         t.number_girl AS girlNumber,
-        (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+        (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
         t.number AS totalUserNum,
         t.status,
         t.tag
@@ -635,7 +635,7 @@
             t.activity_type AS activityType,
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
-            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
             t.status as teamStatus
@@ -686,7 +686,7 @@
             t.activity_type AS activityType,
             (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
             t.pay_way AS payWay,
-            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+            (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
             t.number AS totalUserNum,
             t.tag AS label,
             -1 as teamStatus
@@ -714,7 +714,7 @@
           t.activity_type AS activityType,
           (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
           t.pay_way AS payWay,
-          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
           t.number AS totalUserNum,
           t.tag AS label,
           -1 as teamStatus
@@ -743,7 +743,7 @@
           t.activity_type AS activityType,
           (SELECT s.price FROM shop s WHERE s.id = t.shop_id) AS price,
           t.pay_way AS payWay,
-          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id) AS joinUserNum,
+          (SELECT COUNT(tu.id) FROM team_users tu WHERE tu.team_id = t.id and tu.status = 0) AS joinUserNum,
           t.number AS totalUserNum,
           t.tag AS label,
           -1 as teamStatus
