@@ -136,8 +136,8 @@ public class AppDynamicController {
 
     @ApiOperation("删除动态信息")
     @PostMapping("/delete")
-    public R deleteDynamic(@RequestParam("dynamicId") Long dynamicId){
-        return R.ok(dynamicSerivce.deleteDynamic(dynamicId));
+    public R deleteDynamic(@RequestParam("dynamicId") Long dynamicId,@RequestParam("userId") Long userId){
+        return R.ok(dynamicSerivce.deleteDynamic(dynamicId,userId));
     }
 
     @ApiOperation("根据获取动态详情")

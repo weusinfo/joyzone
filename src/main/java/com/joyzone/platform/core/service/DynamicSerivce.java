@@ -224,9 +224,9 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param dynamicId
      * @return
      */
-    public R deleteDynamic(Long dynamicId){
+    public R deleteDynamic(Long dynamicId,Long userId){
         try {
-            dynamicMapper.deleteDynamic(dynamicId);
+            dynamicMapper.deleteDynamic(dynamicId,userId);
             return R.ok();
         }catch (Exception e){
             return R.error("操作失败");
