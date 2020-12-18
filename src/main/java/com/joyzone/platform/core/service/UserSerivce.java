@@ -165,7 +165,7 @@ public class UserSerivce extends BaseService<UserModel> {
     public UserModel selectByKey(Object userId) {
     	UserModel userModel = cacheService.getUserById(userId.toString());
     	if(userModel == null) {
-    		userModel = super.selectByKey(userId);
+    		userModel = userMapper.getUserInfo((Long)userId);
     		if(userModel != null) {
     			cacheService.apdUser(userModel);
     		}else {
