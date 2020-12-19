@@ -178,20 +178,12 @@ public class UserSerivce extends BaseService<UserModel> {
     		}else {
     			logger.error("=================这个"+userId+"没有查询到用户。。。");
     		}
-    		
     	}
     	return userModel;
     }
 
-    public UserModel changeCover(Long userId, String cover) {
-    	int i = userMapper.changeCover(userId, cover);
-    	if(i > 0) {
-    		UserModel userModel = cacheService.getUserById(userId+"");
-    		userModel.setCoverPic(cover);
-    		cacheService.apdUser(userModel);
-    		return userModel;
-    	}
-    	return null;
+    public int changeCover(Long userId, String cover) {
+    	return userMapper.changeCover(userId, cover);
     }
     
     public boolean checkPlayNum(String playNum) {
