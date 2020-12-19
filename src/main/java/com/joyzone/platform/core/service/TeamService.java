@@ -223,7 +223,7 @@ public class TeamService extends BaseService<TeamModel> {
             detailDto.setInviteUserName(inviteUserInfo.get("inviteUserName").toString());
         }
         if(status == 0){
-            if(userId == owner){
+            if(userId.longValue() == owner.longValue()){
                 detailDto.setButtonShow("解散");
             } else if (userIdList.contains(userId)) {
                 detailDto.setButtonShow("退出");

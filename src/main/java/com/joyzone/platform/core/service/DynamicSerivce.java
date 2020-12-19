@@ -70,8 +70,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
      * @param userId
      * zhangyu
      */
-    public UserDynamicDTO getUserDynamicList(Long userId,Integer pageNum,Integer pageSize){
-        UserDynamicDTO userDynamic = dynamicMapper.selectByUserDynamic(userId);
+    public UserDynamicDTO getUserDynamicList(Long userId,Long browserId,Integer pageNum,Integer pageSize){
+        UserDynamicDTO userDynamic = dynamicMapper.selectByUserDynamic(userId,browserId);
         if (null != userDynamic){
             List<UserDynamicListDto> list = dynamicMapper.queryUserDynamicList(userId,pageNum,pageSize);
             if  (!list.isEmpty()){

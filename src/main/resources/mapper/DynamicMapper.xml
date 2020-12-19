@@ -81,7 +81,8 @@
       u.head_pic AS userPic,
       u.user_name AS userName,
       u.sex AS userSex,
-      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
+      TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge,
+      (SELECT COUNT(1) FROM follows WHERE user_id = #{browserId} AND target_id = #{userId}) AS followed
     FROM `user` u
     WHERE u.id = #{userId}
   </select>

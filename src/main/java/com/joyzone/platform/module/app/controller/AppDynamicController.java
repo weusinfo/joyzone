@@ -79,10 +79,11 @@ public class AppDynamicController {
     @ApiOperation("根据用户id获取用户动态列表")
     @PostMapping("getUserDynamicList")
     public R getUserDynamicList(@RequestParam("userId") Long userId,
+                                @RequestParam("browserId") Long browserId,
                                 @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                 @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
 
-        return R.ok(dynamicSerivce.getUserDynamicList(userId,pageNum,pageSize));
+        return R.ok(dynamicSerivce.getUserDynamicList(userId,browserId,pageNum,pageSize));
     }
 
     @ApiOperation("获取动态首页动态列表")

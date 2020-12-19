@@ -32,6 +32,9 @@ public class UserDynamicDTO extends BaseModel{
     @ApiModelProperty("用户年龄")
     private Integer userAge;
 
+    @ApiModelProperty("是否关注了该用户")
+    private Integer followed;
+
     @ApiModelProperty("动态列表")
     private List<UserDynamicListDto> userDynamicList;
 
@@ -73,6 +76,14 @@ public class UserDynamicDTO extends BaseModel{
 
     public void setUserAge(Integer userAge) {
         this.userAge = userAge;
+    }
+
+    public Integer getFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(Integer followed) {
+        this.followed = followed;
     }
 
     public List<UserDynamicListDto> getUserDynamicList() {

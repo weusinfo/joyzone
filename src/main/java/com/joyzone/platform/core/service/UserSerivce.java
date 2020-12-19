@@ -11,6 +11,7 @@ import cn.hutool.core.util.HashUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
+import org.apache.commons.lang3.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import org.slf4j.Logger;
@@ -63,6 +64,9 @@ public class UserSerivce extends BaseService<UserModel> {
      */
     public int saveUser(UserModel userModel){
         Date date = new Date();
+        if(StringUtils.isNotEmpty(userModel.getHeadPic())){
+            userModel.setCoverPic(userModel.getHeadPic());
+        }
         if(userModel.getId() != null){
             userModel.setUpdateTime(date);
             int i = userMapper.updateByPrimaryKeySelective(userModel);

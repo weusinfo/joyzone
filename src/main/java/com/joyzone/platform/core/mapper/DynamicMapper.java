@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface DynamicMapper extends Mapper<DynamicModel> {
 
-    UserDynamicDTO selectByUserDynamic(@Param("userId") Long userId);
+    UserDynamicDTO selectByUserDynamic(@Param("userId") Long userId,@Param("browserId") Long browserId);
 
     List<UserDynamicListDto> queryUserDynamicList(@Param("userId") Long userId,@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
