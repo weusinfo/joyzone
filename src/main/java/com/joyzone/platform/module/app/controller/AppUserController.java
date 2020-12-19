@@ -3,6 +3,7 @@ package com.joyzone.platform.module.app.controller;
 import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.UserModel;
+import com.joyzone.platform.core.service.CacheService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,6 +32,9 @@ public class AppUserController {
 
     @Autowired
     private UserSerivce userSerivce;
+    
+    @Autowired
+    private CacheService cacheService;
 
     @ApiOperation("根据ID保存用户的经纬度信息")
     @PostMapping("saveUserLngAndLat")
@@ -70,11 +74,16 @@ public class AppUserController {
     @PostMapping("/changeCover")
     public R changeCover(@RequestParam("userId") Long userId, @RequestParam("coverUrl") String coverUrl) {
     	Map<String,Object> map = Maps.newHashMap();
-    	UserModel userModel = userSerivce.changeCover(userId, coverUrl);
-    	if(userModel != null) {
-    		map.put("userId", userModel.getId());
-    		map.put("user", userModel);
-    		return R.ok(map);
+    	int i = userSerivce.changeCover(userId, coverUrl);
+    	if(i >0) {
+        	UserModel userModel = userSerivce.selectByKey(userId);
+        	if(userModel != null) {
+        		userModel.setCoverPic(coverUrl);
+            	cacheService.apdUser(userModel);
+        		map.put("userId", userModel.getId());
+        		map.put("user", userModel);
+        		return R.ok(map);
+        	}
     	}
     	return R.error("修改失败！");
     }
