@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import tk.mybatis.mapper.entity.Example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,7 +116,7 @@ public class AppLoginApiController {
             @ApiImplicitParam(name = "phone", value = "用户手机号", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "mobileCode", value = "验证码", required = true, dataType = "String", paramType = "query")
     })
-    public R userRegister(@RequestParam("phone") String phone,@RequestParam("mobileCode") String mobileCode) {
+    public R userRegister(@RequestParam("phone") String phone,@RequestParam("mobileCode") String mobileCode, String playNum) {
         Map map = new HashMap();
         if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(mobileCode)) {
             return R.error("参数有误！");
@@ -132,10 +133,17 @@ public class AppLoginApiController {
             redisService.hdel(Constants.CACHE_KEY_CODE, phone);
             return R.ok((Object)map);
         }
+        if(!StringUtils.isEmpty(playNum) && playNum.trim() != "") {
+        	boolean isExisted = userSerivce.checkPlayNum(playNum);
+        	if(!isExisted) {
+        		return R.error("邀请码错误！");
+        	}
+        }
         userModel = new UserModel();
         userModel.setPhone(phone);
         userModel.setType(0);  //0:用户
         userModel.setStatus(0);   //用户状态: 0 激活 ， 1 封号， 2禁入
+        userModel.setPlayNum(playNum);
         userModel.setCreateTime(new Date());
         try {
         	userSerivce.register(userModel);

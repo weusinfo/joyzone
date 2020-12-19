@@ -145,8 +145,13 @@ public class UserModel extends BaseModel{
     @ApiModelProperty("用户封面")
     @Column(name = "cover_pic")
     private String coverPic;
-
+    
     /**
+     * 邀请者
+     */
+    private String inviter;
+
+	/**
      * 获取自增长主键
      *
      * @return id - 自增长主键
@@ -368,4 +373,11 @@ public class UserModel extends BaseModel{
     public void setCoverPic(String coverPic) {
         this.coverPic = coverPic;
     }
+    
+    public String getInviter() {
+		return inviter;
+	}
+	public void setInviter(String inviter) {
+		this.inviter = inviter;
+	}
 }

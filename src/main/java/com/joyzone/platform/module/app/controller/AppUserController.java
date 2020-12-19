@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +64,19 @@ public class AppUserController {
         	return R.ok((Object)map);
         }
         return R.error("修改失败！");
+    }
+    
+    @ApiOperation("修改用户封面（动态封面，组队聚会封面）")
+    @PostMapping("/changeCover")
+    public R changeCover(@RequestParam("userId") Long userId, @RequestParam("coverUrl") String coverUrl) {
+    	Map<String,Object> map = Maps.newHashMap();
+    	UserModel userModel = userSerivce.changeCover(userId, coverUrl);
+    	if(userModel != null) {
+    		map.put("userId", userModel.getId());
+    		map.put("user", userModel);
+    		return R.ok(map);
+    	}
+    	return R.error("修改失败！");
     }
 
 }

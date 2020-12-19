@@ -7,6 +7,7 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.mapper.UserMapper;
 import com.joyzone.platform.core.model.UserModel;
 
+import cn.hutool.core.util.HashUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
@@ -85,7 +86,9 @@ public class UserSerivce extends BaseService<UserModel> {
     	 this.saveUser(userModel);
     	 String chatPwd = DigestUtil.md5Hex(userModel.getId().toString());
          userModel.setChatIdMd5(chatPwd);
-         updateChatMD5(userModel.getId(), chatPwd);
+         int playNum = HashUtil.intHash(userModel.getId().intValue());
+         userModel.setPlayNum(playNum+"");
+         updateChatMD5(userModel.getId(), chatPwd,playNum+"");
          Object obj = chatService.registerUser(userModel.getId().toString(), chatPwd);
          cacheService.apdUser(userModel);
          if(obj ==null) {
@@ -145,8 +148,8 @@ public class UserSerivce extends BaseService<UserModel> {
         return userMapper.getUserInfo(userId);
     }
     
-    public Integer updateChatMD5(Long userId, String md5) {
-    	return userMapper.updateChatMD5(userId, md5);
+    public Integer updateChatMD5(Long userId, String md5, String playNum) {
+    	return userMapper.updateChatMD5(userId, md5,playNum);
     }
     
     public void updateMD5() {
@@ -156,7 +159,7 @@ public class UserSerivce extends BaseService<UserModel> {
     	if(!Collections.isEmpty(users)) {
     		for(UserModel user : users) {
     			String md5 = DigestUtil.md5Hex(user.getId().toString());
-    			updateChatMD5(user.getId(), md5);
+    			updateChatMD5(user.getId(), md5,null);
     		}
     	}
     }
@@ -176,4 +179,22 @@ public class UserSerivce extends BaseService<UserModel> {
     	return userModel;
     }
 
+    public UserModel changeCover(Long userId, String cover) {
+    	int i = userMapper.changeCover(userId, cover);
+    	if(i > 0) {
+    		UserModel userModel = cacheService.getUserById(userId+"");
+    		userModel.setCoverPic(cover);
+    		cacheService.apdUser(userModel);
+    		return userModel;
+    	}
+    	return null;
+    }
+    
+    public boolean checkPlayNum(String playNum) {
+    	Integer count = userMapper.checkPlayNum(playNum);
+    	if(count != null && count > 0) {
+    		return true;
+    	}
+    	return false;
+    }
 }
