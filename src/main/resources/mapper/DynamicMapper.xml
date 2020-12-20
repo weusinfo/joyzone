@@ -178,7 +178,7 @@
       FROM dynamic d
       LEFT JOIN dynamic_comment dc on dc.dynamic_id = d.id
       LEFT JOIN give_thumb gt on gt.dynamic_id = d.id
-      WHERE d.id = #{dynamicId}
+      WHERE d.id = #{dynamicId} and d.user_id = #{userId}
   </delete>
 
   <select id="selectByDynamicId" resultMap="indexDynamicListMap">

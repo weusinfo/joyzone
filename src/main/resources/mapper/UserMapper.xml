@@ -22,6 +22,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="cover_pic" property="coverPic" jdbcType="VARCHAR" />
+    <result column="inviter" property="inviter" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="BaseResultSQL">
@@ -61,6 +62,18 @@
   </insert>
   
   <update id="updateChatMD5">
-  	update user set chat_id_md5 = #{md5} where id = ${userId}
+  	update user set chat_id_md5 = #{md5} 
+  	<if test="playNum != null and playNum != ''">
+  		,play_num = #{playNum}
+  	</if>
+  	where id = ${userId}
   </update>
+  
+  <update id="changeCover">
+  	update user set cover_pic = #{cover,jdbcType=VARCHAR} where id = #{userId}
+  </update>
+  
+  <select id="checkPlayNum" resultType="java.lang.Integer">
+  	select count(*) from user where play_num = #{playNum}
+  </select>
 </mapper>
