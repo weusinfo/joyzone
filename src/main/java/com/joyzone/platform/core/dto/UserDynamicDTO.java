@@ -26,6 +26,9 @@ public class UserDynamicDTO extends BaseModel{
     @ApiModelProperty("用户昵称")
     private String userName;
 
+    @ApiModelProperty("背景图片")
+    private String coverPic;
+
     @ApiModelProperty("用户性别")
     private Integer userSex;
 
@@ -92,5 +95,13 @@ public class UserDynamicDTO extends BaseModel{
 
     public void setUserDynamicList(List<UserDynamicListDto> userDynamicList) {
         this.userDynamicList = userDynamicList;
+    }
+
+    public String getCoverPic() {
+        return coverPic;
+    }
+
+    public void setCoverPic(String coverPic) {
+        this.coverPic = coverPic;
     }
 }
