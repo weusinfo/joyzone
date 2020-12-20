@@ -134,19 +134,19 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             }
         }
         // 根据距离进行排序
-        Collections.sort(dynamics, new Comparator<IndexDynamicListDTO>(){
-            public int compare(IndexDynamicListDTO arg0, IndexDynamicListDTO arg1) {
-                BigDecimal hits0 = BigDecimal.valueOf(arg0.getDistance());
-                BigDecimal hits1 = BigDecimal.valueOf(arg1.getDistance()) ;
-                if (hits1.compareTo(hits0) > 0) {
-                   return -1;
-                } else if (hits1.compareTo(hits0) == 0) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        });
+//        Collections.sort(dynamics, new Comparator<IndexDynamicListDTO>(){
+//            public int compare(IndexDynamicListDTO arg0, IndexDynamicListDTO arg1) {
+//                BigDecimal hits0 = BigDecimal.valueOf(arg0.getDistance());
+//                BigDecimal hits1 = BigDecimal.valueOf(arg1.getDistance()) ;
+//                if (hits1.compareTo(hits0) > 0) {
+//                   return -1;
+//                } else if (hits1.compareTo(hits0) == 0) {
+//                    return 0;
+//                } else {
+//                    return 1;
+//                }
+//            }
+//        });
         if (dynamics.size() > 0){
             Page page = new Page();
             page = (Page)list;
