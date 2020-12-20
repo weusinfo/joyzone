@@ -45,7 +45,14 @@ public class ShopCommentModel {
     @Column(name = "update_time")
     private Date updateTime;
 
-    private Byte type;
+    @Column(name = "environment_type")
+    private Byte environmentType;
+
+    @Column(name = "service_type")
+    private Byte serviceType;
+
+    @Column(name = "play_type")
+    private Byte playType;
 
     @Column(name = "is_anonym")
     private Boolean isAnonym;
@@ -75,9 +82,10 @@ public class ShopCommentModel {
         this.userId = shopCommentDTO.getUserId();
         this.shopId = shopCommentDTO.getShopId();
         this.createTime = new Date();
-        Byte type = shopCommentDTO.getType();
-        this.type = type;
-        this.adminContent = ShopCommentUtil.adminContent(type);
+        this.environmentType = shopCommentDTO.getEnvironmentType();
+        this.serviceType = shopCommentDTO.getServiceType();
+        this.playType = shopCommentDTO.getPlayType();
+        this.adminContent = ShopCommentUtil.adminContent();
         this.isAnonym = shopCommentDTO.getIsAnonym();
         // 获取实例
         SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
@@ -175,20 +183,6 @@ public class ShopCommentModel {
     }
 
     /**
-     * @return type
-     */
-    public Byte getType() {
-        return type;
-    }
-
-    /**
-     * @param type
-     */
-    public void setType(Byte type) {
-        this.type = type;
-    }
-
-    /**
      * @return is_anonym
      */
     public Boolean getIsAnonym() {
@@ -254,5 +248,29 @@ public class ShopCommentModel {
      */
     public void setAdminContent(String adminContent) {
         this.adminContent = adminContent;
+    }
+
+    public Byte getEnvironmentType() {
+        return environmentType;
+    }
+
+    public void setEnvironmentType(Byte environmentType) {
+        this.environmentType = environmentType;
+    }
+
+    public Byte getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(Byte serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public Byte getPlayType() {
+        return playType;
+    }
+
+    public void setPlayType(Byte playType) {
+        this.playType = playType;
     }
 }

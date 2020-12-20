@@ -3,6 +3,7 @@ package com.joyzone.platform.core.model;
 import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.dto.DynamicDTO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -68,9 +69,11 @@ public class DynamicModel {
 
     public DynamicModel(DynamicDTO dynamicDTO) {
         this.userId = dynamicDTO.getUserId();
-        // 获取实例
-        SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
-        this.content =  wordUtils.filterInfo(dynamicDTO.getContent());
+        if (StringUtils.isNotBlank(dynamicDTO.getContent())){
+            // 获取实例
+            SensitiveWordUtils wordUtils = SensitiveWordUtils.getInstance();
+            this.content =  wordUtils.filterInfo(dynamicDTO.getContent());
+        }
         this.kind = dynamicDTO.getKind();
         this.thumbs = 0;
         Date date = new Date();

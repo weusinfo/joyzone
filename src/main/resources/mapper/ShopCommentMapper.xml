@@ -10,11 +10,13 @@
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="is_anonym" property="isAnonym" jdbcType="TINYINT" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="pic_urls" property="picUrls" jdbcType="LONGVARCHAR" />
     <result column="admin_content" property="adminContent" jdbcType="LONGVARCHAR" />
+    <result column="environment_type" property="environmentType" jdbcType="TINYINT" />
+    <result column="service_type" property="serviceType" jdbcType="TINYINT" />
+    <result column="play_type" property="playType" jdbcType="TINYINT" />
   </resultMap>
 
   <resultMap id="ResultShopCommentVO" type="com.joyzone.platform.core.vo.ShopCommentVO" >
@@ -22,7 +24,9 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="shop_id" property="shopId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="environment_type" property="environmentType" jdbcType="TINYINT" />
+    <result column="service_type" property="serviceType" jdbcType="TINYINT" />
+    <result column="play_type" property="playType" jdbcType="TINYINT" />
     <result column="is_anonym" property="isAnonym" jdbcType="TINYINT" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="pic_urls" property="pics" jdbcType="LONGVARCHAR" />
@@ -34,13 +38,15 @@
   </resultMap>
 
   <sql id="BaseResultSQL">
-      id,user_id,shop_id,create_time,update_time,type,is_anonym,content,pic_urls,admin_content
+      id,user_id,shop_id,create_time,update_time,is_anonym,content,pic_urls,admin_content,
+      environment_type,service_type,play_type
   </sql>
 
   <select id="listShopComments" resultMap="ResultShopCommentVO">
     select
       sc.id,sc.shop_id,sc.user_id,sc.create_time,sc.type,sc.is_anonym,sc.content,sc.pic_urls,
-      sc.admin_content,u.head_pic,u.user_name,u.sex,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) as age
+      sc.environment_type,sc.service_type,sc.play_type,sc.admin_content,
+      u.head_pic,u.user_name,u.sex,TIMESTAMPDIFF(YEAR,u.birthday,NOW()) as age
     from shop_comment sc
     left join `user` u on u.id = sc.user_id
     where sc.shop_id = #{shopId}
@@ -49,15 +55,15 @@
   <select id="countShopComment" resultType="com.joyzone.platform.core.vo.ShopCommentCountVO">
     select
       count(id)  as commentTotal,
-      (select count(id) from shop_comment where type = 1 and shop_id = #{shopId}) as environmentFineCount,
-      (select count(id) from shop_comment where type = 2 and shop_id = #{shopId}) as environmentMiddlingCount,
-      (select count(id) from shop_comment where type = 3 and shop_id = #{shopId}) as environmentLowerCount,
-      (select count(id) from shop_comment where type = 4 and shop_id = #{shopId}) as serviceFineCount,
-      (select count(id) from shop_comment where type = 5 and shop_id = #{shopId}) as serviceMiddlingCount,
-      (select count(id) from shop_comment where type = 6 and shop_id = #{shopId}) as serviceLowerCount,
-      (select count(id) from shop_comment where type = 7 and shop_id = #{shopId}) as playFineCount,
-      (select count(id) from shop_comment where type = 8 and shop_id = #{shopId}) as playMiddlingCount,
-      (select count(id) from shop_comment where type = 9 and shop_id = #{shopId}) as playLowerCount
+      (select count(id) from shop_comment where environment_type = 1 and shop_id = #{shopId}) as environmentFineCount,
+      (select count(id) from shop_comment where environment_type = 2 and shop_id = #{shopId}) as environmentMiddlingCount,
+      (select count(id) from shop_comment where environment_type = 3 and shop_id = #{shopId}) as environmentLowerCount,
+      (select count(id) from shop_comment where service_type = 1 and shop_id = #{shopId}) as serviceFineCount,
+      (select count(id) from shop_comment where service_type = 2 and shop_id = #{shopId}) as serviceMiddlingCount,
+      (select count(id) from shop_comment where service_type = 3 and shop_id = #{shopId}) as serviceLowerCount,
+      (select count(id) from shop_comment where play_type = 1 and shop_id = #{shopId}) as playFineCount,
+      (select count(id) from shop_comment where play_type = 2 and shop_id = #{shopId}) as playMiddlingCount,
+      (select count(id) from shop_comment where play_type = 3 and shop_id = #{shopId}) as playLowerCount
     from shop_comment
     where shop_id = #{shopId}
     group by shop_id

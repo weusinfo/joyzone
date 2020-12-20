@@ -250,4 +250,13 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
             return null;
         }
     }
+
+    /**
+     * 举报处理暂时没有实现
+     * @param userId
+     * @param dynamicId
+     */
+    public void reportByDynamic(Long userId,Long dynamicId){
+
+    }
 }

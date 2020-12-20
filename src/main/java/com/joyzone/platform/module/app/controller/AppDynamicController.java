@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Description:TODO
  *
@@ -31,7 +28,7 @@ import java.util.List;
  * date: 2020/11/05
  */
 @RestController
-@RequestMapping("app_dynamic")
+@RequestMapping("/app_dynamic")
 @Api(description = "AppDynamicController",tags = "app动态相关接口")
 public class AppDynamicController {
 
@@ -45,7 +42,7 @@ public class AppDynamicController {
     private UserSerivce userSerivce;
 
     @ApiOperation("发布动态")
-    @PostMapping("saveDynamic")
+    @PostMapping("/saveDynamic")
     public R saveDynamic(DynamicDTO dynamicDTO){
         if(dynamicDTO == null
                 || dynamicDTO.getUserId() == null
@@ -67,7 +64,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("评论动态")
-    @PostMapping("saveDynamicComment")
+    @PostMapping("/saveDynamicComment")
     public R saveDynamicComment(DynamicCommentModel commentModel){
         if(commentModel == null || commentModel.getUserId() == null ||
                 commentModel.getDynamicId() == null || commentModel.getContent() == null)
@@ -77,7 +74,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("根据用户id获取用户动态列表")
-    @PostMapping("getUserDynamicList")
+    @PostMapping("/getUserDynamicList")
     public R getUserDynamicList(@RequestParam("userId") Long userId,
                                 @RequestParam("browserId") Long browserId,
                                 @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
@@ -87,7 +84,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("获取动态首页动态列表")
-    @PostMapping("getIndexDynamicList")
+    @PostMapping("/getIndexDynamicList")
     public R getIndexDynamicList(@RequestParam("userId") Long userId,@RequestParam("type") Integer type,
                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
@@ -96,7 +93,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("点赞(动态)/取消点赞")
-    @PostMapping("giveThumb")
+    @PostMapping("/giveThumb")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "dynamicId", value = "动态id", required = true, dataType = "Long", paramType = "query"),
@@ -112,7 +109,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("关注(别人)/取消关注")
-    @PostMapping("saveFollows")
+    @PostMapping("/saveFollows")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "关注者ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "targetId", value = "被关注者id", required = true, dataType = "Long", paramType = "query"),
@@ -124,7 +121,7 @@ public class AppDynamicController {
     }
 
     @ApiOperation("根据用户id获取关注者列表与被关注者列表")
-    @PostMapping("getUserFollowList")
+    @PostMapping("/getUserFollowList")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "0：我关注的人 1：关注我的人", required = true, dataType = "Integer", paramType = "query")
@@ -142,9 +139,16 @@ public class AppDynamicController {
     }
 
     @ApiOperation("根据获取动态详情")
-    @PostMapping("selectByDynamicId")
+    @PostMapping("/selectByDynamicId")
     public R selectByDynamicId(@RequestParam("userId") Long userId,@RequestParam("dynamicId") Long dynamicId){
 
         return R.ok(dynamicSerivce.selectByDynamicId(userId,dynamicId));
+    }
+
+    @ApiOperation("举报")
+    @PostMapping("/report")
+    public R reportByDynamic(@RequestParam("userId") Long userId,@RequestParam("dynamicId") Long dynamicId){
+        dynamicSerivce.reportByDynamic(userId,dynamicId);
+        return R.ok();
     }
 }

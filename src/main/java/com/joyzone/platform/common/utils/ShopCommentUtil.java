@@ -57,4 +57,8 @@ public class ShopCommentUtil {
         }
         return content;
     }
+
+    public static String adminContent(){
+        return FINE ;
+    }
 }

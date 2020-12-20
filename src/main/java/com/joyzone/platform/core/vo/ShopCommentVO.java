@@ -5,6 +5,7 @@ import com.joyzone.platform.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,15 @@ public class ShopCommentVO {
     private Integer sex;
 
     private String pics;
+
+    @ApiModelProperty("环境类型")
+    private Byte environmentType;
+
+    @ApiModelProperty("服务类型")
+    private Byte serviceType;
+
+    @ApiModelProperty("体验")
+    private Byte playType;
 
     public Long getId() {
         return id;
@@ -163,5 +173,29 @@ public class ShopCommentVO {
 
     public void setPics(String pics) {
         this.pics = pics;
+    }
+
+    public Byte getEnvironmentType() {
+        return environmentType;
+    }
+
+    public void setEnvironmentType(Byte environmentType) {
+        this.environmentType = environmentType;
+    }
+
+    public Byte getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(Byte serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public Byte getPlayType() {
+        return playType;
+    }
+
+    public void setPlayType(Byte playType) {
+        this.playType = playType;
     }
 }

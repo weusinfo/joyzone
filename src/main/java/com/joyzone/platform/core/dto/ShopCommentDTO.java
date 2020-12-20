@@ -30,6 +30,15 @@ public class ShopCommentDTO {
     @ApiModelProperty("评论相片地址")
     private String picUrls;
 
+    @ApiModelProperty("环境类型")
+    private Byte environmentType;
+
+    @ApiModelProperty("服务类型")
+    private Byte serviceType;
+
+    @ApiModelProperty("体验")
+    private Byte playType;
+
 
     public Long getUserId() {
         return userId;
@@ -77,5 +86,29 @@ public class ShopCommentDTO {
 
     public void setPicUrls(String picUrls) {
         this.picUrls = picUrls;
+    }
+
+    public Byte getEnvironmentType() {
+        return environmentType;
+    }
+
+    public void setEnvironmentType(Byte environmentType) {
+        this.environmentType = environmentType;
+    }
+
+    public Byte getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(Byte serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public Byte getPlayType() {
+        return playType;
+    }
+
+    public void setPlayType(Byte playType) {
+        this.playType = playType;
     }
 }
