@@ -100,8 +100,8 @@ public abstract class BaseFileUtil {
 	 */
 	public InputStream handleFile(MultipartFile file) throws Exception {
 		File tmpFile = genTempFile(file);
-		boolean isValid  = isValidPic(file);
-		if(!isValid) return file.getInputStream();
+//		boolean isValid  = isValidPic(file);
+//		if(!isValid) return file.getInputStream();
 		if(StringUtils.isNoneEmpty(fileSize) && StringUtils.isNoneEmpty(scale)) {
 			if(file.getSize() >= Long.parseLong(fileSize)) {
 				Thumbnails.of(file.getInputStream()).scale(Float.parseFloat(scale)).toFile(tmpFile);
