@@ -34,7 +34,7 @@ public class AppMineApiController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
     })
     public R getMyShopCollectList(ShopCollectModel model,Long userId){
-        PageHelper.startPage(0,10);
+        PageHelper.startPage(model.getPageNum(),model.getPageSize());
         List<ShopModel> shopList = shopCollectService.getMyShopCollectList(model,userId);
         if(shopList != null && shopList.size() > 0){
             Page page = new Page();
