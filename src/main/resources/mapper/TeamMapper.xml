@@ -662,7 +662,7 @@
           s.price AS price,
           s.lng AS lng,
           s.lat AS lat,
-          (select count(id) from shop_collect where user_id = #{userId} and shop_id = #{shopId}) as isCollected,
+          (select count(id) from shop_collect where status = 1 and user_id = #{userId} and shop_id = #{shopId}) as isCollected,
           ${userId} as userId
       FROM shop s
       WHERE s.id = #{shopId}
