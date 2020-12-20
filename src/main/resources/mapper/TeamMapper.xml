@@ -143,6 +143,8 @@
         <result column="userId" property="userId" jdbcType="BIGINT" />
         <result column="lng" property="lng" jdbcType="DECIMAL"/>
         <result column="lat" property="lat" jdbcType="DECIMAL"/>
+        <result column="isCollected" property="isCollected" jdbcType="INTEGER"/>
+
         <collection property="shopPicList" javaType="ArrayList" column="{shopId=shopId}" select="com.joyzone.platform.core.mapper.TeamMapper.queryShopPicList"
                     fetchType="lazy" ofType="java.lang.String">
         </collection>
@@ -660,6 +662,7 @@
           s.price AS price,
           s.lng AS lng,
           s.lat AS lat,
+          (select count(id) from shop_collect where user_id = #{userId} and shop_id = #{shopId}) as isCollected,
           ${userId} as userId
       FROM shop s
       WHERE s.id = #{shopId}

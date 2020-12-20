@@ -47,6 +47,9 @@ public class ShopDetaiDTO extends BaseModel{
     @ApiModelProperty("纬度")
     private BigDecimal lat;
 
+    @ApiModelProperty("是否关注 0未关注 1已关注")
+    private Integer isCollected;
+
     public Long getShopId() {
         return shopId;
     }
@@ -125,5 +128,13 @@ public class ShopDetaiDTO extends BaseModel{
 
     public void setLat(BigDecimal lat) {
         this.lat = lat;
+    }
+
+    public Integer getIsCollected() {
+        return isCollected;
+    }
+
+    public void setIsCollected(Integer isCollected) {
+        this.isCollected = isCollected;
     }
 }
