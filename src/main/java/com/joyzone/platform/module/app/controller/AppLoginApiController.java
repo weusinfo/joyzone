@@ -90,9 +90,9 @@ public class AppLoginApiController {
             map.put("type", 0);
             return R.ok((Object)map);
         }else if(!StringUtils.isEmpty(phone) && phone.equals("18888888888")) {
-        	redisService.hset(Constants.CACHE_KEY_CODE, phone, mobile_code, Constants.CACHE_CODE_EXPIRES);
+        	redisService.hset(Constants.CACHE_KEY_CODE, phone, 66688, Constants.CACHE_CODE_EXPIRES);
         	map.put("type", 0);
-        	map.put("code", mobile_code);
+        	map.put("code", 66688);
         	return R.ok(map);
         }else {
             return R.error("手机号格式不正确!");
