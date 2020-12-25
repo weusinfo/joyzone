@@ -22,11 +22,11 @@
       TIMESTAMPDIFF(YEAR,u.birthday,NOW()) AS userAge
     FROM follows f
     <if test="type == 0">
-      LEFT JOIN `user` u ON u.id = f.target_id
+      INNER JOIN `user` u ON u.id = f.target_id
       WHERE f.status = 0 and f.user_id = #{userId}
     </if>
     <if test="type == 1">
-      LEFT JOIN `user` u ON u.id = f.user_id
+      INNER JOIN `user` u ON u.id = f.user_id
       WHERE f.status = 0 and f.target_id = #{userId}
     </if>
   </select>
