@@ -50,6 +50,9 @@ public class ShopDetaiDTO extends BaseModel{
     @ApiModelProperty("是否关注 0未关注 1已关注")
     private Integer isCollected;
 
+    @ApiModelProperty("商户信息h5页面")
+    private String shopInfoH5;
+
     public Long getShopId() {
         return shopId;
     }
@@ -136,5 +139,13 @@ public class ShopDetaiDTO extends BaseModel{
 
     public void setIsCollected(Integer isCollected) {
         this.isCollected = isCollected;
+    }
+
+    public String getShopInfoH5() {
+        return shopInfoH5;
+    }
+
+    public void setShopInfoH5(String shopInfoH5) {
+        this.shopInfoH5 = shopInfoH5;
     }
 }
