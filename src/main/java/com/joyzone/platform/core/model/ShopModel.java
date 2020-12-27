@@ -122,6 +122,9 @@ public class ShopModel extends BaseModel {
     @DateTimeFormat(pattern = DateUtils.DATE_PATTERN)
     private Date endTime;
 
+    @ApiModelProperty("商户信息h5页面")
+    private String shopInfoH5;
+
     public String getProvince() {
         return province;
     }
@@ -373,5 +376,13 @@ public class ShopModel extends BaseModel {
 
     public void setShopTypeName(String shopTypeName) {
         this.shopTypeName = shopTypeName;
+    }
+
+    public String getShopInfoH5() {
+        return shopInfoH5;
+    }
+
+    public void setShopInfoH5(String shopInfoH5) {
+        this.shopInfoH5 = shopInfoH5;
     }
 }

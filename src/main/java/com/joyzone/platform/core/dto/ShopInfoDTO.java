@@ -115,6 +115,9 @@ public class ShopInfoDTO extends BaseModel {
     @ApiModelProperty("店家轮播图片")
     private List<String> coverImgList;
 
+    @ApiModelProperty("商户信息h5页面")
+    private String shopInfoH5;
+
     public Long getShopId() {
         return shopId;
     }
@@ -289,5 +292,13 @@ public class ShopInfoDTO extends BaseModel {
 
     public void setCoverImgList(List<String> coverImgList) {
         this.coverImgList = coverImgList;
+    }
+
+    public String getShopInfoH5() {
+        return shopInfoH5;
+    }
+
+    public void setShopInfoH5(String shopInfoH5) {
+        this.shopInfoH5 = shopInfoH5;
     }
 }

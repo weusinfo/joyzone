@@ -24,6 +24,7 @@
     <result column="area" property="area" jdbcType="VARCHAR"/>
     <result column="shop_type_id" property="shopTypeId" jdbcType="BIGINT"/>
     <result column="shop_type_name" property="shopTypeName" jdbcType="VARCHAR"/>
+    <result column="shop_info_h5" property="shopInfoH5" jdbcType="VARCHAR"/>
   </resultMap>
 
     <resultMap id="ShopHomeDtoMap" type="com.joyzone.platform.core.dto.ShopHomeDTO">
@@ -106,13 +107,13 @@
 
   <insert id="addShop" parameterType="com.joyzone.platform.core.model.ShopModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   insert into shop(name,phone,address,description,price,cover_img,status,
-  	reg_img,legal_person_img,create_time,province,city,area,lng,lat,shop_type_id,shop_type_name)
+  	reg_img,legal_person_img,create_time,province,city,area,lng,lat,shop_type_id,shop_type_name,shop_info_h5)
   values(#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
   #{description,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},
   #{coverImg,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{regImg,jdbcType=VARCHAR},
   #{legalPersonImg,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},
   #{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{lng,jdbcType=DECIMAL},#{lat,jdbcType=DECIMAL},
-  #{shopTypeId,jdbcType=BIGINT},#{shopTypeName,jdbcType=VARCHAR})
+  #{shopTypeId,jdbcType=BIGINT},#{shopTypeName,jdbcType=VARCHAR},#{shopInfoH5,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateShop" parameterType="com.joyzone.platform.core.model.ShopModel">
@@ -162,6 +163,9 @@
      </if>
      <if test="shopTypeName != null and shopTypeName != ''">
         shop_type_name = #{shopTypeName,jdbcType=VARCHAR},
+     </if>
+     <if test="shopInfoH5 != null and shopInfoH5 != ''">
+         shop_info_h5 = #{shopInfoH5,jdbcType=VARCHAR},
      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -218,7 +222,8 @@
         shop_type_name as shopTypeName,
         (
 	        SELECT status FROM shop_collect WHERE user_id = #{userId} AND shop_id = #{shopId}
-        ) AS shopCollectStatus
+        ) AS shopCollectStatus,
+        shop_info_h5 as shopInfoH5
         from shop
         where id = #{shopId}
     </select>
