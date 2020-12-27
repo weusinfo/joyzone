@@ -19,7 +19,9 @@ import com.joyzone.platform.core.vo.AppTeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +31,9 @@ import java.util.Map;
 @Transactional
 public class TeamService extends BaseService<TeamModel> {
 
-    @Autowired
+    @Resource
     private TeamMapper teamMapper;
-    @Autowired
+    @Resource
     private TeamUsersMapper teamUsersMapper;
     @Autowired
     private GroupService groupService;
@@ -215,7 +217,10 @@ public class TeamService extends BaseService<TeamModel> {
         int tag = detailDto.getTag();
         List<ActivityUserDTO> userInfoList = detailDto.getJoinUserInfoList();
         for(int i=0;i<userInfoList.size();i++){
-            userIdList.add(userInfoList.get(i).getUserId());
+            ActivityUserDTO activityUserDTO = userInfoList.get(i);
+            if (null != activityUserDTO){
+                userIdList.add(activityUserDTO.getUserId());
+            }
         }
         if(tag == 0){ //特约聚会时，将邀约对象的信息返回
             Map inviteUserInfo = teamMapper.getInviteUserInfo(detailDto.getTeamId());
