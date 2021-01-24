@@ -9,8 +9,10 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.*;
 import com.joyzone.platform.core.mapper.DynamicMapper;
 import com.joyzone.platform.core.mapper.GiveThumbMapper;
+import com.joyzone.platform.core.mapper.UserLocationMapper;
 import com.joyzone.platform.core.model.DynamicModel;
 import com.joyzone.platform.core.model.GiveThumbModel;
+import com.joyzone.platform.core.model.UserLocationModel;
 import com.joyzone.platform.core.vo.LocationVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     private DynamicMapper dynamicMapper;
     @Resource
     private GiveThumbMapper thumbMapper;
+    @Resource
+    private UserLocationMapper userLocationMapper;
 
     /**
      * 发布动态
@@ -187,6 +191,15 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
         Object obj = this.redisService.hget(RedisColumn.USER_LOCATION,userId.toString());
         if (null != obj){
            return JSONObject.parseObject(obj.toString(),LocationVO.class);
+        } else {
+            UserLocationModel userLocation = userLocationMapper.selectByUserId(userId);
+            if (null != userLocation){
+                BigDecimal lat = userLocation.getLatitude();
+                BigDecimal lng = userLocation.getLongitude();
+                LocationVO locationVO = new LocationVO(lng.doubleValue(),lat.doubleValue());
+                redisService.hset(RedisColumn.USER_LOCATION , userId.toString() ,JSONObject.toJSONString(locationVO));
+                return locationVO;
+            }
         }
         return null;
     }
