@@ -4,13 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.exception.JZException;
 import com.joyzone.platform.common.utils.RedisColumn;
 import com.joyzone.platform.core.base.BaseService;
+import com.joyzone.platform.core.mapper.UserLocationMapper;
 import com.joyzone.platform.core.mapper.UserMapper;
+import com.joyzone.platform.core.model.UserLocationModel;
 import com.joyzone.platform.core.model.UserModel;
 
 import cn.hutool.core.util.HashUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.joyzone.platform.core.vo.LocationVO;
 import io.jsonwebtoken.lang.Collections;
+import org.apache.commons.lang3.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import org.slf4j.Logger;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +45,14 @@ public class UserSerivce extends BaseService<UserModel> {
     @Autowired
     private ChatService chatService;
 
-    @Resource
-    private UserMapper userMapper;
-    
     @Autowired
     private CacheService cacheService;
+
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private UserLocationMapper userLocationMapper;
 
     /**
      * 后台用户管理清单
@@ -75,6 +82,8 @@ public class UserSerivce extends BaseService<UserModel> {
             }
             return i;
         }
+        int userCode = (int) ((Math.random() * 9 + 1) * 100000);
+        userModel.setUserName("聚友-" + userCode);
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
         int i =userMapper.saveUser(userModel);
@@ -113,6 +122,27 @@ public class UserSerivce extends BaseService<UserModel> {
      * Mr.Gx
      */
     public void saveUserLngAndLat(Long userId,Double lng,Double lat){
+        if (null == userId){
+            return ;
+        }
+        lat = null == lat ? 0.0 : lat;
+        lng = null == lng ? 0.0 : lng;
+
+        UserLocationModel location = userLocationMapper.selectByUserId(userId);
+        Date date = new Date();
+        if (null != location){
+            location.setLatitude(new BigDecimal(lat));
+            location.setLongitude(new BigDecimal(lng));
+            location.setUpdateTime(date);
+            userLocationMapper.update(location);
+        } else {
+            location = new UserLocationModel();
+            location.setLatitude(new BigDecimal(lat));
+            location.setLongitude(new BigDecimal(lng));
+            location.setUserId(userId);
+            location.setCreateTime(date);
+            userLocationMapper.insert(location);
+        }
         // RedisGeoUtil.geoadd(redisService.getStringRedisTemplate(), RedisColumn.USER_LOCATION,new Point(lng,lat),userId.toString());
         redisService.hset(RedisColumn.USER_LOCATION , userId.toString() ,JSONObject.toJSONString(new LocationVO(lng,lat)));
     }
@@ -191,5 +221,24 @@ public class UserSerivce extends BaseService<UserModel> {
     		return true;
     	}
     	return false;
+    }
+
+    public void updateUserName(){
+        List<UserModel> usetList = this.getUserList(null);
+        if (null != usetList && !usetList.isEmpty()){
+            for (UserModel user : usetList){
+                String userName = user.getUserName();
+                if (StringUtils.isBlank(userName)){
+                    int userCode = (int) ((Math.random() * 9 + 1) * 100000);
+                    user.setUserName("聚友-" + userCode);
+                    user.setUpdateTime(new Date());
+                    int i = userMapper.updateByPrimaryKeySelective(user);
+                    cacheService.delUser(user.getId()+"");
+                    if(i > 0) {
+                        chatService.updateUser(""+user.getId(), user.getUserName());
+                    }
+                }
+            }
+        }
     }
 }

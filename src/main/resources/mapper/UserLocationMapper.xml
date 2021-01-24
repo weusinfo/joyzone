@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.UserLocationMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.UserLocationModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="longitude" property="longitude" jdbcType="DECIMAL" />
+    <result column="latitude" property="latitude" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="BaseResultSQL">
+    user_id,longitude,latitude,create_time,update_time
+  </sql>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+      <include refid="BaseResultSQL"></include>
+    from user_location where user_id = #{userId};
+  </select>
+
+  <update id="update" parameterType="com.joyzone.platform.core.model.UserLocationModel">
+    update user_location
+    <set >
+      <if test="longitude != null" >
+        longitude = #{longitude},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+    </set>
+    where user_id = #{userId}
+  </update>
+</mapper>

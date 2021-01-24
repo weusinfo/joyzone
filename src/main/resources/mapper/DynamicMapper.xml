@@ -32,6 +32,7 @@
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
     <result column="pics" property="pics" jdbcType="VARCHAR"/>
     <result column="thumbCount" property="thumbCount" jdbcType="INTEGER"/>
+    <result column="kind" property="kind" jdbcType="INTEGER" />
     <collection property="commentDetailList" javaType="ArrayList" column="{dynamicId=dynamicId}" select="com.joyzone.platform.core.mapper.DynamicMapper.queryUserDynamicCommentList"
                 fetchType="lazy" ofType="com.joyzone.platform.core.dto.UserDynamicCommentListDTO">
     </collection>
@@ -95,6 +96,7 @@
       d.content AS dynamicContent,
       d.create_time AS createTime,
       d.pics,
+      d.kind,
       d.thumbs AS thumbCount
     FROM DYNAMIC d
     WHERE d.user_id = #{userId}

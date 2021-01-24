@@ -92,4 +92,10 @@ public class UserController {
     public void updateMD5() {
     	userSerivce.updateMD5();
     }
+
+
+    @PostMapping("/update")
+    public void updateUserName(){
+        userSerivce.updateUserName();
+    }
 }

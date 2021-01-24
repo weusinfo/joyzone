@@ -1,6 +1,5 @@
 package com.joyzone.platform.core.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.joyzone.platform.common.utils.LocationUtils;
@@ -73,19 +72,24 @@ public class DynamicSerivce extends BaseService<DynamicModel> {
     public UserDynamicDTO getUserDynamicList(Long userId,Long browserId,Integer pageNum,Integer pageSize){
         UserDynamicDTO userDynamic = dynamicMapper.selectByUserDynamic(userId,browserId);
         if (null != userDynamic){
+            List<UserDynamicListDto> userDynamicListDtos = new ArrayList<>();
             List<UserDynamicListDto> list = dynamicMapper.queryUserDynamicList(userId,pageNum,pageSize);
             if  (!list.isEmpty()){
-                list.stream().forEach(m -> {
-                    List<UserDynamicCommentListDTO> commentList = m.getCommentDetailList();
-                    setReviewerInfo(commentList);
-                    String pics = m.getPics();
-                    if  (StringUtils.isNotBlank(pics)){
-                    	String[] rtnPics = pics.split(",");
-                        m.setDynamicPics(Arrays.asList(rtnPics));
-                        m.setPics(null);
+                for (UserDynamicListDto dto : list){
+                    // 不是看自己的动态就要校验下是否是隐私类型
+                    if (userId.intValue() != browserId.intValue() && 1 == dto.getKind() && 0 == userDynamic.getFollowed()){
+                        continue;
                     }
-                });
-                userDynamic.setUserDynamicList(list);
+                    setReviewerInfo(dto.getCommentDetailList());
+                    String pics = dto.getPics();
+                    if  (StringUtils.isNotBlank(pics)){
+                        String[] rtnPics = pics.split(",");
+                        dto.setDynamicPics(Arrays.asList(rtnPics));
+                        dto.setPics(null);
+                    }
+                    userDynamicListDtos.add(dto);
+                }
+                userDynamic.setUserDynamicList(userDynamicListDtos);
             }
         }
         return userDynamic;
