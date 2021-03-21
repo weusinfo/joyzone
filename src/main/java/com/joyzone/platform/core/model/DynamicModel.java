@@ -1,15 +1,18 @@
 package com.joyzone.platform.core.model;
 
-import com.alibaba.fastjson.JSONObject;
 import com.joyzone.platform.common.utils.SensitiveWordUtils;
 import com.joyzone.platform.core.dto.DynamicDTO;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 
+ * @author louishe
+ *
+ */
 @Table(name = "dynamic")
 public class DynamicModel {
     /**
@@ -64,8 +67,13 @@ public class DynamicModel {
      * 纬度
      */
     private BigDecimal lat;
+    
+    /**
+     * 攻略标签ID
+     */
+    private Long labelId;
 
-    public DynamicModel() { }
+	public DynamicModel() { }
 
     public DynamicModel(DynamicDTO dynamicDTO) {
         this.userId = dynamicDTO.getUserId();
@@ -238,4 +246,12 @@ public class DynamicModel {
     public void setLat(BigDecimal lat) {
         this.lat = lat;
     }
+    
+    public Long getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(Long labelId) {
+		this.labelId = labelId;
+	}
 }

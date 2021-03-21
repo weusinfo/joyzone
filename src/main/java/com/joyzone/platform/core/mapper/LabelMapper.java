@@ -6,12 +6,12 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface LabelMapper extends Mapper<LabelModel>{
 	
-	public void addLabel(LabelModel labelModel);
+	public int addLabel(LabelModel labelModel);
 	
 	public int delLabel(String labelId, Long userId);
 	
-	public void updateLabel(LabelModel labelModel);
+	public int updateLabel(LabelModel labelModel);
 	
-	public void disableModel(Long labelId, Long userId);
+	public int disableModel(Long labelId, Long userId);
 
 }

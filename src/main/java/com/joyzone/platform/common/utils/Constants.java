@@ -41,4 +41,12 @@ public interface Constants {
 	Integer CACHE_CODE_EXPIRES = 5 * 60 * 1000;
 	
 	String KEY_EXPIRATION_PREFIX = "INVITNG_";
+	
+	String INTEREST_TAGS_DEFAULT = "default";
+	
+	String STRATEGY_LABEL_DEFAULT = "default";
+	
+	String CACHE_INTEREST_TAGS = "sys::interest::tags";
+	
+	String CACHE_STRATEGY_LABEL = "sys::strategy:label";
 }

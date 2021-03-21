@@ -42,4 +42,8 @@
   <update id="disableTag">
   	update tag set status = 1 where user_id = #{userId} and id = #{id}
   </update>
+  
+  <select id="getTags" resultType="com.joyzone.platform.core.model.TagsModel">
+  	select id, name, type from tags where status = 2
+  </select>
 </mapper>

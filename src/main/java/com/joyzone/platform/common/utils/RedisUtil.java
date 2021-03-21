@@ -30,6 +30,7 @@ public class RedisUtil {
      * 是否锁定标志
      */
     private volatile boolean locked = false;
+    
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
