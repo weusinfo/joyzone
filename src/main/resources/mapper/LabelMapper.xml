@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.LabelMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.LabelModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <insert id="addLabel" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.joyzone.platform.core.model.LabelModel">
+  	insert into label(name,type, status,user_id,create_time,num)
+  values(#{name,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+  #{userId,jdbcType=BIGINT},sysdate(),#{num,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateLabel">
+  	update label
+  	<set>
+  		<if test="name != '' and name != null">
+  			name = #{name}
+  		</if>
+  		<if test="type != '' and type != null">
+  			type = #{type}
+  		</if>
+  		<if test="num != '' and num != null">
+  			num = #{num}
+  		</if>
+  	</set>
+  	where id = #{id} and user_id = #{userId}
+  </update>
+
+  <delete id="delLabel">
+  	delete from label where id = #{labelId} and user_id = #{userId}
+  </update>
+  
+  <update id="disableModel">
+  	update label set status = 1 where id = #{id} and user_id = #{userId}
+  </update>
+</mapper>

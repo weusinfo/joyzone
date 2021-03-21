@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.TagsMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.TagsModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <insert id="addTag"  useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.joyzone.platform.core.model.TagsModel">
+  	insert into tag(name, user_id, status, create_time, type, num)
+  	values(#{name,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{status,jdbcType=INTEGER},sysdate(), #{type,jdbcType=VARCHAR},#{num,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateTag" parameterType="com.joyzone.platform.core.model.TagsModel">
+  	update tag
+  	<set>
+  		<if test="name != null and name != ''">
+  			name = #{name}
+  		</if>
+  		<if test="type != null and type != ''">
+  			type = #{type}
+  		</if>
+  		<if test="num != '' and num != null">
+  			num = #{num}
+  		</if>
+  	</set>
+  	where id = #{id} and user_id = #{userId}
+  </update>
+  
+  <delete id="delTag">
+  	delete from tag where id = #{id} and user_id = #{userId}
+  </delete>
+  
+  <update id="disableTag">
+  	update tag set status = 1 where user_id = #{userId} and id = #{id}
+  </update>
+</mapper>
