@@ -3,7 +3,7 @@ package com.joyzone.platform.core.service;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

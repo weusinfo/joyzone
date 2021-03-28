@@ -174,7 +174,9 @@ public class TeamService extends BaseService<TeamModel> {
                 teamModel.setTag(0); //特约聚会
                 teamModel.setNumber(2); //一对一聚会只有两人
             } else {
-                if(teamModel.getToWay() != 0){
+                if(teamModel.getToWay() == null){
+                    teamModel.setTag(2); //普通聚会
+                } else if(teamModel.getToWay() != 0){
                     teamModel.setTag(1); //好友聚会
                 } else {
                     teamModel.setTag(2); //普通聚会
@@ -338,6 +340,10 @@ public class TeamService extends BaseService<TeamModel> {
     
     public int failInviting(String invitingId) {
     	return teamMapper.failInviting(invitingId);
+    }
+
+    public List<Map<String,Object>> getSystemActivity(){
+        return teamMapper.getSystemActivity();
     }
 
 }

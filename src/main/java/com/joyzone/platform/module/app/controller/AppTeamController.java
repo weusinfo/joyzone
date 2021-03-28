@@ -224,17 +224,24 @@ public class AppTeamController {
             return R.error("开始时间不能为空");
         if(teamModel.getStartTime().compareTo(new Date()) <= 0 )
             return R.error("开始时间必须晚于现在");
-        if(teamModel.getActivityAddress() == null)
-            return R.error("活动地点不能为空");
+        if(teamModel.getOwner() != 0){
+            if(teamModel.getActivityAddress() == null)
+                return R.error("活动地点不能为空");
+        }
+
         /*if(teamModel.getToWay() == null)
             return R.error("可参与人类型不能为空");*/ //一对一邀约时，没有可参与人选项
         if(teamModel.getPayWay() == null)
             return R.error("请填写人均费用方式");
 
-        UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
-        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
-                userModel.getBirthday() == null || userModel.getHeadPic() == null){
-            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
+        if(teamModel.getOwner() == 0){
+
+        }else {
+            UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
+            if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
+                    userModel.getBirthday() == null || userModel.getHeadPic() == null){
+                return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
+            }
         }
         int ret = 0;
         try {
@@ -321,5 +328,10 @@ public class AppTeamController {
         return teamService.getShopTabOne(shopId,userId);
     }
 
+    @PostMapping("/getSystemActivity")
+    @ApiOperation("新版202103：获取系统推荐聚会 @zhangyu")
+    public List<Map<String,Object>> getSystemActivity(){
+        return teamService.getSystemActivity();
+    }
 
 }

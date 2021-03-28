@@ -795,4 +795,10 @@
         LEFT JOIN team t ON t.invited_id = u.id
         WHERE t.id = #{teamId}
     </select>
+
+    <select id="getSystemActivity" resultType="java.util.HashMap">
+        SELECT hu.hobby_id AS hobbyId,h.hobby_name AS hobbyName,COUNT(hu.id) AS num FROM hobby_user hu
+        LEFT JOIN hobby h ON h.id = hu.hobby_id
+        GROUP BY hu.hobby_id ORDER BY num DESC LIMIT 5
+    </select>
 </mapper>

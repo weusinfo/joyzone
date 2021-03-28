@@ -18,7 +18,7 @@ public class LabelService extends BaseService<LabelModel>{
 	
 	@Autowired
 	private RedisUtil redisUtil;
-	
+
 	@Autowired
 	private LabelMapper labelMapper;
 	/**
@@ -58,7 +58,7 @@ public class LabelService extends BaseService<LabelModel>{
 			redisUtil.hset(Constants.CACHE_STRATEGY_LABEL, labelModel.getId() + "::" + type, labelModel);
 		}
 	}
-	
+
 	/**
 	 * Disable label
 	 * @param labelId

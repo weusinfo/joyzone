@@ -56,4 +56,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     int save(TeamModel teamModel);
 
     Map getInviteUserInfo(@Param("teamId") Long teamId);
+
+    List<Map<String,Object>> getSystemActivity();
 }
