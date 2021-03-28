@@ -29,7 +29,7 @@
     <result column="selected" property="selected" jdbcType="INTEGER" />
   </resultMap>
 
-    <select id="getSystemHobbyList" resultMap="systemHobbyMap">
+  <select id="getSystemHobbyList" resultMap="systemHobbyMap">
         SELECT * , ${userId} as userId FROM (
             SELECT TYPE as hobbyType,COUNT(*) AS num
             FROM hobby WHERE STATUS = 0
@@ -45,4 +45,14 @@
     WHERE h.type = #{hobbyType} AND h.status = 0
   </select>
 
+  <delete id="deleteUserHobbys">
+    delete FROM hobby_user where user_id = #{userId}
+  </delete>
+
+  <insert id="saveUserHobbys">
+    insert into hobby_user(user_id, hobby_id,create_time) values
+    <foreach collection="hobbyIdList" item="hobbyId" index="index" separator=",">
+      (#{userId},#{hobbyId}, sysdate())
+    </foreach>
+  </insert>
 </mapper>

@@ -11,5 +11,6 @@ import java.util.Map;
 public interface HobbyMapper extends Mapper<HobbyModel>{
     List<SystemHobbyDTO> getSystemHobbyList(@Param("userId") Long userId);
     List<SystemHobbyDTO> getHobbyNamesByType(@Param("hobbyType") String hobbyType,@Param("userId")Long userId);
-
+    void deleteUserHobbys(@Param("userId") Long userId);
+    int saveUserHobbys(@Param("hobbyIdList") Long[] hobbyIdList, @Param("userId") Long userId);
 }

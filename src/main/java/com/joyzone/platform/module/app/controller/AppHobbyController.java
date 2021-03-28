@@ -5,6 +5,7 @@ import com.joyzone.platform.core.dto.SystemHobbyDTO;
 import com.joyzone.platform.core.model.HobbyModel;
 import com.joyzone.platform.core.model.TeamModel;
 import com.joyzone.platform.core.service.HobbyService;
+import com.joyzone.platform.core.vo.UserHobbyVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,13 +46,8 @@ public class AppHobbyController {
 
     @PostMapping("/saveUserHobbys")
     @ApiOperation("保存爱好清单 @zhangyu")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "hobbyId", value = "爱好ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0:添加 1：移除", required = true, dataType = "Integer", paramType = "query")
-    })
-    public R saveUserHobbys(Long userId,Long hobbyId,Integer type){
-        int ret = hobbyService.saveUserHobbys(userId,hobbyId,type);
+    public R saveUserHobbys(@RequestBody UserHobbyVO userHobbyVO){
+        int ret = hobbyService.saveUserHobbys(userHobbyVO);
         return ret > 0 ? R.ok() : R.error("操作失败");
     }
 

@@ -4,14 +4,13 @@ import com.joyzone.platform.core.base.BaseService;
 import com.joyzone.platform.core.dto.SystemHobbyDTO;
 import com.joyzone.platform.core.mapper.HobbyMapper;
 import com.joyzone.platform.core.model.HobbyModel;
-import com.joyzone.platform.core.model.ShopModel;
+import com.joyzone.platform.core.vo.UserHobbyVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -29,13 +28,11 @@ public class HobbyService extends BaseService<HobbyModel> {
 		return hobbyMapper.getHobbyNamesByType(hobbyType,userId);
 	}
 
-	public int saveUserHobbys(Long userId,Long hobbyId,Integer type){
-		if(type == 0){
-			//hobbyMapper.saveUserHobbys(userId,hobbyId);
-		}
-		if(type == 1){
-			//hobbyMapper.saveUserHobbys(userId,hobbyId);
-		}
-		return 0;
+	public int saveUserHobbys(UserHobbyVO userHobbyVO){
+		int ret = 0;
+		hobbyMapper.deleteUserHobbys(userHobbyVO.getUserId());
+		Long[] hobbyIdList = userHobbyVO.getHobbyIds().stream().toArray(Long[]::new);
+		ret = hobbyMapper.saveUserHobbys(hobbyIdList,userHobbyVO.getUserId());
+		return ret;
 	}
 }
