@@ -38,7 +38,7 @@
 
   <delete id="delLabel">
   	delete from label where id = #{labelId} and user_id = #{userId}
-  </update>
+  </delete>
   
   <update id="disableModel">
   	update label set status = 1 where id = #{id} and user_id = #{userId}
