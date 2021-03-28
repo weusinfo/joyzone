@@ -265,7 +265,7 @@ public class AppTeamController {
     @ApiOperation("新版202011：前端获取聚会列表 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0：全部 1：收到邀请 2：最快开始 3：最多参与 4：最近距离", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：全部 1：收到邀请 2：最快开始 3：最多参与 4：系统推荐", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "pageNum", value = "页数",required = true, dataType = "Integer",defaultValue = "1",paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "每页条数",required = true, dataType = "Integer",defaultValue = "10",paramType = "query")
     })

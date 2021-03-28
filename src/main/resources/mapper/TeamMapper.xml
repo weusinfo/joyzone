@@ -573,7 +573,7 @@
                     -1 AS teamStatus
                 FROM team t
                 LEFT JOIN  `user` u ON u.id = t.owner
-                WHERE t.status = 0 AND t.tag = 2
+                WHERE t.status = 0 AND t.tag = 2 AND t.owner = 0
                 AND TIMESTAMPDIFF(HOUR,NOW(),t.start_time) > 1
             ) t1 ORDER BY t1.joinUserNum DESC
         </if>
