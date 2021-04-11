@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/apple-app-site-association")
 public class ResourceController {
 	
-	@RequestMapping(name = "/apple-app-site-association",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String getAppJson() {
 		String json = "{\r\n" + 
 				"    \"applinks\": {\r\n" + 
