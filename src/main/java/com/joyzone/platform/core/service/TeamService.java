@@ -229,20 +229,22 @@ public class TeamService extends BaseService<TeamModel> {
             detailDto.setInviteUserId(Long.valueOf(inviteUserInfo.get("inviteUserId").toString()));
             detailDto.setInviteUserName(inviteUserInfo.get("inviteUserName").toString());
         }
-        if(status == 0){
-            if(userId.longValue() == owner.longValue()){
-                detailDto.setButtonShow("解散");
-            } else if (userIdList.contains(userId)) {
-                detailDto.setButtonShow("退出");
-            } else {
-                detailDto.setButtonShow("加入");
+        if(userId != null){
+            if(status == 0){
+                if(userId.longValue() == owner.longValue()){
+                    detailDto.setButtonShow("解散");
+                } else if (userIdList.contains(userId)) {
+                    detailDto.setButtonShow("退出");
+                } else {
+                    detailDto.setButtonShow("加入");
+                }
+            }else if(status == 1){
+                detailDto.setButtonShow("成功"); //聚会详情按钮内容为“成功”，“失败”，“失败”时，按钮不显示在前端页面
+            }else if(status == 2){
+                detailDto.setButtonShow("失败");
+            }else if(status == 3){
+                detailDto.setButtonShow("已解散");
             }
-        }else if(status == 1){
-            detailDto.setButtonShow("成功"); //聚会详情按钮内容为“成功”，“失败”，“失败”时，按钮不显示在前端页面
-        }else if(status == 2){
-            detailDto.setButtonShow("失败");
-        }else if(status == 3){
-            detailDto.setButtonShow("已解散");
         }
         return R.ok(detailDto);
     }
@@ -347,4 +349,7 @@ public class TeamService extends BaseService<TeamModel> {
     }
 
 
+    public void setTeamStatusFailedAuto() {
+        teamMapper.setTeamStatusFailedAuto();
+    }
 }

@@ -59,4 +59,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     Map getInviteUserInfo(@Param("teamId") Long teamId);
 
     List<Map<String,Object>> getSystemActivity();
+
+    void setTeamStatusFailedAuto();
 }

@@ -801,4 +801,12 @@
         LEFT JOIN hobby h ON h.id = hu.hobby_id
         GROUP BY hu.hobby_id ORDER BY num DESC LIMIT 5
     </select>
+
+    <update id="setTeamStatusFailedAuto">
+        UPDATE team SET STATUS = 2 WHERE id IN (
+            SELECT a.id FROM (
+              SELECT id FROM team WHERE STATUS = 0 AND TIMESTAMPDIFF(HOUR,start_time,NOW()) > 6
+            ) a
+        )
+    </update>
 </mapper>

@@ -277,10 +277,9 @@ public class AppTeamController {
     @PostMapping("/getActivityDetail")
     @ApiOperation("新版202011：前端获取聚会详情 @zhangyu")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "teamId", value = "聚会id", required = true, dataType = "Long", paramType = "query")
             })
-    public R getActivityDetail(@RequestParam("userId") Long userId,@RequestParam("teamId") Long teamId){
+    public R getActivityDetail(Long userId,@RequestParam("teamId") Long teamId){
         return teamService.getActivityDetail(userId,teamId);
     }
 
@@ -334,4 +333,9 @@ public class AppTeamController {
         return teamService.getSystemActivity();
     }
 
+    @PostMapping("/setTeamStatusFailedAuto")
+    @ApiOperation("新版202103：系统定时设置过期组队的状态为失败 @zhangyu")
+    public void setTeamStatusFailedAuto() {
+        teamService.setTeamStatusFailedAuto();
+    }
 }

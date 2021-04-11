@@ -47,5 +47,9 @@ public class SystemScheduler {
         teamController.saveActivity(teamModel);
 
     }
+    @Scheduled(cron = "0 0 10,17,23 * * ?")
+    public void setTeamStatusFailedAuto(){
+        teamController.setTeamStatusFailedAuto();
+    }
 
 }
