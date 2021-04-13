@@ -12,16 +12,16 @@ public class ResourceController {
 	@RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String getAppJson() {
 		String json = "{\r\n" + 
-				"    \"applinks\": {\r\n" + 
-				"        \"apps\": [],\r\n" + 
-				"        \"details\": [\r\n" + 
-				"            {\r\n" + 
-				"                \"appID\": \"4WRFSUX5RH.chaifuwei.Quwan\",\r\n" + 
-				"                \"paths\": [\"*\"]\r\n" + 
-				"            }\r\n" + 
-				"        ]\r\n" + 
-				"    }\r\n" + 
-				"}";
+    			"    \"applinks\": {\r\n" + 
+    			"        \"apps\": [],\r\n" + 
+    			"        \"details\": [\r\n" + 
+    			"            {\r\n" + 
+    			"                \"appID\": \"4WRFSUX5RH.chaifuwei.Quwan\",\r\n" + 
+    			"                \"paths\": [\"/*\"]\r\n" + 
+    			"            }\r\n" + 
+    			"        ]\r\n" + 
+    			"    }\r\n" + 
+    			"}";
 		return json;
 	}
 
