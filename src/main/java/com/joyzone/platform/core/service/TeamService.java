@@ -174,7 +174,9 @@ public class TeamService extends BaseService<TeamModel> {
                 teamModel.setTag(0); //特约聚会
                 teamModel.setNumber(2); //一对一聚会只有两人
             } else {
-                if(teamModel.getToWay() != 0){
+                if(teamModel.getToWay() == null){
+                    teamModel.setTag(2); //普通聚会
+                } else if(teamModel.getToWay() != 0){
                     teamModel.setTag(1); //好友聚会
                 } else {
                     teamModel.setTag(2); //普通聚会
@@ -227,20 +229,22 @@ public class TeamService extends BaseService<TeamModel> {
             detailDto.setInviteUserId(Long.valueOf(inviteUserInfo.get("inviteUserId").toString()));
             detailDto.setInviteUserName(inviteUserInfo.get("inviteUserName").toString());
         }
-        if(status == 0){
-            if(userId.longValue() == owner.longValue()){
-                detailDto.setButtonShow("解散");
-            } else if (userIdList.contains(userId)) {
-                detailDto.setButtonShow("退出");
-            } else {
-                detailDto.setButtonShow("加入");
+        if(userId != null){
+            if(status == 0){
+                if(userId.longValue() == owner.longValue()){
+                    detailDto.setButtonShow("解散");
+                } else if (userIdList.contains(userId)) {
+                    detailDto.setButtonShow("退出");
+                } else {
+                    detailDto.setButtonShow("加入");
+                }
+            }else if(status == 1){
+                detailDto.setButtonShow("成功"); //聚会详情按钮内容为“成功”，“失败”，“失败”时，按钮不显示在前端页面
+            }else if(status == 2){
+                detailDto.setButtonShow("失败");
+            }else if(status == 3){
+                detailDto.setButtonShow("已解散");
             }
-        }else if(status == 1){
-            detailDto.setButtonShow("成功"); //聚会详情按钮内容为“成功”，“失败”，“失败”时，按钮不显示在前端页面
-        }else if(status == 2){
-            detailDto.setButtonShow("失败");
-        }else if(status == 3){
-            detailDto.setButtonShow("已解散");
         }
         return R.ok(detailDto);
     }
@@ -340,4 +344,12 @@ public class TeamService extends BaseService<TeamModel> {
     	return teamMapper.failInviting(invitingId);
     }
 
+    public List<Map<String,Object>> getSystemActivity(){
+        return teamMapper.getSystemActivity();
+    }
+
+
+    public void setTeamStatusFailedAuto() {
+        teamMapper.setTeamStatusFailedAuto();
+    }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joyzone.platform.core.mapper.HobbyMapper" >
+  <resultMap id="BaseResultMap" type="com.joyzone.platform.core.model.HobbyModel" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hobbyName" property="hobbyName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="systemHobbyMap" type="com.joyzone.platform.core.dto.SystemHobbyDTO">
+    <id column="hobbyType" property="hobbyType" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <collection property="hobbyNameList" javaType="ArrayList" column="{hobbyType=hobbyType,userId=userId}" select="com.joyzone.platform.core.mapper.HobbyMapper.getHobbyNamesByType"
+                fetchType="lazy" ofType="java.lang.String">
+
+    </collection>
+  </resultMap>
+
+  <resultMap id="hobbyMap" type="com.joyzone.platform.core.dto.HobbyDTO">
+    <id column="hobbyId" property="hobbyId" jdbcType="BIGINT" />
+    <result column="hobbyName" property="hobbyName" jdbcType="VARCHAR" />
+    <result column="selected" property="selected" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getSystemHobbyList" resultMap="systemHobbyMap">
+        SELECT * , ${userId} as userId FROM (
+            SELECT TYPE as hobbyType,COUNT(*) AS num
+            FROM hobby WHERE STATUS = 0
+            GROUP BY TYPE
+        ) t
+        WHERE num > 0
+    </select>
+
+  <select id="getHobbyNamesByType" resultMap="hobbyMap">
+    SELECT h.id AS hobbyId, h.hobby_name AS hobbyName,
+    IF((SELECT COUNT(id) FROM hobby_user hu WHERE hu.user_id = #{userId} AND hu.hobby_id = hobbyId)>0,0,1) AS selected
+    FROM hobby h
+    WHERE h.type = #{hobbyType} AND h.status = 0
+  </select>
+
+  <delete id="deleteUserHobbys">
+    delete FROM hobby_user where user_id = #{userId}
+  </delete>
+
+  <insert id="saveUserHobbys">
+    insert into hobby_user(user_id, hobby_id,create_time) values
+    <foreach collection="hobbyIdList" item="hobbyId" index="index" separator=",">
+      (#{userId},#{hobbyId}, sysdate())
+    </foreach>
+  </insert>
+</mapper>

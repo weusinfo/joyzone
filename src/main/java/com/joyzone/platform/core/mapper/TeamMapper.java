@@ -6,6 +6,7 @@ import com.joyzone.platform.core.vo.AppTeamVO;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,4 +57,8 @@ public interface TeamMapper extends Mapper<TeamModel> {
     int save(TeamModel teamModel);
 
     Map getInviteUserInfo(@Param("teamId") Long teamId);
+
+    List<Map<String,Object>> getSystemActivity();
+
+    void setTeamStatusFailedAuto();
 }

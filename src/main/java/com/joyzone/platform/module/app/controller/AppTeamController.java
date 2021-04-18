@@ -224,17 +224,24 @@ public class AppTeamController {
             return R.error("开始时间不能为空");
         if(teamModel.getStartTime().compareTo(new Date()) <= 0 )
             return R.error("开始时间必须晚于现在");
-        if(teamModel.getActivityAddress() == null)
-            return R.error("活动地点不能为空");
+        if(teamModel.getOwner() != 0){
+            if(teamModel.getActivityAddress() == null)
+                return R.error("活动地点不能为空");
+        }
+
         /*if(teamModel.getToWay() == null)
             return R.error("可参与人类型不能为空");*/ //一对一邀约时，没有可参与人选项
         if(teamModel.getPayWay() == null)
             return R.error("请填写人均费用方式");
 
-        UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
-        if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
-                userModel.getBirthday() == null || userModel.getHeadPic() == null){
-            return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
+        if(teamModel.getOwner() == 0){
+
+        }else {
+            UserModel userModel = userSerivce.selectByKey(teamModel.getOwner());
+            if(userModel ==null || userModel.getSex() == null || userModel.getUserName() == null ||
+                    userModel.getBirthday() == null || userModel.getHeadPic() == null){
+                return R.error(100,"请完善个人必要信息：昵称/性别/生日/头像");
+            }
         }
         int ret = 0;
         try {
@@ -258,7 +265,7 @@ public class AppTeamController {
     @ApiOperation("新版202011：前端获取聚会列表 @zhangyu")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "0：全部 1：收到邀请 2：最快开始 3：最多参与 4：最近距离", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "0：全部 1：收到邀请 2：最快开始 3：最多参与 4：系统推荐", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "pageNum", value = "页数",required = true, dataType = "Integer",defaultValue = "1",paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "每页条数",required = true, dataType = "Integer",defaultValue = "10",paramType = "query")
     })
@@ -270,10 +277,9 @@ public class AppTeamController {
     @PostMapping("/getActivityDetail")
     @ApiOperation("新版202011：前端获取聚会详情 @zhangyu")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "teamId", value = "聚会id", required = true, dataType = "Long", paramType = "query")
             })
-    public R getActivityDetail(@RequestParam("userId") Long userId,@RequestParam("teamId") Long teamId){
+    public R getActivityDetail(Long userId,@RequestParam("teamId") Long teamId){
         return teamService.getActivityDetail(userId,teamId);
     }
 
@@ -321,5 +327,15 @@ public class AppTeamController {
         return teamService.getShopTabOne(shopId,userId);
     }
 
+    @PostMapping("/getSystemActivity")
+    @ApiOperation("新版202103：获取系统推荐聚会 @zhangyu")
+    public List<Map<String,Object>> getSystemActivity(){
+        return teamService.getSystemActivity();
+    }
 
+    @PostMapping("/setTeamStatusFailedAuto")
+    @ApiOperation("新版202103：系统定时设置过期组队的状态为失败 @zhangyu")
+    public void setTeamStatusFailedAuto() {
+        teamService.setTeamStatusFailedAuto();
+    }
 }
