@@ -67,11 +67,6 @@ public class DynamicModel {
      * 纬度
      */
     private BigDecimal lat;
-    
-    /**
-     * 攻略标签ID
-     */
-    private Long labelId;
 
 	public DynamicModel() { }
 
@@ -246,12 +241,5 @@ public class DynamicModel {
     public void setLat(BigDecimal lat) {
         this.lat = lat;
     }
-    
-    public Long getLabelId() {
-		return labelId;
-	}
-
-	public void setLabelId(Long labelId) {
-		this.labelId = labelId;
-	}
+	
 }
