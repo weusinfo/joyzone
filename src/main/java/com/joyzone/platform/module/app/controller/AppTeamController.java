@@ -348,7 +348,7 @@ public class AppTeamController {
      */
     @GetMapping("/getTeamImg")
     @ApiOperation("获取群组织者头像作为群组封面")
-    public R getTeamHeadImg(@RequestParam("shopId") String chatGroupId){
+    public R getTeamHeadImg(@RequestParam("chatGroupId") String chatGroupId){
     	String headImg = teamService.getTeamHeadImg(chatGroupId);
     	Map<String,String> map = Maps.newHashMap();
     	map.put("teamImg", headImg);

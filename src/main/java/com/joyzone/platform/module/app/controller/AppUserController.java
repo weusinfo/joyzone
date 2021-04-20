@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.joyzone.platform.common.utils.R;
 import com.joyzone.platform.core.model.UserModel;
 import com.joyzone.platform.core.service.CacheService;
+import com.joyzone.platform.core.service.TeamService;
 import com.joyzone.platform.core.service.UserSerivce;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,9 @@ public class AppUserController {
     
     @Autowired
     private CacheService cacheService;
+    
+    @Autowired
+    private TeamService teamService;
 
     @ApiOperation("根据ID保存用户的经纬度信息")
     @PostMapping("saveUserLngAndLat")
@@ -46,10 +51,20 @@ public class AppUserController {
     @ApiOperation("根据ID获取用户信息")
     @PostMapping("getUserInfo")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "query")
+            @ApiImplicitParam(name = "userGroupId", value = "用户或聊天群ID", required = true, dataType = "String", paramType = "query")
     })
-    public R getUserInfo(@RequestParam("userId") Long userId){
-        return R.ok(userSerivce.selectByKey(userId));
+    public R getUserInfo(@RequestParam("userGroupId") String userGroupId){
+    	if(StringUtils.isNotEmpty(userGroupId)) {
+    		if(userGroupId.startsWith("group_")) {
+    			String chatGroupId = userGroupId.substring(6);
+    			String headImg = teamService.getTeamHeadImg(chatGroupId);
+    			UserModel user = new UserModel();
+    			user.setHeadPic(headImg);
+    			return R.ok(user);
+    			
+    		}
+    	}
+        return R.ok(userSerivce.selectByKey(userGroupId));
     }
 
     @ApiOperation("添加或修改用户信息")
