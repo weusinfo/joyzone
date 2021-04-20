@@ -51,12 +51,12 @@ public class AppUserController {
     @ApiOperation("根据ID获取用户信息")
     @PostMapping("getUserInfo")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userGroupId", value = "用户或聊天群ID", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "userId", value = "用户或聊天群ID", required = true, dataType = "String", paramType = "query")
     })
-    public R getUserInfo(@RequestParam("userGroupId") String userGroupId){
-    	if(StringUtils.isNotEmpty(userGroupId)) {
-    		if(userGroupId.startsWith("group_")) {
-    			String chatGroupId = userGroupId.substring(6);
+    public R getUserInfo(@RequestParam("userId") String userId){
+    	if(StringUtils.isNotEmpty(userId)) {
+    		if(userId.startsWith("group_")) {
+    			String chatGroupId = userId.substring(6);
     			String headImg = teamService.getTeamHeadImg(chatGroupId);
     			UserModel user = new UserModel();
     			user.setHeadPic(headImg);
@@ -64,7 +64,7 @@ public class AppUserController {
     			
     		}
     	}
-        return R.ok(userSerivce.selectByKey(userGroupId));
+        return R.ok(userSerivce.selectByKey(userId));
     }
 
     @ApiOperation("添加或修改用户信息")
