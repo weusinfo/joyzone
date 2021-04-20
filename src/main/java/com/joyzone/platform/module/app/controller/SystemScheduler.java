@@ -22,7 +22,7 @@ public class SystemScheduler {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
 
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 30 22 * * ?")
     public void reportCurrentTime(){
         System.out.println("现在时间："+format.format(new Date()));
         List<Map<String,Object>> systemActivityList = teamController.getSystemActivity();
@@ -47,6 +47,7 @@ public class SystemScheduler {
         teamController.saveActivity(teamModel);
 
     }
+    
     @Scheduled(cron = "0 0 10,17,23 * * ?")
     public void setTeamStatusFailedAuto(){
         teamController.setTeamStatusFailedAuto();
