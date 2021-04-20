@@ -809,4 +809,8 @@
             ) a
         )
     </update>
+    
+    <select id="getTeamHeadImg" resultType="java.lang.String">
+    	SELECT head_pic FROM USER LEFT JOIN team ON user.`id` = team.`owner` WHERE team.`chat_group_id` = #{chatGroupId};
+    </select>
 </mapper>

@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -337,5 +338,19 @@ public class AppTeamController {
     @ApiOperation("新版202103：系统定时设置过期组队的状态为失败 @zhangyu")
     public void setTeamStatusFailedAuto() {
         teamService.setTeamStatusFailedAuto();
+    }
+    
+    /**
+     * 获取群组织者头像作为群组封面
+     * @param chatGroupId
+     * @return
+     */
+    @GetMapping("/getTeamImg")
+    @ApiOperation("获取群组织者头像作为群组封面")
+    public R getTeamHeadImg(@RequestParam("shopId") String chatGroupId){
+    	String headImg = teamService.getTeamHeadImg(chatGroupId);
+    	Map<String,String> map = Maps.newHashMap();
+    	map.put("teamImg", headImg);
+    	return R.ok(map);
     }
 }

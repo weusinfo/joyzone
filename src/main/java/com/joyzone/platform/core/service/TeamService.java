@@ -352,4 +352,8 @@ public class TeamService extends BaseService<TeamModel> {
     public void setTeamStatusFailedAuto() {
         teamMapper.setTeamStatusFailedAuto();
     }
+    
+    public String getTeamHeadImg(String chatGroupId) {
+    	return teamMapper.getTeamHeadImg(chatGroupId);
+    }
 }

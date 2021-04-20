@@ -61,4 +61,6 @@ public interface TeamMapper extends Mapper<TeamModel> {
     List<Map<String,Object>> getSystemActivity();
 
     void setTeamStatusFailedAuto();
+    
+    String getTeamHeadImg(@Param("chatGroupId") String chatGroupId);
 }
