@@ -340,6 +340,7 @@ public class AppTeamController {
         teamService.setTeamStatusFailedAuto();
     }
     
+    
     /**
      * 获取群组织者头像作为群组封面
      * @param chatGroupId

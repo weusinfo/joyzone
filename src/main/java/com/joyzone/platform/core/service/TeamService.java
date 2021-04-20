@@ -353,6 +353,7 @@ public class TeamService extends BaseService<TeamModel> {
         teamMapper.setTeamStatusFailedAuto();
     }
     
+    
     public String getTeamHeadImg(String chatGroupId) {
     	return teamMapper.getTeamHeadImg(chatGroupId);
     }
