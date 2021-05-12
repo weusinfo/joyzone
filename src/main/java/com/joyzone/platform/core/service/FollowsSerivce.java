@@ -41,6 +41,7 @@ public class FollowsSerivce extends BaseService<FollowsModel> {
                 followsModel.setStatus(0);
                 followsModel.setCreateTime(new Date());
                 followsModel.setUpdateTime(new Date());
+                followsModel.setBlockStatus(1);
                 return followsMapper.insert(followsModel);
             }
         } else if(type == 1){
