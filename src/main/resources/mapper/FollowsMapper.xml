@@ -11,6 +11,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="block_status" property="blockStatus" jdbcType="INTEGER" />
   </resultMap>
 
   <select id="getUserFollowList" resultType="com.joyzone.platform.core.dto.UserFollowDTO">
@@ -24,15 +25,31 @@
     <if test="type == 0">
       INNER JOIN `user` u ON u.id = f.target_id
       WHERE f.status = 0 and f.user_id = #{userId}
+      and f.block_status = 1
     </if>
     <if test="type == 1">
       INNER JOIN `user` u ON u.id = f.user_id
       WHERE f.status = 0 and f.target_id = #{userId}
+      and f.block_status = 1
     </if>
+    
   </select>
 
   <select id="findFollowRecord" resultType="com.joyzone.platform.core.model.FollowsModel">
     SELECT * FROM follows
     WHERE user_id = #{userId} AND target_id = #{targetId}
   </select>
+  
+  <select id="isExists" resultType="java.lang.Integer">
+  	select count(*) from follows where user_id = #{userId} and target_id = #{targetId} limit 1
+  </select>
+  
+  <insert id="addBlockedFollower" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	insert into follows(user_id, target_id, status,block_status,create_time, update_time)
+  	values(#{userId}, #{targetId}, 1, 2, sysdate(), null)
+  </insert>
+  
+  <update id="blockUser">
+  	update follows set block_status = #{blockStatus} where user_id = #{userId} and target_id = #{targetId}
+  </update>
 </mapper>

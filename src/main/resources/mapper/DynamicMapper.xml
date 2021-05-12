@@ -138,6 +138,7 @@
           (SELECT COUNT(id) FROM follows f WHERE f.user_id = #{userId} AND f.target_id = t.user_id AND f.status = 0) AS followed
         FROM DYNAMIC t
         LEFT JOIN `user` u ON u.id = t.user_id
+        AND NOT EXISTS(SELECT id FROM follows f WHERE f.user_id = #{userId} AND f.`block_status` = 2 AND f.`target_id` = t.`user_id`)
         ORDER BY t.id DESC
     </select>
 
@@ -169,7 +170,7 @@
                   (
                       SELECT user_id as user_id FROM follows WHERE target_id = #{userId}
                       UNION
-                      SELECT target_id as user_id FROM follows WHERE user_id = #{userId}
+                      SELECT target_id as user_id FROM follows WHERE user_id = #{userId} and block_status = 1
                   ) f WHERE t.user_id = f.user_id
              ) t1 LEFT JOIN `user` u ON u.id = t1.user_id
         ORDER BY t1.dynamicId DESC

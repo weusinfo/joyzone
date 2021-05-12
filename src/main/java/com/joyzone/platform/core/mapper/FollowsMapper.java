@@ -11,4 +11,10 @@ public interface FollowsMapper extends Mapper<FollowsModel> {
     List<UserFollowDTO> getUserFollowList(@Param("userId") Long userId, @Param("type") Integer type);
 
     FollowsModel findFollowRecord(@Param("userId") Long userId,@Param("targetId") Long targetId);
+    
+    Integer isExists(Long userId, Long targetId);
+    
+    Integer addBlockedFollower(Long userId, Long targetId);
+    
+    int blockUser(Long userId, Long targetId, Integer blockStatus);
 }

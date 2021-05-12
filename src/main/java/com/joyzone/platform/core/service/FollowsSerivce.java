@@ -61,5 +61,20 @@ public class FollowsSerivce extends BaseService<FollowsModel> {
     public List<UserFollowDTO> getUserFollowList(Long userId, Integer type){
         return followsMapper.getUserFollowList(userId,type);
     }
+    
+    public void addBlockedFollower(Long userId, Long targetId) {
+    	followsMapper.addBlockedFollower(userId, targetId);
+    }
+    
+    public void blockUser(Long userId, Long targetId, Integer blockStatus) {
+    	Integer count = followsMapper.isExists(userId, targetId);
+    	if(count == null || count == 0) {
+    		//insert into follows
+    		followsMapper.addBlockedFollower(userId, targetId);
+    	}else {
+    		//update
+    		followsMapper.blockUser(userId, targetId, blockStatus);
+    	}
+    }
 
 }

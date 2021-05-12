@@ -27,8 +27,14 @@ public class FollowsModel {
      * 0：关注 1取消关注
      */
     private Integer status;
-
+    
     /**
+     * 是否拉黑;0:非拉黑;1:已拉黑
+     */
+    @Column(name = "block_status")
+    private Integer blockStatus;
+
+	/**
      * 创建时间
      */
     @Column(name = "create_time")
@@ -147,4 +153,12 @@ public class FollowsModel {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+    
+    public Integer getBlockStatus() {
+		return blockStatus;
+	}
+
+	public void setBlockStatus(Integer blockStatus) {
+		this.blockStatus = blockStatus;
+	}
 }
