@@ -157,7 +157,7 @@ public class AppLoginApiController {
         	userSerivce.register(userModel);
         }catch(Exception e) {
         	LOGGER.error("注册发生错误。。。，", e.getMessage());
-        	return R.error("用户注册失败！");
+        	return R.error("感谢您的注册，但服务开小差了，我们会在适当的时候通知您！");
         }
         map.put("message","注册成功！");
         map.put("userId",userModel.getId());
