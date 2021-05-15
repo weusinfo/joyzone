@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -53,6 +54,9 @@ public class UserSerivce extends BaseService<UserModel> {
 
     @Resource
     private UserLocationMapper userLocationMapper;
+    
+    @Resource
+    private SystemService sysService;
 
     /**
      * 后台用户管理清单
@@ -86,7 +90,7 @@ public class UserSerivce extends BaseService<UserModel> {
         userModel.setUserName("聚友-" + userCode);
         userModel.setCreateTime(date);
         userModel.setUpdateTime(date);
-        int i =userMapper.saveUser(userModel);
+        int i = userMapper.saveUser(userModel);
         cacheService.apdUser(userModel);
         return i;
     }
@@ -105,10 +109,12 @@ public class UserSerivce extends BaseService<UserModel> {
          cacheService.apdUser(userModel);
          if(obj ==null) {
         	 cacheService.delUser(userModel.getId().toString());
+        	 //记录那些注册失败的用户
+        	 sysService.saveFailedUser(userModel);
         	 throw new JZException("注册环信ID失败.");
          }
     }
-
+    
     /**
      * 根据电话号码获取用户信息
      * Mr.Gx

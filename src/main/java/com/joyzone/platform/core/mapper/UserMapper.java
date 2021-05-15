@@ -25,4 +25,6 @@ public interface UserMapper extends Mapper<UserModel> {
     int changeCover(@Param("userId") Long userId, @Param("cover") String cover);
     
     Integer checkPlayNum(@Param("playNum") String playNum);
+    
+    void saveFailedUser(UserModel userModel);
 }
